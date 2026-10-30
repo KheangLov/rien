@@ -133,4 +133,25 @@ describe('Dexie repository', () => {
     expect(await upgradedRepo.grammarStates()).toEqual([])
     await upgraded.delete()
   })
+
+  it('finds words by File, counts learned words and keeps File Boss results', async () => {
+    await repo.addWord(word, now)
+    await repo.addWord({ ...word, answer: 'lend', file: 8 }, now)
+    expect((await repo.cardsInFile('english-file-pre-intermediate-4e', 7)).map(c => c.answer)).toEqual(['borrow'])
+    expect(await repo.countLearned()).toBe(0)
+
+    await repo.saveBossResult({ book: 'english-file-pre-intermediate-4e', file: 7, at: now, score: 12, total: 15 })
+    await repo.saveBossResult({ book: 'english-file-pre-intermediate-4e', file: 8, at: new Date('2026-11-09T08:00:00Z'), score: 14, total: 15 })
+    expect((await repo.bossResults()).map(b => b.file)).toEqual([8, 7])
+    const backup = JSON.parse(JSON.stringify(await repo.exportAll(now)))
+    expect(backup.bosses).toHaveLength(2)
+  })
+
+  it('lists mistakes since a date', async () => {
+    await db.mistakes.bulkAdd([
+      { type: 'article', itemId: 'a', at: new Date('2026-10-01T00:00:00Z'), detail: '' },
+      { type: 'tense', itemId: 'b', at: now, detail: '' },
+    ])
+    expect((await repo.mistakesSince(new Date('2026-11-01T00:00:00Z'))).map(m => m.itemId)).toEqual(['b'])
+  })
 })

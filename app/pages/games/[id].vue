@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import type { Component } from 'vue'
 import { dateKey } from '#shared/utils/streak'
+import FileBoss from '~/components/games/FileBoss.vue'
 import FixIt from '~/components/games/FixIt.vue'
+import SoundHunter from '~/components/games/SoundHunter.vue'
 import WordRecall from '~/components/games/WordRecall.vue'
 
 const GAMES: Record<string, { title: string, component: Component }> = {
   'word-recall': { title: 'Word Recall', component: WordRecall },
   'fix-it': { title: 'Fix It', component: FixIt },
+  'sound-hunter': { title: 'Final Sound Hunter', component: SoundHunter },
+  'file-boss': { title: 'File Boss', component: FileBoss },
 }
 
 const route = useRoute()

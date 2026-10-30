@@ -1,13 +1,10 @@
-import type { Card } from 'ts-fsrs'
-import type { GrammarRow, MistakeRow, MistakeType, Settings } from '../schemas/db'
+import type { GrammarRow, MistakeRow, Settings } from '../schemas/db'
 import type { FixItItem, Pack } from '../schemas/pack'
 import { normalizeAnswer } from './answer'
-import { newFsrsState, nextFsrsState, Rating, type Grade } from './scheduler'
+import { gradePractice, type PracticeItem } from './rounds'
+import { Rating, type Grade } from './scheduler'
 
-export interface FixItCard extends FixItItem {
-  // Unique across packs: "<pack id>:<item id>".
-  itemId: string
-}
+export interface FixItCard extends FixItItem, PracticeItem {}
 
 // Core packs apply at every level; book packs up to her current File.
 export function packsFor(packs: Pack[], settings: Pick<Settings, 'book' | 'file'>): Pack[] {
@@ -55,37 +52,6 @@ export function gradeFixIt(
   result: FixItResult,
   now: Date,
 ): { row: GrammarRow, mistake?: MistakeRow } {
-  const fsrs = nextFsrsState((previous?.fsrs as Card | undefined) ?? newFsrsState(now), fixItGrade(result), now)
   const slipped = result.wrongChoice || result.wrongTaps > 0
-  return {
-    row: { itemId: card.itemId, type: card.type, fsrs, due: fsrs.due },
-    mistake: slipped ? { type: card.type, itemId: card.itemId, at: now, detail: card.text } : undefined,
-  }
-}
-
-// Picks a round: sentences already seen and now due come first, then new ones,
-// starting with the mistake types she gets wrong most often.
-export function pickFixItRound(
-  cards: FixItCard[],
-  states: Map<string, GrammarRow>,
-  mistakeCounts: Partial<Record<MistakeType, number>>,
-  now: Date,
-  size: number,
-  random: () => number = Math.random,
-): FixItCard[] {
-  const dueAt = (card: FixItCard) => states.get(card.itemId)?.due.getTime()
-  const due = cards
-    .filter((card) => {
-      const at = dueAt(card)
-      return at !== undefined && at <= now.getTime()
-    })
-    .sort((a, b) => dueAt(a)! - dueAt(b)!)
-
-  const fresh = cards
-    .filter(card => !states.has(card.itemId))
-    .map(card => ({ card, weight: (mistakeCounts[card.type] ?? 0) + random() }))
-    .sort((a, b) => b.weight - a.weight)
-    .map(({ card }) => card)
-
-  return [...due, ...fresh].slice(0, size)
+  return gradePractice(card, previous, fixItGrade(result), slipped ? card.text : undefined, now)
 }

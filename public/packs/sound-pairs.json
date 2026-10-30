@@ -1,0 +1,258 @@
+{
+  "id": "sound-pairs",
+  "title": "Sound pairs for Khmer speakers",
+  "soundPairs": [
+    {
+      "id": "final-s-want-wants",
+      "a": "want",
+      "b": "wants",
+      "focus": "final-s"
+    },
+    {
+      "id": "final-s-eat-eats",
+      "a": "eat",
+      "b": "eats",
+      "focus": "final-s"
+    },
+    {
+      "id": "final-s-cup-cups",
+      "a": "cup",
+      "b": "cups",
+      "focus": "final-s"
+    },
+    {
+      "id": "final-s-shop-shops",
+      "a": "shop",
+      "b": "shops",
+      "focus": "final-s"
+    },
+    {
+      "id": "final-s-need-needs",
+      "a": "need",
+      "b": "needs",
+      "focus": "final-s"
+    },
+    {
+      "id": "final-s-day-days",
+      "a": "day",
+      "b": "days",
+      "focus": "final-s"
+    },
+    {
+      "id": "final-s-month-months",
+      "a": "month",
+      "b": "months",
+      "focus": "final-s"
+    },
+    {
+      "id": "final-s-desk-desks",
+      "a": "desk",
+      "b": "desks",
+      "focus": "final-s"
+    },
+    {
+      "id": "final-ed-walk-walked",
+      "a": "walk",
+      "b": "walked",
+      "focus": "final-ed"
+    },
+    {
+      "id": "final-ed-play-played",
+      "a": "play",
+      "b": "played",
+      "focus": "final-ed"
+    },
+    {
+      "id": "final-ed-cook-cooked",
+      "a": "cook",
+      "b": "cooked",
+      "focus": "final-ed"
+    },
+    {
+      "id": "final-ed-watch-watched",
+      "a": "watch",
+      "b": "watched",
+      "focus": "final-ed"
+    },
+    {
+      "id": "final-ed-love-loved",
+      "a": "love",
+      "b": "loved",
+      "focus": "final-ed"
+    },
+    {
+      "id": "final-ed-stay-stayed",
+      "a": "stay",
+      "b": "stayed",
+      "focus": "final-ed"
+    },
+    {
+      "id": "final-ed-ask-asked",
+      "a": "ask",
+      "b": "asked",
+      "focus": "final-ed"
+    },
+    {
+      "id": "final-ed-help-helped",
+      "a": "help",
+      "b": "helped",
+      "focus": "final-ed"
+    },
+    {
+      "id": "final-consonant-bag-back",
+      "a": "bag",
+      "b": "back",
+      "focus": "final-consonant"
+    },
+    {
+      "id": "final-consonant-bed-bet",
+      "a": "bed",
+      "b": "bet",
+      "focus": "final-consonant"
+    },
+    {
+      "id": "final-consonant-cab-cap",
+      "a": "cab",
+      "b": "cap",
+      "focus": "final-consonant"
+    },
+    {
+      "id": "final-consonant-ride-right",
+      "a": "ride",
+      "b": "right",
+      "focus": "final-consonant"
+    },
+    {
+      "id": "final-consonant-seed-seat",
+      "a": "seed",
+      "b": "seat",
+      "focus": "final-consonant"
+    },
+    {
+      "id": "final-consonant-rope-robe",
+      "a": "rope",
+      "b": "robe",
+      "focus": "final-consonant"
+    },
+    {
+      "id": "final-consonant-made-mate",
+      "a": "made",
+      "b": "mate",
+      "focus": "final-consonant"
+    },
+    {
+      "id": "final-consonant-dog-dock",
+      "a": "dog",
+      "b": "dock",
+      "focus": "final-consonant"
+    },
+    {
+      "id": "sh-ch-ship-chip",
+      "a": "ship",
+      "b": "chip",
+      "focus": "sh-ch"
+    },
+    {
+      "id": "sh-ch-share-chair",
+      "a": "share",
+      "b": "chair",
+      "focus": "sh-ch"
+    },
+    {
+      "id": "sh-ch-wash-watch",
+      "a": "wash",
+      "b": "watch",
+      "focus": "sh-ch"
+    },
+    {
+      "id": "sh-ch-shoes-choose",
+      "a": "shoes",
+      "b": "choose",
+      "focus": "sh-ch"
+    },
+    {
+      "id": "sh-ch-sheep-cheap",
+      "a": "sheep",
+      "b": "cheap",
+      "focus": "sh-ch"
+    },
+    {
+      "id": "sh-ch-cash-catch",
+      "a": "cash",
+      "b": "catch",
+      "focus": "sh-ch"
+    },
+    {
+      "id": "th-think-sink",
+      "a": "think",
+      "b": "sink",
+      "focus": "th"
+    },
+    {
+      "id": "th-three-tree",
+      "a": "three",
+      "b": "tree",
+      "focus": "th"
+    },
+    {
+      "id": "th-thank-tank",
+      "a": "thank",
+      "b": "tank",
+      "focus": "th"
+    },
+    {
+      "id": "th-they-day",
+      "a": "they",
+      "b": "day",
+      "focus": "th"
+    },
+    {
+      "id": "th-those-doze",
+      "a": "those",
+      "b": "doze",
+      "focus": "th"
+    },
+    {
+      "id": "th-mouth-mouse",
+      "a": "mouth",
+      "b": "mouse",
+      "focus": "th"
+    },
+    {
+      "id": "v-w-vest-west",
+      "a": "vest",
+      "b": "west",
+      "focus": "v-w"
+    },
+    {
+      "id": "v-w-vine-wine",
+      "a": "vine",
+      "b": "wine",
+      "focus": "v-w"
+    },
+    {
+      "id": "v-w-vet-wet",
+      "a": "vet",
+      "b": "wet",
+      "focus": "v-w"
+    },
+    {
+      "id": "v-w-verse-worse",
+      "a": "verse",
+      "b": "worse",
+      "focus": "v-w"
+    },
+    {
+      "id": "v-w-vow-wow",
+      "a": "vow",
+      "b": "wow",
+      "focus": "v-w"
+    },
+    {
+      "id": "v-w-viper-wiper",
+      "a": "viper",
+      "b": "wiper",
+      "focus": "v-w"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { GrammarRow } from '#shared/schemas/db'
-import { correctedText, fixItCards, packsFor, fixItGrade, gradeFixIt, pickFixItRound, wrongIndex, type FixItCard } from '#shared/utils/fixit'
+import { correctedText, fixItCards, fixItGrade, gradeFixIt, packsFor, wrongIndex, type FixItCard } from '#shared/utils/fixit'
+import { pickRound } from '#shared/utils/rounds'
 import { newFsrsState, Rating } from '#shared/utils/scheduler'
 
 const now = new Date('2026-11-02T08:00:00Z')
@@ -53,7 +54,7 @@ describe('grading', () => {
   })
 })
 
-describe('pickFixItRound', () => {
+describe('pickRound', () => {
   const noRandom = () => 0
 
   it('puts due sentences first, oldest first, and skips ones not yet due', () => {
@@ -63,13 +64,13 @@ describe('pickFixItRound', () => {
       [b.itemId, state(b, new Date('2026-10-30T00:00:00Z'))],
       [c.itemId, state(c, new Date('2026-11-09T00:00:00Z'))],
     ])
-    const round = pickFixItRound([a, b, c, card('d')], states, {}, now, 10, noRandom)
+    const round = pickRound([a, b, c, card('d')], states, {}, now, 10, noRandom)
     expect(round.map(x => x.id)).toEqual(['b', 'a', 'd'])
   })
 
   it('brings her weakest mistake types forward among new sentences', () => {
     const cards = [card('t', 'tense'), card('a', 'article'), card('p', 'preposition')]
-    const round = pickFixItRound(cards, new Map(), { article: 5, preposition: 2 }, now, 2, noRandom)
+    const round = pickRound(cards, new Map(), { article: 5, preposition: 2 }, now, 2, noRandom)
     expect(round.map(x => x.id)).toEqual(['a', 'p'])
   })
 })

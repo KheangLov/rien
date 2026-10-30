@@ -23,6 +23,8 @@ export const MISTAKE_TYPES = [
   'article',
   'preposition',
   'final-sound',
+  // Sounds Khmer does not have: sh/ch, th, v/w.
+  'sound',
   'other',
 ] as const
 
@@ -34,6 +36,7 @@ export const MISTAKE_LABELS: Record<MistakeType, string> = {
   'article': 'a, an, the',
   'preposition': 'Prepositions',
   'final-sound': 'Word endings',
+  'sound': 'sh, ch, th, v, w',
   'other': 'Other',
 }
 
@@ -120,6 +123,16 @@ export const sessionSchema = z.object({
   minutes: z.number().min(0),
 })
 
+// One finished File Boss quiz.
+export const bossResultSchema = z.object({
+  id: z.number().int().optional(),
+  book: bookSchema,
+  file: fileNumberSchema,
+  at: z.coerce.date(),
+  score: z.number().int().min(0),
+  total: z.number().int().min(1),
+})
+
 export const settingsSchema = z.object({
   book: bookSchema.default('english-file-pre-intermediate-4e'),
   file: fileNumberSchema.default(7),
@@ -140,6 +153,8 @@ export const backupSchema = z.object({
   sessions: z.array(sessionSchema),
   // Added in week 2; older backups have none.
   grammar: z.array(grammarSchema).default([]),
+  // Added in week 3.
+  bosses: z.array(bossResultSchema).default([]),
   settings: settingsSchema,
 })
 
@@ -152,5 +167,6 @@ export type ReviewRow = z.output<typeof reviewSchema>
 export type MistakeRow = z.output<typeof mistakeSchema>
 export type SessionRow = z.output<typeof sessionSchema>
 export type GrammarRow = z.output<typeof grammarSchema>
+export type BossResult = z.output<typeof bossResultSchema>
 export type Settings = z.output<typeof settingsSchema>
 export type Backup = z.output<typeof backupSchema>

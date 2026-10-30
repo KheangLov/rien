@@ -28,7 +28,7 @@ export default defineNuxtConfig({
   },
 
   squirkle: {
-    addons: [],
+    addons: ['charts', 'calendar'],
     prefix: 'Sq',
     css: true,
     theme: { defaultTheme: 'light' },

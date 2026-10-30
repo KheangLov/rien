@@ -225,3 +225,70 @@ a,
   justify-content: space-between;
   gap: 8px;
 }
+
+/* Final Sound Hunter */
+.rien-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.rien-pair .sq-btn {
+  font-size: 22px;
+}
+
+/* Progress */
+.rien-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.rien-stat {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 0;
+  color: var(--sq-on-surface, #18181b);
+}
+
+.rien-bars {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.rien-bar-row {
+  display: grid;
+  grid-template-columns: minmax(0, 9em) minmax(0, 1fr) 2.5em;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: var(--sq-on-surface, #18181b);
+}
+
+.rien-bar-label {
+  overflow-wrap: anywhere;
+}
+
+.rien-bar-track {
+  height: 10px;
+  border-radius: 4px;
+  background: var(--sq-surface-variant, #f1f1f4);
+  overflow: hidden;
+}
+
+.rien-bar-fill {
+  display: block;
+  height: 100%;
+  min-width: 4px;
+  border-radius: 4px;
+  background: var(--sq-series-1, var(--sq-primary, #4f46e5));
+}
+
+.rien-bar-value {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}

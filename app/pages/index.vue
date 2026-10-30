@@ -10,6 +10,11 @@ const total = useLiveQuery(() => db.countCards(), 0)
 const studyDays = useLiveQuery(() => db.studyDays(), [] as string[])
 const doneToday = useLiveQuery(() => db.gamesOn(todayKey.value), [] as string[], todayKey)
 const settings = useLiveQuery(() => db.getSettings(), null)
+const bosses = useLiveQuery(() => db.bossResults(), [])
+const lastBoss = computed(() => {
+  const s = settings.value
+  return s ? bosses.value.find(b => b.book === s.book && b.file === s.file) : undefined
+})
 
 const streak = computed(() => summarizeStreak(studyDays.value, now.value))
 const weeklyGoal = computed(() => settings.value?.weeklyGoal ?? 5)
@@ -40,6 +45,12 @@ const activities = computed(() => [
     id: 'fix-it',
     title: 'Fix It',
     text: 'Eight sentences, one mistake in each',
+    ready: true,
+  },
+  {
+    id: 'sound-hunter',
+    title: 'Final Sound Hunter',
+    text: 'Ten words read aloud. Pick the one you hear.',
     ready: true,
   },
 ].map(activity => ({ ...activity, done: doneToday.value.includes(activity.id) })))
@@ -98,8 +109,27 @@ const activities = computed(() => [
       </SqCardActions>
     </SqCard>
 
+    <SqCard v-if="settings" variant="tonal">
+      <SqCardText class="rien-stack rien-card-body">
+        <div class="rien-activity-head">
+          <strong>File {{ settings.file }} Boss</strong>
+          <SqChip
+            v-if="lastBoss"
+            :color="lastBoss.score >= lastBoss.total * 0.8 ? 'success' : undefined"
+            size="small"
+            :text="`Best so far ${lastBoss.score} / ${lastBoss.total}`"
+          />
+        </div>
+        <p class="rien-muted">15 questions from your File {{ settings.file }} words and recent mistakes. Try it when you finish the File.</p>
+      </SqCardText>
+      <SqCardActions>
+        <SqBtn to="/games/file-boss" variant="tonal">Start File Boss</SqBtn>
+      </SqCardActions>
+    </SqCard>
+
     <div class="rien-row">
       <SqBtn v-if="total > 0" to="/add-words" variant="tonal">Add words</SqBtn>
+      <SqBtn to="/progress" variant="text">Progress</SqBtn>
       <SqBtn to="/settings" variant="text">Settings</SqBtn>
     </div>
   </div>

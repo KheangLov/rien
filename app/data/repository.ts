@@ -1,4 +1,4 @@
-import type { Backup, CardRow, GrammarRow, MistakeRow, MistakeType, NewWordInput, Settings } from '#shared/schemas/db'
+import type { Backup, Book, BossResult, CardRow, GrammarRow, MistakeRow, MistakeType, NewWordInput, SessionRow, Settings } from '#shared/schemas/db'
 import type { GradedAnswer } from '#shared/utils/scheduler'
 
 // All storage goes through this interface: Dexie on the web now,
@@ -13,6 +13,9 @@ export interface StudyRepository {
   dueCards(now: Date, limit: number): Promise<CardRow[]>
   countDue(now: Date): Promise<number>
   countCards(): Promise<number>
+  // Words past the learning steps (FSRS state Review).
+  countLearned(): Promise<number>
+  cardsInFile(book: Book, file: number): Promise<CardRow[]>
 
   // Stores the rescheduled card, its review and any mistake in one transaction.
   saveAnswer(graded: GradedAnswer): Promise<void>
@@ -20,10 +23,15 @@ export interface StudyRepository {
   grammarStates(): Promise<GrammarRow[]>
   saveGrammarAnswer(row: GrammarRow, mistake?: MistakeRow): Promise<void>
   mistakeCounts(since: Date): Promise<Partial<Record<MistakeType, number>>>
+  mistakesSince(since: Date): Promise<MistakeRow[]>
+
+  saveBossResult(result: BossResult): Promise<void>
+  bossResults(): Promise<BossResult[]>
 
   // Adds a finished activity to that day's session row.
   recordActivity(date: string, game: string, minutes: number): Promise<void>
   studyDays(): Promise<string[]>
+  sessions(): Promise<SessionRow[]>
   gamesOn(date: string): Promise<string[]>
 
   exportAll(now?: Date): Promise<Backup>

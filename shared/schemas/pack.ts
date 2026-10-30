@@ -33,11 +33,35 @@ export const fixItItemSchema = z
     }
   })
 
-export const soundPairSchema = z.object({
-  a: z.string().trim().min(1),
-  b: z.string().trim().min(1),
-  focus: z.string().trim().min(1),
-})
+export const SOUND_FOCUSES = ['final-s', 'final-ed', 'final-consonant', 'sh-ch', 'th', 'v-w'] as const
+
+export const SOUND_FOCUS_LABELS: Record<SoundFocus, string> = {
+  'final-s': '-s endings',
+  'final-ed': '-ed endings',
+  'final-consonant': 'final b/p, d/t, g/k',
+  'sh-ch': 'sh and ch',
+  'th': 'th',
+  'v-w': 'v and w',
+}
+
+export const SOUND_FOCUS_TIPS: Record<SoundFocus, string> = {
+  'final-s': 'Listen for the /s/ or /z/ at the very end.',
+  'final-ed': 'Listen for the /t/, /d/ or /ɪd/ of -ed at the end.',
+  'final-consonant': 'Listen to the last sound: is it voiced (b, d, g) or not (p, t, k)?',
+  'sh-ch': 'sh is a long soft sound; ch starts with a short stop, like t + sh.',
+  'th': 'th is made with the tongue between the teeth.',
+  'v-w': 'v uses the top teeth on the lip; w uses round lips and no teeth.',
+}
+
+// Two words that differ in one sound she may not hear yet.
+export const soundPairSchema = z
+  .object({
+    id: z.string().regex(PACK_ID),
+    a: z.string().trim().min(1),
+    b: z.string().trim().min(1),
+    focus: z.enum(SOUND_FOCUSES),
+  })
+  .refine(pair => normalizeAnswer(pair.a) !== normalizeAnswer(pair.b), { message: 'The two words must differ', path: ['b'] })
 
 // A pack with no book is a core pack and applies at every level.
 export const packSchema = z
@@ -51,12 +75,12 @@ export const packSchema = z
   })
   .superRefine((pack, ctx) => {
     const seen = new Set<string>()
-    pack.fixIt.forEach((item, index) => {
-      if (seen.has(item.id)) {
-        ctx.addIssue({ code: 'custom', path: ['fixIt', index, 'id'], message: `Duplicate id "${item.id}"` })
-      }
-      seen.add(item.id)
-    })
+    const check = (list: 'fixIt' | 'soundPairs', id: string, index: number) => {
+      if (seen.has(id)) ctx.addIssue({ code: 'custom', path: [list, index, 'id'], message: `Duplicate id "${id}"` })
+      seen.add(id)
+    }
+    pack.fixIt.forEach((item, index) => check('fixIt', item.id, index))
+    pack.soundPairs.forEach((pair, index) => check('soundPairs', pair.id, index))
   })
 
 export const packIndexSchema = z.object({
@@ -65,3 +89,5 @@ export const packIndexSchema = z.object({
 
 export type FixItItem = z.output<typeof fixItItemSchema>
 export type Pack = z.output<typeof packSchema>
+export type SoundPair = z.output<typeof soundPairSchema>
+export type SoundFocus = (typeof SOUND_FOCUSES)[number]
