@@ -26,6 +26,17 @@ export const MISTAKE_TYPES = [
   'other',
 ] as const
 
+export const MISTAKE_LABELS: Record<MistakeType, string> = {
+  'tense': 'Verb tense',
+  'third-person-s': 'He, she, it + -s',
+  'plural-s': 'Plurals',
+  'possessive-s': 'Possessive \'s',
+  'article': 'a, an, the',
+  'preposition': 'Prepositions',
+  'final-sound': 'Word endings',
+  'other': 'Other',
+}
+
 export const bookSchema = z.enum(BOOKS)
 export const fileNumberSchema = z.number().int().min(1).max(10)
 export const mistakeTypeSchema = z.enum(MISTAKE_TYPES)
@@ -94,6 +105,15 @@ export const mistakeSchema = z.object({
   detail: z.string().max(200).default(''),
 })
 
+// Spaced-review state for one Fix It sentence from a content pack.
+export const grammarSchema = z.object({
+  itemId: z.string().min(1),
+  type: mistakeTypeSchema,
+  fsrs: fsrsStateSchema,
+  due: z.coerce.date(),
+})
+
+// One row per day she studied.
 export const sessionSchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   games: z.array(z.string()),
@@ -104,7 +124,10 @@ export const settingsSchema = z.object({
   book: bookSchema.default('english-file-pre-intermediate-4e'),
   file: fileNumberSchema.default(7),
   khmerHints: z.boolean().default(true),
+  // Most words in one Word Recall round.
   dailyGoal: z.number().int().min(1).max(200).default(20),
+  // Study days per week.
+  weeklyGoal: z.number().int().min(1).max(7).default(5),
 })
 
 export const backupSchema = z.object({
@@ -115,6 +138,8 @@ export const backupSchema = z.object({
   reviews: z.array(reviewSchema),
   mistakes: z.array(mistakeSchema),
   sessions: z.array(sessionSchema),
+  // Added in week 2; older backups have none.
+  grammar: z.array(grammarSchema).default([]),
   settings: settingsSchema,
 })
 
@@ -126,5 +151,6 @@ export type CardRow = z.output<typeof cardSchema>
 export type ReviewRow = z.output<typeof reviewSchema>
 export type MistakeRow = z.output<typeof mistakeSchema>
 export type SessionRow = z.output<typeof sessionSchema>
+export type GrammarRow = z.output<typeof grammarSchema>
 export type Settings = z.output<typeof settingsSchema>
 export type Backup = z.output<typeof backupSchema>

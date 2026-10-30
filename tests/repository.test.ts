@@ -1,5 +1,7 @@
 import 'fake-indexeddb/auto'
+import Dexie from 'dexie'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { gradeFixIt, type FixItCard } from '#shared/utils/fixit'
 import { gradeAnswer } from '#shared/utils/scheduler'
 import { createDexieRepository, RienDexie } from '~/data/dexie'
 import { DuplicateWordError, type StudyRepository } from '~/data/repository'
@@ -81,5 +83,54 @@ describe('Dexie repository', () => {
     await repo.deleteCard(card.id)
     expect(await repo.countCards()).toBe(0)
     expect(await db.reviews.count()).toBe(0)
+  })
+
+  it('stores Fix It progress and counts mistakes by type', async () => {
+    const item: FixItCard = { itemId: 'core:a', id: 'a', text: 'She go home.', wrong: 'go', fix: 'went', distractors: ['goes'], type: 'tense', explain: '' }
+    const first = gradeFixIt(item, undefined, { wrongTaps: 1, wrongChoice: false }, now)
+    await repo.saveGrammarAnswer(first.row, first.mistake)
+    const [row] = await repo.grammarStates()
+    expect(row!.itemId).toBe('core:a')
+    expect(await repo.mistakeCounts(new Date('2026-11-01T00:00:00Z'))).toEqual({ tense: 1 })
+    expect(await repo.mistakeCounts(new Date('2026-11-03T00:00:00Z'))).toEqual({})
+  })
+
+  it('adds activities to one session row per day', async () => {
+    await repo.recordActivity('2026-11-02', 'word-recall', 4.26)
+    await repo.recordActivity('2026-11-02', 'fix-it', 3)
+    await repo.recordActivity('2026-11-03', 'fix-it', 2)
+    expect(await repo.gamesOn('2026-11-02')).toEqual(['word-recall', 'fix-it'])
+    expect((await db.sessions.get('2026-11-02'))!.minutes).toBe(7.3)
+    expect((await repo.studyDays()).sort()).toEqual(['2026-11-02', '2026-11-03'])
+  })
+
+  it('restores a week-1 backup that has no grammar rows', async () => {
+    const card = await repo.addWord(word, now)
+    const backup = JSON.parse(JSON.stringify(await repo.exportAll(now)))
+    delete backup.grammar
+    await repo.importAll(backup)
+    expect((await repo.recentCards(1))[0]!.id).toBe(card.id)
+    expect(await repo.grammarStates()).toEqual([])
+  })
+
+  it('upgrades a week-1 database without losing words', async () => {
+    const name = `test-${crypto.randomUUID()}`
+    const old = new Dexie(name)
+    old.version(1).stores({
+      cards: 'id, due, type, answerKey, createdAt, [book+file]',
+      reviews: '++id, cardId, at',
+      mistakes: '++id, type, itemId, at',
+      sessions: 'date',
+      settings: 'key',
+    })
+    const card = await repo.addWord(word, now)
+    await old.table('cards').add(card)
+    old.close()
+
+    const upgraded = new RienDexie(name)
+    const upgradedRepo = createDexieRepository(upgraded)
+    expect(await upgradedRepo.countCards()).toBe(1)
+    expect(await upgradedRepo.grammarStates()).toEqual([])
+    await upgraded.delete()
   })
 })

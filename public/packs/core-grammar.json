@@ -1,0 +1,54 @@
+{
+  "id": "core-grammar",
+  "title": "Core grammar for Khmer speakers",
+  "fixIt": [
+    { "id": "tense-yesterday-go", "text": "She go to the market yesterday.", "wrong": "go", "fix": "went", "distractors": ["goes", "going"], "type": "tense", "explain": "Yesterday is finished time, so use the past simple: went." },
+    { "id": "tense-last-week-buy", "text": "We buy a new fan last week.", "wrong": "buy", "fix": "bought", "distractors": ["buys", "buying"], "type": "tense", "explain": "Last week is finished time: bought." },
+    { "id": "tense-now-cooking", "text": "Be quiet, my mother cooking dinner now.", "wrong": "cooking", "fix": "is cooking", "distractors": ["cook", "cooked"], "type": "tense", "explain": "Now needs the present continuous: is + -ing." },
+    { "id": "tense-every-day-going", "text": "He going to school by bike every day.", "wrong": "going", "fix": "goes", "distractors": ["go", "is go"], "type": "tense", "explain": "Every day is a habit, so use the present simple: goes." },
+    { "id": "tense-ago-see", "text": "I see that film two weeks ago.", "wrong": "see", "fix": "saw", "distractors": ["seen", "sees"], "type": "tense", "explain": "Ago tells you it is the past: saw." },
+    { "id": "tense-past-continuous", "text": "When I arrived, they eat dinner.", "wrong": "eat", "fix": "were eating", "distractors": ["eats", "eaten"], "type": "tense", "explain": "An action in progress in the past: were eating." },
+    { "id": "tense-going-to-rain", "text": "Look at the clouds. It go to rain.", "wrong": "go", "fix": "is going", "distractors": ["goes", "went"], "type": "tense", "explain": "A prediction from what you can see: be going to." },
+    { "id": "tense-did-went", "text": "Did you went to the party on Saturday?", "wrong": "went", "fix": "go", "distractors": ["going", "goes"], "type": "tense", "explain": "After did, use the base form: Did you go?" },
+    { "id": "tense-didnt-saw", "text": "I didn't saw him at work today.", "wrong": "saw", "fix": "see", "distractors": ["seen", "sees"], "type": "tense", "explain": "After didn't, use the base form: didn't see." },
+    { "id": "tense-never-eat", "text": "I have never eat durian.", "wrong": "eat", "fix": "eaten", "distractors": ["ate", "eating"], "type": "tense", "explain": "Present perfect is have + past participle: have eaten." },
+    { "id": "tense-since-lives", "text": "She lives here since 2020.", "wrong": "lives", "fix": "has lived", "distractors": ["is living", "lived"], "type": "tense", "explain": "With since and a starting point, use the present perfect: has lived." },
+    { "id": "tense-was-born", "text": "My brother born in 2005.", "wrong": "born", "fix": "was born", "distractors": ["is born", "borned"], "type": "tense", "explain": "Birth is in the past: was born." },
+
+    { "id": "s3-work", "text": "My father work in a bank.", "wrong": "work", "fix": "works", "distractors": ["working", "to work"], "type": "third-person-s", "explain": "He, she or it in the present simple: add -s. My father works." },
+    { "id": "s3-like", "text": "She like spicy food.", "wrong": "like", "fix": "likes", "distractors": ["liking", "to like"], "type": "third-person-s", "explain": "She likes: add -s after he, she or it." },
+    { "id": "s3-dont", "text": "He don't speak French.", "wrong": "don't", "fix": "doesn't", "distractors": ["not", "isn't"], "type": "third-person-s", "explain": "He, she or it takes doesn't, not don't." },
+    { "id": "s3-have", "text": "My sister have two children.", "wrong": "have", "fix": "has", "distractors": ["haves", "having"], "type": "third-person-s", "explain": "He, she or it: has, not have." },
+    { "id": "s3-does-likes", "text": "Does she likes coffee?", "wrong": "likes", "fix": "like", "distractors": ["liking", "liked"], "type": "third-person-s", "explain": "The -s moves to does, so the verb has no -s: Does she like?" },
+    { "id": "s3-watch", "text": "Dara watch the news every evening.", "wrong": "watch", "fix": "watches", "distractors": ["watchs", "watching"], "type": "third-person-s", "explain": "Verbs ending in -ch add -es: watches." },
+    { "id": "s3-study", "text": "Sophea study English at ACE.", "wrong": "study", "fix": "studies", "distractors": ["studys", "studying"], "type": "third-person-s", "explain": "Consonant + y becomes -ies: studies." },
+
+    { "id": "plural-brother", "text": "I have two brother and one sister.", "wrong": "brother", "fix": "brothers", "distractors": ["brother's", "brotheres"], "type": "plural-s", "explain": "Two means more than one, so add -s: brothers." },
+    { "id": "plural-book", "text": "There are many book on the table.", "wrong": "book", "fix": "books", "distractors": ["book's", "bookes"], "type": "plural-s", "explain": "Many + plural noun: many books." },
+    { "id": "plural-childs", "text": "Their three childs go to the same school.", "wrong": "childs", "fix": "children", "distractors": ["child", "childrens"], "type": "plural-s", "explain": "Child has an irregular plural: children." },
+    { "id": "plural-peoples", "text": "How many peoples came to the wedding?", "wrong": "peoples", "fix": "people", "distractors": ["person", "peoples'"], "type": "plural-s", "explain": "People is already plural." },
+    { "id": "plural-advices", "text": "She gave me some good advices.", "wrong": "advices", "fix": "advice", "distractors": ["advise", "an advice"], "type": "plural-s", "explain": "Advice is uncountable, so it never takes -s." },
+    { "id": "plural-one-of-city", "text": "Phnom Penh is one of the biggest city in Asia.", "wrong": "city", "fix": "cities", "distractors": ["citys", "city's"], "type": "plural-s", "explain": "One of the + plural noun: one of the biggest cities." },
+
+    { "id": "poss-friend-car", "text": "This is my friend car.", "wrong": "friend", "fix": "friend's", "distractors": ["friends", "of friend"], "type": "possessive-s", "explain": "To show who owns something, add 's: my friend's car." },
+    { "id": "poss-teacher-name", "text": "What is your teacher name?", "wrong": "teacher", "fix": "teacher's", "distractors": ["teachers", "teacher is"], "type": "possessive-s", "explain": "The name belongs to the teacher: your teacher's name." },
+    { "id": "poss-sister-bag", "text": "My sister bag is red.", "wrong": "sister", "fix": "sister's", "distractors": ["sisters", "sister of"], "type": "possessive-s", "explain": "The bag belongs to my sister: my sister's bag." },
+
+    { "id": "art-job", "text": "My mother is teacher.", "wrong": "teacher", "fix": "a teacher", "distractors": ["teachers", "the teachers"], "type": "article", "explain": "Jobs need a or an: She is a teacher." },
+    { "id": "art-an-apple", "text": "I eat a apple every morning.", "wrong": "a", "fix": "an", "distractors": ["any", "much"], "type": "article", "explain": "Use an before a vowel sound: an apple." },
+    { "id": "art-the-sun", "text": "Sun rises in the east.", "wrong": "Sun", "fix": "The sun", "distractors": ["A sun", "Suns"], "type": "article", "explain": "There is only one sun, so use the: the sun." },
+    { "id": "art-have-car", "text": "Do you have car?", "wrong": "car", "fix": "a car", "distractors": ["car's", "an car"], "type": "article", "explain": "One car you don't know yet: a car." },
+    { "id": "art-an-hour", "text": "We waited for a hour.", "wrong": "a", "fix": "an", "distractors": ["much", "few"], "type": "article", "explain": "The h in hour is silent, so it starts with a vowel sound: an hour." },
+    { "id": "art-a-university", "text": "She goes to an university in Siem Reap.", "wrong": "an", "fix": "a", "distractors": ["much", "any"], "type": "article", "explain": "University starts with a \"you\" sound: a university." },
+    { "id": "art-the-best", "text": "He is best student in our class.", "wrong": "best", "fix": "the best", "distractors": ["a best", "most best"], "type": "article", "explain": "Superlatives need the: the best." },
+
+    { "id": "prep-on-monday", "text": "I have class in Monday.", "wrong": "in", "fix": "on", "distractors": ["at", "to"], "type": "preposition", "explain": "Days take on: on Monday." },
+    { "id": "prep-at-time", "text": "The film starts on 7 o'clock.", "wrong": "on", "fix": "at", "distractors": ["in", "to"], "type": "preposition", "explain": "Clock times take at: at 7 o'clock." },
+    { "id": "prep-in-year", "text": "I came to Phnom Penh at 2019.", "wrong": "at", "fix": "in", "distractors": ["on", "to"], "type": "preposition", "explain": "Years take in: in 2019." },
+    { "id": "prep-go-to", "text": "We went at the beach on Sunday.", "wrong": "at", "fix": "to", "distractors": ["in", "on"], "type": "preposition", "explain": "Movement towards a place: go to." },
+    { "id": "prep-listen-to", "text": "I like listening music.", "wrong": "listening", "fix": "listening to", "distractors": ["listen", "listens"], "type": "preposition", "explain": "You listen to something: listening to music." },
+    { "id": "prep-married-to", "text": "She is married with a doctor.", "wrong": "with", "fix": "to", "distractors": ["for", "by"], "type": "preposition", "explain": "You are married to someone." },
+    { "id": "prep-depends-on", "text": "It depends of the weather.", "wrong": "of", "fix": "on", "distractors": ["from", "about"], "type": "preposition", "explain": "It depends on something." },
+    { "id": "prep-arrive-at", "text": "We arrived to the airport at 6.", "wrong": "to", "fix": "at", "distractors": ["on", "for"], "type": "preposition", "explain": "Arrive at a building or place, arrive in a city. Never arrive to." }
+  ]
+}

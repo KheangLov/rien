@@ -6,6 +6,8 @@ const { $pwa } = useNuxtApp()
 
 const bookItems = BOOKS.map(value => ({ title: BOOK_LABELS[value], value }))
 const fileItems = FILE_NUMBERS.map(value => ({ title: `File ${value}`, value }))
+const weeklyGoalItems = [3, 4, 5, 6, 7].map(value => ({ title: `${value} days a week`, value }))
+const roundSizeItems = [10, 15, 20, 30].map(value => ({ title: `${value} words`, value }))
 
 const settings = ref<Settings | null>(null)
 const message = ref<{ type: 'success' | 'error', text: string } | null>(null)
@@ -85,6 +87,18 @@ async function importBackup(event: Event) {
           :items="fileItems"
           label="Current File"
           @update:model-value="update({ file: $event })"
+        />
+        <SqSelect
+          :model-value="settings.weeklyGoal"
+          :items="weeklyGoalItems"
+          label="Weekly goal"
+          @update:model-value="update({ weeklyGoal: $event })"
+        />
+        <SqSelect
+          :model-value="settings.dailyGoal"
+          :items="roundSizeItems"
+          label="Words per Word Recall round"
+          @update:model-value="update({ dailyGoal: $event })"
         />
         <SqSwitch
           :model-value="settings.khmerHints"

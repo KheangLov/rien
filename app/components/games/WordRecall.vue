@@ -4,10 +4,10 @@ import { blankExample, checkAnswer, type Verdict } from '#shared/utils/answer'
 import { gradeAnswer } from '#shared/utils/scheduler'
 import { vPlainInput } from '~/directives/plainInput'
 
-// Cards per session; FSRS decides which ones are due.
-const SESSION_SIZE = 20
 // A missed card comes back at most this many more times in one session.
 const MAX_RETRIES = 2
+
+const emit = defineEmits<{ done: [summary: { clean: number, total: number }] }>()
 
 const db = useDb()
 const { supported: canSpeak, speak } = useSpeech()
@@ -35,7 +35,7 @@ const showKhmer = computed(() =>
 onMounted(async () => {
   const [settings, due] = await Promise.all([
     db.getSettings(),
-    db.dueCards(new Date(), SESSION_SIZE),
+    db.getSettings().then(s => db.dueCards(new Date(), s.dailyGoal)),
   ])
   khmerHints.value = settings.khmerHints
   queue.value = due
@@ -77,7 +77,8 @@ async function submit(giveUp = false) {
 
 function next() {
   position.value++
-  if (!finished.value) startCard()
+  if (finished.value) emit('done', { clean: score.right, total: score.right + score.missed.size })
+  else startCard()
 }
 
 const feedback = computed(() => {

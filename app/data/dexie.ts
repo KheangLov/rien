@@ -5,7 +5,9 @@ import {
   newWordSchema,
   settingsSchema,
   type CardRow,
+  type GrammarRow,
   type MistakeRow,
+  type MistakeType,
   type ReviewRow,
   type SessionRow,
   type Settings,
@@ -22,6 +24,7 @@ export class RienDexie extends Dexie {
   mistakes!: EntityTable<MistakeRow, 'id'>
   sessions!: EntityTable<SessionRow, 'date'>
   settings!: EntityTable<SettingsRow, 'key'>
+  grammar!: EntityTable<GrammarRow, 'itemId'>
 
   constructor(name = 'rien') {
     super(name)
@@ -31,6 +34,9 @@ export class RienDexie extends Dexie {
       mistakes: '++id, type, itemId, at',
       sessions: 'date',
       settings: 'key',
+    })
+    this.version(2).stores({
+      grammar: 'itemId, due, type',
     })
   }
 }
@@ -102,25 +108,66 @@ export function createDexieRepository(db = new RienDexie()): StudyRepository {
       })
     },
 
+    grammarStates() {
+      return db.grammar.toArray()
+    },
+
+    async saveGrammarAnswer(row, mistake) {
+      await db.transaction('rw', db.grammar, db.mistakes, async () => {
+        await db.grammar.put(row)
+        if (mistake) await db.mistakes.add(mistake)
+      })
+    },
+
+    async mistakeCounts(since) {
+      const counts: Partial<Record<MistakeType, number>> = {}
+      await db.mistakes.where('at').aboveOrEqual(since).each((m) => {
+        counts[m.type] = (counts[m.type] ?? 0) + 1
+      })
+      return counts
+    },
+
+    async recordActivity(date, game, minutes) {
+      await db.transaction('rw', db.sessions, async () => {
+        const row = (await db.sessions.get(date)) ?? { date, games: [], minutes: 0 }
+        await db.sessions.put({
+          date,
+          games: [...row.games, game],
+          minutes: Math.round((row.minutes + Math.max(0, minutes)) * 10) / 10,
+        })
+      })
+    },
+
+    async studyDays() {
+      const rows = await db.sessions.toArray()
+      return rows.filter(row => row.games.length > 0).map(row => row.date)
+    },
+
+    async gamesOn(date) {
+      return (await db.sessions.get(date))?.games ?? []
+    },
+
     async exportAll(now = new Date()) {
-      const [cards, reviews, mistakes, sessions, settings] = await Promise.all([
+      const [cards, reviews, mistakes, sessions, grammar, settings] = await Promise.all([
         db.cards.toArray(),
         db.reviews.toArray(),
         db.mistakes.toArray(),
         db.sessions.toArray(),
+        db.grammar.toArray(),
         getSettings(),
       ])
-      return { app: 'rien', version: 1, exportedAt: now, cards, reviews, mistakes, sessions, settings }
+      return { app: 'rien', version: 1, exportedAt: now, cards, reviews, mistakes, sessions, grammar, settings }
     },
 
     async importAll(raw) {
       const backup = backupSchema.parse(raw)
-      await db.transaction('rw', [db.cards, db.reviews, db.mistakes, db.sessions, db.settings], async () => {
-        await Promise.all([db.cards.clear(), db.reviews.clear(), db.mistakes.clear(), db.sessions.clear()])
+      await db.transaction('rw', [db.cards, db.reviews, db.mistakes, db.sessions, db.grammar, db.settings], async () => {
+        await Promise.all([db.cards.clear(), db.reviews.clear(), db.mistakes.clear(), db.sessions.clear(), db.grammar.clear()])
         await db.cards.bulkAdd(backup.cards)
         await db.reviews.bulkAdd(backup.reviews)
         await db.mistakes.bulkAdd(backup.mistakes)
         await db.sessions.bulkAdd(backup.sessions)
+        await db.grammar.bulkAdd(backup.grammar)
         await db.settings.put({ key: 'settings', ...backup.settings })
       })
       return { cards: backup.cards.length }

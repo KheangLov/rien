@@ -1,4 +1,4 @@
-import type { Backup, CardRow, NewWordInput, Settings } from '#shared/schemas/db'
+import type { Backup, CardRow, GrammarRow, MistakeRow, MistakeType, NewWordInput, Settings } from '#shared/schemas/db'
 import type { GradedAnswer } from '#shared/utils/scheduler'
 
 // All storage goes through this interface: Dexie on the web now,
@@ -16,6 +16,15 @@ export interface StudyRepository {
 
   // Stores the rescheduled card, its review and any mistake in one transaction.
   saveAnswer(graded: GradedAnswer): Promise<void>
+
+  grammarStates(): Promise<GrammarRow[]>
+  saveGrammarAnswer(row: GrammarRow, mistake?: MistakeRow): Promise<void>
+  mistakeCounts(since: Date): Promise<Partial<Record<MistakeType, number>>>
+
+  // Adds a finished activity to that day's session row.
+  recordActivity(date: string, game: string, minutes: number): Promise<void>
+  studyDays(): Promise<string[]>
+  gamesOn(date: string): Promise<string[]>
 
   exportAll(now?: Date): Promise<Backup>
   // Replaces everything on this device with the backup.

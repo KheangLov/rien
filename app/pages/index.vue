@@ -1,12 +1,48 @@
 <script setup lang="ts">
+import { dateKey, summarizeStreak } from '#shared/utils/streak'
+
 const db = useDb()
 const now = useClock()
+const todayKey = computed(() => dateKey(now.value))
 
 const due = useLiveQuery(() => db.countDue(now.value), 0, now)
 const total = useLiveQuery(() => db.countCards(), 0)
+const studyDays = useLiveQuery(() => db.studyDays(), [] as string[])
+const doneToday = useLiveQuery(() => db.gamesOn(todayKey.value), [] as string[], todayKey)
+const settings = useLiveQuery(() => db.getSettings(), null)
+
+const streak = computed(() => summarizeStreak(studyDays.value, now.value))
+const weeklyGoal = computed(() => settings.value?.weeklyGoal ?? 5)
 
 const today = computed(() =>
   now.value.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }))
+
+const streakNote = computed(() => {
+  const s = streak.value
+  if (s.current === 0) return 'Finish one activity to start your streak.'
+  if (!s.studiedToday) return 'Finish one activity today to keep it going.'
+  if (s.restUsedThisWeek) return 'Rest day used this week.'
+  return 'One missed day a week won’t break it.'
+})
+
+const activities = computed(() => [
+  {
+    id: 'word-recall',
+    title: 'Word Recall',
+    text: total.value === 0
+      ? 'Add words from class first.'
+      : due.value === 0
+        ? 'No words due right now.'
+        : `${due.value} ${due.value === 1 ? 'word' : 'words'} to review`,
+    ready: due.value > 0,
+  },
+  {
+    id: 'fix-it',
+    title: 'Fix It',
+    text: 'Eight sentences, one mistake in each',
+    ready: true,
+  },
+].map(activity => ({ ...activity, done: doneToday.value.includes(activity.id) })))
 </script>
 
 <template>
@@ -16,28 +52,49 @@ const today = computed(() =>
       <p class="rien-muted">{{ today }}</p>
     </header>
 
-    <SqEmptyState
-      v-if="total === 0"
-      title="Start with today's class"
-      text="Add the new words from your lesson. Rien will bring each one back just before you forget it."
-    >
-      <SqBtn to="/add-words" color="primary" size="large">Add words</SqBtn>
-    </SqEmptyState>
+    <SqCard variant="tonal">
+      <SqCardText class="rien-stack rien-card-body">
+        <div>
+          <p class="rien-big">{{ streak.current }}</p>
+          <p class="rien-muted">{{ streak.current === 1 ? 'day' : 'days' }} in a row. {{ streakNote }}</p>
+        </div>
+        <div class="rien-week" role="list" aria-label="This week">
+          <div
+            v-for="day in streak.week"
+            :key="day.key"
+            role="listitem"
+            class="rien-day"
+            :class="{ 'is-studied': day.studied, 'is-today': day.today, 'is-future': day.future }"
+            :aria-label="`${day.key}${day.studied ? ', studied' : ''}${day.today ? ', today' : ''}`"
+          >
+            <span class="rien-dot" />
+            <span>{{ day.label }}</span>
+          </div>
+        </div>
+        <p class="rien-muted">
+          {{ streak.weekCount }} of {{ weeklyGoal }} days this week<template v-if="streak.weekCount >= weeklyGoal"> · goal reached</template>
+        </p>
+      </SqCardText>
+    </SqCard>
 
-    <SqCard v-else variant="tonal">
-      <SqCardText>
-        <p class="rien-big">{{ due }}</p>
-        <p class="rien-muted">{{ due === 1 ? 'word' : 'words' }} to review · {{ total }} saved</p>
+    <SqCard v-for="activity in activities" :key="activity.id" variant="outlined">
+      <SqCardText class="rien-stack rien-card-body">
+        <div class="rien-activity-head">
+          <strong>{{ activity.title }}</strong>
+          <SqChip v-if="activity.done" color="success" size="small" text="Done today" />
+        </div>
+        <p class="rien-muted">{{ activity.text }}</p>
       </SqCardText>
       <SqCardActions>
         <SqBtn
-          to="/games/word-recall"
-          color="primary"
-          size="large"
-          :disabled="due === 0"
+          v-if="activity.ready"
+          :to="`/games/${activity.id}`"
+          :color="activity.done ? undefined : 'primary'"
+          :variant="activity.done ? 'tonal' : undefined"
         >
-          {{ due === 0 ? 'All done for now' : 'Start Word Recall' }}
+          {{ activity.done ? 'Play again' : 'Start' }}
         </SqBtn>
+        <SqBtn v-else-if="activity.id === 'word-recall'" to="/add-words" variant="tonal">Add words</SqBtn>
       </SqCardActions>
     </SqCard>
 
