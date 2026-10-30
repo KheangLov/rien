@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#0f766e"/>
+  <text x="256" y="300" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="190" fill="#ffffff">Rien</text>
+  <rect x="136" y="350" width="240" height="18" rx="9" fill="#5eead4"/>
+</svg>

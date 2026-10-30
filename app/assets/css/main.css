@@ -1,0 +1,57 @@
+/* iPhone page-shell rules (see plan "iPhone app plan"):
+   safe-area insets need viewport-fit=cover, use 100dvh not 100vh,
+   keep touch targets at least 44px. */
+:root {
+  --rien-font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Khmer Sangam MN', 'Noto Sans Khmer', sans-serif;
+  --rien-tap: 44px;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: var(--rien-font);
+  -webkit-text-size-adjust: 100%;
+}
+
+.rien-shell {
+  min-height: 100dvh;
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  box-sizing: border-box;
+}
+
+.rien-page {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 16px;
+  display: grid;
+  gap: 16px;
+}
+
+.rien-khmer {
+  font-family: 'Khmer Sangam MN', 'Noto Sans Khmer', var(--rien-font);
+}
+
+button,
+a,
+[role='button'] {
+  min-height: var(--rien-tap);
+}
+
+.rien-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.rien-log {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 13px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}

@@ -1,0 +1,16 @@
+# Supply-chain baseline (see plan: "Node version and security baseline")
+engineStrict: true
+# Wait 7 days (in minutes) before installing newly published versions.
+minimumReleaseAge: 10080
+minimumReleaseAgeExclude:
+  # Our own library: we publish it, so it skips the wait.
+  - '@squirkle-ui/*'
+  # TEMPORARY (added 2026-10-31): urgent fix for GHSA-86w9-cpqp-85rv.
+  # Remove after 2026-11-03, once 1.4.1 is past the 7-day wait.
+  - node-forge
+# Install scripts are blocked by default; allow only packages that need them.
+allowBuilds:
+  esbuild: true
+  '@parcel/watcher': true
+overrides:
+  node-forge: '>=1.4.1'
