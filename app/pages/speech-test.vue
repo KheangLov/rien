@@ -119,9 +119,9 @@ async function copyReport() {
 </script>
 
 <template>
-  <main class="rien-page">
+  <div class="rien-page">
     <div class="rien-row">
-      <SqBtn to="/" variant="text">← Back</SqBtn>
+      <SqBtn to="/settings" variant="text">← Settings</SqBtn>
     </div>
 
     <SqCard title="Speech test" subtitle="Run once in Safari and once from the Home Screen">
@@ -152,5 +152,5 @@ async function copyReport() {
         <SqBtn variant="tonal" @click="copyReport">Copy report</SqBtn>
       </SqCardActions>
     </SqCard>
-  </main>
+  </div>
 </template>

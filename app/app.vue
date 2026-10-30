@@ -4,7 +4,9 @@ const { $pwa } = useNuxtApp()
 
 <template>
   <SqApp class="rien-shell">
-    <NuxtPage />
+    <SqMain>
+      <NuxtPage />
+    </SqMain>
     <SqSnackbar
       v-if="$pwa?.needRefresh"
       :model-value="true"

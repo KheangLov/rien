@@ -11,8 +11,17 @@ pnpm install       # pnpm 11; install scripts and fresh releases are restricted 
 pnpm dev           # http://localhost:3000
 pnpm generate      # static build in .output/public
 pnpm preview       # serve the static build
+pnpm test          # Vitest: scheduler, answer checking, Dexie repository
+pnpm typecheck     # vue-tsc via nuxt typecheck
 pnpm audit         # fails on high-severity advisories
 ```
+
+## Layout
+
+- `shared/schemas/db.ts`: Zod schemas for every stored row and the JSON backup.
+- `shared/utils/scheduler.ts`: the only file that touches ts-fsrs (FSRS-6 defaults).
+- `shared/utils/answer.ts`: answer checking. A dropped `-s`/`-ed` is always wrong and logged as a `final-sound` mistake, never forgiven as a typo.
+- `app/data/repository.ts`: storage interface. `app/data/dexie.ts` implements it for the web; the native app will add SQLite.
 
 ## Day 1 phone check
 

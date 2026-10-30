@@ -1,56 +1,49 @@
 <script setup lang="ts">
-const { $pwa } = useNuxtApp()
+const db = useDb()
+const now = useClock()
 
-const online = ref(true)
-const standalone = ref(false)
+const due = useLiveQuery(() => db.countDue(now.value), 0, now)
+const total = useLiveQuery(() => db.countCards(), 0)
 
-function refreshStatus() {
-  online.value = navigator.onLine
-  standalone.value =
-    window.matchMedia('(display-mode: standalone)').matches ||
-    (navigator as Navigator & { standalone?: boolean }).standalone === true
-}
-
-onMounted(() => {
-  refreshStatus()
-  window.addEventListener('online', refreshStatus)
-  window.addEventListener('offline', refreshStatus)
-})
-
-onBeforeUnmount(() => {
-  window.removeEventListener('online', refreshStatus)
-  window.removeEventListener('offline', refreshStatus)
-})
+const today = computed(() =>
+  now.value.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }))
 </script>
 
 <template>
-  <main class="rien-page">
-    <SqCard variant="tonal">
-      <SqCardTitle>Rien · <span class="rien-khmer">រៀន</span></SqCardTitle>
-      <SqCardText>
-        Daily English practice, ten to fifteen minutes at a time. The games arrive in week 1.
-      </SqCardText>
-    </SqCard>
+  <div class="rien-page">
+    <header class="rien-header">
+      <h1 class="rien-title">Rien · <span class="rien-khmer">រៀន</span></h1>
+      <p class="rien-muted">{{ today }}</p>
+    </header>
 
-    <SqCard title="Day 1 checks" variant="outlined">
+    <SqEmptyState
+      v-if="total === 0"
+      title="Start with today's class"
+      text="Add the new words from your lesson. Rien will bring each one back just before you forget it."
+    >
+      <SqBtn to="/add-words" color="primary" size="large">Add words</SqBtn>
+    </SqEmptyState>
+
+    <SqCard v-else variant="tonal">
       <SqCardText>
-        <div class="rien-row">
-          <SqChip :color="online ? 'success' : 'warning'" :text="online ? 'Online' : 'Offline'" />
-          <SqChip :color="standalone ? 'success' : 'info'" :text="standalone ? 'Opened from Home Screen' : 'Opened in browser'" />
-          <SqChip
-            :color="$pwa?.offlineReady ? 'success' : 'info'"
-            :text="$pwa?.offlineReady ? 'Ready offline' : 'Preparing offline copy'"
-          />
-        </div>
+        <p class="rien-big">{{ due }}</p>
+        <p class="rien-muted">{{ due === 1 ? 'word' : 'words' }} to review · {{ total }} saved</p>
       </SqCardText>
       <SqCardActions>
-        <SqBtn v-if="$pwa?.showInstallPrompt" color="primary" @click="$pwa.install()">Install</SqBtn>
-        <SqBtn to="/speech-test" variant="tonal">Speech test</SqBtn>
+        <SqBtn
+          to="/games/word-recall"
+          color="primary"
+          size="large"
+          :disabled="due === 0"
+        >
+          {{ due === 0 ? 'All done for now' : 'Start Word Recall' }}
+        </SqBtn>
       </SqCardActions>
     </SqCard>
 
-    <SqAlert v-if="!standalone" type="info" variant="tonal">
-      On iPhone: tap Share, then “Add to Home Screen”. Open it once online, then turn on Airplane Mode and open it again.
-    </SqAlert>
-  </main>
+    <div class="rien-row">
+      <SqBtn v-if="total > 0" to="/add-words" variant="tonal">Add words</SqBtn>
+      <SqBtn to="/settings" variant="text">Settings</SqBtn>
+    </div>
+  </div>
 </template>
