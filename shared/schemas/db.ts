@@ -92,6 +92,8 @@ export const cardSchema = z
     // Copy of fsrs.due so Dexie can index it.
     due: z.coerce.date(),
     createdAt: z.coerce.date(),
+    // First review, for the daily cap on new words.
+    introducedAt: z.coerce.date().optional(),
   })
   .refine(hasCue, cueMessage)
 
@@ -152,6 +154,8 @@ export const settingsSchema = z.object({
   khmerHints: z.boolean().default(true),
   // Most words in one Word Recall round.
   dailyGoal: z.number().int().min(1).max(200).default(20),
+  // New (never reviewed) words a day; reviews are never capped.
+  newPerDay: z.number().int().min(0).max(50).default(10),
   // Study days per week.
   weeklyGoal: z.number().int().min(1).max(7).default(5),
   // Daily notification, native app only.

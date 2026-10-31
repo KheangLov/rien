@@ -1,28 +1,12 @@
 <script setup lang="ts">
-import type { Component } from 'vue'
-import { dateKey } from '#shared/utils/streak'
-import CoupleTalk from '~/components/games/CoupleTalk.vue'
-import FileBoss from '~/components/games/FileBoss.vue'
-import FixIt from '~/components/games/FixIt.vue'
-import GapRadio from '~/components/games/GapRadio.vue'
-import SayIt from '~/components/games/SayIt.vue'
-import SentenceBuilder from '~/components/games/SentenceBuilder.vue'
-import SoundHunter from '~/components/games/SoundHunter.vue'
-import WordRecall from '~/components/games/WordRecall.vue'
-
-const GAMES: Record<string, { title: string, component: Component }> = {
-  'word-recall': { title: 'Word Recall', component: WordRecall },
-  'fix-it': { title: 'Fix It', component: FixIt },
-  'sound-hunter': { title: 'Final Sound Hunter', component: SoundHunter },
-  'file-boss': { title: 'File Boss', component: FileBoss },
-  'couple-talk': { title: 'Couple Talk', component: CoupleTalk },
-  'say-it': { title: 'Say It', component: SayIt },
-  'sentence-builder': { title: 'Sentence Builder', component: SentenceBuilder },
-  'gap-radio': { title: 'Gap Radio', component: GapRadio },
-}
+import { GAME_COMPONENTS } from '~/components/games/registry'
+import type { GameId } from '~/utils/activities'
 
 const route = useRoute()
-const game = computed(() => GAMES[String(route.params.id)])
+const id = computed(() => String(route.params.id) as GameId)
+const game = computed(() => (id.value in GAME_COMPONENTS
+  ? { ...ACTIVITIES[id.value], component: GAME_COMPONENTS[id.value] }
+  : undefined))
 
 if (!game.value) {
   throw createError({ statusCode: 404, statusMessage: 'Game not found', fatal: true })
@@ -30,23 +14,18 @@ if (!game.value) {
 
 useHead({ title: () => `${game.value?.title} · Rien` })
 
-const db = useDb()
-const startedAt = Date.now()
-
-// A finished round counts towards today's session and the streak.
-async function recordDone() {
-  const minutes = Math.min(60, (Date.now() - startedAt) / 60_000)
-  await db.recordActivity(dateKey(new Date()), String(route.params.id), minutes)
-}
+const recorder = useActivityRecorder()
 </script>
 
 <template>
-  <div v-if="game" class="rien-page">
-    <div class="rien-row">
-      <SqBtn to="/" variant="text">← Today</SqBtn>
-      <SqSpacer />
-      <strong>{{ game.title }}</strong>
+  <div v-if="game" class="rien-page rien-game">
+    <div class="rien-game-bar">
+      <NuxtLink to="/" class="rien-icon-btn" aria-label="Close">
+        <RienIcon name="close" />
+      </NuxtLink>
+      <h1 class="rien-subbar-title">{{ game.title }}</h1>
+      <span />
     </div>
-    <component :is="game.component" @done="recordDone" />
+    <component :is="game.component" @done="recorder.record(id)" />
   </div>
 </template>

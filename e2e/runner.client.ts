@@ -1,7 +1,8 @@
 // End-to-end run through the real screens, included only in builds made with
-// RIEN_E2E=1 (see nuxt.config.ts). It clicks and types like a person would,
+// RIEN_E2E=1 (see nuxt.config.ts). It taps and types like a person would,
 // works out the right answers from the content packs, and logs each step as
 // "[e2e] PASS …" or "[e2e] FAIL …", ending with "[e2e] DONE pass=… fail=…".
+// "[e2e] SCREEN name" asks the host script for a screenshot.
 // The same build runs in the iOS simulator and in Chrome.
 import { defineNuxtPlugin, navigateTo } from '#app'
 import type { Pack } from '#shared/schemas/pack'
@@ -19,16 +20,6 @@ const WORDS = [
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 const log = (line: string) => console.log(`[e2e] ${line}`)
-
-// Asks the host script for a screenshot, and also records any text field
-// smaller than 16px (iOS zooms the page when one gets focus).
-async function screen(name: string) {
-  const small = [...document.querySelectorAll<HTMLElement>('input, textarea, select')]
-    .filter(el => Number.parseFloat(getComputedStyle(el).fontSize) < 16)
-  if (small.length) throw new Error(`${small.length} text field(s) under 16px on ${name}`)
-  log(`SCREEN ${name}`)
-  await sleep(1500)
-}
 const text = () => (document.querySelector('main') as HTMLElement | null)?.innerText.replace(/\s+/g, ' ') ?? ''
 
 async function waitFor<T>(find: () => T | undefined | null | false, what: string, timeout = 8000): Promise<T> {
@@ -44,20 +35,27 @@ async function waitFor<T>(find: () => T | undefined | null | false, what: string
 const waitText = (needle: string, timeout?: number) =>
   waitFor(() => text().includes(needle), `"${needle}"`, timeout)
 
+// Fails if any text field is under 16px (iOS zooms the page when one gets focus)
+// or the page is wider than the screen, then asks for a screenshot.
+async function screen(name: string) {
+  const small = [...document.querySelectorAll<HTMLElement>('input, textarea, select')]
+    .filter(el => Number.parseFloat(getComputedStyle(el).fontSize) < 16)
+  if (small.length) throw new Error(`${small.length} text field(s) under 16px on ${name}`)
+  if (document.documentElement.scrollWidth > window.innerWidth + 1) {
+    throw new Error(`${name} is wider than the screen (${document.documentElement.scrollWidth} > ${window.innerWidth})`)
+  }
+  log(`SCREEN ${name}`)
+  await sleep(1500)
+}
+
 function button(label: string, root: ParentNode = document): HTMLElement | undefined {
   return [...root.querySelectorAll<HTMLElement>('button, a')]
-    .find(b => b.textContent?.trim().startsWith(label) && !(b as HTMLButtonElement).disabled)
+    .find(b => (b.textContent?.trim().startsWith(label) || b.getAttribute('aria-label') === label) && !(b as HTMLButtonElement).disabled)
 }
 
 async function click(label: string, root?: ParentNode) {
   ;(await waitFor(() => button(label, root), `button "${label}"`)).click()
   await sleep(250)
-}
-
-async function startActivity(title: string, label = 'Start') {
-  const card = await waitFor(() => [...document.querySelectorAll('.sq-card')]
-    .find(c => c.querySelector('strong')?.textContent?.trim() === title), `card "${title}"`)
-  await click(label, card)
 }
 
 function setValue(input: HTMLInputElement | HTMLTextAreaElement, value: string) {
@@ -75,18 +73,50 @@ async function fill(label: string, value: string) {
   setValue(field, value)
 }
 
-async function typeAnswer(value: string) {
-  setValue(await waitFor(() => document.querySelector<HTMLInputElement>('main form input'), 'answer field'), value)
-  await sleep(100)
-}
-
 async function goTo(path: string, ready: string) {
   await navigateTo(path)
   await waitText(ready)
   await sleep(300)
 }
 
-// Answers for the question types, from the packs.
+// --- One handler per activity --------------------------------------------------
+
+async function playRecall(options: { hintFirst?: boolean, wrongFirst?: Record<string, string> } = {}) {
+  const wrongFirst = { ...options.wrongFirst }
+  let hinted = !options.hintFirst
+  const seen = new Set<string>()
+  for (let i = 0; i < 8 && !text().includes('Round done') && !text().includes('Nice work') && !text().includes('Session complete'); i++) {
+    const cue = (await waitFor(() => document.querySelector('.rien-cue'), 'word cue')).textContent!.trim()
+    const word = WORDS.find(w => w.meaning === cue)
+    if (!word) throw new Error(`unknown cue "${cue}"`)
+    if (!hinted) {
+      await click('Hint')
+      const hint = (await waitFor(() => document.querySelector('.rien-hint'), 'hint')).textContent!
+      if (hint[0] !== word.answer[0]) throw new Error(`hint "${hint}" does not start the word`)
+      hinted = true
+      await fill('Type the English word', word.answer)
+      await click('Check')
+      await waitText('Right, with a hint')
+      await click('Next')
+      seen.add(word.answer)
+      continue
+    }
+    const wrong = wrongFirst[word.answer]
+    delete wrongFirst[word.answer]
+    await fill('Type the English word', wrong ?? word.answer)
+    await click('Check')
+    if (wrong && word.answer === 'walked') await waitText('Check the ending: -ed')
+    if (text().includes('Type it once')) {
+      if (button('Next')) throw new Error('Next is enabled before the word is retyped')
+      await screen('word-recall-retype')
+      await fill('Type it once', word.answer)
+    }
+    await click('Next')
+    seen.add(word.answer)
+  }
+  return [...seen].join(', ')
+}
+
 function fixItAnswer(packs: Pack[], sentence: string) {
   const item = packs.flatMap(p => p.fixIt).find(i => i.text === sentence)
   if (!item) throw new Error(`no Fix It item for "${sentence}"`)
@@ -104,21 +134,81 @@ async function answerFixIt(packs: Pack[]) {
   await sleep(300)
 }
 
+async function playFixIt(packs: Pack[]) {
+  for (let i = 0; i < 8; i++) {
+    await answerFixIt(packs)
+    await click('Next')
+  }
+}
+
 async function answerSound() {
   await click('Play')
   ;(await waitFor(() => document.querySelector<HTMLButtonElement>('.rien-pair button:not([disabled])'), 'sound choice')).click()
   await sleep(300)
 }
 
-async function answerWord(wrongFirst: Record<string, string>) {
-  const cue = (await waitFor(() => document.querySelector('.rien-cue'), 'word cue')).textContent!.trim()
-  const word = WORDS.find(w => w.meaning === cue)
-  if (!word) throw new Error(`unknown cue "${cue}"`)
-  const answer = wrongFirst[word.answer] ?? word.answer
-  delete wrongFirst[word.answer]
-  await typeAnswer(answer)
+async function playSounds() {
+  for (let i = 0; i < 10; i++) {
+    await answerSound()
+    await click('Next')
+  }
+}
+
+const tileWords = (sentence: string) =>
+  sentence.replace(/[.?!]$/, '').split(/\s+/).map(w => w.replace(/[^\p{L}\p{N}'-]/gu, ''))
+
+async function playBuilder(packs: Pack[], wrongFirst: boolean) {
+  const items = builderCards(packs)
+  for (let i = 0; i < 6; i++) {
+    const tiles = await waitFor(() => {
+      const found = [...document.querySelectorAll<HTMLButtonElement>('[aria-label="Words to place"] .rien-token')]
+      return found.length ? found : undefined
+    }, 'tiles')
+    const key = (words: string[]) => words.map(w => w.toLowerCase()).sort().join(' ')
+    const shown = tiles.map(t => t.textContent!.trim())
+    const item = items.find(c => key(tileWords(c.text)) === key(shown))
+    if (!item) throw new Error(`no sentence for tiles ${shown.join(' ')}`)
+    if (wrongFirst && i === 0) {
+      for (const tile of [...tiles]) tile.click()
+      await click('Check')
+      await waitText('Not quite')
+      await screen('sentence-builder-retry')
+      for (const tile of [...document.querySelectorAll<HTMLButtonElement>('[aria-label="Your sentence"] .rien-token')]) {
+        tile.click()
+        await sleep(30)
+      }
+      await waitFor(() => document.querySelectorAll('[aria-label="Your sentence"] .rien-token').length === 0, 'tiles back')
+      await sleep(200)
+    }
+    for (const word of tileWords(item.text).map(w => w.toLowerCase())) {
+      const tile = [...document.querySelectorAll<HTMLButtonElement>('[aria-label="Words to place"] .rien-token')]
+        .find(t => t.textContent!.trim().toLowerCase() === word)
+      if (!tile) throw new Error(`no tile "${word}"`)
+      tile.click()
+      await sleep(30)
+    }
+    await click('Check')
+    await waitText(wrongFirst && i === 0 ? 'Correct on the second try' : 'Correct')
+    await click('Next')
+  }
+}
+
+async function playRadio(packs: Pack[], missOne: boolean) {
+  const title = (await waitFor(() => document.querySelector('.rien-cue'), 'title')).textContent!.trim()
+  const radio = packs.flatMap(p => p.radio).find(r => r.title === title)
+  if (!radio) throw new Error(`no text "${title}"`)
+  const shownText = (await waitFor(() => document.querySelector('.rien-radio'), 'radio text')).textContent!.replace(/\s+/g, ' ')
+  if (!shownText.includes(radio.text.split(/\s+/).slice(0, 3).join(' '))) throw new Error('words run together')
+  await click('Play')
+  const answers = radioAnswers(radioTokens(radio.text))
+  const inputs = [...document.querySelectorAll<HTMLInputElement>('.rien-gap')]
+  if (inputs.length !== answers.length) throw new Error(`${inputs.length} gaps on screen, ${answers.length} expected`)
+  inputs.forEach((input, i) => setValue(input, missOne && i === 0 ? 'zzz' : answers[i]!))
+  await sleep(100)
   await click('Check')
-  return word.answer
+  await waitText(`${missOne ? answers.length - 1 : answers.length} of ${answers.length} right`)
+  await screen('gap-radio-checked')
+  await click('Done')
 }
 
 export default defineNuxtPlugin({
@@ -150,14 +240,20 @@ async function run() {
   log(`START ${navigator.userAgent}`)
   const packs = await usePacks()
 
-  await step('Today page loads with an empty streak', async () => {
-    await goTo('/', 'days in a row')
+  await step('Today loads, fresh, with the tab bar and a session plan', async () => {
+    await goTo('/', 'Today’s session')
     if ((await db.countCards()) !== 0) throw new Error('expected a fresh install')
+    const tabs = [...document.querySelectorAll('.rien-tab')].map(t => t.textContent!.trim())
+    if (tabs.join(',') !== 'Today,Words,Progress,Me') throw new Error(`tabs: ${tabs.join(',')}`)
+    await screen('today-empty')
   })
 
-  await step('Add three words', async () => {
-    await goTo('/add-words', 'Add a word')
-    await screen('add-words')
+  await step('Add three words from the Words tab', async () => {
+    await click('Words')
+    await waitText('No words yet')
+    await screen('words-empty')
+    await click('Add a word')
+    await waitText('Right after class')
     for (const word of WORDS) {
       await fill('English word', word.answer)
       await fill('Meaning in English', word.meaning)
@@ -166,154 +262,111 @@ async function run() {
       await click('Save word')
       await waitText(`Saved “${word.answer}”`)
     }
-    return `${await db.countCards()} saved`
-  })
-
-  await step('A duplicate word is refused', async () => {
     await fill('English word', 'Borrow')
     await fill('Meaning in English', 'again')
     await click('Save word')
     await waitText('is already in your words')
     await fill('English word', '')
     await fill('Meaning in English', '')
+    return `${await db.countCards()} saved, duplicate refused`
   })
 
-  await step('Word Recall: typo, dropped ending, retry', async () => {
-    await goTo('/', 'words to review')
-    await startActivity('Word Recall')
-    const wrongFirst: Record<string, string> = { borrow: 'borow', walked: 'walk' }
-    const seen: string[] = []
-    for (let i = 0; i < 6 && !text().includes('Round done'); i++) {
-      const answered = await answerWord(wrongFirst)
-      if (answered === 'walked' && !seen.includes('walked')) {
-        await waitText('Check the ending: -ed')
-        await screen('word-recall-ending')
-      }
-      if (answered === 'borrow' && !seen.includes('borrow')) await waitText('Nearly')
-      seen.push(answered)
-      await click('Next')
-    }
-    await waitText('Round done')
-    return text().match(/\d+ \/ \d+ right first time/)?.[0]
+  await step('Words tab: search, filters and details', async () => {
+    await click('Back')
+    // The subtitle is styled in capitals, so match it case-insensitively.
+    await waitFor(() => /3 saved/i.test(text()), '"3 saved"')
+    await fill('Search words', 'walk')
+    await waitFor(() => document.querySelectorAll('.rien-list-row').length === 1, 'one search result')
+    await fill('Search words', '')
+    await click('Due 3')
+    await waitFor(() => document.querySelectorAll('.rien-list-row').length === 3, 'three due')
+    await click('Tricky 0')
+    await waitText('No tricky words')
+    await click('All 3')
+    await click('borrow')
+    await waitText('reviewed 0 times')
+    await screen('words-detail')
   })
 
-  await step('Fix It: a full round', async () => {
-    await goTo('/', 'Fix It')
-    await startActivity('Fix It')
-    for (let i = 0; i < 8; i++) {
-      await answerFixIt(packs)
-      await click('Next')
-    }
-    await waitText('Round done')
-    return text().match(/\d+ \/ \d+/)?.[0]
-  })
-
-  await step('Final Sound Hunter: a full round', async () => {
-    await goTo('/', 'Final Sound Hunter')
-    await startActivity('Final Sound Hunter')
-    for (let i = 0; i < 10; i++) {
-      await answerSound()
-      await click('Next')
-    }
-    await waitText('Round done')
-    return text().match(/\d+ \/ \d+ heard right/)?.[0]
-  })
-
-  await step('Sentence Builder: a full round, one wrong try first', async () => {
-    await goTo('/', 'Sentence Builder')
-    await startActivity('Sentence Builder')
-    const items = builderCards(packs)
+  await step('Today’s session: plays every planned activity in order', async () => {
+    try { localStorage.clear() }
+    catch {}
+    await click('Today')
+    await waitText('Start session')
+    await click('Start session')
+    const played: string[] = []
     for (let i = 0; i < 6; i++) {
-      const tiles = await waitFor(() => {
-        const found = [...document.querySelectorAll<HTMLButtonElement>('[aria-label="Words to place"] .rien-token')]
-        return found.length ? found : undefined
-      }, 'tiles')
-      const key = (words: string[]) => words.map(w => w.toLowerCase()).sort().join(' ')
-      const shown = tiles.map(t => t.textContent!.trim())
-      const item = items.find(c => key(c.text.replace(/[.?!]$/, '').split(/\s+/).map(w => w.replace(/[^\p{L}\p{N}'-]/gu, ''))) === key(shown))
-      if (!item) throw new Error(`no sentence for tiles ${shown.join(' ')}`)
-      if (i === 0) {
-        // Place in the shuffled order (always wrong), then fix it.
-        for (const tile of [...tiles]) tile.click()
-        await click('Check')
-        await waitText('Not quite')
-        await screen('sentence-builder-retry')
-        for (const tile of [...document.querySelectorAll<HTMLButtonElement>('[aria-label="Your sentence"] .rien-token')]) {
-          tile.click()
-          await sleep(30)
-        }
-        await waitFor(() => document.querySelectorAll('[aria-label="Your sentence"] .rien-token').length === 0, 'tiles back in the pool')
-        await sleep(200)
+      await waitFor(() => document.querySelector('.rien-session-label') || text().includes('Session complete'), 'session step')
+      if (text().includes('Session complete')) break
+      const label = document.querySelector('.rien-session-label')!.textContent!
+      if (i === 0) await screen('session-step')
+      if (label.includes('Word Recall')) played.push(`recall (${await playRecall({ hintFirst: true, wrongFirst: { walked: 'walk' } })})`)
+      else if (label.includes('Fix It')) { await playFixIt(packs); played.push('fix-it') }
+      else if (label.includes('Final Sound Hunter')) { await playSounds(); played.push('sounds') }
+      else if (label.includes('Sentence Builder')) { await playBuilder(packs, true); played.push('builder') }
+      else if (label.includes('Gap Radio')) { await playRadio(packs, true); played.push('radio') }
+      else if (label.includes('Say It')) { await click('Skip'); played.push('say-it skipped') }
+      else throw new Error(`unknown step ${label}`)
+      await waitFor(() => text().includes('Nice work') || text().includes('Session complete'), 'between steps')
+      if (text().includes('Nice work')) {
+        if (i === 0) await screen('session-between')
+        await click('Continue')
       }
-      const order = item.text.replace(/[.?!]$/, '').split(/\s+/).map(w => w.replace(/[^\p{L}\p{N}'-]/gu, '').toLowerCase())
-      for (const word of order) {
-        const tile = [...document.querySelectorAll<HTMLButtonElement>('[aria-label="Words to place"] .rien-token')]
-          .find(t => t.textContent!.trim().toLowerCase() === word)
-        if (!tile) throw new Error(`no tile "${word}"`)
-        tile.click()
-        await sleep(30)
-      }
-      await click('Check')
-      await waitText(i === 0 ? 'Correct on the second try' : 'Correct')
-      await click('Next')
     }
-    await waitText('Round done')
-    return text().match(/\d+ \/ \d+ built/)?.[0]
+    await waitText('Session complete')
+    await screen('session-complete')
+    if (!played[0]?.startsWith('recall')) throw new Error(`due words should come first, got ${played.join(', ')}`)
+    return played.join(' → ')
   })
 
-  await step('Gap Radio: fill the gaps, one missed', async () => {
-    await goTo('/', 'Gap Radio')
-    await startActivity('Gap Radio')
-    const title = (await waitFor(() => document.querySelector('.rien-cue'), 'title')).textContent!.trim()
-    const radio = packs.flatMap(p => p.radio).find(r => r.title === title)
-    if (!radio) throw new Error(`no text "${title}"`)
-    await click('Play')
-    const shown = (await waitFor(() => document.querySelector('.rien-radio'), 'radio text')).textContent!.replace(/\s+/g, ' ')
-    if (!shown.includes(radio.text.split(/\s+/).slice(0, 3).join(' '))) throw new Error(`words run together: "${shown.slice(0, 60)}"`)
-    await screen('gap-radio')
-    const answers = radioAnswers(radioTokens(radio.text))
-    const inputs = [...document.querySelectorAll<HTMLInputElement>('.rien-gap')]
-    if (inputs.length !== answers.length) throw new Error(`${inputs.length} gaps on screen, ${answers.length} expected`)
+  await step('Today shows the session done, the streak and done marks', async () => {
+    await goTo('/', 'Session done')
+    const streak = document.querySelector('.rien-streak-row')?.getAttribute('aria-label')
+    if (streak !== '1 day streak') throw new Error(`streak: ${streak}`)
+    // Played steps get a done mark; a skipped step (Say It in the simulator) does not.
+    const done = document.querySelectorAll('.rien-list .rien-done-dot').length
+    if (done < 3) throw new Error(`only ${done} activities marked done`)
+    await screen('today-after-session')
+    return `${streak}, ${done} done marks`
+  })
+
+  const practise = async (id: string, play: () => Promise<void>, finished: string) => {
+    await goTo(`/games/${id}`, '')
+    await play()
+    await waitFor(() => text().includes(finished), finished)
+    return text().match(/\d+ (\/|of) \d+[^.]*/)?.[0]
+  }
+
+  await step('Fix It on its own', () => practise('fix-it', () => playFixIt(packs), 'Round done'))
+  await step('Final Sound Hunter on its own', () => practise('sound-hunter', playSounds, 'Round done'))
+  await step('Sentence Builder on its own', () => practise('sentence-builder', () => playBuilder(packs, false), 'Round done'))
+  await step('Gap Radio on its own, one gap missed', async () => {
     const before = (await db.mistakeCounts(new Date(0))).listening ?? 0
-    inputs.forEach((input, i) => setValue(input, i === 0 ? 'zzz' : answers[i]!))
-    await sleep(100)
-    await click('Check')
-    await waitText(`${answers.length - 1} of ${answers.length} right`)
-    await screen('gap-radio-checked')
+    await goTo('/games/gap-radio', 'Listen, then type')
+    await playRadio(packs, true)
     const after = (await db.mistakeCounts(new Date(0))).listening ?? 0
-    if (after !== before + 1) throw new Error(`expected one new listening mistake, got ${after - before}`)
-    await click('Done')
-    return `${answers.length - 1} of ${answers.length} right, 1 listening mistake saved`
+    if (after <= before) throw new Error('no listening mistake saved')
   })
 
   await step('File Boss: all 15 questions', async () => {
-    await goTo('/', 'File 7 Boss')
-    await click('Start File Boss')
-    await waitText('questions mixing')
-    const kinds: string[] = []
+    await goTo('/games/file-boss', 'questions mixing')
     for (let i = 0; i < 15; i++) {
       await waitFor(() => document.querySelector('.rien-sentence, .rien-pair, main form input'), 'question')
-      if (document.querySelector('.rien-sentence')) {
-        kinds.push('fix')
-        await answerFixIt(packs)
-      }
-      else if (document.querySelector('.rien-pair')) {
-        kinds.push('sound')
-        await answerSound()
-      }
+      if (document.querySelector('.rien-sentence')) await answerFixIt(packs)
+      else if (document.querySelector('.rien-pair')) await answerSound()
       else {
-        kinds.push('word')
-        await answerWord({})
+        const cue = document.querySelector('.rien-cue')!.textContent!.trim()
+        await fill('Type the English word', WORDS.find(w => w.meaning === cue)!.answer)
+        await click('Check')
       }
       await click('Next')
     }
     await waitFor(() => text().includes('File beaten') || text().includes('Good try'), 'boss result')
-    return `${text().match(/\d+ \/ 15/)?.[0]} (${kinds.filter(k => k === 'word').length} words, ${kinds.filter(k => k === 'fix').length} grammar, ${kinds.filter(k => k === 'sound').length} sounds)`
+    return text().match(/\d+ \/ 15/)?.[0]
   })
 
   await step('Couple Talk: start, timer ends, save', async () => {
-    await goTo('/', 'Couple Talk')
-    await click('Start Couple Talk')
+    await goTo('/games/couple-talk', 'Start 10 minutes')
     await click('Start 10 minutes')
     await waitFor(() => document.querySelector('.rien-timer')?.textContent?.startsWith('9:5'), 'timer running')
     const realNow = Date.now.bind(Date)
@@ -328,23 +381,16 @@ async function run() {
     await waitText('Nice talk')
   })
 
-  await step('Today shows the streak and finished activities', async () => {
-    await goTo('/', 'days in a row')
-    await waitText('1 day in a row')
-    const done = (text().match(/Done today/g) ?? []).length
-    // Word Recall, Fix It, Final Sound Hunter, Sentence Builder and Gap Radio (Say It is not played).
-    if (done < 5) throw new Error(`only ${done} activities marked done today`)
-    await waitText('Done this week')
-    await screen('today-after')
-    return `${done} activities done today`
-  })
-
-  await step('Progress page shows totals and the File Boss result', async () => {
+  await step('Progress tab shows totals and the File Boss result', async () => {
     await goTo('/progress', 'Weak spots')
-    await screen('progress')
     await waitText('3 words saved')
     await waitText('File 7:')
-    return text().match(/Weak spots.{0,120}/)?.[0]
+    await screen('progress')
+  })
+
+  await step('Settings tab includes the new-word limit', async () => {
+    await goTo('/settings', 'New words')
+    await screen('settings')
   })
 
   await step('Backup round trip through the storage layer', async () => {

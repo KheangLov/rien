@@ -9,6 +9,7 @@ const bookItems = BOOKS.map(value => ({ title: BOOK_LABELS[value], value }))
 const fileItems = FILE_NUMBERS.map(value => ({ title: `File ${value}`, value }))
 const weeklyGoalItems = [3, 4, 5, 6, 7].map(value => ({ title: `${value} days a week`, value }))
 const roundSizeItems = [10, 15, 20, 30].map(value => ({ title: `${value} words`, value }))
+const newPerDayItems = [5, 10, 15, 20].map(value => ({ title: `${value} new words a day`, value }))
 const reminderTimes = Array.from({ length: 34 }, (_, i) => {
   const hour = 6 + Math.floor(i / 2)
   const minute = (i % 2) * 30
@@ -86,9 +87,7 @@ async function importBackup(event: Event) {
 
 <template>
   <div class="rien-page">
-    <div class="rien-row">
-      <SqBtn to="/" variant="text">← Today</SqBtn>
-    </div>
+    <PageHeader title="Settings" />
 
     <SqCard v-if="settings" title="Class">
       <SqCardText class="rien-stack">
@@ -115,6 +114,14 @@ async function importBackup(event: Event) {
           :items="roundSizeItems"
           label="Words per Word Recall round"
           @update:model-value="update({ dailyGoal: $event })"
+        />
+        <SqSelect
+          :model-value="settings.newPerDay"
+          :items="newPerDayItems"
+          label="New words"
+          hint="Reviews are never limited. Fewer new words keeps daily reviews short."
+          persistent-hint
+          @update:model-value="update({ newPerDay: $event })"
         />
         <SqSwitch
           :model-value="settings.khmerHints"

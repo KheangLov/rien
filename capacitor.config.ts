@@ -11,6 +11,11 @@ const config: CapacitorConfig = {
     contentInset: 'never',
   },
   plugins: {
+    // Shrink the web view when the keyboard opens, so the pinned Check button
+    // sits above the keyboard instead of behind it.
+    Keyboard: {
+      resize: 'native',
+    },
     CapacitorSQLite: {
       iosDatabaseLocation: 'Library/CapacitorDatabase',
       iosIsEncryption: false,

@@ -74,6 +74,7 @@ async function sayIt() {
     const [best = ''] = await speech.listen((text) => { partial.value = text })
     heard.value = best
     words.value = compareSpoken(current.text, best)
+    haptic(words.value.some(w => w.status === 'ending') ? 'warning' : 'success')
     tries.value++
     phase.value = 'heard'
   }
@@ -191,7 +192,7 @@ function next() {
 
         <SqAlert v-if="listenError" type="error" variant="tonal" :text="listenError" />
 
-        <div class="rien-row">
+        <div class="rien-row" :class="{ 'rien-actions': phase !== 'heard' }">
           <SqBtn
             :color="phase === 'heard' ? undefined : 'primary'"
             :variant="phase === 'heard' ? 'tonal' : undefined"

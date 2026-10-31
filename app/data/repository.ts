@@ -16,6 +16,9 @@ export interface StudyRepository {
   // Words past the learning steps (FSRS state Review).
   countLearned(): Promise<number>
   cardsInFile(book: Book, file: number): Promise<CardRow[]>
+  allCards(): Promise<CardRow[]>
+  // Words reviewed for the first time since this moment (the daily new-word cap).
+  countIntroducedSince(since: Date): Promise<number>
 
   // Stores the rescheduled card, its review and any mistake in one transaction.
   saveAnswer(graded: GradedAnswer): Promise<void>

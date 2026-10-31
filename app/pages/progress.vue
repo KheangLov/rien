@@ -45,11 +45,7 @@ const formatDate = (date: Date) => date.toLocaleDateString('en-GB', { day: 'nume
 
 <template>
   <div class="rien-page">
-    <div class="rien-row">
-      <SqBtn to="/" variant="text">← Today</SqBtn>
-    </div>
-
-    <h1 class="rien-title">Progress</h1>
+    <PageHeader title="Progress" />
 
     <div class="rien-stats">
       <SqCard v-for="stat in stats" :key="stat.label" variant="tonal">

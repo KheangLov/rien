@@ -55,6 +55,7 @@ function startCard() {
 
 function place(tile: Tile) {
   if (phase.value === 'result') return
+  haptic('tap')
   pool.value = pool.value.filter(t => t.id !== tile.id)
   placed.value = [...placed.value, tile]
 }
@@ -71,6 +72,7 @@ async function check() {
   attempts.value++
   const words = placed.value.map(t => t.word)
   solved.value = isCorrect(current, words)
+  haptic(solved.value ? (attempts.value === 1 ? 'success' : 'warning') : 'error')
   if (!solved.value && attempts.value < MAX_ATTEMPTS) {
     phase.value = 'retry'
     return
@@ -161,10 +163,10 @@ function next() {
           <p class="rien-sentence-fixed">{{ card.text }}</p>
         </template>
 
-        <div class="rien-row">
+        <div class="rien-row rien-actions">
           <SqBtn v-if="phase !== 'result'" color="primary" size="large" :disabled="pool.length > 0" @click="check">Check</SqBtn>
           <SqBtn v-else color="primary" size="large" @click="next">Next</SqBtn>
-          <SqBtn v-if="phase === 'result' && canSpeak" variant="tonal" @click="speak(card.text)">Hear it</SqBtn>
+          <SqBtn v-if="phase === 'result' && canSpeak" variant="tonal" size="large" aria-label="Hear it" @click="speak(card.text)"><RienIcon name="sound-hunter" /></SqBtn>
         </div>
       </SqCardText>
     </SqCard>

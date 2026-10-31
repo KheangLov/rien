@@ -49,6 +49,7 @@ async function check() {
   verdicts.value = checkGaps(answers.value, typed.value)
   const graded = gradeRadio(current, states.value.get(current.itemId), verdicts.value, new Date())
   right.value = graded.right
+  haptic(graded.mistakes.length === 0 ? 'success' : right.value >= answers.value.length / 2 ? 'warning' : 'error')
   const [first, ...rest] = graded.mistakes
   await db.saveGrammarAnswer(graded.row, first)
   for (const mistake of rest) await db.saveMistake(mistake)
@@ -114,11 +115,11 @@ function finish() {
             </template>
           </p>
         </SqCardText>
-        <SqCardActions>
+        <div class="rien-row rien-actions">
           <SqBtn v-if="!verdicts" color="primary" size="large" :disabled="!allTyped" @click="check">Check</SqBtn>
-          <SqBtn v-if="!verdicts" variant="text" @click="check">Show answers</SqBtn>
+          <SqBtn v-if="!verdicts" variant="tonal" size="large" @click="check">Show answers</SqBtn>
           <SqBtn v-else color="primary" size="large" @click="finish">Done</SqBtn>
-        </SqCardActions>
+        </div>
       </SqCard>
 
       <SqCard v-if="verdicts && right === answers.length" title="Every word caught" variant="tonal">

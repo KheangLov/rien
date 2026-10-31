@@ -115,6 +115,14 @@ export function createDexieRepository(db = new RienDexie()): StudyRepository {
       return db.cards.filter(card => card.fsrs.state === State.Review).count()
     },
 
+    allCards() {
+      return db.cards.orderBy('createdAt').reverse().toArray()
+    },
+
+    countIntroducedSince(since) {
+      return db.cards.filter(card => Boolean(card.introducedAt && card.introducedAt >= since)).count()
+    },
+
     cardsInFile(book, file) {
       return db.cards.where('[book+file]').equals([book, file]).toArray()
     },

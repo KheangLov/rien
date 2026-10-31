@@ -16,15 +16,17 @@ export default defineNuxtConfig({
   plugins: e2e ? ['~~/e2e/runner.client.ts'] : [],
 
   app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       htmlAttrs: { lang: 'en' },
       title: 'Rien',
       meta: [
         // viewport-fit=cover is required for env(safe-area-inset-*) on iPhone.
         { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
-        { name: 'theme-color', content: '#0f766e' },
+        { name: 'theme-color', content: '#f7f7f5' },
         { name: 'apple-mobile-web-app-capable', content: 'yes' },
         { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
+        { name: 'color-scheme', content: 'light dark' },
         { name: 'apple-mobile-web-app-title', content: 'Rien' },
       ],
       link: [
@@ -38,7 +40,17 @@ export default defineNuxtConfig({
     addons: ['charts', 'calendar'],
     prefix: 'Sq',
     css: true,
-    theme: { defaultTheme: 'light' },
+    // Brand colours go in here, not through useTheme().setBrand() at runtime: the
+    // module writes the theme CSS into the page head once, and the head manager
+    // puts that version back, overwriting runtime changes.
+    theme: {
+      defaultTheme: 'light',
+      themes: {
+        light: { colors: { primary: '#0f766e' } },
+        // A lighter teal so buttons and links stay readable on dark surfaces.
+        dark: { dark: true, colors: { primary: '#2dd4bf' } },
+      },
+    },
     squircle: { mode: 'auto' },
     // The app must work offline, so no Iconify API and no web fonts.
     icons: { api: false },

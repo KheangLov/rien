@@ -145,7 +145,7 @@ async function finish() {
             </ul>
           </SqCardText>
         </SqCard>
-        <div class="rien-row">
+        <div class="rien-row rien-actions">
           <SqBtn color="primary" size="large" @click="begin">Start {{ TALK_MINUTES }} minutes</SqBtn>
           <SqBtn variant="text" @click="anotherTopic">Another topic</SqBtn>
         </div>

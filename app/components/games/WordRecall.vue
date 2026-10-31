@@ -26,7 +26,7 @@ const progress = computed(() =>
 onMounted(async () => {
   const settings = await db.getSettings()
   khmerHints.value = settings.khmerHints
-  queue.value = await db.dueCards(new Date(), settings.dailyGoal)
+  queue.value = await loadWordQueue()
   loading.value = false
 })
 

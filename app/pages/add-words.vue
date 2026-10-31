@@ -21,7 +21,6 @@ const saving = ref(false)
 const saved = ref('')
 const answerField = ref<{ focus?: () => void } | null>(null)
 
-const recent = useLiveQuery(() => db.recentCards(20), [])
 
 onMounted(async () => {
   const settings = await db.getSettings()
@@ -58,19 +57,13 @@ async function save() {
     saving.value = false
   }
 }
-
-async function remove(id: string, answer: string) {
-  if (window.confirm(`Delete “${answer}” and its review history?`)) await db.deleteCard(id)
-}
 </script>
 
 <template>
   <div class="rien-page">
-    <div class="rien-row">
-      <SqBtn to="/" variant="text">← Today</SqBtn>
-    </div>
+    <PageHeader title="Add a word" back="/words" />
 
-    <SqCard title="Add a word" subtitle="Right after class, while you remember it">
+    <SqCard subtitle="Right after class, while you remember it">
       <SqCardText>
         <form class="rien-stack" novalidate @submit.prevent="save">
           <SqTextField
@@ -110,21 +103,5 @@ async function remove(id: string, answer: string) {
 
     <SqAlert v-if="saved" type="success" variant="tonal" :text="saved" />
 
-    <SqCard v-if="recent.length" title="Recently added" variant="outlined">
-      <SqList>
-        <SqListItem
-          v-for="card in recent"
-          :key="card.id"
-          :title="card.answer"
-          :subtitle="card.meaning || card.khmer || card.example"
-        >
-          <template #append>
-            <SqBtn variant="text" size="small" @click="remove(card.id, card.answer)">
-              Delete<span class="rien-sr-only"> {{ card.answer }}</span>
-            </SqBtn>
-          </template>
-        </SqListItem>
-      </SqList>
-    </SqCard>
   </div>
 </template>

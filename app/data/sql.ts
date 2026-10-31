@@ -156,6 +156,10 @@ export async function openSqlRepository(driver: SqlDriver): Promise<StudyReposit
     // FSRS state 2 is Review: past the learning steps.
     countLearned: () => count(`SELECT COUNT(*) AS n FROM cards WHERE state = 2`),
     cardsInFile: (book, file) => cards(`WHERE book = ? AND file = ?`, [book, file]),
+    allCards: () => cards(`ORDER BY created_at DESC`),
+    async countIntroducedSince(since) {
+      return (await cards('')).filter(card => card.introducedAt && card.introducedAt >= since).length
+    },
 
     async saveAnswer({ card, review, mistake }) {
       await driver.transaction(async () => {

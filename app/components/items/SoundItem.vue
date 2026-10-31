@@ -29,6 +29,7 @@ async function choose(option: string) {
   if (picked.value) return
   picked.value = option
   const { row, mistake } = gradeSound(props.card, props.previous, played, option, new Date())
+  haptic(mistake ? 'error' : 'success')
   await db.saveGrammarAnswer(row, mistake)
   emit('answered', { row, slipped: Boolean(mistake) })
 }
@@ -71,9 +72,9 @@ async function choose(option: string) {
             :title="picked === played ? `Yes: ${played}` : `It was “${played}”`"
             :text="SOUND_FOCUS_TIPS[card.focus]"
           />
-          <div class="rien-row">
+          <div class="rien-row rien-actions">
             <SqBtn color="primary" size="large" @click="emit('next')">Next</SqBtn>
-            <SqBtn variant="tonal" @click="speak([card.a, card.b])">Hear both</SqBtn>
+            <SqBtn variant="tonal" size="large" @click="speak([card.a, card.b])">Hear both</SqBtn>
           </div>
         </template>
       </template>

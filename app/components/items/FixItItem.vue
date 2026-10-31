@@ -34,6 +34,7 @@ function openChoices() {
 function tap(index: number) {
   if (phase.value !== 'find') return
   if (index === target.value) return openChoices()
+  haptic('warning')
   if (!wrongTaps.value.includes(index)) wrongTaps.value.push(index)
   if (wrongTaps.value.length >= MAX_WRONG_TAPS) openChoices()
 }
@@ -44,6 +45,7 @@ async function choose(choice: string) {
   phase.value = 'result'
   const result = { wrongTaps: wrongTaps.value.length, wrongChoice: choice !== props.card.fix }
   const { row, mistake } = gradeFixIt(props.card, props.previous, result, new Date())
+  haptic(!mistake ? 'success' : result.wrongChoice ? 'error' : 'warning')
   await db.saveGrammarAnswer(row, mistake)
   emit('answered', { row, slipped: Boolean(mistake) })
 }
@@ -94,9 +96,9 @@ async function choose(choice: string) {
         />
         <p class="rien-sentence-fixed">{{ fixed }}</p>
         <p class="rien-muted rien-strike">{{ card.text }}</p>
-        <div class="rien-row">
+        <div class="rien-row rien-actions">
           <SqBtn color="primary" size="large" @click="emit('next')">Next</SqBtn>
-          <SqBtn v-if="canSpeak" variant="tonal" @click="speak(fixed)">Hear it</SqBtn>
+          <SqBtn v-if="canSpeak" variant="tonal" size="large" aria-label="Hear it" @click="speak(fixed)"><RienIcon name="sound-hunter" /></SqBtn>
         </div>
       </template>
     </SqCardText>

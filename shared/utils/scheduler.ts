@@ -41,7 +41,7 @@ export function gradeAnswer(
   const rating = gradeFor(verdict)
   const fsrsState = nextFsrsState(card.fsrs as Card, rating, now)
   return {
-    card: { ...card, fsrs: fsrsState, due: fsrsState.due },
+    card: { ...card, fsrs: fsrsState, due: fsrsState.due, introducedAt: card.introducedAt ?? now },
     review: {
       cardId: card.id,
       at: now,

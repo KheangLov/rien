@@ -88,6 +88,22 @@ describe.each(Object.entries(stores))('%s repository', (_, open) => {
     expect((await repo.recentCards(1))[0]!.fsrs.reps).toBe(2)
   })
 
+  it('counts words first reviewed since a moment, for the new-word cap', async () => {
+    const a = await repo.addWord(word, now)
+    await repo.addWord({ ...word, answer: 'lend' }, now)
+    expect(await repo.countIntroducedSince(new Date(0))).toBe(0)
+    const first = gradeAnswer(a, { result: 'correct' }, 'borrow', 2000, now)
+    expect(first.card.introducedAt).toEqual(now)
+    await repo.saveAnswer(first)
+    const later = new Date('2026-11-05T08:00:00Z')
+    const second = gradeAnswer(first.card, { result: 'correct' }, 'borrow', 2000, later)
+    expect(second.card.introducedAt).toEqual(now)
+    await repo.saveAnswer(second)
+    expect(await repo.countIntroducedSince(new Date('2026-11-02T00:00:00Z'))).toBe(1)
+    expect(await repo.countIntroducedSince(new Date('2026-11-03T00:00:00Z'))).toBe(0)
+    expect((await repo.allCards()).map(c => c.answer).sort()).toEqual(['borrow', 'lend'])
+  })
+
   it('lists due cards oldest first', async () => {
     await repo.addWord(word, new Date('2026-11-02T09:00:00Z'))
     await repo.addWord({ ...word, answer: 'lend' }, new Date('2026-11-02T07:00:00Z'))

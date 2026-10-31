@@ -120,9 +120,7 @@ async function copyReport() {
 
 <template>
   <div class="rien-page">
-    <div class="rien-row">
-      <SqBtn to="/settings" variant="text">← Settings</SqBtn>
-    </div>
+    <PageHeader title="Speech test" back="/settings" />
 
     <SqCard title="Speech test" subtitle="Run once in Safari and once from the Home Screen">
       <SqCardText>
