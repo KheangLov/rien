@@ -14,7 +14,7 @@ if (( NOW - LAST < 6 * 86400 )); then
   exit 0
 fi
 
-if ! xcrun devicectl list devices 2>/dev/null | grep -q "physical"; then
+if ! xcrun devicectl list devices 2>/dev/null | grep "physical" | grep -vq "unavailable"; then
   echo "iPhone not reachable; try again later"
   exit 0
 fi

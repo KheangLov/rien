@@ -8,9 +8,10 @@ cd "${0:A:h}/.."
 source ~/.nvm/nvm.sh >/dev/null 2>&1 || true
 nvm use >/dev/null
 
-DEVICE=${RIEN_DEVICE:-$(xcrun devicectl list devices 2>/dev/null | awk '/physical/ && /iPhone/ { for (i = 1; i <= NF; i++) if ($i ~ /^[0-9A-F]{8}-[0-9A-F]{16}$/) { print $i; exit } }')}
+# A paired iPhone that is reachable right now (not "unavailable": locked, asleep or off the Wi-Fi).
+DEVICE=${RIEN_DEVICE:-$(xcrun devicectl list devices 2>/dev/null | awk '/physical/ && /iPhone/ && !/unavailable/ { for (i = 1; i <= NF; i++) if ($i ~ /^[0-9A-F]{8}-[0-9A-F]{16}$/) { print $i; exit } }')}
 if [[ -z "$DEVICE" ]]; then
-  echo "No paired iPhone found. Unlock it and keep it on the same Wi-Fi as this Mac." >&2
+  echo "iPhone not reachable. Unlock it, keep it on the same Wi-Fi as this Mac, and try again." >&2
   exit 1
 fi
 echo "iPhone: $DEVICE"
