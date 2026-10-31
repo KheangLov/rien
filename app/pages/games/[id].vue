@@ -4,6 +4,7 @@ import { dateKey } from '#shared/utils/streak'
 import CoupleTalk from '~/components/games/CoupleTalk.vue'
 import FileBoss from '~/components/games/FileBoss.vue'
 import FixIt from '~/components/games/FixIt.vue'
+import SayIt from '~/components/games/SayIt.vue'
 import SoundHunter from '~/components/games/SoundHunter.vue'
 import WordRecall from '~/components/games/WordRecall.vue'
 
@@ -13,6 +14,7 @@ const GAMES: Record<string, { title: string, component: Component }> = {
   'sound-hunter': { title: 'Final Sound Hunter', component: SoundHunter },
   'file-boss': { title: 'File Boss', component: FileBoss },
   'couple-talk': { title: 'Couple Talk', component: CoupleTalk },
+  'say-it': { title: 'Say It', component: SayIt },
 }
 
 const route = useRoute()

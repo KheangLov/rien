@@ -182,6 +182,10 @@ export async function openSqlRepository(driver: SqlDriver): Promise<StudyReposit
       return Object.fromEntries(rows.map(r => [r.type, r.n]))
     },
 
+    async saveMistake(mistake) {
+      await addMistake(mistakeSchema.parse(mistake))
+    },
+
     async mistakesSince(since) {
       const rows = await driver.all<DataRow>(`SELECT id, data FROM mistakes WHERE at >= ? ORDER BY at`, [since.getTime()])
       return parseRows(rows, raw => mistakeSchema.parse(raw))

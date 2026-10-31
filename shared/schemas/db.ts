@@ -149,6 +149,14 @@ export const settingsSchema = z.object({
   dailyGoal: z.number().int().min(1).max(200).default(20),
   // Study days per week.
   weeklyGoal: z.number().int().min(1).max(7).default(5),
+  // Daily notification, native app only.
+  reminder: z
+    .object({
+      enabled: z.boolean().default(false),
+      hour: z.number().int().min(0).max(23).default(19),
+      minute: z.number().int().min(0).max(59).default(0),
+    })
+    .default({ enabled: false, hour: 19, minute: 0 }),
 })
 
 export const backupSchema = z.object({

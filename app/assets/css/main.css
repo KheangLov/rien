@@ -331,3 +331,37 @@ a,
 .rien-gap-sm {
   gap: 6px;
 }
+
+/* Say It */
+.rien-spoken {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.rien-spoken-word {
+  padding: 0 4px;
+  border-radius: 6px;
+  border-bottom: 3px solid transparent;
+}
+
+/* Status shows by underline style as well as colour, so it never relies on colour alone. */
+.rien-spoken-word.is-ending {
+  border-bottom: 3px dashed var(--sq-warning, #d97706);
+  background: color-mix(in srgb, var(--sq-warning, #d97706) 14%, transparent);
+}
+
+.rien-spoken-word.is-missing {
+  border-bottom: 3px dotted var(--sq-error, #dc2626);
+  color: var(--sq-muted, #6b7280);
+}
+
+.rien-rating {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}

@@ -9,6 +9,11 @@ const bookItems = BOOKS.map(value => ({ title: BOOK_LABELS[value], value }))
 const fileItems = FILE_NUMBERS.map(value => ({ title: `File ${value}`, value }))
 const weeklyGoalItems = [3, 4, 5, 6, 7].map(value => ({ title: `${value} days a week`, value }))
 const roundSizeItems = [10, 15, 20, 30].map(value => ({ title: `${value} words`, value }))
+const reminderTimes = Array.from({ length: 34 }, (_, i) => {
+  const hour = 6 + Math.floor(i / 2)
+  const minute = (i % 2) * 30
+  return { title: `${hour}:${String(minute).padStart(2, '0')}`, value: hour * 60 + minute }
+})
 
 const settings = ref<Settings | null>(null)
 const message = ref<{ type: 'success' | 'error', text: string } | null>(null)
@@ -38,6 +43,16 @@ onBeforeUnmount(() => {
 
 async function update(patch: Partial<Settings>) {
   settings.value = await db.saveSettings(patch)
+}
+
+async function updateReminder(patch: Partial<Settings['reminder']>) {
+  const reminder = { ...settings.value!.reminder, ...patch }
+  const allowed = await applyReminder(reminder)
+  if (!allowed && reminder.enabled) {
+    message.value = { type: 'error', text: 'Allow notifications for Rien in the iPhone Settings app first.' }
+    return
+  }
+  await update({ reminder })
 }
 
 async function exportBackup() {
@@ -106,6 +121,24 @@ async function importBackup(event: Event) {
           label="Show Khmer hints in Word Recall"
           color="primary"
           @update:model-value="update({ khmerHints: $event })"
+        />
+      </SqCardText>
+    </SqCard>
+
+    <SqCard v-if="native && settings" title="Daily reminder">
+      <SqCardText class="rien-stack">
+        <SqSwitch
+          :model-value="settings.reminder.enabled"
+          label="Remind me to study every day"
+          color="primary"
+          @update:model-value="updateReminder({ enabled: $event })"
+        />
+        <SqSelect
+          v-if="settings.reminder.enabled"
+          :model-value="settings.reminder.hour * 60 + settings.reminder.minute"
+          :items="reminderTimes"
+          label="Time"
+          @update:model-value="updateReminder({ hour: Math.floor($event / 60), minute: $event % 60 })"
         />
       </SqCardText>
     </SqCard>

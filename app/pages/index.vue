@@ -58,6 +58,10 @@ const activities = computed(() => [
     text: 'Ten words read aloud. Pick the one you hear.',
     ready: true,
   },
+  // Speech recognition only works in the native iPhone app.
+  ...(isNativeApp()
+    ? [{ id: 'say-it', title: 'Say It', text: 'Read five sentences aloud and check your endings.', ready: true }]
+    : []),
 ].map(activity => ({ ...activity, done: doneToday.value.includes(activity.id) })))
 </script>
 

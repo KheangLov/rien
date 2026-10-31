@@ -24,6 +24,8 @@ export interface StudyRepository {
   saveGrammarAnswer(row: GrammarRow, mistake?: MistakeRow): Promise<void>
   mistakeCounts(since: Date): Promise<Partial<Record<MistakeType, number>>>
   mistakesSince(since: Date): Promise<MistakeRow[]>
+  // A slip with no review schedule of its own (Say It).
+  saveMistake(mistake: MistakeRow): Promise<void>
 
   saveBossResult(result: BossResult): Promise<void>
   bossResults(): Promise<BossResult[]>

@@ -146,6 +146,10 @@ export function createDexieRepository(db = new RienDexie()): StudyRepository {
       return counts
     },
 
+    async saveMistake(mistake) {
+      await db.mistakes.add(mistake)
+    },
+
     mistakesSince(since) {
       return db.mistakes.where('at').aboveOrEqual(since).toArray()
     },

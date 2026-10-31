@@ -169,6 +169,12 @@ describe.each(Object.entries(stores))('%s repository', (_, open) => {
     expect(backup.bosses).toHaveLength(2)
   })
 
+  it('saves a mistake on its own', async () => {
+    await repo.saveMistake({ type: 'final-sound', itemId: 'say:1', at: now, detail: 'he want' })
+    expect(await repo.mistakeCounts(new Date(0))).toEqual({ 'final-sound': 1 })
+    expect(await repo.grammarStates()).toEqual([])
+  })
+
   it('lists mistakes since a date', async () => {
     await addMistake(repo, { type: 'article', itemId: 'a', at: new Date('2026-10-01T00:00:00Z'), detail: '' })
     await addMistake(repo, { type: 'tense', itemId: 'b', at: now, detail: '' })

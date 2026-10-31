@@ -11,6 +11,7 @@ const WRITES = [
   'deleteCard',
   'saveAnswer',
   'saveGrammarAnswer',
+  'saveMistake',
   'recordActivity',
   'saveBossResult',
   'saveTalk',
