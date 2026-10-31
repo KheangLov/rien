@@ -213,14 +213,15 @@ export async function openSqlRepository(driver: SqlDriver): Promise<StudyReposit
       return parseRows(rows, raw => talkResultSchema.parse(raw))
     },
 
-    async recordActivity(date, game, minutes) {
+    async recordActivity(date, game, minutes, score) {
       await driver.transaction(async () => {
         const [row] = await driver.all<DataRow>(`SELECT data FROM sessions WHERE date = ?`, [date])
-        const current = row ? sessionSchema.parse(JSON.parse(row.data)) : { date, games: [], minutes: 0 }
+        const current = row ? sessionSchema.parse(JSON.parse(row.data)) : { date, games: [], minutes: 0, rounds: [] }
         await putSession({
           date,
           games: [...current.games, game],
           minutes: Math.round((current.minutes + Math.max(0, minutes)) * 10) / 10,
+          rounds: [...current.rounds, ...(score ? [{ game, ...score }] : [])],
         })
       })
     },

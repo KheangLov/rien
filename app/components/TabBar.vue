@@ -4,6 +4,7 @@ import type { IconName } from './RienIcon.vue'
 const tabs: { to: string, label: string, icon: IconName }[] = [
   { to: '/', label: 'Today', icon: 'today' },
   { to: '/words', label: 'Words', icon: 'words' },
+  { to: '/tank', label: 'Tank', icon: 'fish' },
   { to: '/progress', label: 'Progress', icon: 'progress' },
   { to: '/settings', label: 'Me', icon: 'me' },
 ]

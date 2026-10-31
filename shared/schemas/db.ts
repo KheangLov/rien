@@ -124,11 +124,20 @@ export const grammarSchema = z.object({
   due: z.coerce.date(),
 })
 
+// The score of one finished round.
+export const roundSchema = z.object({
+  game: z.string(),
+  clean: z.number().int().min(0),
+  total: z.number().int().min(0),
+})
+
 // One row per day she studied.
 export const sessionSchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   games: z.array(z.string()),
   minutes: z.number().min(0),
+  // Added for the fish tank; older rows have none.
+  rounds: z.array(roundSchema).default([]),
 })
 
 // One finished File Boss quiz.
@@ -198,6 +207,7 @@ export type CardRow = z.output<typeof cardSchema>
 export type ReviewRow = z.output<typeof reviewSchema>
 export type MistakeRow = z.output<typeof mistakeSchema>
 export type SessionRow = z.output<typeof sessionSchema>
+export type RoundScore = z.output<typeof roundSchema>
 export type GrammarRow = z.output<typeof grammarSchema>
 export type BossResult = z.output<typeof bossResultSchema>
 export type TalkResult = z.output<typeof talkResultSchema>

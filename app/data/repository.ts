@@ -37,7 +37,7 @@ export interface StudyRepository {
   talkResults(): Promise<TalkResult[]>
 
   // Adds a finished activity to that day's session row.
-  recordActivity(date: string, game: string, minutes: number): Promise<void>
+  recordActivity(date: string, game: string, minutes: number, score?: { clean: number, total: number }): Promise<void>
   studyDays(): Promise<string[]>
   sessions(): Promise<SessionRow[]>
   gamesOn(date: string): Promise<string[]>

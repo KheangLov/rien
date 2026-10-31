@@ -32,8 +32,9 @@ async function waitFor<T>(find: () => T | undefined | null | false, what: string
   throw new Error(`timed out waiting for ${what}`)
 }
 
+// Case-insensitive: some headings are styled in capitals, which innerText reports.
 const waitText = (needle: string, timeout?: number) =>
-  waitFor(() => text().includes(needle), `"${needle}"`, timeout)
+  waitFor(() => text().toLowerCase().includes(needle.toLowerCase()), `"${needle}"`, timeout)
 
 // Fails if any text field is under 16px (iOS zooms the page when one gets focus)
 // or the page is wider than the screen, then asks for a screenshot.
@@ -244,7 +245,7 @@ async function run() {
     await goTo('/', 'Today’s session')
     if ((await db.countCards()) !== 0) throw new Error('expected a fresh install')
     const tabs = [...document.querySelectorAll('.rien-tab')].map(t => t.textContent!.trim())
-    if (tabs.join(',') !== 'Today,Words,Progress,Me') throw new Error(`tabs: ${tabs.join(',')}`)
+    if (tabs.join(',') !== 'Today,Words,Tank,Progress,Me') throw new Error(`tabs: ${tabs.join(',')}`)
     await screen('today-empty')
   })
 
@@ -254,13 +255,18 @@ async function run() {
     await screen('words-empty')
     await click('Add a word')
     await waitText('Right after class')
-    for (const word of WORDS) {
+    for (const [i, word] of WORDS.entries()) {
       await fill('English word', word.answer)
       await fill('Meaning in English', word.meaning)
       if (word.khmer) await fill('Khmer hint', word.khmer)
       if (word.example) await fill('Example sentence', word.example)
       await click('Save word')
       await waitText(`Saved “${word.answer}”`)
+      if (i === 0) {
+        // The first word unlocks the first award fish.
+        await waitFor(() => document.querySelector('.rien-toast')?.textContent?.includes('New fish: Sprout'), 'Sprout award message')
+        await screen('toast-first-fish')
+      }
     }
     await fill('English word', 'Borrow')
     await fill('Meaning in English', 'again')
@@ -317,6 +323,19 @@ async function run() {
     await screen('session-complete')
     if (!played[0]?.startsWith('recall')) throw new Error(`due words should come first, got ${played.join(', ')}`)
     return played.join(' → ')
+  })
+
+  await step('Tank: study fish hatched by the session, awards unlocked', async () => {
+    await goTo('/tank', 'Study fish')
+    const swimming = document.querySelectorAll('.rien-fish').length
+    const eggs = document.querySelectorAll('.rien-egg').length
+    if (swimming < 4) throw new Error(`only ${swimming} fish swimming`)
+    // Teammate needs four activities in a day; the simulator session skips Say It, so only check Sprout.
+    if (!text().includes('Sprout')) throw new Error('Sprout should be unlocked')
+    ;(document.querySelector('.rien-fish') as HTMLElement).click()
+    await waitFor(() => button('Feed it') || button('Bring it back') || text().includes('Award:'), 'fish card')
+    await screen('tank')
+    return `${swimming} swimming, ${eggs} eggs`
   })
 
   await step('Today shows the session done, the streak and done marks', async () => {

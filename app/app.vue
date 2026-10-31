@@ -3,8 +3,23 @@ const { $pwa } = useNuxtApp()
 const route = useRoute()
 
 // The four tab pages show the tab bar; games and sub-pages are full screen.
-const TABS = ['/', '/words', '/progress', '/settings']
+const TABS = ['/', '/words', '/tank', '/progress', '/settings']
 const hasTabs = computed(() => TABS.includes(route.path.replace(/\/$/, '') || '/'))
+
+// News from the tank, one at a time, each for a few seconds.
+const toasts = useToasts()
+const current = computed(() => toasts.value[0])
+let timer: ReturnType<typeof setTimeout> | undefined
+watch(current, (text) => {
+  clearTimeout(timer)
+  if (!text) return
+  haptic('success')
+  timer = setTimeout(() => toasts.value.shift(), 4200)
+})
+function openTank() {
+  toasts.value.splice(0)
+  navigateTo('/tank')
+}
 </script>
 
 <template>
@@ -13,6 +28,12 @@ const hasTabs = computed(() => TABS.includes(route.path.replace(/\/$/, '') || '/
       <NuxtPage />
     </SqMain>
     <TabBar v-if="hasTabs" />
+    <Transition name="rien-toast">
+      <button v-if="current" :key="current" type="button" class="rien-toast" role="status" @click="openTank">
+        <RienIcon name="fish" :size="26" />
+        <span>{{ current }}</span>
+      </button>
+    </Transition>
     <SqSnackbar
       v-if="$pwa?.needRefresh"
       :model-value="true"

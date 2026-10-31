@@ -43,7 +43,7 @@ async function save() {
 
   saving.value = true
   try {
-    const card = await db.addWord(parsed.data)
+    const card = await withTankNews(() => db.addWord(parsed.data))
     // Remember the book and File for the next word and the next class.
     await db.saveSettings({ book: form.book, file: form.file })
     saved.value = `Saved “${card.answer}”`

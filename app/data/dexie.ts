@@ -182,13 +182,14 @@ export function createDexieRepository(db = new RienDexie()): StudyRepository {
       return db.sessions.toArray()
     },
 
-    async recordActivity(date, game, minutes) {
+    async recordActivity(date, game, minutes, score) {
       await db.transaction('rw', db.sessions, async () => {
-        const row = (await db.sessions.get(date)) ?? { date, games: [], minutes: 0 }
+        const row = (await db.sessions.get(date)) ?? { date, games: [], minutes: 0, rounds: [] }
         await db.sessions.put({
           date,
           games: [...row.games, game],
           minutes: Math.round((row.minutes + Math.max(0, minutes)) * 10) / 10,
+          rounds: [...(row.rounds ?? []), ...(score ? [{ game, ...score }] : [])],
         })
       })
     },

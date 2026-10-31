@@ -26,6 +26,6 @@ const recorder = useActivityRecorder()
       <h1 class="rien-subbar-title">{{ game.title }}</h1>
       <span />
     </div>
-    <component :is="game.component" @done="recorder.record(id)" />
+    <component :is="game.component" @done="recorder.record(id, $event)" />
   </div>
 </template>

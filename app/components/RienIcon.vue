@@ -21,6 +21,7 @@ const PATHS = {
   'say-it': 'M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zM5 11a7 7 0 0 0 14 0M12 18v3',
   'file-boss': 'M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M9 21h6M10 17h4v4h-4z',
   'couple-talk': 'M4 5h16v11H10l-6 4z',
+  'fish': 'M2 12c3.5-4.5 9.5-5.5 14-2l5-3v10l-5-3c-4.5 3.5-10.5 2.5-14-2zM8 11.5h.01',
 } as const
 
 export type IconName = keyof typeof PATHS

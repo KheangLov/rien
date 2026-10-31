@@ -481,7 +481,7 @@ input {
   bottom: 0;
   z-index: 50;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   padding: 6px max(8px, env(safe-area-inset-left)) calc(4px + env(safe-area-inset-bottom));
   background: color-mix(in srgb, var(--sq-surface, #fff) 82%, transparent);
   -webkit-backdrop-filter: saturate(1.8) blur(20px);
@@ -918,4 +918,255 @@ input {
 /* The phone was not sure: dashed grey, so it never reads as a verdict. */
 .rien-spoken-word.is-unclear {
   border-bottom: 3px dashed var(--sq-muted, #6b7280);
+}
+
+/* ---------------------------------------------------------------------------
+   Fish tank
+   ------------------------------------------------------------------------ */
+.rien-tank {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+  border-radius: 24px;
+  background:
+    radial-gradient(120% 60% at 30% 0%, rgb(255 255 255 / 35%), transparent 60%),
+    linear-gradient(180deg, #7dd3fc 0%, #38bdf8 35%, #0e7490 100%);
+  box-shadow: inset 0 0 0 3px rgb(255 255 255 / 25%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .rien-tank {
+    background:
+      radial-gradient(120% 60% at 30% 0%, rgb(255 255 255 / 12%), transparent 60%),
+      linear-gradient(180deg, #0c4a6e 0%, #075985 40%, #083344 100%);
+  }
+}
+
+.rien-tank-floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 64px;
+}
+
+.rien-plant {
+  position: absolute;
+  bottom: 18px;
+  width: 34px;
+  height: 120px;
+  transform-origin: bottom center;
+  animation: rien-sway 5s ease-in-out infinite alternate;
+}
+
+.rien-plant.is-slow {
+  animation-duration: 7s;
+}
+
+.rien-plant.is-short {
+  height: 70px;
+}
+
+@keyframes rien-sway {
+  from { transform: rotate(-4deg); }
+  to { transform: rotate(5deg); }
+}
+
+.rien-bubble {
+  position: absolute;
+  bottom: -10px;
+  border-radius: 50%;
+  border: 1.5px solid rgb(255 255 255 / 70%);
+  background: rgb(255 255 255 / 15%);
+  animation: rien-rise 9s linear infinite;
+}
+
+@keyframes rien-rise {
+  to { transform: translateY(-330px) translateX(8px); opacity: 0.2; }
+}
+
+.rien-fish,
+.rien-egg {
+  position: absolute;
+  min-height: 0;
+  padding: 4px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.rien-egg {
+  bottom: 22px;
+}
+
+.rien-fish {
+  animation: rien-swim var(--dur, 20s) ease-in-out var(--delay, 0s) infinite;
+}
+
+.rien-fish-bob {
+  display: block;
+  animation: rien-bob 2.6s ease-in-out infinite alternate;
+}
+
+/* Swim right, turn, swim back. The sprite faces right. */
+@keyframes rien-swim {
+  0% { left: 3%; transform: scaleX(1); }
+  47% { left: calc(97% - var(--w) - 8px); transform: scaleX(1); }
+  50% { left: calc(97% - var(--w) - 8px); transform: scaleX(-1); }
+  97% { left: 3%; transform: scaleX(-1); }
+  100% { left: 3%; transform: scaleX(1); }
+}
+
+@keyframes rien-bob {
+  from { transform: translateY(-3px); }
+  to { transform: translateY(3px); }
+}
+
+.rien-fish.is-dead {
+  animation: none;
+}
+
+.rien-fish.is-dead .rien-fish-bob {
+  transform: rotate(180deg);
+  animation: rien-float 4s ease-in-out infinite alternate;
+}
+
+@keyframes rien-float {
+  from { transform: rotate(180deg) translateY(0); }
+  to { transform: rotate(176deg) translateY(2px); }
+}
+
+.rien-fish.is-selected,
+.rien-egg.is-selected {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rien-fish,
+  .rien-fish-bob,
+  .rien-plant,
+  .rien-bubble {
+    animation: none;
+  }
+
+  .rien-fish {
+    left: 10%;
+  }
+}
+
+.rien-fish-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.rien-fish-card p {
+  margin: 2px 0 0;
+}
+
+.rien-fish-thumb {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 52px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #bae6fd, #7dd3fc);
+}
+
+.rien-awards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.rien-award {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  padding: 12px 6px;
+  border: 1px solid var(--sq-border, #e4e4e7);
+  border-radius: 16px;
+  background: var(--sq-surface, #fff);
+  color: var(--sq-on-surface, #18181b);
+  font: inherit;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.rien-award strong {
+  font-size: 14px;
+}
+
+.rien-award span {
+  color: var(--sq-muted, #6b7280);
+}
+
+.rien-award.is-locked {
+  cursor: default;
+  background: color-mix(in srgb, var(--sq-surface, #fff) 70%, transparent);
+}
+
+.rien-award-bar {
+  display: block;
+  width: 80%;
+  height: 6px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--sq-on-surface, #18181b) 10%, transparent);
+  overflow: hidden;
+}
+
+.rien-award-bar span {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: var(--sq-primary, #0f766e);
+}
+
+.rien-award-count {
+  font-variant-numeric: tabular-nums;
+}
+
+/* News across the top ("Fixer grew…") */
+.rien-toast {
+  position: fixed;
+  z-index: 60;
+  left: 50%;
+  top: calc(env(safe-area-inset-top) + 10px);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(92vw, 520px);
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 18px;
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  color: #fff;
+  background: linear-gradient(135deg, #0e7490, #0f766e);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 25%);
+  cursor: pointer;
+}
+
+.rien-toast-enter-active,
+.rien-toast-leave-active {
+  transition: transform 250ms ease, opacity 250ms ease;
+}
+
+.rien-toast-enter-from,
+.rien-toast-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -20px);
 }

@@ -151,11 +151,13 @@ describe.each(Object.entries(stores))('%s repository', (_, open) => {
   })
 
   it('adds activities to one session row per day', async () => {
-    await repo.recordActivity('2026-11-02', 'word-recall', 4.26)
+    await repo.recordActivity('2026-11-02', 'word-recall', 4.26, { clean: 3, total: 4 })
     await repo.recordActivity('2026-11-02', 'fix-it', 3)
     await repo.recordActivity('2026-11-03', 'fix-it', 2)
     expect(await repo.gamesOn('2026-11-02')).toEqual(['word-recall', 'fix-it'])
-    expect((await repo.sessions()).find(s => s.date === '2026-11-02')!.minutes).toBe(7.3)
+    const day = (await repo.sessions()).find(s => s.date === '2026-11-02')!
+    expect(day.minutes).toBe(7.3)
+    expect(day.rounds).toEqual([{ game: 'word-recall', clean: 3, total: 4 }])
     expect((await repo.studyDays()).sort()).toEqual(['2026-11-02', '2026-11-03'])
   })
 

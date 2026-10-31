@@ -14,6 +14,15 @@ const doneToday = useLiveQuery(() => db.gamesOn(todayKey.value), [] as string[],
 const settings = useLiveQuery(() => db.getSettings(), null)
 const bosses = useLiveQuery(() => db.bossResults(), [])
 const talks = useLiveQuery(() => db.talkResults(), [])
+const tank = useLiveQuery(() => loadTank(now.value), null, now)
+const tankLine = computed(() => {
+  const t = tank.value
+  if (!t) return ''
+  const fish = t.skills.filter(f => f.stage !== 'egg').length + t.awards.filter(a => a.unlocked).length
+  const hungry = t.skills.filter(f => f.stage !== 'egg' && ['hungry', 'sick', 'dead'].includes(f.health)).length
+  if (fish === 0) return 'Finish a round to hatch your first fish'
+  return `${fish} fish${hungry ? ` · ${hungry} need feeding` : ' · all happy'}`
+})
 
 const plan = ref<ActivityId[]>([])
 watch(todayKey, async () => { plan.value = await loadSessionPlan(now.value) }, { immediate: true })
@@ -137,6 +146,16 @@ const talkedThisWeek = computed(() => {
 
     <h2 class="rien-section-title">This week</h2>
     <ul class="rien-list">
+      <li>
+        <NuxtLink to="/tank" class="rien-list-row">
+          <span class="rien-list-icon"><RienIcon name="fish" /></span>
+          <span class="rien-list-text">
+            <span class="rien-list-title">Your fish tank</span>
+            <span class="rien-list-sub">{{ tankLine }}</span>
+          </span>
+          <span class="rien-list-end"><RienIcon name="next" :size="18" /></span>
+        </NuxtLink>
+      </li>
       <li>
         <NuxtLink to="/games/file-boss" class="rien-list-row">
           <span class="rien-list-icon"><RienIcon name="file-boss" /></span>
