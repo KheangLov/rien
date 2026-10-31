@@ -18,7 +18,8 @@
     "build:ios": "RIEN_NATIVE=1 nuxt generate && cap sync ios",
     "open:ios": "cap open ios",
     "build:e2e": "RIEN_E2E=1 nuxt generate",
-    "build:ios:e2e": "RIEN_NATIVE=1 RIEN_E2E=1 nuxt generate && cap sync ios"
+    "build:ios:e2e": "RIEN_NATIVE=1 RIEN_E2E=1 nuxt generate && cap sync ios",
+    "install:iphone": "scripts/install-iphone.sh"
   },
   "devDependencies": {
     "@capacitor/cli": "^8.5.3",

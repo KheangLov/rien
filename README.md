@@ -42,6 +42,10 @@ pnpm open:ios      # open in Xcode; pick a team under Signing & Capabilities
   project). Apple does not allow changing it once the App Store Connect record exists.
 - Moving her data: Settings → Save backup in the web app, then Settings → Restore in the
   native app.
+- Free Apple ID install (no paid program): Debug builds are signed with the Personal Team
+  under `io.github.kheanglov.rien.dev`. `pnpm install:iphone` builds, installs and opens it
+  on the paired iPhone, over Wi-Fi once paired. Free installs stop opening after 7 days;
+  run it again to renew. Developer Mode must be on (Settings → Privacy & Security).
 
 ## Layout
 
