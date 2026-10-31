@@ -16,7 +16,9 @@
     "test": "vitest run",
     "typecheck": "nuxt typecheck",
     "build:ios": "RIEN_NATIVE=1 nuxt generate && cap sync ios",
-    "open:ios": "cap open ios"
+    "open:ios": "cap open ios",
+    "build:e2e": "RIEN_E2E=1 nuxt generate",
+    "build:ios:e2e": "RIEN_NATIVE=1 RIEN_E2E=1 nuxt generate && cap sync ios"
   },
   "devDependencies": {
     "@capacitor/cli": "^8.5.3",

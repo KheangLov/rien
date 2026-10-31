@@ -58,6 +58,18 @@ const activities = computed(() => [
     text: 'Ten words read aloud. Pick the one you hear.',
     ready: true,
   },
+  {
+    id: 'sentence-builder',
+    title: 'Sentence Builder',
+    text: 'Six sentences. Put the words in order.',
+    ready: true,
+  },
+  {
+    id: 'gap-radio',
+    title: 'Gap Radio',
+    text: 'Listen to a short story and fill in the missing words.',
+    ready: true,
+  },
   // Speech recognition only works in the native iPhone app.
   ...(isNativeApp()
     ? [{ id: 'say-it', title: 'Say It', text: 'Read five sentences aloud and check your endings.', ready: true }]

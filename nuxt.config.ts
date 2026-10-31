@@ -1,5 +1,7 @@
 // The native iPhone app bundles its files, so it needs no service worker.
 const native = process.env.RIEN_NATIVE === '1'
+// Test builds only: plays every game through the real screens (e2e/runner.client.ts).
+const e2e = process.env.RIEN_E2E === '1'
 
 // Client-only static build: no server rendering, no backend (see plan "Technical plan").
 export default defineNuxtConfig({
@@ -10,6 +12,8 @@ export default defineNuxtConfig({
   modules: ['@squirkle-ui/nuxt', '@vite-pwa/nuxt'],
 
   css: ['~/assets/css/main.css'],
+
+  plugins: e2e ? ['~~/e2e/runner.client.ts'] : [],
 
   app: {
     head: {

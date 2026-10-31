@@ -2,6 +2,7 @@
   "packs": [
     "core-grammar.json",
     "sound-pairs.json",
-    "couple-talk.json"
+    "couple-talk.json",
+    "practice-games.json"
   ]
 }

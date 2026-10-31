@@ -8,6 +8,8 @@ minimumReleaseAgeExclude:
   # TEMPORARY (added 2026-10-31): urgent fix for GHSA-86w9-cpqp-85rv.
   # Remove after 2026-11-03, once 1.4.1 is past the 7-day wait.
   - node-forge
+# ON 2026-11-03: also update Nuxt to 4.6.3 (pnpm up nuxt), which fixes moderate
+# dev-server advisories; it clears the 7-day wait that day. Not urgent enough to bypass it.
 # Install scripts are blocked by default; allow only packages that need them.
 allowBuilds:
   esbuild: true

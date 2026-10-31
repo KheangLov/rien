@@ -25,6 +25,9 @@ export const MISTAKE_TYPES = [
   'final-sound',
   // Sounds Khmer does not have: sh/ch, th, v/w.
   'sound',
+  'word-order',
+  // Words missed while listening (Gap Radio).
+  'listening',
   'other',
 ] as const
 
@@ -37,6 +40,8 @@ export const MISTAKE_LABELS: Record<MistakeType, string> = {
   'preposition': 'Prepositions',
   'final-sound': 'Word endings',
   'sound': 'sh, ch, th, v, w',
+  'word-order': 'Word order',
+  'listening': 'Listening',
   'other': 'Other',
 }
 

@@ -16,6 +16,16 @@ pnpm typecheck     # vue-tsc via nuxt typecheck
 pnpm audit         # fails on high-severity advisories
 ```
 
+## Checks
+
+- `pnpm test`: unit tests, with every storage test run against both IndexedDB and SQLite.
+- `pnpm build:e2e`, then open the build: `e2e/runner.client.ts` plays every game through the
+  real screens and logs `[e2e] PASS/FAIL` lines, ending with `[e2e] DONE`.
+- `pnpm build:ios:e2e`: the same run inside the iOS app (launch it with
+  `xcrun simctl launch --console-pty <device> io.github.kheanglov.rien` to read the log).
+- CI (`.github/workflows/ci.yml`) runs install from the lockfile, audit, tests, type check
+  and build once the repository is on GitHub. Dependabot updates weekly with a 7-day wait.
+
 ## iPhone app (Capacitor)
 
 The same build wrapped as a native app, with SQLite storage instead of IndexedDB

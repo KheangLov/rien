@@ -1,0 +1,207 @@
+{
+  "id": "practice-games",
+  "title": "Sentence Builder and Gap Radio",
+  "builder": [
+    {
+      "id": "where-live",
+      "text": "Where do you live?",
+      "alternatives": [],
+      "tip": "Questions: question word + do + you + verb."
+    },
+    {
+      "id": "sister-job",
+      "text": "What does your sister do?",
+      "alternatives": [],
+      "tip": "He, she or it: does, and the verb has no -s."
+    },
+    {
+      "id": "did-market",
+      "text": "Did you go to the market yesterday?",
+      "alternatives": [],
+      "tip": "Past questions: did + base verb (go, not went)."
+    },
+    {
+      "id": "how-often",
+      "text": "How often do you play football?",
+      "alternatives": [],
+      "tip": "How often + do + you + verb."
+    },
+    {
+      "id": "always-coffee",
+      "text": "I always drink coffee in the morning.",
+      "alternatives": [
+        "In the morning I always drink coffee."
+      ],
+      "tip": "Always goes before the main verb.",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "never-late",
+      "text": "She is never late for class.",
+      "alternatives": [],
+      "tip": "Never goes after am, is or are."
+    },
+    {
+      "id": "usually-dinner",
+      "text": "We usually have dinner at seven.",
+      "alternatives": [
+        "Usually we have dinner at seven."
+      ],
+      "tip": "Usually goes before the main verb."
+    },
+    {
+      "id": "new-red-bike",
+      "text": "He bought a new red bike.",
+      "alternatives": [],
+      "tip": "Age comes before colour: a new red bike."
+    },
+    {
+      "id": "lived-here",
+      "text": "They have lived here for two years.",
+      "alternatives": [],
+      "tip": "Present perfect with for: have lived … for two years."
+    },
+    {
+      "id": "been-siem-reap",
+      "text": "Have you ever been to Siem Reap?",
+      "alternatives": [],
+      "tip": "Have you ever been to …?"
+    },
+    {
+      "id": "film-start",
+      "text": "What time does the film start?",
+      "alternatives": [],
+      "tip": "What time + does + subject + verb."
+    },
+    {
+      "id": "help-homework",
+      "text": "Can you help me with my homework?",
+      "alternatives": [],
+      "tip": "Can + you + verb for a request."
+    },
+    {
+      "id": "cold-weather",
+      "text": "I don't like cold weather.",
+      "alternatives": [],
+      "tip": "Don't comes before the verb.",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "why-call",
+      "text": "Why didn't you call me last night?",
+      "alternatives": [],
+      "tip": "Why + didn't + you + verb."
+    },
+    {
+      "id": "taller",
+      "text": "My brother is taller than me.",
+      "alternatives": [],
+      "tip": "Comparative + than."
+    },
+    {
+      "id": "most-beautiful",
+      "text": "This is the most beautiful beach in Cambodia.",
+      "alternatives": [],
+      "tip": "The most + adjective + noun."
+    },
+    {
+      "id": "going-to-visit",
+      "text": "I am going to visit my grandmother tomorrow.",
+      "alternatives": [
+        "Tomorrow I am going to visit my grandmother."
+      ],
+      "tip": "Am going to + verb for a plan.",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "just-finished",
+      "text": "She has just finished her work.",
+      "alternatives": [],
+      "tip": "Just goes between has and the past participle."
+    },
+    {
+      "id": "bank-near",
+      "text": "Is there a bank near here?",
+      "alternatives": [],
+      "tip": "Is there + a + noun?"
+    },
+    {
+      "id": "shirt-cost",
+      "text": "How much does this shirt cost?",
+      "alternatives": [],
+      "tip": "How much + does + it + cost?"
+    },
+    {
+      "id": "watching-called",
+      "text": "I was watching TV when you called.",
+      "alternatives": [
+        "When you called I was watching TV."
+      ],
+      "tip": "Past continuous for the longer action.",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "drink-water",
+      "text": "You should drink more water.",
+      "alternatives": [],
+      "tip": "Should + base verb."
+    },
+    {
+      "id": "speak-slowly",
+      "text": "Could you speak more slowly, please?",
+      "alternatives": [],
+      "tip": "Could you + verb + please?"
+    },
+    {
+      "id": "phnom-penh",
+      "text": "I live in Phnom Penh with my family.",
+      "alternatives": [
+        "I live with my family in Phnom Penh."
+      ],
+      "tip": "Place, then people: in Phnom Penh with my family.",
+      "keepFirstCapital": true
+    }
+  ],
+  "radio": [
+    {
+      "id": "sophea-morning",
+      "title": "Sophea's morning",
+      "text": "Sophea gets up at six o'clock every morning. She washes her face, puts on her uniform and eats a bowl of rice soup with her mother. Then she rides her bike to school. The road is busy, so she rides slowly and carefully. Her first class starts at seven. She likes English best because her teacher tells funny stories and asks a lot of questions."
+    },
+    {
+      "id": "trip-kampot",
+      "title": "A trip to Kampot",
+      "text": "Last weekend we visited Kampot with three friends. We left Phnom Penh early on Saturday and arrived before lunch. In the afternoon we walked by the river and watched the boats. In the evening we ate fresh crab at a small restaurant near the market. On Sunday we climbed Bokor Mountain. It was cold and cloudy at the top, but the view was wonderful."
+    },
+    {
+      "id": "new-neighbours",
+      "title": "Our new neighbours",
+      "text": "A new family moved into the house next to ours last month. The father works at a hospital and the mother teaches maths. They have two children and a very noisy dog. The children play football in the street every afternoon. Yesterday they kicked the ball into our garden, and my brother kicked it back. Now they wave and say hello every time they see us."
+    },
+    {
+      "id": "rainy-season",
+      "title": "Rainy season",
+      "text": "In Cambodia the rainy season usually starts in May and ends in October. Most afternoons are hot and sunny, and then the sky suddenly turns dark. The rain comes very fast and the streets fill with water. People wait under shop roofs until it stops. Farmers are happy because the rice fields need water. Children love it because they can play in the puddles."
+    },
+    {
+      "id": "learning-cook",
+      "title": "Learning to cook",
+      "text": "My grandmother taught me how to cook amok when I was twelve. First we cut the fish into small pieces. Then we mixed coconut milk, eggs and curry paste in a big bowl. We added the fish and poured everything into banana leaf cups. We steamed them for twenty minutes. The kitchen smelled wonderful. Now I cook it every year for my family's New Year dinner."
+    },
+    {
+      "id": "night-market",
+      "title": "The night market",
+      "text": "On Friday evenings my friends and I often go to the night market. There are hundreds of stalls with clothes, shoes, bags and phone covers. We usually look around for an hour before we buy anything. I always try to get a better price, but my friend Dara pays the first price every time. After shopping we sit on the mats, eat grilled corn and listen to live music."
+    },
+    {
+      "id": "phone-call",
+      "title": "A phone call from my sister",
+      "text": "My sister called me last night from Korea. She moved there two years ago to study engineering. She told me that her classes are difficult but interesting. She has made many friends and she is learning to speak Korean. She misses Khmer food very much, especially fish amok. She plans to come home in December, and we are going to visit Angkor Wat together."
+    },
+    {
+      "id": "new-year-plans",
+      "title": "Plans for Khmer New Year",
+      "text": "This year we are going to spend Khmer New Year in my father's village. We are going to leave on the first morning and take the bus with my aunt and cousins. My mother is going to bring cakes and fruit for the pagoda. In the afternoon the young people will play traditional games. In the evening everyone is going to dance and throw water and powder at each other."
+    }
+  ]
+}

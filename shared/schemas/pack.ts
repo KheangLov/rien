@@ -73,6 +73,37 @@ export const talkSchema = z.object({
   questions: z.array(z.string().trim().min(1).max(160)).length(3),
 })
 
+// Sentence Builder: the words of `text` are shuffled and she puts them in order.
+export const builderSchema = z
+  .object({
+    id: z.string().regex(PACK_ID),
+    text: z.string().trim().min(3).max(120),
+    // Other orders that are also correct.
+    alternatives: z.array(z.string().trim().min(3)).default([]),
+    // Keep the first word's capital letter on its tile (for "I" and names).
+    keepFirstCapital: z.boolean().default(false),
+    tip: z.string().trim().min(1).max(160),
+  })
+  .superRefine((item, ctx) => {
+    const words = item.text.split(/\s+/)
+    if (words.length < 3 || words.length > 12) {
+      ctx.addIssue({ code: 'custom', path: ['text'], message: 'Use 3 to 12 words' })
+    }
+    const key = (t: string) => t.split(/\s+/).map(normalizeAnswer).sort().join(' ')
+    item.alternatives.forEach((alt, index) => {
+      if (key(alt) !== key(item.text)) {
+        ctx.addIssue({ code: 'custom', path: ['alternatives', index], message: 'An alternative must use the same words' })
+      }
+    })
+  })
+
+// Gap Radio: a short text read aloud with some words blanked.
+export const radioSchema = z.object({
+  id: z.string().regex(PACK_ID),
+  title: z.string().trim().min(1).max(60),
+  text: z.string().trim().min(40).max(700),
+})
+
 // A pack with no book is a core pack and applies at every level.
 export const packSchema = z
   .object({
@@ -83,16 +114,20 @@ export const packSchema = z
     fixIt: z.array(fixItItemSchema).default([]),
     soundPairs: z.array(soundPairSchema).default([]),
     talks: z.array(talkSchema).default([]),
+    builder: z.array(builderSchema).default([]),
+    radio: z.array(radioSchema).default([]),
   })
   .superRefine((pack, ctx) => {
     const seen = new Set<string>()
-    const check = (list: 'fixIt' | 'soundPairs' | 'talks', id: string, index: number) => {
+    const check = (list: 'fixIt' | 'soundPairs' | 'talks' | 'builder' | 'radio', id: string, index: number) => {
       if (seen.has(id)) ctx.addIssue({ code: 'custom', path: [list, index, 'id'], message: `Duplicate id "${id}"` })
       seen.add(id)
     }
     pack.fixIt.forEach((item, index) => check('fixIt', item.id, index))
     pack.soundPairs.forEach((pair, index) => check('soundPairs', pair.id, index))
     pack.talks.forEach((talk, index) => check('talks', talk.id, index))
+    pack.builder.forEach((item, index) => check('builder', item.id, index))
+    pack.radio.forEach((item, index) => check('radio', item.id, index))
   })
 
 export const packIndexSchema = z.object({
@@ -103,4 +138,6 @@ export type FixItItem = z.output<typeof fixItItemSchema>
 export type Pack = z.output<typeof packSchema>
 export type SoundPair = z.output<typeof soundPairSchema>
 export type Talk = z.output<typeof talkSchema>
+export type BuilderItem = z.output<typeof builderSchema>
+export type RadioText = z.output<typeof radioSchema>
 export type SoundFocus = (typeof SOUND_FOCUSES)[number]

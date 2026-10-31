@@ -1,5 +1,7 @@
 import type { GrammarRow } from '#shared/schemas/db'
+import { builderCards } from '#shared/utils/builder'
 import { fixItCards, packsFor } from '#shared/utils/fixit'
+import { radioCards } from '#shared/utils/radio'
 import { soundCards } from '#shared/utils/sounds'
 import { addDays } from '#shared/utils/streak'
 
@@ -24,6 +26,8 @@ export async function loadPractice(now = new Date()) {
     settings,
     fixCards: fixItCards(active),
     soundCards: soundCards(active),
+    builderCards: builderCards(active),
+    radioCards: radioCards(active),
     states: new Map<string, GrammarRow>(rows.map(row => [row.itemId, row])),
     counts,
   }
