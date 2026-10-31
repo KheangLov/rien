@@ -1,3 +1,6 @@
+// The native iPhone app bundles its files, so it needs no service worker.
+const native = process.env.RIEN_NATIVE === '1'
+
 // Client-only static build: no server rendering, no backend (see plan "Technical plan").
 export default defineNuxtConfig({
   compatibilityDate: '2026-10-31',
@@ -39,6 +42,7 @@ export default defineNuxtConfig({
   },
 
   pwa: {
+    disable: native,
     registerType: 'prompt',
     manifest: {
       name: 'Rien: English study',

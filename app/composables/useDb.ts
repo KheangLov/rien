@@ -1,9 +1,20 @@
+import { Capacitor } from '@capacitor/core'
 import { createDexieRepository } from '~/data/dexie'
-import type { StudyRepository } from '~/data/repository'
+import { lazyRepository, withChangeEvents, type ObservableRepository } from '~/data/events'
 
-let repository: StudyRepository | undefined
+let repository: ObservableRepository | undefined
 
-export function useDb(): StudyRepository {
-  repository ??= createDexieRepository()
+// IndexedDB (Dexie) on the web; SQLite in the native iPhone app, where iOS
+// may clear web storage when space runs low.
+export function useDb(): ObservableRepository {
+  repository ??= withChangeEvents(
+    Capacitor.isNativePlatform()
+      ? lazyRepository(import('~/data/native').then(m => m.openNativeRepository()))
+      : createDexieRepository(),
+  )
   return repository
+}
+
+export function isNativeApp(): boolean {
+  return Capacitor.isNativePlatform()
 }

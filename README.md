@@ -16,12 +16,30 @@ pnpm typecheck     # vue-tsc via nuxt typecheck
 pnpm audit         # fails on high-severity advisories
 ```
 
+## iPhone app (Capacitor)
+
+The same build wrapped as a native app, with SQLite storage instead of IndexedDB
+(iOS may clear web storage when space runs low).
+
+```bash
+sudo xcode-select -s /Applications/Xcode.app/Contents/Developer   # once
+sudo xcodebuild -license accept && sudo xcodebuild -runFirstLaunch # once
+pnpm build:ios     # static build without the service worker, then cap sync
+pnpm open:ios      # open in Xcode; pick a team under Signing & Capabilities
+```
+
+- Bundle ID: `io.github.kheanglov.rien` (in `capacitor.config.ts`). Apple does not allow
+  changing it once the App Store Connect record exists.
+- Moving her data: Settings → Save backup in the web app, then Settings → Restore in the
+  native app.
+
 ## Layout
 
 - `shared/schemas/db.ts`: Zod schemas for every stored row and the JSON backup.
 - `shared/utils/scheduler.ts`: the only file that touches ts-fsrs (FSRS-6 defaults).
 - `shared/utils/answer.ts`: answer checking. A dropped `-s`/`-ed` is always wrong and logged as a `final-sound` mistake, never forgiven as a typo.
-- `app/data/repository.ts`: storage interface. `app/data/dexie.ts` implements it for the web; the native app will add SQLite.
+- `app/data/repository.ts`: storage interface. `app/data/dexie.ts` implements it for the web,
+  `app/data/sql.ts` for SQLite (the app runs it on the Capacitor plugin, the tests on `node:sqlite`).
 
 ## iPhone check (plan week 4)
 

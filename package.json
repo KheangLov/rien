@@ -14,9 +14,12 @@
     "postinstall": "nuxt prepare",
     "audit": "pnpm audit --audit-level high",
     "test": "vitest run",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "build:ios": "RIEN_NATIVE=1 nuxt generate && cap sync ios",
+    "open:ios": "cap open ios"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.5.3",
     "@vite-pwa/nuxt": "^1.1.1",
     "fake-indexeddb": "^6.2.6",
     "typescript": "^6.0.3",
@@ -24,6 +27,11 @@
     "vue-tsc": "^3.3.13"
   },
   "dependencies": {
+    "@capacitor-community/sqlite": "^8.1.1",
+    "@capacitor/core": "^8.5.3",
+    "@capacitor/filesystem": "^8.1.5",
+    "@capacitor/ios": "^8.5.3",
+    "@capacitor/share": "^8.0.3",
     "@squirkle-ui/calendar": "^0.1.2",
     "@squirkle-ui/charts": "^0.1.1",
     "@squirkle-ui/nuxt": "^0.1.1",

@@ -3,6 +3,7 @@ import { BOOK_LABELS, BOOKS, FILE_NUMBERS, type Settings } from '#shared/schemas
 
 const db = useDb()
 const { $pwa } = useNuxtApp()
+const native = isNativeApp()
 
 const bookItems = BOOKS.map(value => ({ title: BOOK_LABELS[value], value }))
 const fileItems = FILE_NUMBERS.map(value => ({ title: `File ${value}`, value }))
@@ -41,14 +42,14 @@ async function update(patch: Partial<Settings>) {
 
 async function exportBackup() {
   const backup = await db.exportAll()
-  const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' })
-  const url = URL.createObjectURL(blob)
-  const link = document.createElement('a')
-  link.href = url
-  link.download = `rien-backup-${new Date().toISOString().slice(0, 10)}.json`
-  link.click()
-  URL.revokeObjectURL(url)
-  message.value = { type: 'success', text: `Backup saved with ${backup.cards.length} words.` }
+  try {
+    await saveBackupFile(`rien-backup-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(backup, null, 2))
+    message.value = { type: 'success', text: `Backup saved with ${backup.cards.length} words.` }
+  }
+  catch (error) {
+    // Closing the share sheet without choosing is not a failure worth reporting.
+    if (!String(error).includes('cancel')) message.value = { type: 'error', text: 'Could not save the backup.' }
+  }
 }
 
 async function importBackup(event: Event) {
@@ -110,7 +111,11 @@ async function importBackup(event: Event) {
     </SqCard>
 
     <SqCard title="Backup" subtitle="Your words live only on this phone">
-      <SqCardText>
+      <SqCardText v-if="native">
+        Save a backup to Files every week or two. Moving from the Home Screen web app?
+        Save a backup there first, then tap Restore here and choose that file.
+      </SqCardText>
+      <SqCardText v-else>
         Clearing Safari's website data deletes them. Save a backup to Files every week or two.
       </SqCardText>
       <SqCardActions>
@@ -128,7 +133,7 @@ async function importBackup(event: Event) {
 
     <SqAlert v-if="message" :type="message.type" variant="tonal" :text="message.text" />
 
-    <SqCard title="This phone" variant="outlined">
+    <SqCard v-if="!native" title="This phone" variant="outlined">
       <SqCardText>
         <div class="rien-row">
           <SqChip :color="online ? 'success' : 'warning'" :text="online ? 'Online' : 'Offline'" />
