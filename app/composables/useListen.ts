@@ -1,9 +1,19 @@
 import { Capacitor, registerPlugin, type PluginListenerHandle } from '@capacitor/core'
+import type { HeardWord } from '#shared/utils/spoken'
 
 type Permission = 'granted' | 'denied' | 'prompt'
 
+export interface Heard {
+  // Whole-sentence readings, best first.
+  alternatives: string[]
+  // The best reading word by word, with confidence and other spellings considered.
+  words?: HeardWord[]
+  // file:// URL of her recording.
+  recording?: string
+}
+
 interface RienSpeechPlugin {
-  listen(options: { language?: string, maxSeconds?: number }): Promise<{ alternatives: string[] }>
+  listen(options: { language?: string, maxSeconds?: number }): Promise<Heard>
   stop(): Promise<void>
   checkPermissions(): Promise<{ speech: Permission, microphone: Permission }>
   requestPermissions(): Promise<{ speech: Permission, microphone: Permission }>
@@ -24,17 +34,22 @@ export function useListen() {
     return status.speech === 'granted' && status.microphone === 'granted'
   }
 
-  // Listens once (call it from a tap) and returns the alternatives, best first.
-  async function listen(onPartial: (text: string) => void): Promise<string[]> {
+  // Listens once (call it from a tap).
+  async function listen(onPartial: (text: string) => void): Promise<Heard> {
     const handle = await RienSpeech.addListener('partial', ({ text }) => onPartial(text))
     try {
       window.speechSynthesis?.cancel()
-      return (await RienSpeech.listen({ language: 'en-US', maxSeconds: 12 })).alternatives
+      return await RienSpeech.listen({ language: 'en-US', maxSeconds: 12 })
     }
     finally {
       await handle.remove()
     }
   }
 
-  return { supported, ensurePermission, listen, stop: () => RienSpeech.stop() }
+  // Plays her last recording back through the web view.
+  function playRecording(url: string) {
+    void new Audio(Capacitor.convertFileSrc(url)).play().catch(() => {})
+  }
+
+  return { supported, ensurePermission, listen, playRecording, stop: () => RienSpeech.stop() }
 }

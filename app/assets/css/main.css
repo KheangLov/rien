@@ -914,3 +914,8 @@ input {
 .rien-word-detail p {
   margin: 0;
 }
+
+/* The phone was not sure: dashed grey, so it never reads as a verdict. */
+.rien-spoken-word.is-unclear {
+  border-bottom: 3px dashed var(--sq-muted, #6b7280);
+}

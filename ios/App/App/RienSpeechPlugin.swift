@@ -33,6 +33,11 @@ public class RienSpeechPlugin: CAPPlugin, CAPBridgedPlugin {
     private var lastResult: SFSpeechRecognitionResult?
     private var silenceTimer: Timer?
     private var limitTimer: Timer?
+    // Her voice, so she can play herself back next to the model reading.
+    private var recording: AVAudioFile?
+    private var recordingURL: URL {
+        FileManager.default.temporaryDirectory.appendingPathComponent("say-it.m4a")
+    }
 
     // MARK: Permissions
 
@@ -116,9 +121,23 @@ public class RienSpeechPlugin: CAPPlugin, CAPBridgedPlugin {
         self.request = request
 
         let input = audioEngine.inputNode
+        let format = input.outputFormat(forBus: 0)
+        try? FileManager.default.removeItem(at: recordingURL)
+        recording = try? AVAudioFile(
+            forWriting: recordingURL,
+            settings: [
+                AVFormatIDKey: kAudioFormatMPEG4AAC,
+                AVSampleRateKey: format.sampleRate,
+                AVNumberOfChannelsKey: format.channelCount,
+            ],
+            commonFormat: format.commonFormat,
+            interleaved: format.isInterleaved
+        )
+        let file = recording
         input.removeTap(onBus: 0)
-        input.installTap(onBus: 0, bufferSize: 1024, format: input.outputFormat(forBus: 0)) { buffer, _ in
+        input.installTap(onBus: 0, bufferSize: 1024, format: format) { buffer, _ in
             request.append(buffer)
+            try? file?.write(from: buffer)
         }
         audioEngine.prepare()
         do {
@@ -163,11 +182,25 @@ public class RienSpeechPlugin: CAPPlugin, CAPBridgedPlugin {
         }
     }
 
+    // Returns every whole-sentence reading, each word of the best one with its
+    // confidence and the other spellings considered, and the recording.
     private func finish(with result: SFSpeechRecognitionResult) {
         let alternatives = result.transcriptions.map { $0.formattedString }
+        let words: [[String: Any]] = result.bestTranscription.segments.map { segment in
+            [
+                "text": segment.substring,
+                "confidence": Double(segment.confidence),
+                "alternatives": segment.alternativeSubstrings,
+            ]
+        }
         let pending = call
+        let hasRecording = recording != nil
         teardown()
-        pending?.resolve(["alternatives": alternatives])
+        var data: [String: Any] = ["alternatives": alternatives, "words": words]
+        if hasRecording {
+            data["recording"] = recordingURL.absoluteString
+        }
+        pending?.resolve(data)
     }
 
     private func finish(rejecting message: String) {
@@ -189,6 +222,8 @@ public class RienSpeechPlugin: CAPPlugin, CAPBridgedPlugin {
         task = nil
         request = nil
         call = nil
+        // Releasing the file finishes writing it.
+        recording = nil
         // Hand audio back so reading aloud works again straight after.
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .spokenAudio)
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)

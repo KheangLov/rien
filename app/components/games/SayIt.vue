@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { correctedText } from '#shared/utils/fixit'
 import { shuffle } from '#shared/utils/rounds'
-import { compareSpoken, type SpokenWord } from '#shared/utils/spoken'
+import { compareBest, type SpokenWord } from '#shared/utils/spoken'
 
 const ROUND_SIZE = 5
 // Sentences from her own words' examples in each round, the rest from Fix It.
@@ -24,6 +24,7 @@ const position = ref(0)
 const phase = ref<'ready' | 'listening' | 'heard'>('ready')
 const partial = ref('')
 const heard = ref('')
+const recording = ref<string | undefined>()
 const words = ref<SpokenWord[]>([])
 const tries = ref(0)
 const clean = ref(0)
@@ -35,6 +36,8 @@ const progress = computed(() =>
   sentences.value.length ? Math.round((position.value / sentences.value.length) * 100) : 0)
 const endings = computed(() => words.value.filter(w => w.status === 'ending'))
 const missing = computed(() => words.value.filter(w => w.status === 'missing'))
+const unclear = computed(() => words.value.filter(w => w.status === 'unclear'))
+const plain = (word: string) => word.replace(/[^\p{L}']/gu, '')
 
 onMounted(async () => {
   try {
@@ -71,9 +74,11 @@ async function sayIt() {
   phase.value = 'listening'
   partial.value = ''
   try {
-    const [best = ''] = await speech.listen((text) => { partial.value = text })
+    const result = await speech.listen((text) => { partial.value = text })
+    const [best = '', ...others] = result.alternatives
     heard.value = best
-    words.value = compareSpoken(current.text, best)
+    recording.value = result.recording
+    words.value = compareBest(current.text, result.words ?? best.split(/\s+/).map(text => ({ text })), others)
     haptic(words.value.some(w => w.status === 'ending') ? 'warning' : 'success')
     tries.value++
     phase.value = 'heard'
@@ -107,6 +112,7 @@ function next() {
   position.value++
   phase.value = 'ready'
   heard.value = ''
+  recording.value = undefined
   words.value = []
   tries.value = 0
   listenError.value = ''
@@ -182,6 +188,13 @@ function next() {
             :text="endings.map(w => `${w.word.replace(/[^\p{L}']/gu, '')}: say the -${w.ending}`).join(' · ')"
           />
           <SqAlert
+            v-else-if="unclear.length"
+            type="info"
+            variant="tonal"
+            title="The phone was not sure"
+            :text="`Listen to yourself, then to the model, and compare: ${unclear.map(w => plain(w.word)).join(', ')}.`"
+          />
+          <SqAlert
             v-else-if="missing.length"
             type="info"
             variant="tonal"
@@ -204,6 +217,13 @@ function next() {
             {{ phase === 'heard' ? 'Say it again' : 'Say it' }}
           </SqBtn>
           <SqBtn variant="tonal" :disabled="phase === 'listening'" @click="speak(sentence.text)">Hear it</SqBtn>
+          <SqBtn
+            v-if="recording && phase === 'heard'"
+            variant="tonal"
+            @click="speech.playRecording(recording)"
+          >
+            Hear yourself
+          </SqBtn>
         </div>
 
         <div v-if="phase === 'heard'" class="rien-stack rien-gap-sm">
