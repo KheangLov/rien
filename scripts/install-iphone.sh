@@ -17,9 +17,16 @@ echo "iPhone: $DEVICE"
 
 DERIVED=${TMPDIR:-/tmp}/rien-device-build
 pnpm build:ios
-xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug \
+LOG="$DERIVED.log"
+echo "Building for the iPhone (log: $LOG)…"
+# Quiet mode printed warnings in plugin code as "error" lines, so keep the
+# full log in a file and show its end only if the build really fails.
+if ! xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug \
   -destination "id=$DEVICE" -derivedDataPath "$DERIVED" \
-  -allowProvisioningUpdates -allowProvisioningDeviceRegistration build -quiet
+  -allowProvisioningUpdates -allowProvisioningDeviceRegistration build > "$LOG" 2>&1; then
+  grep -E "error:|BUILD FAILED" "$LOG" | tail -20 >&2
+  exit 1
+fi
 xcrun devicectl device install app --device "$DEVICE" "$DERIVED/Build/Products/Debug-iphoneos/App.app"
 xcrun devicectl device process launch --device "$DEVICE" io.github.kheanglov.rien.dev
 echo "Rien is installed and open. It works for 7 days from now."
