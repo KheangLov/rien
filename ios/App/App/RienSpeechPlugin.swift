@@ -115,7 +115,10 @@ public class RienSpeechPlugin: CAPPlugin, CAPBridgedPlugin {
         request.shouldReportPartialResults = true
         request.taskHint = .dictation
         request.addsPunctuation = false
-        if recognizer.supportsOnDeviceRecognition {
+        // On the phone by default (private, works offline). With onDevice false,
+        // iOS may use Apple's online recognition, which is usually more accurate.
+        let onDevice = call.getBool("onDevice") ?? true
+        if onDevice && recognizer.supportsOnDeviceRecognition {
             request.requiresOnDeviceRecognition = true
         }
         self.request = request

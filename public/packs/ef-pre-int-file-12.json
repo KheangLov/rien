@@ -1,0 +1,52 @@
+{
+  "id": "ef-pre-int-file-12",
+  "title": "English File Pre-Intermediate, File 12 (check against the book)",
+  "book": "english-file-pre-intermediate-4e",
+  "file": 12,
+  "fixIt": [
+    {
+      "id": "past-perfect",
+      "text": "When I got home, my sister had cook dinner.",
+      "wrong": "cook",
+      "fix": "cooked",
+      "distractors": [
+        "cooking",
+        "cooks"
+      ],
+      "type": "tense",
+      "explain": "Past perfect: had + past participle."
+    },
+    {
+      "id": "told-me",
+      "text": "She said me that she was tired.",
+      "wrong": "said",
+      "fix": "told",
+      "distractors": [
+        "says",
+        "tell"
+      ],
+      "type": "other",
+      "explain": "Tell someone; say something."
+    },
+    {
+      "id": "said-that",
+      "text": "He told that he was busy.",
+      "wrong": "told",
+      "fix": "said",
+      "distractors": [
+        "tell",
+        "talked"
+      ],
+      "type": "other",
+      "explain": "Said that … (no person after it)."
+    }
+  ],
+  "builder": [
+    {
+      "id": "who-wrote",
+      "text": "Who wrote this song?",
+      "alternatives": [],
+      "tip": "When who is the subject, no auxiliary: Who wrote?"
+    }
+  ]
+}

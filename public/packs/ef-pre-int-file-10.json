@@ -1,0 +1,52 @@
+{
+  "id": "ef-pre-int-file-10",
+  "title": "English File Pre-Intermediate, File 10 (check against the book)",
+  "book": "english-file-pre-intermediate-4e",
+  "file": 10,
+  "fixIt": [
+    {
+      "id": "into",
+      "text": "She walked in the room.",
+      "wrong": "in",
+      "fix": "into",
+      "distractors": [
+        "on",
+        "at"
+      ],
+      "type": "preposition",
+      "explain": "Movement inside: into the room."
+    },
+    {
+      "id": "passive-built",
+      "text": "This temple was build in the 12th century.",
+      "wrong": "build",
+      "fix": "built",
+      "distractors": [
+        "building",
+        "builds"
+      ],
+      "type": "tense",
+      "explain": "Passive: was + past participle."
+    },
+    {
+      "id": "passive-grown",
+      "text": "Rice is grow in many provinces.",
+      "wrong": "grow",
+      "fix": "grown",
+      "distractors": [
+        "grew",
+        "growing"
+      ],
+      "type": "tense",
+      "explain": "Passive: is + past participle."
+    }
+  ],
+  "builder": [
+    {
+      "id": "turn-it-off",
+      "text": "Please turn it off.",
+      "alternatives": [],
+      "tip": "With it, the pronoun goes in the middle: turn it off."
+    }
+  ]
+}

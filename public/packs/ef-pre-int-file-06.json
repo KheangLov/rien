@@ -1,0 +1,53 @@
+{
+  "id": "ef-pre-int-file-06",
+  "title": "English File Pre-Intermediate, File 6 (check against the book)",
+  "book": "english-file-pre-intermediate-4e",
+  "file": 6,
+  "fixIt": [
+    {
+      "id": "will-rain",
+      "text": "I think it will rains tomorrow.",
+      "wrong": "rains",
+      "fix": "rain",
+      "distractors": [
+        "raining",
+        "rained"
+      ],
+      "type": "tense",
+      "explain": "After will, use the base form."
+    },
+    {
+      "id": "will-help",
+      "text": "I will helping you with that.",
+      "wrong": "helping",
+      "fix": "help",
+      "distractors": [
+        "helps",
+        "helped"
+      ],
+      "type": "tense",
+      "explain": "Will + base form: will help."
+    },
+    {
+      "id": "review-met",
+      "text": "Yesterday I meet my old teacher.",
+      "wrong": "meet",
+      "fix": "met",
+      "distractors": [
+        "meeting",
+        "meets"
+      ],
+      "type": "tense",
+      "explain": "Yesterday: past simple, met."
+    }
+  ],
+  "builder": [
+    {
+      "id": "sunny",
+      "text": "I think it will be sunny tomorrow.",
+      "alternatives": [],
+      "tip": "I think + will for predictions.",
+      "keepFirstCapital": true
+    }
+  ]
+}

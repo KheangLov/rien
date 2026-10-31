@@ -132,6 +132,21 @@ async function importBackup(event: Event) {
       </SqCardText>
     </SqCard>
 
+    <SqCard v-if="native && settings" title="Say It">
+      <SqCardText class="rien-stack">
+        <SqSwitch
+          :model-value="settings.speechOnline"
+          label="Use Apple’s online speech recognition"
+          color="primary"
+          @update:model-value="update({ speechOnline: $event })"
+        />
+        <p class="rien-muted">
+          Usually hears endings more accurately when you are online. Your recordings are then
+          processed by Apple. Off keeps everything on this phone and works offline.
+        </p>
+      </SqCardText>
+    </SqCard>
+
     <SqCard v-if="native && settings" title="Daily reminder">
       <SqCardText class="rien-stack">
         <SqSwitch

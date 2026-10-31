@@ -29,4 +29,5 @@ if ! xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug 
 fi
 xcrun devicectl device install app --device "$DEVICE" "$DERIVED/Build/Products/Debug-iphoneos/App.app"
 xcrun devicectl device process launch --device "$DEVICE" io.github.kheanglov.rien.dev
+date +%s > "$HOME/.rien-last-install"
 echo "Rien is installed and open. It works for 7 days from now."

@@ -1,0 +1,88 @@
+{
+  "id": "ef-pre-int-file-05",
+  "title": "English File Pre-Intermediate, File 5 (check against the book)",
+  "book": "english-file-pre-intermediate-4e",
+  "file": 5,
+  "fixIt": [
+    {
+      "id": "than",
+      "text": "My brother is taller then me.",
+      "wrong": "then",
+      "fix": "than",
+      "distractors": [
+        "that",
+        "as"
+      ],
+      "type": "other",
+      "explain": "Comparatives use than."
+    },
+    {
+      "id": "as-as",
+      "text": "This phone is as cheap than that one.",
+      "wrong": "than",
+      "fix": "as",
+      "distractors": [
+        "then",
+        "like"
+      ],
+      "type": "other",
+      "explain": "as … as: as cheap as."
+    },
+    {
+      "id": "in-country",
+      "text": "It is the biggest city of Cambodia.",
+      "wrong": "of",
+      "fix": "in",
+      "distractors": [
+        "on",
+        "at"
+      ],
+      "type": "preposition",
+      "explain": "Superlatives with places take in: the biggest city in Cambodia."
+    },
+    {
+      "id": "best",
+      "text": "He is the better student in the class.",
+      "wrong": "better",
+      "fix": "best",
+      "distractors": [
+        "good",
+        "well"
+      ],
+      "type": "other",
+      "explain": "The + superlative: the best."
+    },
+    {
+      "id": "arent-enough",
+      "text": "There isn't enough chairs for everyone.",
+      "wrong": "isn't",
+      "fix": "aren't",
+      "distractors": [
+        "don't",
+        "hasn't"
+      ],
+      "type": "plural-s",
+      "explain": "Chairs is plural: there aren't."
+    },
+    {
+      "id": "too-to",
+      "text": "I'm too tired for go out.",
+      "wrong": "for",
+      "fix": "to",
+      "distractors": [
+        "at",
+        "of"
+      ],
+      "type": "preposition",
+      "explain": "too + adjective + to + verb."
+    }
+  ],
+  "builder": [
+    {
+      "id": "best-restaurant",
+      "text": "This is the best restaurant in town.",
+      "alternatives": [],
+      "tip": "The + superlative + noun + in."
+    }
+  ]
+}

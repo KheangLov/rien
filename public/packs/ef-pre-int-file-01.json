@@ -1,0 +1,88 @@
+{
+  "id": "ef-pre-int-file-01",
+  "title": "English File Pre-Intermediate, File 1 (check against the book)",
+  "book": "english-file-pre-intermediate-4e",
+  "file": 1,
+  "fixIt": [
+    {
+      "id": "q-where-do-you-live",
+      "text": "Where you live?",
+      "wrong": "you",
+      "fix": "do you",
+      "distractors": [
+        "you do",
+        "does you"
+      ],
+      "type": "word-order",
+      "explain": "Questions in the present need do before the subject: Where do you live?"
+    },
+    {
+      "id": "q-where-does-he-work",
+      "text": "Where does you work?",
+      "wrong": "does",
+      "fix": "do",
+      "distractors": [
+        "is",
+        "are"
+      ],
+      "type": "third-person-s",
+      "explain": "Does is for he, she and it. With you, use do."
+    },
+    {
+      "id": "ps-doesnt-eat",
+      "text": "My sister don't eat meat.",
+      "wrong": "don't",
+      "fix": "doesn't",
+      "distractors": [
+        "isn't",
+        "not"
+      ],
+      "type": "third-person-s",
+      "explain": "He, she or it: doesn't."
+    },
+    {
+      "id": "ps-gets-up",
+      "text": "He usually get up at six.",
+      "wrong": "get",
+      "fix": "gets",
+      "distractors": [
+        "getting",
+        "to get"
+      ],
+      "type": "third-person-s",
+      "explain": "Present simple with he: gets."
+    },
+    {
+      "id": "pc-is-raining",
+      "text": "Look! It rain outside.",
+      "wrong": "rain",
+      "fix": "is raining",
+      "distractors": [
+        "rains",
+        "rained"
+      ],
+      "type": "tense",
+      "explain": "Look! means now: present continuous."
+    },
+    {
+      "id": "pc-is-wearing",
+      "text": "She wearing a red dress today.",
+      "wrong": "wearing",
+      "fix": "is wearing",
+      "distractors": [
+        "wear",
+        "wears"
+      ],
+      "type": "tense",
+      "explain": "Present continuous needs am, is or are."
+    }
+  ],
+  "builder": [
+    {
+      "id": "music-like",
+      "text": "What kind of music do you like?",
+      "alternatives": [],
+      "tip": "Question word + do + you + verb."
+    }
+  ]
+}

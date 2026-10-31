@@ -384,7 +384,7 @@ async function run() {
   await step('Progress tab shows totals and the File Boss result', async () => {
     await goTo('/progress', 'Weak spots')
     await waitText('3 words saved')
-    await waitText('File 7:')
+    await waitText('File 9:')
     await screen('progress')
   })
 

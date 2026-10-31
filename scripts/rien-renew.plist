@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Optional: runs scripts/renew-iphone.sh every 3 hours so the free install
+     never expires. Not installed automatically. To turn it on, see README.md. -->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>io.github.kheanglov.rien.renew</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/zsh</string>
+    <string>/Users/nitaandkheang/projects/rien/scripts/renew-iphone.sh</string>
+  </array>
+  <key>StartInterval</key>
+  <integer>10800</integer>
+  <key>StandardOutPath</key>
+  <string>/Users/nitaandkheang/Library/Logs/rien-renew.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/nitaandkheang/Library/Logs/rien-renew.log</string>
+</dict>
+</plist>

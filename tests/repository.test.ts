@@ -57,9 +57,9 @@ describe.each(Object.entries(stores))('%s repository', (_, open) => {
   })
 
   it('starts with default settings and saves changes', async () => {
-    expect(await repo.getSettings()).toMatchObject({ file: 7, khmerHints: true })
-    await repo.saveSettings({ file: 8 })
-    expect((await repo.getSettings()).file).toBe(8)
+    expect(await repo.getSettings()).toMatchObject({ file: 9, khmerHints: true })
+    await repo.saveSettings({ file: 12 })
+    expect((await repo.getSettings()).file).toBe(12)
   })
 
   it('adds a word that is due immediately', async () => {

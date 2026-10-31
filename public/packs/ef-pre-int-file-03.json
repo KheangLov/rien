@@ -1,0 +1,76 @@
+{
+  "id": "ef-pre-int-file-03",
+  "title": "English File Pre-Intermediate, File 3 (check against the book)",
+  "book": "english-file-pre-intermediate-4e",
+  "file": 3,
+  "fixIt": [
+    {
+      "id": "goingto-am",
+      "text": "Tomorrow I going to visit my aunt.",
+      "wrong": "going",
+      "fix": "am going",
+      "distractors": [
+        "go",
+        "will going"
+      ],
+      "type": "tense",
+      "explain": "Be going to: I am going to visit."
+    },
+    {
+      "id": "arrive-in",
+      "text": "We are arriving to Bangkok on Friday.",
+      "wrong": "to",
+      "fix": "in",
+      "distractors": [
+        "at",
+        "on"
+      ],
+      "type": "preposition",
+      "explain": "Arrive in a city or country, arrive at a building."
+    },
+    {
+      "id": "future-doing",
+      "text": "What are you do this weekend?",
+      "wrong": "do",
+      "fix": "doing",
+      "distractors": [
+        "did",
+        "does"
+      ],
+      "type": "tense",
+      "explain": "Plans: present continuous, are you doing?"
+    },
+    {
+      "id": "rel-who",
+      "text": "She is the teacher which helped me.",
+      "wrong": "which",
+      "fix": "who",
+      "distractors": [
+        "what",
+        "where"
+      ],
+      "type": "other",
+      "explain": "Use who (or that) for people."
+    },
+    {
+      "id": "rel-that",
+      "text": "This is the café who sells good coffee.",
+      "wrong": "who",
+      "fix": "that",
+      "distractors": [
+        "what",
+        "where"
+      ],
+      "type": "other",
+      "explain": "Use that or which for things and places."
+    }
+  ],
+  "builder": [
+    {
+      "id": "weekend-doing",
+      "text": "What are you doing this weekend?",
+      "alternatives": [],
+      "tip": "Present continuous for plans: are you doing?"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "ef-pre-int-file-09",
+  "title": "English File Pre-Intermediate, File 9 (check against the book)",
+  "book": "english-file-pre-intermediate-4e",
+  "file": 9,
+  "fixIt": [
+    {
+      "id": "second-cond",
+      "text": "If I have a lot of money, I would buy a house.",
+      "wrong": "have",
+      "fix": "had",
+      "distractors": [
+        "has",
+        "will have"
+      ],
+      "type": "tense",
+      "explain": "Second conditional: if + past, would + verb."
+    },
+    {
+      "id": "for-years",
+      "text": "I have lived here since five years.",
+      "wrong": "since",
+      "fix": "for",
+      "distractors": [
+        "from",
+        "during"
+      ],
+      "type": "preposition",
+      "explain": "For + a period of time (five years); since + a starting point."
+    },
+    {
+      "id": "since-year",
+      "text": "She has worked at the bank for 2019.",
+      "wrong": "for",
+      "fix": "since",
+      "distractors": [
+        "from",
+        "at"
+      ],
+      "type": "preposition",
+      "explain": "Since + a starting point: since 2019."
+    }
+  ],
+  "builder": [
+    {
+      "id": "how-long",
+      "text": "How long have you lived here?",
+      "alternatives": [],
+      "tip": "How long + present perfect."
+    },
+    {
+      "id": "when-start",
+      "text": "When did you start learning English?",
+      "alternatives": [],
+      "tip": "A finished time (when?) takes the past simple."
+    }
+  ]
+}

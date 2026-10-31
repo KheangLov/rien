@@ -1,0 +1,78 @@
+{
+  "id": "ef-pre-int-file-02",
+  "title": "English File Pre-Intermediate, File 2 (check against the book)",
+  "book": "english-file-pre-intermediate-4e",
+  "file": 2,
+  "fixIt": [
+    {
+      "id": "past-swam",
+      "text": "We stayed at a hotel and swim every day.",
+      "wrong": "swim",
+      "fix": "swam",
+      "distractors": [
+        "swimmed",
+        "swims"
+      ],
+      "type": "tense",
+      "explain": "Swim is irregular: swam."
+    },
+    {
+      "id": "past-lost",
+      "text": "I losed my passport at the airport.",
+      "wrong": "losed",
+      "fix": "lost",
+      "distractors": [
+        "lose",
+        "loosed"
+      ],
+      "type": "tense",
+      "explain": "Lose is irregular: lost."
+    },
+    {
+      "id": "pastcont-sleeping",
+      "text": "I was sleep when you called.",
+      "wrong": "sleep",
+      "fix": "sleeping",
+      "distractors": [
+        "slept",
+        "sleeps"
+      ],
+      "type": "tense",
+      "explain": "Past continuous: was + -ing."
+    },
+    {
+      "id": "pastcont-were",
+      "text": "They was waiting for the bus.",
+      "wrong": "was",
+      "fix": "were",
+      "distractors": [
+        "is",
+        "be"
+      ],
+      "type": "tense",
+      "explain": "They, we and you take were."
+    },
+    {
+      "id": "prep-in-year",
+      "text": "I was born on 2001.",
+      "wrong": "on",
+      "fix": "in",
+      "distractors": [
+        "at",
+        "by"
+      ],
+      "type": "preposition",
+      "explain": "Years take in."
+    }
+  ],
+  "builder": [
+    {
+      "id": "got-home",
+      "text": "When I got home, I made dinner.",
+      "alternatives": [
+        "I made dinner when I got home."
+      ],
+      "tip": "When + past simple, then what happened next."
+    }
+  ]
+}

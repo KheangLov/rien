@@ -1,0 +1,66 @@
+{
+  "id": "ef-pre-int-file-08",
+  "title": "English File Pre-Intermediate, File 8 (check against the book)",
+  "book": "english-file-pre-intermediate-4e",
+  "file": 8,
+  "fixIt": [
+    {
+      "id": "should-go",
+      "text": "You should goes to bed earlier.",
+      "wrong": "goes",
+      "fix": "go",
+      "distractors": [
+        "going",
+        "to go"
+      ],
+      "type": "other",
+      "explain": "Should + base form."
+    },
+    {
+      "id": "first-cond",
+      "text": "If you study hard, you pass the test.",
+      "wrong": "pass",
+      "fix": "will pass",
+      "distractors": [
+        "passed",
+        "would pass"
+      ],
+      "type": "tense",
+      "explain": "First conditional: if + present, will + verb."
+    },
+    {
+      "id": "mine",
+      "text": "This bag is my.",
+      "wrong": "my",
+      "fix": "mine",
+      "distractors": [
+        "me",
+        "I"
+      ],
+      "type": "possessive-s",
+      "explain": "Without a noun after it, use mine."
+    },
+    {
+      "id": "well",
+      "text": "She speaks English very good.",
+      "wrong": "good",
+      "fix": "well",
+      "distractors": [
+        "better",
+        "goodly"
+      ],
+      "type": "other",
+      "explain": "Adverb of manner: well, not good."
+    }
+  ],
+  "builder": [
+    {
+      "id": "if-rains",
+      "text": "If it rains, we will stay at home.",
+      "alternatives": [
+        "We will stay at home if it rains."
+      ],
+      "tip": "If + present simple, will + verb."
+    }
+  ]
+}

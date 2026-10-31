@@ -1,0 +1,88 @@
+{
+  "id": "ef-pre-int-file-04",
+  "title": "English File Pre-Intermediate, File 4 (check against the book)",
+  "book": "english-file-pre-intermediate-4e",
+  "file": 4,
+  "fixIt": [
+    {
+      "id": "pp-finished",
+      "text": "I have already finish my work.",
+      "wrong": "finish",
+      "fix": "finished",
+      "distractors": [
+        "finishing",
+        "finishes"
+      ],
+      "type": "tense",
+      "explain": "Present perfect: have + past participle."
+    },
+    {
+      "id": "do-washing-up",
+      "text": "Can you make the washing up?",
+      "wrong": "make",
+      "fix": "do",
+      "distractors": [
+        "take",
+        "have"
+      ],
+      "type": "other",
+      "explain": "We do the washing up, the housework and the shopping."
+    },
+    {
+      "id": "pp-gone",
+      "text": "She has went to the shop.",
+      "wrong": "went",
+      "fix": "gone",
+      "distractors": [
+        "go",
+        "going"
+      ],
+      "type": "tense",
+      "explain": "Has + past participle: gone, not went."
+    },
+    {
+      "id": "pp-ever-bought",
+      "text": "Have you ever buy anything online?",
+      "wrong": "buy",
+      "fix": "bought",
+      "distractors": [
+        "buying",
+        "buys"
+      ],
+      "type": "tense",
+      "explain": "Have you ever + past participle: bought."
+    },
+    {
+      "id": "anything",
+      "text": "I didn't do nothing at the weekend.",
+      "wrong": "nothing",
+      "fix": "anything",
+      "distractors": [
+        "something",
+        "everything"
+      ],
+      "type": "other",
+      "explain": "After not, use anything."
+    },
+    {
+      "id": "boring",
+      "text": "The film was very bored.",
+      "wrong": "bored",
+      "fix": "boring",
+      "distractors": [
+        "boringly",
+        "bore"
+      ],
+      "type": "other",
+      "explain": "Things are boring; people feel bored."
+    }
+  ],
+  "builder": [
+    {
+      "id": "finished-yet",
+      "text": "Have you finished your homework yet?",
+      "alternatives": [],
+      "tip": "Yet goes at the end of the question."
+    }
+  ]
+}

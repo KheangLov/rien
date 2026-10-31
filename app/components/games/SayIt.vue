@@ -74,7 +74,8 @@ async function sayIt() {
   phase.value = 'listening'
   partial.value = ''
   try {
-    const result = await speech.listen((text) => { partial.value = text })
+    const { speechOnline } = await db.getSettings()
+    const result = await speech.listen((text) => { partial.value = text }, { online: speechOnline })
     const [best = '', ...others] = result.alternatives
     heard.value = best
     recording.value = result.recording

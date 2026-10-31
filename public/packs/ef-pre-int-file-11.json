@@ -1,0 +1,72 @@
+{
+  "id": "ef-pre-int-file-11",
+  "title": "English File Pre-Intermediate, File 11 (check against the book)",
+  "book": "english-file-pre-intermediate-4e",
+  "file": 11,
+  "fixIt": [
+    {
+      "id": "used-to",
+      "text": "I use to play football when I was a child.",
+      "wrong": "use",
+      "fix": "used",
+      "distractors": [
+        "using",
+        "uses"
+      ],
+      "type": "tense",
+      "explain": "Used to for the past."
+    },
+    {
+      "id": "did-use-to",
+      "text": "Did you used to have long hair?",
+      "wrong": "used",
+      "fix": "use",
+      "distractors": [
+        "using",
+        "uses"
+      ],
+      "type": "tense",
+      "explain": "After did: use to, not used to."
+    },
+    {
+      "id": "might-come",
+      "text": "She might comes tomorrow.",
+      "wrong": "comes",
+      "fix": "come",
+      "distractors": [
+        "coming",
+        "to come"
+      ],
+      "type": "other",
+      "explain": "Might + base form."
+    },
+    {
+      "id": "so-do-i",
+      "text": "I love dancing. So am I.",
+      "wrong": "am",
+      "fix": "do",
+      "distractors": [
+        "I",
+        "does"
+      ],
+      "type": "other",
+      "explain": "Love is a normal verb, so: So do I."
+    }
+  ],
+  "builder": [
+    {
+      "id": "used-to-live",
+      "text": "I used to live in the countryside.",
+      "alternatives": [],
+      "tip": "Used to + base form.",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "neither-do-i",
+      "text": "I don't like coffee. Neither do I.",
+      "alternatives": [],
+      "tip": "Neither + auxiliary + subject.",
+      "keepFirstCapital": true
+    }
+  ]
+}

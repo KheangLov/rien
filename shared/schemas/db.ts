@@ -13,7 +13,8 @@ export const BOOK_LABELS: Record<Book, string> = {
   'english-file-upper-intermediate-4e': 'English File Upper-Intermediate',
 }
 
-export const FILE_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const
+// English File Pre-Intermediate 4th edition has 12 Files.
+export const FILE_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const
 
 export const MISTAKE_TYPES = [
   'tense',
@@ -46,7 +47,7 @@ export const MISTAKE_LABELS: Record<MistakeType, string> = {
 }
 
 export const bookSchema = z.enum(BOOKS)
-export const fileNumberSchema = z.number().int().min(1).max(10)
+export const fileNumberSchema = z.number().int().min(1).max(12)
 export const mistakeTypeSchema = z.enum(MISTAKE_TYPES)
 
 // Mirrors ts-fsrs's Card. Dates are coerced so JSON backups restore cleanly.
@@ -150,7 +151,8 @@ export const talkResultSchema = z.object({
 
 export const settingsSchema = z.object({
   book: bookSchema.default('english-file-pre-intermediate-4e'),
-  file: fileNumberSchema.default(7),
+  // ACE Level 6 is most likely Files 9 to 12 (an estimate; check with her teacher).
+  file: fileNumberSchema.default(9),
   khmerHints: z.boolean().default(true),
   // Most words in one Word Recall round.
   dailyGoal: z.number().int().min(1).max(200).default(20),
@@ -158,6 +160,9 @@ export const settingsSchema = z.object({
   newPerDay: z.number().int().min(0).max(50).default(10),
   // Study days per week.
   weeklyGoal: z.number().int().min(1).max(7).default(5),
+  // Say It: let iOS use Apple's online recognition (usually more accurate;
+  // recordings are processed by Apple). Off keeps recognition on the phone.
+  speechOnline: z.boolean().default(false),
   // Daily notification, native app only.
   reminder: z
     .object({

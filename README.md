@@ -46,6 +46,10 @@ pnpm open:ios      # open in Xcode; pick a team under Signing & Capabilities
   under `io.github.kheanglov.rien.dev`. `pnpm install:iphone` builds, installs and opens it
   on the paired iPhone, over Wi-Fi once paired. Free installs stop opening after 7 days;
   run it again to renew. Developer Mode must be on (Settings → Privacy & Security).
+- `pnpm renew:iphone` reinstalls only when the install is over 6 days old. To run that
+  automatically every 3 hours (optional, your choice):
+  `cp scripts/rien-renew.plist ~/Library/LaunchAgents/ && launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/rien-renew.plist`.
+  To turn it off: `launchctl bootout gui/$(id -u)/io.github.kheanglov.rien.renew && rm ~/Library/LaunchAgents/rien-renew.plist`.
 
 ## Layout
 

@@ -1,0 +1,88 @@
+{
+  "id": "ef-pre-int-file-07",
+  "title": "English File Pre-Intermediate, File 7 (check against the book)",
+  "book": "english-file-pre-intermediate-4e",
+  "file": 7,
+  "fixIt": [
+    {
+      "id": "want-to",
+      "text": "I want learn English.",
+      "wrong": "learn",
+      "fix": "to learn",
+      "distractors": [
+        "learning",
+        "learned"
+      ],
+      "type": "other",
+      "explain": "Want + to + verb."
+    },
+    {
+      "id": "forgot-to",
+      "text": "She forgot calling her mother.",
+      "wrong": "calling",
+      "fix": "to call",
+      "distractors": [
+        "call",
+        "called"
+      ],
+      "type": "other",
+      "explain": "Forgot to call: she did not call."
+    },
+    {
+      "id": "good-at-ing",
+      "text": "She is good at swim.",
+      "wrong": "swim",
+      "fix": "swimming",
+      "distractors": [
+        "to swim",
+        "swam"
+      ],
+      "type": "other",
+      "explain": "After a preposition, use -ing."
+    },
+    {
+      "id": "afraid-of",
+      "text": "I'm afraid from dogs.",
+      "wrong": "from",
+      "fix": "of",
+      "distractors": [
+        "about",
+        "with"
+      ],
+      "type": "preposition",
+      "explain": "Afraid of something."
+    },
+    {
+      "id": "has-to",
+      "text": "She have to wear a uniform at work.",
+      "wrong": "have",
+      "fix": "has",
+      "distractors": [
+        "must to",
+        "having"
+      ],
+      "type": "third-person-s",
+      "explain": "He, she or it: has to."
+    },
+    {
+      "id": "do-i-have-to",
+      "text": "Do I has to pay now?",
+      "wrong": "has",
+      "fix": "have",
+      "distractors": [
+        "must",
+        "having"
+      ],
+      "type": "third-person-s",
+      "explain": "After do, use have: Do I have to?"
+    }
+  ],
+  "builder": [
+    {
+      "id": "dont-have-to",
+      "text": "You don't have to wear a tie.",
+      "alternatives": [],
+      "tip": "Don't have to: it is not necessary."
+    }
+  ]
+}
