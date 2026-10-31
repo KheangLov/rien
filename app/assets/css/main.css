@@ -292,3 +292,42 @@ a,
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
+
+/* Couple Talk */
+.rien-timer-card {
+  text-align: center;
+}
+
+.rien-timer {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--sq-on-surface, #18181b);
+}
+
+.rien-row-center {
+  justify-content: center;
+}
+
+.rien-questions {
+  margin: 0;
+  padding-left: 1.4em;
+  display: grid;
+  gap: 10px;
+  font-size: 18px;
+  line-height: 1.4;
+  color: var(--sq-on-surface, #18181b);
+}
+
+.rien-rules {
+  margin: 0;
+  padding-left: 1.2em;
+  display: grid;
+  gap: 6px;
+}
+
+.rien-gap-sm {
+  gap: 6px;
+}

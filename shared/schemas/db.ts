@@ -133,6 +133,14 @@ export const bossResultSchema = z.object({
   total: z.number().int().min(1),
 })
 
+// One finished Couple Talk evening.
+export const talkResultSchema = z.object({
+  id: z.number().int().optional(),
+  talkId: z.string().min(1),
+  at: z.coerce.date(),
+  minutes: z.number().min(0),
+})
+
 export const settingsSchema = z.object({
   book: bookSchema.default('english-file-pre-intermediate-4e'),
   file: fileNumberSchema.default(7),
@@ -155,6 +163,8 @@ export const backupSchema = z.object({
   grammar: z.array(grammarSchema).default([]),
   // Added in week 3.
   bosses: z.array(bossResultSchema).default([]),
+  // Added in week 4.
+  talks: z.array(talkResultSchema).default([]),
   settings: settingsSchema,
 })
 
@@ -168,5 +178,6 @@ export type MistakeRow = z.output<typeof mistakeSchema>
 export type SessionRow = z.output<typeof sessionSchema>
 export type GrammarRow = z.output<typeof grammarSchema>
 export type BossResult = z.output<typeof bossResultSchema>
+export type TalkResult = z.output<typeof talkResultSchema>
 export type Settings = z.output<typeof settingsSchema>
 export type Backup = z.output<typeof backupSchema>

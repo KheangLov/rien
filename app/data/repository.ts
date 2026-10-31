@@ -1,4 +1,4 @@
-import type { Backup, Book, BossResult, CardRow, GrammarRow, MistakeRow, MistakeType, NewWordInput, SessionRow, Settings } from '#shared/schemas/db'
+import type { Backup, Book, BossResult, CardRow, GrammarRow, MistakeRow, MistakeType, NewWordInput, SessionRow, Settings, TalkResult } from '#shared/schemas/db'
 import type { GradedAnswer } from '#shared/utils/scheduler'
 
 // All storage goes through this interface: Dexie on the web now,
@@ -27,6 +27,9 @@ export interface StudyRepository {
 
   saveBossResult(result: BossResult): Promise<void>
   bossResults(): Promise<BossResult[]>
+
+  saveTalk(result: TalkResult): Promise<void>
+  talkResults(): Promise<TalkResult[]>
 
   // Adds a finished activity to that day's session row.
   recordActivity(date: string, game: string, minutes: number): Promise<void>

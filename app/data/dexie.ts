@@ -13,6 +13,7 @@ import {
   type ReviewRow,
   type SessionRow,
   type Settings,
+  type TalkResult,
 } from '#shared/schemas/db'
 import { normalizeAnswer } from '#shared/utils/answer'
 import { newFsrsState } from '#shared/utils/scheduler'
@@ -28,6 +29,7 @@ export class RienDexie extends Dexie {
   settings!: EntityTable<SettingsRow, 'key'>
   grammar!: EntityTable<GrammarRow, 'itemId'>
   bosses!: EntityTable<BossResult, 'id'>
+  talks!: EntityTable<TalkResult, 'id'>
 
   constructor(name = 'rien') {
     super(name)
@@ -43,6 +45,9 @@ export class RienDexie extends Dexie {
     })
     this.version(3).stores({
       bosses: '++id, at, [book+file]',
+    })
+    this.version(4).stores({
+      talks: '++id, talkId, at',
     })
   }
 }
@@ -153,6 +158,14 @@ export function createDexieRepository(db = new RienDexie()): StudyRepository {
       return db.bosses.orderBy('at').reverse().toArray()
     },
 
+    async saveTalk(result) {
+      await db.talks.add(result)
+    },
+
+    talkResults() {
+      return db.talks.orderBy('at').reverse().toArray()
+    },
+
     sessions() {
       return db.sessions.toArray()
     },
@@ -178,28 +191,30 @@ export function createDexieRepository(db = new RienDexie()): StudyRepository {
     },
 
     async exportAll(now = new Date()) {
-      const [cards, reviews, mistakes, sessions, grammar, bosses, settings] = await Promise.all([
+      const [cards, reviews, mistakes, sessions, grammar, bosses, talks, settings] = await Promise.all([
         db.cards.toArray(),
         db.reviews.toArray(),
         db.mistakes.toArray(),
         db.sessions.toArray(),
         db.grammar.toArray(),
         db.bosses.toArray(),
+        db.talks.toArray(),
         getSettings(),
       ])
-      return { app: 'rien', version: 1, exportedAt: now, cards, reviews, mistakes, sessions, grammar, bosses, settings }
+      return { app: 'rien', version: 1, exportedAt: now, cards, reviews, mistakes, sessions, grammar, bosses, talks, settings }
     },
 
     async importAll(raw) {
       const backup = backupSchema.parse(raw)
-      await db.transaction('rw', [db.cards, db.reviews, db.mistakes, db.sessions, db.grammar, db.bosses, db.settings], async () => {
-        await Promise.all([db.cards.clear(), db.reviews.clear(), db.mistakes.clear(), db.sessions.clear(), db.grammar.clear(), db.bosses.clear()])
+      await db.transaction('rw', [db.cards, db.reviews, db.mistakes, db.sessions, db.grammar, db.bosses, db.talks, db.settings], async () => {
+        await Promise.all([db.cards.clear(), db.reviews.clear(), db.mistakes.clear(), db.sessions.clear(), db.grammar.clear(), db.bosses.clear(), db.talks.clear()])
         await db.cards.bulkAdd(backup.cards)
         await db.reviews.bulkAdd(backup.reviews)
         await db.mistakes.bulkAdd(backup.mistakes)
         await db.sessions.bulkAdd(backup.sessions)
         await db.grammar.bulkAdd(backup.grammar)
         await db.bosses.bulkAdd(backup.bosses)
+        await db.talks.bulkAdd(backup.talks)
         await db.settings.put({ key: 'settings', ...backup.settings })
       })
       return { cards: backup.cards.length }

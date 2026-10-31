@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { dateKey, summarizeStreak } from '#shared/utils/streak'
+import { dateKey, summarizeStreak, weekStart } from '#shared/utils/streak'
 
 const db = useDb()
 const now = useClock()
@@ -11,6 +11,11 @@ const studyDays = useLiveQuery(() => db.studyDays(), [] as string[])
 const doneToday = useLiveQuery(() => db.gamesOn(todayKey.value), [] as string[], todayKey)
 const settings = useLiveQuery(() => db.getSettings(), null)
 const bosses = useLiveQuery(() => db.bossResults(), [])
+const talks = useLiveQuery(() => db.talkResults(), [])
+const talkedThisWeek = computed(() => {
+  const monday = weekStart(now.value).getTime()
+  return talks.value.some(t => t.at.getTime() >= monday)
+})
 const lastBoss = computed(() => {
   const s = settings.value
   return s ? bosses.value.find(b => b.book === s.book && b.file === s.file) : undefined
@@ -124,6 +129,19 @@ const activities = computed(() => [
       </SqCardText>
       <SqCardActions>
         <SqBtn to="/games/file-boss" variant="tonal">Start File Boss</SqBtn>
+      </SqCardActions>
+    </SqCard>
+
+    <SqCard variant="tonal">
+      <SqCardText class="rien-stack rien-card-body">
+        <div class="rien-activity-head">
+          <strong>Couple Talk</strong>
+          <SqChip v-if="talkedThisWeek" color="success" size="small" text="Done this week" />
+        </div>
+        <p class="rien-muted">Ten minutes of English together this evening: three questions and a timer.</p>
+      </SqCardText>
+      <SqCardActions>
+        <SqBtn to="/games/couple-talk" variant="tonal">Start Couple Talk</SqBtn>
       </SqCardActions>
     </SqCard>
 

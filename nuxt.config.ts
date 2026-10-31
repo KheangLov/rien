@@ -58,8 +58,12 @@ export default defineNuxtConfig({
       ],
     },
     workbox: {
+      // Client-only app: every route is the same shell, so precache only index.html
+      // and serve it for all navigations. Precaching the other prerendered pages
+      // added extension-less URLs (/settings, /404) that some hosts cannot serve,
+      // and one failed download aborts the whole offline install.
       navigateFallback: '/',
-      globPatterns: ['**/*.{js,css,html,png,svg,ico,json,woff2,mp3}'],
+      globPatterns: ['index.html', '**/*.{js,css,png,svg,ico,json,woff2,mp3}'],
     },
     client: { installPrompt: true },
     devOptions: { enabled: false },

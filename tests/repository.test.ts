@@ -154,4 +154,13 @@ describe('Dexie repository', () => {
     ])
     expect((await repo.mistakesSince(new Date('2026-11-01T00:00:00Z'))).map(m => m.itemId)).toEqual(['b'])
   })
+
+  it('keeps Couple Talk evenings, newest first, and backs them up', async () => {
+    await repo.saveTalk({ talkId: 'couple-talk:us', at: now, minutes: 10 })
+    await repo.saveTalk({ talkId: 'couple-talk:food', at: new Date('2026-11-05T12:00:00Z'), minutes: 12 })
+    expect((await repo.talkResults()).map(t => t.talkId)).toEqual(['couple-talk:food', 'couple-talk:us'])
+    const backup = JSON.parse(JSON.stringify(await repo.exportAll(now)))
+    await repo.importAll(backup)
+    expect(await repo.talkResults()).toHaveLength(2)
+  })
 })

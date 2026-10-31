@@ -1,6 +1,7 @@
 {
   "packs": [
     "core-grammar.json",
-    "sound-pairs.json"
+    "sound-pairs.json",
+    "couple-talk.json"
   ]
 }

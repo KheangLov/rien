@@ -63,6 +63,16 @@ export const soundPairSchema = z
   })
   .refine(pair => normalizeAnswer(pair.a) !== normalizeAnswer(pair.b), { message: 'The two words must differ', path: ['b'] })
 
+// An evening conversation prompt for the two of them: three questions that
+// pull in one grammar point, and a tip naming it.
+export const talkSchema = z.object({
+  id: z.string().regex(PACK_ID),
+  topic: z.string().trim().min(1).max(60),
+  focus: mistakeTypeSchema,
+  tip: z.string().trim().min(1).max(160),
+  questions: z.array(z.string().trim().min(1).max(160)).length(3),
+})
+
 // A pack with no book is a core pack and applies at every level.
 export const packSchema = z
   .object({
@@ -72,15 +82,17 @@ export const packSchema = z
     file: fileNumberSchema.optional(),
     fixIt: z.array(fixItItemSchema).default([]),
     soundPairs: z.array(soundPairSchema).default([]),
+    talks: z.array(talkSchema).default([]),
   })
   .superRefine((pack, ctx) => {
     const seen = new Set<string>()
-    const check = (list: 'fixIt' | 'soundPairs', id: string, index: number) => {
+    const check = (list: 'fixIt' | 'soundPairs' | 'talks', id: string, index: number) => {
       if (seen.has(id)) ctx.addIssue({ code: 'custom', path: [list, index, 'id'], message: `Duplicate id "${id}"` })
       seen.add(id)
     }
     pack.fixIt.forEach((item, index) => check('fixIt', item.id, index))
     pack.soundPairs.forEach((pair, index) => check('soundPairs', pair.id, index))
+    pack.talks.forEach((talk, index) => check('talks', talk.id, index))
   })
 
 export const packIndexSchema = z.object({
@@ -90,4 +102,5 @@ export const packIndexSchema = z.object({
 export type FixItItem = z.output<typeof fixItItemSchema>
 export type Pack = z.output<typeof packSchema>
 export type SoundPair = z.output<typeof soundPairSchema>
+export type Talk = z.output<typeof talkSchema>
 export type SoundFocus = (typeof SOUND_FOCUSES)[number]

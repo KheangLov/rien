@@ -1,0 +1,182 @@
+{
+  "id": "couple-talk",
+  "title": "Couple Talk topics",
+  "talks": [
+    {
+      "id": "weekend",
+      "topic": "Last weekend",
+      "focus": "tense",
+      "tip": "Use the past simple: went, ate, saw, watched.",
+      "questions": [
+        "What did you do last Saturday, from morning to night?",
+        "What was the best moment of the weekend, and why?",
+        "What did you eat, and who cooked it?"
+      ]
+    },
+    {
+      "id": "childhood",
+      "topic": "When we were children",
+      "focus": "tense",
+      "tip": "Use the past simple and used to: I used to play…",
+      "questions": [
+        "Where did you live when you were ten?",
+        "What games did you use to play with your friends?",
+        "Who was your favourite teacher, and what did they teach?"
+      ]
+    },
+    {
+      "id": "next-weekend",
+      "topic": "Plans for next weekend",
+      "focus": "tense",
+      "tip": "Use going to for plans: I'm going to visit…",
+      "questions": [
+        "What are you going to do next weekend?",
+        "Who are you going to see, and where?",
+        "What is one thing you are not going to do?"
+      ]
+    },
+    {
+      "id": "experiences",
+      "topic": "Have you ever…?",
+      "focus": "tense",
+      "tip": "Use the present perfect: I have been… I have never…",
+      "questions": [
+        "Have you ever been on a plane? Tell the story.",
+        "What is the best film you have ever seen?",
+        "Have you ever lost something important? What happened?"
+      ]
+    },
+    {
+      "id": "family-day",
+      "topic": "A day in my family",
+      "focus": "third-person-s",
+      "tip": "He, she or it + -s: my mother cooks, my brother works.",
+      "questions": [
+        "What does your mother or father do on a normal day?",
+        "Who in your family gets up first, and what does he or she do?",
+        "What does your favourite relative like doing?"
+      ]
+    },
+    {
+      "id": "work-day",
+      "topic": "A normal working day",
+      "focus": "third-person-s",
+      "tip": "Talk about other people too: my boss starts, my friend goes…",
+      "questions": [
+        "What time does your day start, and what do you do first?",
+        "What does the person next to you at work or class do?",
+        "Who helps you most at work or at school, and how?"
+      ]
+    },
+    {
+      "id": "food",
+      "topic": "Food we love",
+      "focus": "article",
+      "tip": "Use a, an and the: an egg, a bowl of rice, the best market.",
+      "questions": [
+        "What is the best dish your family makes? Describe how to cook it.",
+        "Which do you prefer, a market or a supermarket? Why?",
+        "What did you eat for breakfast today?"
+      ]
+    },
+    {
+      "id": "our-city",
+      "topic": "City or countryside",
+      "focus": "article",
+      "tip": "Use the with superlatives: the busiest, the most beautiful.",
+      "questions": [
+        "Which is better for living, Phnom Penh or the countryside? Why?",
+        "What is the most beautiful place you know in Cambodia?",
+        "What would you change about our neighbourhood?"
+      ]
+    },
+    {
+      "id": "shopping",
+      "topic": "Things we buy",
+      "focus": "plural-s",
+      "tip": "Say the -s on plurals clearly: two shirts, three cups, many books.",
+      "questions": [
+        "What things did you buy last month?",
+        "How many things are in your bag right now? Name them all.",
+        "Do you like shopping online? Why or why not?"
+      ]
+    },
+    {
+      "id": "home",
+      "topic": "Our home",
+      "focus": "plural-s",
+      "tip": "Plurals: chairs, windows, plants, and people (no -s).",
+      "questions": [
+        "Describe our home room by room.",
+        "How many people and things are in the living room right now?",
+        "What three things would you like to change at home?"
+      ]
+    },
+    {
+      "id": "family-things",
+      "topic": "Whose is it?",
+      "focus": "possessive-s",
+      "tip": "Use 's for owners: my sister's phone, my father's car.",
+      "questions": [
+        "Describe a family member's favourite thing.",
+        "Which is better, your phone or your friend's phone? Why?",
+        "Tell me about your grandparents' house."
+      ]
+    },
+    {
+      "id": "routines",
+      "topic": "Times and days",
+      "focus": "preposition",
+      "tip": "Use at for times, on for days, in for months: at 7, on Monday, in April.",
+      "questions": [
+        "What time do you usually go to bed, and get up?",
+        "What do you do on Sundays?",
+        "Which month do you like most, and why?"
+      ]
+    },
+    {
+      "id": "holidays",
+      "topic": "Holidays and festivals",
+      "focus": "tense",
+      "tip": "Mix the past and the present: last year we went…, every year we go…",
+      "questions": [
+        "How did your family celebrate the last Khmer New Year?",
+        "What do you do every year at Pchum Ben?",
+        "Which holiday do you like most, and why?"
+      ]
+    },
+    {
+      "id": "us",
+      "topic": "Our story",
+      "focus": "tense",
+      "tip": "Tell it in order with the past simple: first we met, then we…",
+      "questions": [
+        "Where did we first meet? Tell the story in English.",
+        "What was our best day together, and what did we do?",
+        "What should we do on our next free day?"
+      ]
+    },
+    {
+      "id": "phones",
+      "topic": "Phones and apps",
+      "focus": "third-person-s",
+      "tip": "He, she or it + -s: my sister uses, this app shows…",
+      "questions": [
+        "Which app does your family use most, and what does it do?",
+        "How has your phone changed your day?",
+        "What did people do before smartphones?"
+      ]
+    },
+    {
+      "id": "learning-english",
+      "topic": "Learning English",
+      "focus": "preposition",
+      "tip": "Watch the small words: good at, interested in, listen to.",
+      "questions": [
+        "Why are you learning English?",
+        "What are you good at in English, and what is hard?",
+        "What new English word did you learn this week? Use it in a sentence."
+      ]
+    }
+  ]
+}

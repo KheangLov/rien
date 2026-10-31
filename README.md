@@ -23,9 +23,16 @@ pnpm audit         # fails on high-severity advisories
 - `shared/utils/answer.ts`: answer checking. A dropped `-s`/`-ed` is always wrong and logged as a `final-sound` mistake, never forgiven as a typo.
 - `app/data/repository.ts`: storage interface. `app/data/dexie.ts` implements it for the web; the native app will add SQLite.
 
-## Day 1 phone check
+## iPhone check (plan week 4)
 
 1. Deploy `.output/public` to any static HTTPS host.
 2. On her iPhone, open it in Safari, then Share → Add to Home Screen.
-3. Open it once online, then in Airplane Mode: it should still open.
-4. Open **Speech test** in Safari and again from the Home Screen, then send the copied report.
+3. Open it once from the Home Screen while online and wait a few seconds,
+   then turn on Airplane Mode, close the app fully and open it again.
+4. With Airplane Mode still on, open Word Recall, Fix It, Final Sound Hunter,
+   File Boss, Couple Talk, Progress and Settings. Each should load.
+5. Final Sound Hunter: are the iPhone voice's -s and -ed endings clear enough?
+   If not, the plan's fallback is recorded audio for the core words.
+6. Settings → Speech test, once in Safari and once from the Home Screen.
+   Copy both reports.
+7. Settings → Save backup, and check the file lands in Files.
