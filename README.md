@@ -28,8 +28,8 @@ pnpm build:ios     # static build without the service worker, then cap sync
 pnpm open:ios      # open in Xcode; pick a team under Signing & Capabilities
 ```
 
-- Bundle ID: `io.github.kheanglov.rien` (in `capacitor.config.ts`). Apple does not allow
-  changing it once the App Store Connect record exists.
+- Bundle ID: `io.github.kheanglov.rien` (confirmed; in `capacitor.config.ts` and the Xcode
+  project). Apple does not allow changing it once the App Store Connect record exists.
 - Moving her data: Settings → Save backup in the web app, then Settings → Restore in the
   native app.
 
