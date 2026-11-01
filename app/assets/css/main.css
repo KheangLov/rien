@@ -2250,6 +2250,18 @@ html {
   touch-action: manipulation;
 }
 
+/* No scrollbars anywhere, as in native apps; everything still scrolls by
+   touch, trackpad, wheel and keyboard. */
+* {
+  scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 /* Installed from the browser: no pull-to-refresh or page bounce, like the
    native app (the browser keeps its own when Rien is opened as a web page). */
 @media (display-mode: standalone) {
