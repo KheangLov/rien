@@ -39,7 +39,7 @@ const today = computed(() =>
   now.value.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }))
 
 const practice = computed(() => {
-  const ids: ActivityId[] = ['word-recall', 'fix-it', 'sound-hunter', 'sentence-builder', 'gap-radio']
+  const ids: ActivityId[] = ['word-recall', 'fix-it', 'sound-hunter', 'sentence-builder', 'gap-radio', 'speed-round', 'listen-pick', 'picture-match']
   if (native) ids.push('say-it')
   return ids.map(id => ({
     id,

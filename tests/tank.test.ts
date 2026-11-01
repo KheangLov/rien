@@ -73,10 +73,10 @@ describe('achievements', () => {
   })
 
   it('Explorer needs every activity available on this device', () => {
-    const all = ['word-recall', 'fix-it', 'sound-hunter', 'sentence-builder', 'gap-radio', 'file-boss', 'couple-talk']
+    const all = ['word-recall', 'fix-it', 'sound-hunter', 'sentence-builder', 'gap-radio', 'speed-round', 'listen-pick', 'picture-match', 'file-boss', 'couple-talk']
     const explorer = (native: boolean) => achievementFish(stats({ native, sessions: [day(0, all)] })).find(a => a.id === 'award:all-games')!
     expect(explorer(false).unlocked).toBe(true)
-    expect(explorer(true)).toMatchObject({ unlocked: false, have: 7, need: 8 })
+    expect(explorer(true)).toMatchObject({ unlocked: false, have: 10, need: 11 })
   })
 })
 

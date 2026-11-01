@@ -11,7 +11,7 @@ const BASES = [
   'lightbulb', 'layers', 'pen-new-square', 'soundwave', 'widget-add', 'radio', 'microphone-2', 'cup-star',
   'chat-square-dots', 'bell-bing', 'moon', 'download-minimalistic', 'upload-minimalistic', 'smartphone',
   'translation', 'calendar', 'cup-first', 'home-add', 'square-arrow-up',
-  'menu-dots-vertical', 'stop', 'playback-speed',
+  'menu-dots-vertical', 'stop', 'playback-speed', 'stopwatch', 'headphones-round-sound',
 ]
 // Squirkle UI's own controls (aliases in nuxt.config.ts) use one weight each.
 const SQUIRKLE = [

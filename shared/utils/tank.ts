@@ -62,6 +62,9 @@ export const SKILLS: { game: string, title: string, species: Species, nativeOnly
   { game: 'gap-radio', title: 'Radio', species: { name: 'Neon tetra', back: '#334155', belly: '#e2e8f0', fin: '#cbd5e1', form: 'long', tail: 'forked', pattern: { kind: 'lateral', color: '#22d3ee', accent: '#ef4444' } } },
   { game: 'say-it', title: 'Chatty', species: { name: 'Betta', back: '#5b21b6', belly: '#a78bfa', fin: '#8b5cf6', form: 'torpedo', tail: 'flowing', features: ['sail'] }, nativeOnly: true },
   { game: 'file-boss', title: 'Boss', species: { name: 'Grouper', back: '#57534e', belly: '#d6d3d1', fin: '#78716c', form: 'heavy', tail: 'round', pattern: { kind: 'spots', color: '#292524' } } },
+  { game: 'speed-round', title: 'Dash', species: { name: 'Sailfish', back: '#1e40af', belly: '#e0f2fe', fin: '#3b82f6', form: 'long', tail: 'lunate', pattern: { kind: 'bars', color: '#93c5fd' }, features: ['sail', 'snout'] } },
+  { game: 'listen-pick', title: 'Ears', species: { name: 'Croaker', back: '#a8a29e', belly: '#fafaf9', fin: '#d6d3d1', form: 'heavy', tail: 'forked', pattern: { kind: 'lateral', color: '#78716c' }, features: ['barbels'] } },
+  { game: 'picture-match', title: 'Picasso', species: { name: 'Parrotfish', back: '#0d9488', belly: '#a7f3d0', fin: '#f472b6', form: 'humped', tail: 'lunate', tailColor: '#f472b6', pattern: { kind: 'patches', color: '#f9a8d4' } } },
   { game: 'couple-talk', title: 'Lovebirds', species: { name: 'Kissing gourami', back: '#f472b6', belly: '#fce7f3', fin: '#fbcfe8', form: 'deep', tail: 'forked', features: ['lips'] } },
 ]
 

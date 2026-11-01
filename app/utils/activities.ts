@@ -13,6 +13,9 @@ export const ACTIVITIES = {
   'sentence-builder': { title: 'Sentence Builder', blurb: 'Put the words in order', icon: 'sentence-builder' },
   'gap-radio': { title: 'Gap Radio', blurb: 'Listen and fill the gaps', icon: 'gap-radio' },
   'say-it': { title: 'Say It', blurb: 'Read aloud, check your endings', icon: 'say-it' },
+  'speed-round': { title: 'Speed Round', blurb: '60 seconds: right or wrong?', icon: 'speed-round' },
+  'listen-pick': { title: 'Listen & Pick', blurb: 'Hear a word, pick it', icon: 'listen-pick' },
+  'picture-match': { title: 'Picture Match', blurb: 'Match the picture to the word', icon: 'picture-match' },
   'file-boss': { title: 'File Boss', blurb: '15 questions to finish a File', icon: 'file-boss' },
   'couple-talk': { title: 'Couple Talk', blurb: 'Ten minutes of English together', icon: 'couple-talk' },
 } as const satisfies Record<string, ActivityInfo>
