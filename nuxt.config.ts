@@ -76,8 +76,8 @@ export default defineNuxtConfig({
     icons: {
       api: false,
       // Squirkle's own controls (clear buttons, chevrons, alerts, checkboxes) draw
-      // Solar too, from the same bundled subset (scripts/build-icons.mjs). Built-in
-      // names need patches/@squirkle-ui__ui@0.1.1.patch (upstream issue 12).
+      // Solar too, from the same bundled subset (scripts/build-icons.mjs). Aliases
+      // replace built-in names since @squirkle-ui/ui 0.1.2 (upstream issue 12).
       aliases: {
         close: 'solar:close-circle-bold',
         check: 'solar:rien-check-linear',
