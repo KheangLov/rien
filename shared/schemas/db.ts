@@ -175,6 +175,8 @@ export const settingsSchema = z.object({
   weeklyGoal: z.number().int().min(1).max(7).default(5),
   // Look and feel. Motion also stays off when the phone asks for reduced motion.
   appearance: z.enum(['system', 'light', 'dark']).default('system'),
+  // The app's main colour (app/utils/accents.ts); teal is Rien's own.
+  accent: z.enum(['teal', 'blue', 'indigo', 'violet', 'pink', 'red', 'orange', 'green']).default('teal'),
   liquidGlass: z.boolean().default(true),
   motion: z.boolean().default(true),
   // Say It: let iOS use Apple's online recognition (usually more accurate;

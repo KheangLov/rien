@@ -8,7 +8,7 @@ import type { Settings } from '#shared/schemas/db'
 // the status bar. Motion also stays off when the phone asks for reduced motion.
 // Settings applies a change at once through $setAppearance (animated for
 // light ↔ dark); saved settings reach here too, through sync.
-type Look = Pick<Settings, 'appearance' | 'liquidGlass' | 'motion'>
+type Look = Pick<Settings, 'appearance' | 'liquidGlass' | 'motion' | 'accent'>
 
 export default defineNuxtPlugin(() => {
   const theme = useTheme()
@@ -19,7 +19,7 @@ export default defineNuxtPlugin(() => {
   root.classList.add('rien-glass', 'rien-motion')
 
   const isDark = (look: Look) => look.appearance === 'dark' || (look.appearance === 'system' && systemDark.matches)
-  const keyOf = (look: Look) => `${isDark(look)}${look.liquidGlass}${look.motion && !reduce.matches}`
+  const keyOf = (look: Look) => `${isDark(look)}${look.liquidGlass}${look.motion && !reduce.matches}${look.accent}`
   let painted = ''
 
   // Applies a look in one pass, and only when something changed (every save
@@ -43,6 +43,14 @@ export default defineNuxtPlugin(() => {
       meta.removeAttribute('media')
     }
     root.classList.toggle('rien-glass', look.liquidGlass)
+    // Her main colour (Settings), as a stylesheet of its own.
+    let accent = document.getElementById('rien-accent')
+    if (!accent) {
+      accent = document.createElement('style')
+      accent.id = 'rien-accent'
+      document.head.append(accent)
+    }
+    accent.textContent = accentCss(look.accent)
     root.classList.toggle('rien-motion', motion)
     if (Capacitor.isNativePlatform()) {
       void import('@capacitor/status-bar').then(({ StatusBar, Style }) =>

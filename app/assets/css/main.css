@@ -3367,3 +3367,55 @@ html.rien-motion .rien-talk-card-enter-active {
 .rien-copy-now {
   margin-top: 14px;
 }
+
+/* Settings: main colour swatches. */
+.rien-accents {
+  display: grid;
+  gap: 10px;
+}
+
+.rien-accents-label {
+  font-size: 17px;
+  color: var(--sq-on-surface, #18181b);
+}
+
+.rien-accents-swatches {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+}
+
+.rien-accent {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--swatch);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 8%);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.rien-accent.is-on {
+  box-shadow: 0 0 0 2px var(--sq-surface, #fff), 0 0 0 4px var(--swatch);
+  transform: scale(0.9);
+}
+
+/* "Ready for something new?" (NewContent). */
+.rien-new-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  color: #7c3aed;
+  background: color-mix(in srgb, #8b5cf6 15%, transparent);
+}
+
+.rien-new-content .sq-card-actions {
+  justify-content: flex-end;
+}

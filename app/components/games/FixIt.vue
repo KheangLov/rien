@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { MISTAKE_LABELS, type GrammarRow, type MistakeType } from '#shared/schemas/db'
 import type { FixItCard } from '#shared/utils/fixit'
-import { pickRound } from '#shared/utils/rounds'
+import { pickRound, topUpRound } from '#shared/utils/rounds'
 import { slipRound } from '#shared/utils/slips'
 import FixItItem from '~/components/items/FixItItem.vue'
 
@@ -33,7 +33,7 @@ onMounted(async () => {
     states.value = practice.states
     round.value = props.slips
       ? slipRound(practice.fixCards, await db.mistakesSince(practice.since), ROUND_SIZE)
-      : pickRound(practice.fixCards, practice.states, practice.counts, practice.now, ROUND_SIZE)
+      : topUpRound(pickRound(practice.fixCards, practice.states, practice.counts, practice.now, ROUND_SIZE), practice.fixCards, practice.states, ROUND_SIZE)
   }
   catch (error) {
     console.error('[rien] could not start Fix It', error)
@@ -83,20 +83,23 @@ function next() {
       text="You have practised every sentence for now. They come back when they are due."
     />
 
-    <SqCard v-else-if="finished" title="Round done" variant="tonal" class="rien-pop">
-      <Confetti />
-      <SqCardText>
-        <p class="rien-big">{{ clean }} / {{ round.length }}</p>
-        <p v-if="best >= 3" class="rien-best-combo"><RienIcon name="flame" :size="18" weight="fill" /> Best streak: {{ best }} in a row</p>
-        <p class="rien-muted">fixed without a slip.</p>
-        <p v-if="practiceLabels.length" class="rien-muted">
-          To practise: {{ practiceLabels.join(', ') }}. These come up more often from now on.
-        </p>
-      </SqCardText>
-      <SqCardActions>
-        <SqBtn to="/" color="primary">Back to today</SqBtn>
-      </SqCardActions>
-    </SqCard>
+    <template v-else-if="finished">
+      <SqCard title="Round done" variant="tonal" class="rien-pop">
+        <Confetti />
+        <SqCardText>
+          <p class="rien-big">{{ clean }} / {{ round.length }}</p>
+          <p v-if="best >= 3" class="rien-best-combo"><RienIcon name="flame" :size="18" weight="fill" /> Best streak: {{ best }} in a row</p>
+          <p class="rien-muted">fixed without a slip.</p>
+          <p v-if="practiceLabels.length" class="rien-muted">
+            To practise: {{ practiceLabels.join(', ') }}. These come up more often from now on.
+          </p>
+        </SqCardText>
+        <SqCardActions>
+          <SqBtn to="/" color="primary">Back to today</SqBtn>
+        </SqCardActions>
+      </SqCard>
+      <NewContent :kinds="['fixIt']" />
+    </template>
 
     <FixItItem
       v-else-if="card"

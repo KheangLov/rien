@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { GrammarRow } from '#shared/schemas/db'
 import { SOUND_FOCUS_LABELS, type SoundFocus } from '#shared/schemas/pack'
-import { pickRound } from '#shared/utils/rounds'
+import { pickRound, topUpRound } from '#shared/utils/rounds'
 import type { SoundCard } from '#shared/utils/sounds'
 import SoundItem from '~/components/items/SoundItem.vue'
 
@@ -27,7 +27,7 @@ onMounted(async () => {
   try {
     const practice = await loadPractice()
     states.value = practice.states
-    round.value = pickRound(practice.soundCards, practice.states, practice.counts, practice.now, ROUND_SIZE)
+    round.value = topUpRound(pickRound(practice.soundCards, practice.states, practice.counts, practice.now, ROUND_SIZE), practice.soundCards, practice.states, ROUND_SIZE)
   }
   catch (error) {
     console.error('[rien] could not start Final Sound Hunter', error)
@@ -77,20 +77,23 @@ function next() {
       text="Every sound pair is resting. They come back when they are due."
     />
 
-    <SqCard v-else-if="finished" title="Round done" variant="tonal" class="rien-pop">
-      <Confetti />
-      <SqCardText>
-        <p class="rien-big">{{ clean }} / {{ round.length }}</p>
-        <p v-if="best >= 3" class="rien-best-combo"><RienIcon name="flame" :size="18" weight="fill" /> Best streak: {{ best }} in a row</p>
-        <p class="rien-muted">heard right.</p>
-        <p v-if="practiceLabels.length" class="rien-muted">
-          To practise: {{ practiceLabels.join(', ') }}.
-        </p>
-      </SqCardText>
-      <SqCardActions>
-        <SqBtn to="/" color="primary">Back to today</SqBtn>
-      </SqCardActions>
-    </SqCard>
+    <template v-else-if="finished">
+      <SqCard title="Round done" variant="tonal" class="rien-pop">
+        <Confetti />
+        <SqCardText>
+          <p class="rien-big">{{ clean }} / {{ round.length }}</p>
+          <p v-if="best >= 3" class="rien-best-combo"><RienIcon name="flame" :size="18" weight="fill" /> Best streak: {{ best }} in a row</p>
+          <p class="rien-muted">heard right.</p>
+          <p v-if="practiceLabels.length" class="rien-muted">
+            To practise: {{ practiceLabels.join(', ') }}.
+          </p>
+        </SqCardText>
+        <SqCardActions>
+          <SqBtn to="/" color="primary">Back to today</SqBtn>
+        </SqCardActions>
+      </SqCard>
+      <NewContent :kinds="['soundPairs']" />
+    </template>
 
     <SoundItem
       v-else-if="card"
