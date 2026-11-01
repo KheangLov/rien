@@ -10,7 +10,7 @@
   <style>
     #rien-splash {
       --rs-bg: {{SPLASH_LIGHT}};
-      --rs-ink: rgb(24 24 27 / 55%);
+      --rs-ink: #18181b8c;
       --rs-accent: var(--rs-brand, #0f766e);
       position: fixed;
       inset: 0;
@@ -23,12 +23,20 @@
       user-select: none;
     }
 
+    /* Dark follows her Appearance setting (rs-light / rs-dark, set below from
+       what the app saved), and the phone's own setting only when that is System. */
     @media (prefers-color-scheme: dark) {
-      #rien-splash {
+      #rien-splash:not(.rs-light) {
         --rs-bg: {{SPLASH_DARK}};
-        --rs-ink: rgb(235 235 245 / 55%);
+        --rs-ink: #ebebf58c;
         --rs-accent: var(--rs-t1, #2dd4bf);
       }
+    }
+
+    #rien-splash.rs-dark {
+      --rs-bg: {{SPLASH_DARK}};
+      --rs-ink: #ebebf58c;
+      --rs-accent: var(--rs-t1, #2dd4bf);
     }
 
     /* The same colour fields as the app's glass background, fading in. */
@@ -216,8 +224,8 @@
     <svg class="rs-logo" viewBox="0 0 512 512">
       <defs>
         <linearGradient id="rs-tile" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="{{TEAL_LIGHT}}" />
-          <stop offset="1" stop-color="{{TEAL}}" />
+          <stop offset="0" style="stop-color: var(--rs-logo-top, {{TEAL_LIGHT}})" />
+          <stop offset="1" style="stop-color: var(--rs-logo-bottom, {{TEAL}})" />
         </linearGradient>
         <linearGradient id="rs-shine-fill" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0" stop-color="#fff" stop-opacity="0" />
@@ -231,7 +239,7 @@
       <path d="{{SQUIRCLE}}" fill="url(#rs-tile)" />
       <g transform="translate(0 -9)">
         <path fill="#fff" d="{{WORD}}" />
-        <rect x="136" y="350" width="240" height="18" rx="9" fill="{{MINT}}" />
+        <rect x="136" y="350" width="240" height="18" rx="9" style="fill: var(--rs-logo-bar, {{MINT}})" />
       </g>
       <g clip-path="url(#rs-bar-clip)">
         <rect class="rs-shine" x="0" y="337" width="90" height="26" fill="url(#rs-shine-fill)" />
@@ -251,14 +259,30 @@
     (function () {
       var splash = document.getElementById('rien-splash')
       document.body.appendChild(splash)
-      // Her main colour (Settings), saved on this device by the app each time
-      // it is applied (app/utils/accents.ts): the colour fields, glow,
-      // ripples, fish and tagline take it; the logo stays Rien's teal.
+      // Her Appearance and main colour (Settings), saved on this device by the
+      // app each time they are applied (app/utils/accents.ts): light or dark,
+      // and the colour fields, glow, ripples, fish and tagline take her colour.
       try {
         var colours = JSON.parse(localStorage.getItem('rien-splash-colours') || 'null')
+        if (colours && (colours.appearance === 'light' || colours.appearance === 'dark')) {
+          splash.classList.add('rs-' + colours.appearance)
+          document.documentElement.style.colorScheme = colours.appearance
+        }
         if (colours && colours.brand && colours.tints) {
           splash.style.setProperty('--rs-brand', colours.brand)
           for (var i = 0; i < 3; i++) splash.style.setProperty('--rs-t' + (i + 1), colours.tints[i])
+        }
+        // The logo takes her colour too, but only in a browser tab: an
+        // installed app (PWA or the phone app) opens on the system's launch
+        // screen with the teal home-screen logo, and this one must match it.
+        var cap = window.Capacitor
+        var installed = (cap && (cap.isNativePlatform ? cap.isNativePlatform() : cap.platform !== 'web'))
+          || window.androidBridge || navigator.standalone
+          || matchMedia('(display-mode: standalone), (display-mode: fullscreen)').matches
+        if (colours && colours.logo && !installed) {
+          splash.style.setProperty('--rs-logo-top', colours.logo.top)
+          splash.style.setProperty('--rs-logo-bottom', colours.logo.bottom)
+          splash.style.setProperty('--rs-logo-bar', colours.logo.bar)
         }
       }
       catch (error) {}

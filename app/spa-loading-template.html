@@ -3,7 +3,7 @@
   <style>
     #rien-splash {
       --rs-bg: #f8f9fb;
-      --rs-ink: rgb(24 24 27 / 55%);
+      --rs-ink: #18181b8c;
       --rs-accent: var(--rs-brand, #0f766e);
       position: fixed;
       inset: 0;
@@ -16,12 +16,20 @@
       user-select: none;
     }
 
+    /* Dark follows her Appearance setting (rs-light / rs-dark, set below from
+       what the app saved), and the phone's own setting only when that is System. */
     @media (prefers-color-scheme: dark) {
-      #rien-splash {
+      #rien-splash:not(.rs-light) {
         --rs-bg: #0f1013;
-        --rs-ink: rgb(235 235 245 / 55%);
+        --rs-ink: #ebebf58c;
         --rs-accent: var(--rs-t1, #2dd4bf);
       }
+    }
+
+    #rien-splash.rs-dark {
+      --rs-bg: #0f1013;
+      --rs-ink: #ebebf58c;
+      --rs-accent: var(--rs-t1, #2dd4bf);
     }
 
     /* The same colour fields as the app's glass background, fading in. */
@@ -209,8 +217,8 @@
     <svg class="rs-logo" viewBox="0 0 512 512">
       <defs>
         <linearGradient id="rs-tile" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#139483" />
-          <stop offset="1" stop-color="#0f766e" />
+          <stop offset="0" style="stop-color: var(--rs-logo-top, #139483)" />
+          <stop offset="1" style="stop-color: var(--rs-logo-bottom, #0f766e)" />
         </linearGradient>
         <linearGradient id="rs-shine-fill" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0" stop-color="#fff" stop-opacity="0" />
@@ -224,7 +232,7 @@
       <path d="M512.00 256.00L511.78 342.00L511.12 369.38L510.02 389.15L508.47 405.09L506.48 418.58L504.02 430.33L501.09 440.72L497.69 450.01L493.78 458.37L489.36 465.90L484.40 472.71L478.86 478.86L472.71 484.40L465.90 489.36L458.37 493.78L450.01 497.69L440.72 501.09L430.33 504.02L418.58 506.48L405.09 508.47L389.15 510.02L369.38 511.12L342.00 511.78L256.00 512.00L170.00 511.78L142.62 511.12L122.85 510.02L106.91 508.47L93.42 506.48L81.67 504.02L71.28 501.09L61.99 497.69L53.63 493.78L46.10 489.36L39.29 484.40L33.14 478.86L27.60 472.71L22.64 465.90L18.22 458.37L14.31 450.01L10.91 440.72L7.98 430.33L5.52 418.58L3.53 405.09L1.98 389.15L0.88 369.38L0.22 342.00L0.00 256.00L0.22 170.00L0.88 142.62L1.98 122.85L3.53 106.91L5.52 93.42L7.98 81.67L10.91 71.28L14.31 61.99L18.22 53.63L22.64 46.10L27.60 39.29L33.14 33.14L39.29 27.60L46.10 22.64L53.63 18.22L61.99 14.31L71.28 10.91L81.67 7.98L93.42 5.52L106.91 3.53L122.85 1.98L142.62 0.88L170.00 0.22L256.00 0.00L342.00 0.22L369.38 0.88L389.15 1.98L405.09 3.53L418.58 5.52L430.33 7.98L440.72 10.91L450.01 14.31L458.37 18.22L465.90 22.64L472.71 27.60L478.86 33.14L484.40 39.29L489.36 46.10L493.78 53.63L497.69 61.99L501.09 71.28L504.02 81.67L506.48 93.42L508.47 106.91L510.02 122.85L511.12 142.62L511.78 170.00Z" fill="url(#rs-tile)" />
       <g transform="translate(0 -9)">
         <path fill="#fff" d="M122.7 246.4L93.2 246.4L93.2 300L65.3 300L65.3 163.3L132.3 163.3Q146.7 163.5 154.5 166.8Q162.2 170 167.6 176.3Q172 181.5 174.6 187.8Q177.2 194.1 177.2 202.2Q177.2 212 172.3 221.4Q167.4 230.8 156.1 234.7Q165.5 238.5 169.5 245.5Q173.4 252.5 173.4 266.9L173.4 276.1Q173.4 285.4 174.2 288.8Q175.3 294.1 179.4 296.6L179.4 300L147.9 300Q146.6 295.5 146.1 292.7Q145 286.9 144.9 280.9L144.7 268.2Q144.5 255.1 139.9 250.7Q135.3 246.4 122.7 246.4ZM140 221.5Q148.6 217.6 148.6 206.1Q148.6 193.7 140.3 189.4Q135.7 187 126.4 187L93.2 187L93.2 223.7L125.6 223.7Q135.2 223.7 140 221.5ZM226.9 198.9L226.9 300L200.1 300L200.1 198.9L226.9 198.9ZM226.9 162.4L226.9 186.8L200.1 186.8L200.1 162.4L226.9 162.4ZM339 270.3Q338 279.3 329.7 288.6Q316.7 303.3 293.3 303.3Q274 303.3 259.2 290.9Q244.5 278.5 244.5 250.5Q244.5 224.2 257.8 210.2Q271.1 196.2 292.4 196.2Q305 196.2 315.1 200.9Q325.2 205.6 331.8 215.9Q337.7 224.9 339.5 236.7Q340.5 243.7 340.3 256.8L271.1 256.8Q271.7 272 280.7 278.1Q286.2 281.9 293.9 281.9Q302 281.9 307.1 277.3Q309.9 274.8 312 270.3L339 270.3ZM312.9 239.3Q312.2 228.8 306.5 223.4Q300.8 218 292.4 218Q283.2 218 278.1 223.7Q273.1 229.5 271.8 239.3L312.9 239.3ZM405.7 218.5Q392.3 218.5 387.3 229.9Q384.7 235.9 384.7 245.3L384.7 300L358.3 300L358.3 199.1L383.8 199.1L383.8 213.8Q388.9 206 393.5 202.6Q401.7 196.5 414.2 196.5Q429.9 196.5 439.8 204.7Q449.8 212.9 449.8 231.9L449.8 300L422.7 300L422.7 238.5Q422.7 230.5 420.6 226.2Q416.7 218.5 405.7 218.5Z" />
-        <rect x="136" y="350" width="240" height="18" rx="9" fill="#5eead4" />
+        <rect x="136" y="350" width="240" height="18" rx="9" style="fill: var(--rs-logo-bar, #5eead4)" />
       </g>
       <g clip-path="url(#rs-bar-clip)">
         <rect class="rs-shine" x="0" y="337" width="90" height="26" fill="url(#rs-shine-fill)" />
@@ -244,14 +252,30 @@
     (function () {
       var splash = document.getElementById('rien-splash')
       document.body.appendChild(splash)
-      // Her main colour (Settings), saved on this device by the app each time
-      // it is applied (app/utils/accents.ts): the colour fields, glow,
-      // ripples, fish and tagline take it; the logo stays Rien's teal.
+      // Her Appearance and main colour (Settings), saved on this device by the
+      // app each time they are applied (app/utils/accents.ts): light or dark,
+      // and the colour fields, glow, ripples, fish and tagline take her colour.
       try {
         var colours = JSON.parse(localStorage.getItem('rien-splash-colours') || 'null')
+        if (colours && (colours.appearance === 'light' || colours.appearance === 'dark')) {
+          splash.classList.add('rs-' + colours.appearance)
+          document.documentElement.style.colorScheme = colours.appearance
+        }
         if (colours && colours.brand && colours.tints) {
           splash.style.setProperty('--rs-brand', colours.brand)
           for (var i = 0; i < 3; i++) splash.style.setProperty('--rs-t' + (i + 1), colours.tints[i])
+        }
+        // The logo takes her colour too, but only in a browser tab: an
+        // installed app (PWA or the phone app) opens on the system's launch
+        // screen with the teal home-screen logo, and this one must match it.
+        var cap = window.Capacitor
+        var installed = (cap && (cap.isNativePlatform ? cap.isNativePlatform() : cap.platform !== 'web'))
+          || window.androidBridge || navigator.standalone
+          || matchMedia('(display-mode: standalone), (display-mode: fullscreen)').matches
+        if (colours && colours.logo && !installed) {
+          splash.style.setProperty('--rs-logo-top', colours.logo.top)
+          splash.style.setProperty('--rs-logo-bottom', colours.logo.bottom)
+          splash.style.setProperty('--rs-logo-bar', colours.logo.bar)
         }
       }
       catch (error) {}

@@ -10,8 +10,10 @@ import com.getcapacitor.BridgeActivity;
 public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // The app's own plugin (speech in and out), which lives in this module.
+        // The app's own plugins, which live in this module: speech in and out,
+        // and her Appearance for Android's own splash screen.
         registerPlugin(RienSpeechPlugin.class);
+        registerPlugin(RienLookPlugin.class);
         super.onCreate(savedInstanceState);
 
         // Android's back gesture goes back a screen in the app, and only leaves
