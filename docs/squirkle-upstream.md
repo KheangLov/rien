@@ -3,6 +3,7 @@
 Drafts to file on [KheangLov/squirkle-ui](https://github.com/KheangLov/squirkle-ui), found with
 `@squirkle-ui/ui`, `@squirkle-ui/nuxt`, `@squirkle-ui/charts` 0.1.1 and `@squirkle-ui/calendar` 0.1.2
 on Nuxt 4.6.2, Vue 3.5, iOS 26 Safari and WKWebView. Each lists the workaround Rien uses today.
+Fixed upstream so far: 10 (`@squirkle-ui/core` 0.1.2) and 12 (`@squirkle-ui/ui` 0.1.2).
 
 ## 1. Text fields at 14px make iPhones zoom in on focus
 
@@ -76,7 +77,7 @@ or `absolute` (a bottom sheet, a sliding tab lens) silently falls back into the 
 - Rien: two-class selectors (`.ios-sheet.sq-surface`, `.rien-tabbar .rien-tab-lens`).
 - Suggested fix: `:where(.sq-surface) { position: relative }` (zero specificity), or document it.
 
-## 10. The SVG fallback draws a different shape from native `corner-shape` (Safari, iOS)
+## 10. The SVG fallback draws a different shape from native `corner-shape` (Safari, iOS) — fixed in core 0.1.2
 
 Native: `.sq-surface` gets `border-radius: r * (1 + smoothing); corner-shape: squircle`, a
 superellipse filling a corner box of 1.6 × r. Fallback (`SqShape`, used wherever
@@ -90,6 +91,8 @@ Chrome and Android show clear squircles.
   Checked by overlaying both in Chrome: no visible difference.
 - Suggested fix: the same in `@squirkle-ui/core`, keeping the Figma path behind an option for anyone
   who wants it. Remove Rien's patch once a release has it.
+- Fixed: `@squirkle-ui/core` 0.1.2 draws this superellipse by default (`geometry: 'css'`; the Figma
+  shape is `geometry: 'figma'`). Rien's patch is gone.
 
 ## 11. `SqCalendar` month view does not fit a phone
 
@@ -106,3 +109,12 @@ never touches it). `SqShape` with `clip` on an element that paints its own backg
 problem. Rien sets the element's radius to half the squircle's corner while clipped
 (`.rien-sq[data-sq-shape]:not(.sq-surface)` and `app/plugins/squircles.client.ts`).
 - Suggested fix: `SqShape` sets the host's radius the same way while `clip` is on.
+
+## 12. Icon aliases cannot replace built-in icon names — fixed in ui 0.1.2
+
+`icons.aliases` applied only to `$name`, while Squirkle's own controls (clear buttons, chevrons, alerts,
+checkboxes) ask for bare built-in names such as `close` and `chevronDown`, so an app could not draw them
+from its own icon set.
+
+- Rien: had `patches/@squirkle-ui__ui@0.1.1.patch`, now removed.
+- Fixed: `@squirkle-ui/ui` 0.1.2 also applies an alias whose key is a bare built-in name.

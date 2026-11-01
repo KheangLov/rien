@@ -16,6 +16,3 @@ allowBuilds:
   '@parcel/watcher': true
 overrides:
   node-forge: '>=1.4.1'
-patchedDependencies:
-  '@squirkle-ui/core@0.1.1': patches/@squirkle-ui__core@0.1.1.patch
-  '@squirkle-ui/ui@0.1.1': patches/@squirkle-ui__ui@0.1.1.patch
