@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { BOOK_LABELS } from '#shared/schemas/db'
 import { minutesByDay, minutesThisWeek, weakSpots } from '#shared/utils/progress'
-import { addDays, dateKey } from '#shared/utils/streak'
+import { addDays } from '#shared/utils/streak'
 
 const db = useDb()
 const now = useClock()
@@ -18,16 +18,6 @@ const daily = computed(() => minutesByDay(sessions.value, now.value, 14))
 const dailyTotal = computed(() => daily.value.values.reduce((a, b) => a + b, 0))
 const spots = computed(() => weakSpots(counts.value))
 const maxSpot = computed(() => Math.max(1, ...spots.value.map(s => s.count)))
-
-const calendarDate = ref(dateKey(new Date()))
-// The title is the minutes studied; month cells are too narrow on a phone for more.
-const events = computed(() => studied.value.map(s => ({
-  id: s.date,
-  title: String(Math.max(1, Math.round(s.minutes))),
-  start: s.date,
-  end: s.date,
-  allDay: true,
-})))
 
 // Axis ticks can be fractions such as 0.6000000000000001.
 const formatMinutes = (v: number) => `${Number(v.toFixed(1))} min`
@@ -80,17 +70,9 @@ const formatDate = (date: Date) => date.toLocaleDateString('en-GB', { day: 'nume
       :height="180"
     />
 
-    <SqCard title="Days studied" subtitle="The number on a day is the minutes you studied">
+    <SqCard title="Days studied">
       <SqCardText>
-        <SqCalendar
-          v-model="calendarDate"
-          view="month"
-          :views="['month']"
-          :events="events"
-          :first-day-of-week="1"
-          locale="en-GB"
-          :max-events="1"
-        />
+        <StudyCalendar :days="studied" :today="now" />
       </SqCardText>
     </SqCard>
 

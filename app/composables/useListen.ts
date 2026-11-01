@@ -1,32 +1,25 @@
-import { Capacitor, registerPlugin, type PluginListenerHandle } from '@capacitor/core'
-import type { HeardWord } from '#shared/utils/spoken'
+import { Capacitor } from '@capacitor/core'
+import { RienSpeech, type Heard } from '~/utils/rienSpeech'
 
-type Permission = 'granted' | 'denied' | 'prompt'
+export type { Heard }
 
-export interface Heard {
-  // Whole-sentence readings, best first.
-  alternatives: string[]
-  // The best reading word by word, with confidence and other spellings considered.
-  words?: HeardWord[]
-  // file:// URL of her recording.
-  recording?: string
+// Her recording being played back, so it can be stopped.
+let playback: HTMLAudioElement | null = null
+
+// Stops everything that makes or takes sound: reading aloud, her recording
+// playing back, and listening. Runs on every screen change, when the app goes
+// to the background, and when a sheet closes.
+export function stopAllSound() {
+  stopSpeaking()
+  playback?.pause()
+  playback = null
+  if (Capacitor.isNativePlatform()) void RienSpeech.stop().catch(() => {})
 }
-
-interface RienSpeechPlugin {
-  listen(options: { language?: string, maxSeconds?: number, onDevice?: boolean }): Promise<Heard>
-  stop(): Promise<void>
-  checkPermissions(): Promise<{ speech: Permission, microphone: Permission }>
-  requestPermissions(): Promise<{ speech: Permission, microphone: Permission }>
-  addListener(event: 'partial', listener: (data: { text: string }) => void): Promise<PluginListenerHandle>
-}
-
-// The app's own plugin: ios/App/App/RienSpeechPlugin.swift and
-// android/app/src/main/java/io/github/kheanglov/rien/RienSpeechPlugin.java.
-const RienSpeech = registerPlugin<RienSpeechPlugin>('RienSpeech')
 
 // Speech recognition for Say It. Native apps only (iPhone and Android): iPhone
 // Home Screen web apps cannot use speech recognition.
 export function useListen() {
+  if (getCurrentScope()) onScopeDispose(() => stopAllSound())
   const supported = Capacitor.isNativePlatform()
 
   async function ensurePermission(): Promise<boolean> {
@@ -47,9 +40,12 @@ export function useListen() {
     }
   }
 
-  // Plays her last recording back through the web view.
+  // Plays her last recording back through the web view (one at a time).
   function playRecording(url: string) {
-    void new Audio(Capacitor.convertFileSrc(url)).play().catch(() => {})
+    stopSpeaking()
+    playback?.pause()
+    playback = new Audio(Capacitor.convertFileSrc(url))
+    void playback.play().catch(() => {})
   }
 
   return { supported, ensurePermission, listen, playRecording, stop: () => RienSpeech.stop() }

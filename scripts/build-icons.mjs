@@ -6,10 +6,10 @@
 import { readFileSync, writeFileSync } from 'node:fs'
 
 const BASES = [
-  'home-2', 'notebook', 'chart-2', 'user-circle', 'close-circle', 'alt-arrow-left', 'alt-arrow-right',
-  'add-circle', 'check-read', 'magnifer', 'play', 'fire', 'stars', 'gallery', 'camera', 'volume-loud',
+  'home-2', 'notebook', 'chart-2', 'user-rounded', 'close-square', 'alt-arrow-left', 'alt-arrow-right',
+  'add-square', 'check-read', 'magnifer', 'play', 'fire', 'stars', 'gallery', 'camera', 'volume-loud',
   'lightbulb', 'layers', 'pen-new-square', 'soundwave', 'widget-add', 'radio', 'microphone-2', 'cup-star',
-  'chat-round-dots', 'bell-bing', 'moon', 'download-minimalistic', 'upload-minimalistic', 'smartphone',
+  'chat-square-dots', 'bell-bing', 'moon', 'download-minimalistic', 'upload-minimalistic', 'smartphone',
   'translation', 'calendar', 'cup-first',
 ]
 const VARIANTS = ['linear', 'bold', 'bold-duotone']

@@ -75,3 +75,34 @@ or `absolute` (a bottom sheet, a sliding tab lens) silently falls back into the 
 
 - Rien: two-class selectors (`.ios-sheet.sq-surface`, `.rien-tabbar .rien-tab-lens`).
 - Suggested fix: `:where(.sq-surface) { position: relative }` (zero specificity), or document it.
+
+## 10. The SVG fallback draws a different shape from native `corner-shape` (Safari, iOS)
+
+Native: `.sq-surface` gets `border-radius: r * (1 + smoothing); corner-shape: squircle`, a
+superellipse filling a corner box of 1.6 × r. Fallback (`SqShape`, used wherever
+`CSS.supports('corner-shape', 'squircle')` is false: every iPhone and Safari today, Safari 26.5
+checked): `getSquirclePath` draws a Figma-style smoothed corner whose arc keeps radius r. Same
+props, visibly different shape: on the iPhone it reads as an ordinary rounded rectangle, while
+Chrome and Android show clear squircles.
+
+- Rien: `patches/@squirkle-ui__core@0.1.1.patch` makes `getSquirclePath` draw the same superellipse
+  as native (24 points per corner, corners scaled down together when they do not fit, like CSS).
+  Checked by overlaying both in Chrome: no visible difference.
+- Suggested fix: the same in `@squirkle-ui/core`, keeping the Figma path behind an option for anyone
+  who wants it. Remove Rien's patch once a release has it.
+
+## 11. `SqCalendar` month view does not fit a phone
+
+At 390 px the toolbar (Today, arrows, title, view switch) wraps onto two lines, and month cells keep
+a tall event height, so a month takes more than a screen. Rien replaced it with its own compact
+month grid (`app/components/StudyCalendar.vue`) for showing study days.
+
+- Suggested fix: a compact toolbar below ~480 px (title on its own row, icon-only Today), and a
+  dense month mode (square cells, dots instead of event chips).
+
+Related, found the same day: a clipped element that keeps its own `border-radius` shows that
+circle, not the squircle (a circle corner sits inside a squircle corner of the same size, so the clip
+never touches it). `SqShape` with `clip` on an element that paints its own background has this
+problem. Rien sets the element's radius to half the squircle's corner while clipped
+(`.rien-sq[data-sq-shape]:not(.sq-surface)` and `app/plugins/squircles.client.ts`).
+- Suggested fix: `SqShape` sets the host's radius the same way while `clip` is on.
