@@ -2,7 +2,7 @@ import { default_w, forgetting_curve } from 'ts-fsrs'
 import { describe, expect, it } from 'vitest'
 import type { ReviewRow } from '#shared/schemas/db'
 import { fitFsrs, firstReviewPairs, MIN_PAIRS } from '#shared/utils/fsrsFit'
-import { buildModel, emptyModel, learn, predict, skillReport, suitability, workingLevel, type Evidence } from '#shared/utils/mastery'
+import { buildModel, DEFAULT_PARAMS, emptyModel, evaluate, learn, predict, skillReport, suitability, tune, TUNE_MIN_ANSWERS, workingLevel, type Evidence } from '#shared/utils/mastery'
 import { expectedWordMs, gradeFor, msPerLetter, Rating } from '#shared/utils/scheduler'
 import { levelFor, LEVEL_DIFFICULTY, mistakeTypeOf, skillLabel, skillOf } from '#shared/utils/skills'
 
@@ -180,5 +180,69 @@ describe('FSRS fitted to her memory', () => {
     expect(fit.params.slice(4)).toEqual([...default_w].slice(4))
     expect(fit.params[3]).toBeGreaterThanOrEqual(fit.params[2]!)
     expect(fit.params[0]).toBe(default_w[0])
+  })
+})
+
+describe('guessing, self-check and tuning', () => {
+  const random = seeded(11)
+  const day = (k: number) => new Date(start.getTime() + k * 4 * 3_600_000)
+
+  it('does not mistake lucky guesses for knowledge', () => {
+    // She truly knows these words 20% of the time; with four choices she gets
+    // 40% right. Told it is a four-choice game, the model sees through the luck.
+    const answers = (kind?: 'picture') => Array.from({ length: 200 }, (_, k) => {
+      const knows = random() < 0.2
+      const right = knows || random() < 0.25
+      return { itemId: `p${k % 40}`, skill: 'vocabulary', level: 'B1' as const, score: right ? 1 : 0, at: day(k), kind }
+    })
+    const withGuess = skillReport(buildModel(answers('picture'), 'B1'), 'B1', day(200))[0]!.p
+    const without = skillReport(buildModel(answers(), 'B1'), 'B1', day(200))[0]!.p
+    expect(withGuess).toBeLessThan(without)
+    expect(withGuess).toBeLessThan(0.35)
+  })
+
+  // A learner with true strengths answers 600 Fix It and picture items.
+  function simulate(n: number, seed: number, flipAt = Number.POSITIVE_INFINITY) {
+    const r = seeded(seed)
+    const skills = ['past-simple', 'present-perfect', 'articles', 'conditionals']
+    const truth: Record<string, number> = { 'past-simple': 1.2, 'present-perfect': -0.8, 'articles': 0.3, 'conditionals': -1.4 }
+    const items = Array.from({ length: 120 }, (_, i) => ({ itemId: `i${i}`, skill: skills[i % 4]!, level: (['A2', 'B1', 'B1+'] as const)[i % 3]!, d: (r() - 0.5) }))
+    return Array.from({ length: n }, (_, k) => {
+      // Her two weakest skills become her strongest halfway (she studied them).
+      const t = k < flipAt ? truth : { ...truth, 'present-perfect': 1.5, 'conditionals': 1.2 }
+      const it = items[Math.floor(r() * items.length)]!
+      const kind = k % 3 === 0 ? 'picture' as const : 'fix-it' as const
+      const knows = 1 / (1 + Math.exp(-(t[it.skill]! + 0.6 - LEVEL_DIFFICULTY[it.level] - it.d)))
+      const c = kind === 'picture' ? 0.25 : 0.15
+      return { itemId: it.itemId, skill: it.skill, level: it.level, kind, at: day(k), score: r() < c + (1 - c) * knows ? 1 : 0 }
+    })
+  }
+
+  it('checks itself on answers it has not seen, and its chances hold up', () => {
+    const { check } = evaluate(simulate(600, 5), 'B1')
+    expect(check.n).toBe(590)
+    expect(check.logLoss).toBeLessThan(check.baselineLogLoss)
+    expect(check.accuracy).toBeGreaterThan(0.7)
+    // "Expected X% right" matches what happened in every band, within sampling
+    // noise (3 standard errors for the band's size).
+    for (const bin of check.bins.filter(b => b.n >= 30)) {
+      const noise = 3 * Math.sqrt(bin.said * (1 - bin.said) / bin.n)
+      expect(Math.abs(bin.said - bin.was), `${bin.from}-${bin.to}`).toBeLessThan(noise)
+    }
+  })
+
+  it('keeps its starting settings until there are enough of her answers', () => {
+    expect(tune(simulate(TUNE_MIN_ANSWERS - 1, 6), 'B1').tuned).toBe(false)
+  })
+
+  it('fits its speeds to a learner who changes fast, and predicts her better', () => {
+    const answers = simulate(900, 8, 450)
+    const fitted = tune(answers, 'B1')
+    const standard = evaluate(answers, 'B1', DEFAULT_PARAMS).check
+    expect(fitted.check.logLoss).toBeLessThanOrEqual(standard.logLoss)
+    if (fitted.tuned) expect(fitted.params).not.toEqual(DEFAULT_PARAMS)
+    // And it now knows her old weak skills are strong.
+    const report = skillReport(fitted.model, 'B1', day(900))
+    expect(report.at(-1)!.skill === 'present-perfect' || report.at(-1)!.skill === 'conditionals' || report.at(-2)!.skill === 'conditionals' || report.at(-2)!.skill === 'present-perfect').toBe(true)
   })
 })

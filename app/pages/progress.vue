@@ -37,6 +37,24 @@ const skills = computed(() => {
 const ACE_LEVELS: Record<Level, string> = {
   'A1': 'GEP 1–2', 'A2': 'GEP 3–4', 'A2+': 'GEP 5', 'B1': 'GEP 6–7', 'B1+': 'GEP 8', 'B2': 'GEP 9–10', 'B2+': 'GEP 11', 'C1': 'GEP 12',
 }
+// The model's self-check: each of her past answers predicted before it learned
+// from it. Shown once there are enough answers for the numbers to mean much.
+const SELF_CHECK_MIN = 50
+const selfCheck = computed(() => {
+  const l = learner.value
+  if (!l || l.check.n < SELF_CHECK_MIN) return undefined
+  const { check } = l
+  const percent = (x: number) => Math.round(x * 100)
+  return {
+    accuracy: percent(check.accuracy),
+    n: check.n,
+    // How much smaller its prediction error is than a simple running average.
+    sharper: Math.max(0, percent(1 - check.logLoss / check.baselineLogLoss)),
+    rows: check.bins.filter(b => b.n >= 5).map(b => ({ said: percent(b.said), was: percent(b.was), n: b.n })),
+    tuned: l.tuned,
+  }
+})
+
 const working = computed(() => {
   void counts.value
   const l = learner.value
@@ -91,7 +109,26 @@ const formatDate = (date: Date) => date.toLocaleDateString('en-GB', { day: 'nume
       </SqCardText>
     </SqCard>
 
-    <SqCard v-else title="Weak spots" subtitle="Slips in the last 30 days, most first">
+    <SqCard v-if="selfCheck" title="How well Rien knows you" variant="outlined">
+      <SqCardText class="rien-stack rien-gap-sm">
+        <p>
+          Before learning from each of your last {{ selfCheck.n }} answers, Rien guessed whether you would get it right.
+          It was right <b>{{ selfCheck.accuracy }}%</b> of the time<template v-if="selfCheck.sharper > 0">, and its guesses were {{ selfCheck.sharper }}% closer than a simple average</template>.
+        </p>
+        <ul class="rien-calibration" aria-label="What Rien expected and what happened">
+          <li v-for="row in selfCheck.rows" :key="row.said">
+            <span>Expected <b>{{ row.said }}%</b> right</span>
+            <span>you got <b>{{ row.was }}%</b></span>
+            <span class="rien-muted">{{ row.n }} answers</span>
+          </li>
+        </ul>
+        <p class="rien-muted">
+          {{ selfCheck.tuned ? 'Its learning speed is fitted to your answers.' : 'It uses its starting settings until you have 300 answers, then fits them to you.' }}
+        </p>
+      </SqCardText>
+    </SqCard>
+
+    <SqCard v-if="!skills.length" title="Weak spots" subtitle="Slips in the last 30 days, most first">
       <SqCardText>
         <p v-if="spots.length === 0" class="rien-muted">No slips yet. Play Fix It or Final Sound Hunter to find them.</p>
         <ul v-else class="rien-bars">

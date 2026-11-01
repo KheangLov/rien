@@ -308,6 +308,21 @@ a,
   height: 1px;
 }
 
+.rien-calibration {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+}
+
+.rien-calibration li {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+}
+
 .rien-skill-note {
   margin: 12px 0 0;
   font-size: 13px;

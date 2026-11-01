@@ -639,7 +639,15 @@ async function run() {
       if (learner.answers !== attempts.length + reviews) throw new Error(`model saw ${learner.answers} answers, log has ${attempts.length + reviews}`)
       const skills = weakSkills(learner, new Date())
       if (!skills.length) throw new Error('no skills reported')
-      return `${attempts.length} attempts + ${reviews} reviews; weakest: ${skills.slice(0, 2).map(s => `${s.skill} ${Math.round(s.p * 100)}%`).join(', ')}; working at ${workingLevelOf(learner)}`
+      // Its self-check: every past answer predicted before learning from it.
+      const { check } = learner
+      if (check.n !== learner.answers - 10 || !(check.accuracy > 0 && check.accuracy <= 1)) throw new Error(`self-check: ${JSON.stringify(check).slice(0, 120)}`)
+      await goTo('/progress', 'Days studied')
+      await waitText('How well Rien knows you')
+      await waitText('Skills')
+      document.querySelector('.rien-calibration')?.scrollIntoView({ block: 'center' })
+      await screen('progress-self-check')
+      return `${attempts.length} attempts + ${reviews} reviews; self-check ${Math.round(check.accuracy * 100)}% on ${check.n}; weakest: ${skills.slice(0, 2).map(s => `${s.skill} ${Math.round(s.p * 100)}%`).join(', ')}; working at ${workingLevelOf(learner)}`
     }
     finally {
       console.warn = warn
