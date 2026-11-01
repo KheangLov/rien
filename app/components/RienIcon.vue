@@ -41,6 +41,8 @@ const ICONS = {
   'install': 'home-add',
   'share': 'square-arrow-up',
   'menu': 'menu-dots-vertical',
+  'stop': 'stop',
+  'slower': 'playback-speed',
 } as const
 
 export type IconName = keyof typeof ICONS

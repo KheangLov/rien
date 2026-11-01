@@ -1,6 +1,6 @@
 import type { GrammarRow, MistakeRow } from '../schemas/db'
 import type { Pack, RadioText } from '../schemas/pack'
-import { checkAnswer, type Verdict } from './answer'
+import { checkAnswer, normalizeAnswer, type Verdict } from './answer'
 import { gradePractice, type PracticeItem } from './rounds'
 import { Rating } from './scheduler'
 
@@ -40,8 +40,16 @@ export function radioAnswers(tokens: RadioToken[]): string[] {
   return tokens.filter(t => t.gap !== undefined).map(t => t.word)
 }
 
+// Short gaps are mostly the grammar words she is listening for, where one
+// letter makes another word ("what" for "that", "then" for "than"), so they
+// must be exact; longer words still forgive a spelling slip.
+const EXACT_BELOW = 5
+
 export function checkGaps(answers: string[], typed: string[]): Verdict[] {
-  return answers.map((answer, i) => checkAnswer(typed[i] ?? '', answer))
+  return answers.map((answer, i) => {
+    const verdict = checkAnswer(typed[i] ?? '', answer)
+    return verdict.result === 'almost' && normalizeAnswer(answer).length < EXACT_BELOW ? { result: 'wrong' } : verdict
+  })
 }
 
 // Nearly all right: Good. Most right: Hard. Otherwise Again. A typo counts as right.

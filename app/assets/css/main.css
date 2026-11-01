@@ -398,41 +398,205 @@ a,
 }
 
 /* Gap Radio */
+.rien-radio-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rien-radio-title > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.rien-radio-title p {
+  margin: 2px 0 0;
+  font-size: 15px;
+}
+
+.rien-radio-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  color: var(--sq-primary, #0f766e);
+  background: color-mix(in srgb, var(--sq-primary, #0f766e) 15%, transparent);
+}
+
+/* A studio "on air" light: lit while the text is being read. */
+.rien-onair {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--sq-muted, #6b7280);
+  background: color-mix(in srgb, var(--sq-on-surface, #18181b) 7%, transparent);
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.rien-onair i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+.rien-onair.is-on {
+  color: #fff;
+  background: #e11d48;
+}
+
+.rien-onair.is-on i {
+  opacity: 1;
+}
+
+html.rien-motion .rien-onair.is-on i {
+  animation: rien-blink 1s ease-in-out infinite;
+}
+
+@keyframes rien-blink {
+  50% { opacity: 0.25; }
+}
+
+.rien-radio-player {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rien-radio-player .sq-btn {
+  gap: 6px;
+}
+
+/* Sound bars that dance while it plays. */
+.rien-eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 22px;
+  margin-left: auto;
+  padding-right: 4px;
+  opacity: 0.3;
+  transition: opacity 0.2s ease;
+}
+
+.rien-eq i {
+  width: 4px;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--sq-primary, #0f766e);
+}
+
+.rien-eq.is-on {
+  opacity: 1;
+}
+
+html.rien-motion .rien-eq.is-on i {
+  animation: rien-eq 0.9s ease-in-out infinite alternate;
+}
+
+.rien-eq.is-on i:nth-child(2) { animation-delay: -0.3s; }
+.rien-eq.is-on i:nth-child(3) { animation-delay: -0.6s; }
+.rien-eq.is-on i:nth-child(4) { animation-delay: -0.15s; }
+
+@keyframes rien-eq {
+  from { height: 5px; }
+  to { height: 22px; }
+}
+
+.rien-radio-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.rien-radio-progress .sq-progress-linear {
+  flex: 1;
+}
+
 .rien-radio {
   margin: 0;
   font-size: 18px;
-  line-height: 2.1;
+  line-height: 1.95;
   color: var(--sq-on-surface, #18181b);
 }
 
+/* A gap is a blank in the line, not a form box: as tall as the text, tinted,
+   underlined, about as wide as the missing word (--len, its letters). */
 .rien-gap {
+  box-sizing: border-box;
+  width: min(100%, calc(var(--len, 4) * 0.6em + 1.1em));
+  height: 1.6em;
+  margin: 0 1px;
+  padding: 0 0.35em;
+  vertical-align: baseline;
+  border: 0;
+  border-bottom: 2px dashed color-mix(in srgb, var(--sq-primary, #0f766e) 55%, transparent);
+  border-radius: 7px 7px 3px 3px;
   font: inherit;
   font-size: 17px;
-  padding: 2px 6px;
-  min-height: 36px;
-  border: 1px solid var(--sq-border-strong, #a1a1aa);
-  border-radius: 8px;
-  background: var(--sq-surface, #fff);
-  color: inherit;
-  max-width: 100%;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+  color: var(--sq-primary, #0f766e);
+  background: color-mix(in srgb, var(--sq-primary, #0f766e) 9%, transparent);
+  outline: none;
+  transition: background 0.15s ease, border-color 0.15s ease;
 }
 
-.rien-gap-result {
+.rien-gap::placeholder {
+  font-size: 13px;
   font-weight: 600;
-  padding: 2px 4px;
-  border-radius: 6px;
+  color: color-mix(in srgb, var(--sq-primary, #0f766e) 45%, transparent);
+}
+
+.rien-gap:focus {
+  border-bottom-style: solid;
+  border-bottom-color: var(--sq-primary, #0f766e);
+  background: color-mix(in srgb, var(--sq-primary, #0f766e) 16%, transparent);
+}
+
+.rien-gap.is-filled:not(:focus) {
+  border-bottom-style: solid;
+  background: color-mix(in srgb, var(--sq-primary, #0f766e) 6%, transparent);
+}
+
+/* After Check: the right word in a coloured chip, her try struck out before it. */
+.rien-gap-result {
+  padding: 1px 6px;
+  border-radius: 7px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.rien-gap-result s {
+  margin-right: 5px;
+  font-weight: 400;
+  opacity: 0.6;
 }
 
 .rien-gap-result.is-correct {
-  border-bottom: 3px solid var(--sq-success, #16a34a);
+  color: color-mix(in srgb, var(--sq-success, #16a34a) 72%, var(--sq-on-surface, #18181b));
+  background: color-mix(in srgb, var(--sq-success, #16a34a) 14%, transparent);
 }
 
 .rien-gap-result.is-almost {
-  border-bottom: 3px dashed var(--sq-warning, #d97706);
+  color: color-mix(in srgb, var(--sq-warning, #d97706) 72%, var(--sq-on-surface, #18181b));
+  background: color-mix(in srgb, var(--sq-warning, #d97706) 16%, transparent);
 }
 
 .rien-gap-result.is-wrong {
-  border-bottom: 3px dotted var(--sq-error, #dc2626);
+  color: color-mix(in srgb, var(--sq-error, #dc2626) 72%, var(--sq-on-surface, #18181b));
+  background: color-mix(in srgb, var(--sq-error, #dc2626) 13%, transparent);
 }
 
 /* ---------------------------------------------------------------------------

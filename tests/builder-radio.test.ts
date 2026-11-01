@@ -73,6 +73,11 @@ describe('Gap Radio', () => {
     expect(verdicts[0]!.mistake).toBe('final-sound')
   })
 
+  it('wants short words exact, where one letter makes another word', () => {
+    const verdicts = checkGaps(['that', 'than', 'ago', 'market'], ['what', 'then', 'agoo', 'markte'])
+    expect(verdicts.map(v => v.result)).toEqual(['wrong', 'wrong', 'wrong', 'almost'])
+  })
+
   it('grades by share right and logs each missed gap', () => {
     const [card] = radioCards([pack])
     const answers = radioAnswers(radioTokens(card!.text))

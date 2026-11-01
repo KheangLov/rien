@@ -3,14 +3,18 @@ import type { GrammarRow } from '#shared/schemas/db'
 import type { Verdict } from '#shared/utils/answer'
 import { checkGaps, gradeRadio, radioAnswers, radioTokens, type RadioCard } from '#shared/utils/radio'
 import { pickRound } from '#shared/utils/rounds'
+import { vInputAttrs } from '~/directives/inputAttrs'
 import { vPlainInput } from '~/directives/plainInput'
 
 const emit = defineEmits<{ done: [summary: { clean: number, total: number }] }>()
 
 const db = useDb()
 const { supported: canSpeak, speakTracked } = useSpeech()
-// The word being read aloud, for the highlight.
+// The word being read aloud, for the highlight, and whether it is playing
+// (some phones send no word positions, so this is kept apart).
 const reading = ref(-1)
+const playing = ref(false)
+const gapInputs = ref<HTMLInputElement[]>([])
 
 const loading = ref(true)
 const loadError = ref(false)
@@ -22,7 +26,8 @@ const right = ref(0)
 
 const tokens = computed(() => (card.value ? radioTokens(card.value.text) : []))
 const answers = computed(() => radioAnswers(tokens.value))
-const allTyped = computed(() => typed.value.every(t => t.trim()))
+const filled = computed(() => typed.value.filter(t => t.trim()).length)
+const allTyped = computed(() => filled.value === answers.value.length)
 
 onMounted(async () => {
   try {
@@ -52,9 +57,11 @@ const offsets = computed(() => {
 
 function play(rate: number) {
   const text = tokens.value.map(t => `${t.before}${t.word}${t.after}`).join(' ')
+  playing.value = true
   speakTracked(text, rate, (charIndex) => {
     if (charIndex < 0) {
       reading.value = -1
+      playing.value = false
       return
     }
     let index = 0
@@ -63,10 +70,23 @@ function play(rate: number) {
   })
 }
 
+function stop() {
+  stopSpeaking()
+  reading.value = -1
+  playing.value = false
+}
+
+// The keyboard's Next key goes to the following gap; the last one closes it.
+function nextGap(gap: number) {
+  const next = gapInputs.value[gap + 1]
+  if (next) next.focus()
+  else gapInputs.value[gap]?.blur()
+}
+
 async function check() {
   const current = card.value
   if (!current || verdicts.value) return
-  window.speechSynthesis?.cancel()
+  stop()
   verdicts.value = checkGaps(answers.value, typed.value)
   const graded = gradeRadio(current, states.value.get(current.itemId), verdicts.value, new Date())
   right.value = graded.right
@@ -100,16 +120,41 @@ function finish() {
     />
 
     <template v-else>
-      <SqCard variant="tonal">
+      <SqCard variant="tonal" class="rien-radio-head">
         <SqCardText class="rien-stack rien-card-body">
-          <strong class="rien-cue">{{ card.title }}</strong>
-          <p class="rien-muted">
-            {{ verdicts ? `${right} of ${answers.length} right.` : 'Listen, then type the missing words. Play it as often as you like.' }}
-          </p>
+          <div class="rien-radio-title">
+            <span class="rien-radio-icon"><RienIcon name="gap-radio" :size="26" weight="duotone" /></span>
+            <div>
+              <strong class="rien-cue">{{ card.title }}</strong>
+              <p class="rien-muted">
+                {{ verdicts ? `${right} of ${answers.length} right` : 'Listen, then fill the gaps' }}
+              </p>
+            </div>
+            <span class="rien-onair" :class="{ 'is-on': playing }" aria-hidden="true">
+              <i />ON AIR
+            </span>
+          </div>
+
           <SqAlert v-if="!canSpeak" type="warning" variant="tonal" text="This phone cannot read aloud here, so try reading the text instead." />
-          <div v-else class="rien-row">
-            <SqBtn color="primary" @click="play(0.85)">Play</SqBtn>
-            <SqBtn variant="tonal" @click="play(0.65)">Play slower</SqBtn>
+          <div v-else-if="!verdicts" class="rien-radio-player">
+            <SqBtn v-if="!playing" color="primary" @click="play(0.85)">
+              <RienIcon name="play" :size="20" weight="fill" /> Play
+            </SqBtn>
+            <SqBtn v-else color="primary" @click="stop">
+              <RienIcon name="stop" :size="20" weight="fill" /> Stop
+            </SqBtn>
+            <SqBtn variant="tonal" :disabled="playing" @click="play(0.65)">
+              <RienIcon name="slower" :size="20" weight="bold" /> Slower
+            </SqBtn>
+            <span class="rien-eq" :class="{ 'is-on': playing }" aria-hidden="true"><i /><i /><i /><i /></span>
+          </div>
+
+          <div class="rien-radio-progress">
+            <SqProgressLinear
+              :model-value="verdicts ? (right / answers.length) * 100 : (filled / answers.length) * 100"
+              :color="verdicts && right < answers.length ? 'warning' : 'primary'"
+            />
+            <span class="rien-muted">{{ verdicts ? `${right}/${answers.length}` : `${filled} of ${answers.length} filled` }}</span>
           </div>
         </SqCardText>
       </SqCard>
@@ -121,16 +166,21 @@ function finish() {
               <span v-if="token.gap === undefined" :class="{ 'is-reading': reading === index }">{{ token.before }}{{ token.word }}{{ token.after }}</span>
               <span v-else class="rien-gap-wrap" :class="{ 'is-reading': reading === index }">{{ token.before }}<input
                 v-if="!verdicts"
+                :ref="(el) => { if (el) gapInputs[token.gap!] = el as HTMLInputElement }"
                 v-model="typed[token.gap]"
                 v-plain-input
+                v-input-attrs="{ enterkeyhint: token.gap === answers.length - 1 ? 'done' : 'next' }"
                 class="rien-gap"
+                :class="{ 'is-filled': typed[token.gap]?.trim() }"
+                :style="{ '--len': Math.max(3, token.word.length) }"
+                :placeholder="String(token.gap + 1)"
                 :aria-label="`Missing word ${token.gap + 1}`"
-                :size="Math.max(4, token.word.length)"
+                @keydown.enter.prevent="nextGap(token.gap!)"
               ><span
                 v-else
                 class="rien-gap-result"
                 :class="`is-${verdicts[token.gap]!.result}`"
-              >{{ token.word }}<small v-if="verdicts[token.gap]!.result !== 'correct'"> ({{ typed[token.gap]?.trim() || '—' }})</small></span>{{ token.after }}</span>
+              ><s v-if="verdicts[token.gap]!.result !== 'correct' && typed[token.gap]?.trim()">{{ typed[token.gap]!.trim() }}</s>{{ token.word }}</span>{{ token.after }}</span>
               <!-- An explicit space: the template compiler drops trailing spaces inside tags. -->
               {{ ' ' }}
             </template>
