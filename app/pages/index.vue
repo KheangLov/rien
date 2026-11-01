@@ -105,6 +105,8 @@ const talkedThisWeek = computed(() => {
       </button>
     </Squircle>
 
+    <InstallCard />
+
     <SqCard variant="outlined">
       <SqCardText class="rien-stack rien-card-body">
         <div class="rien-week" role="list" aria-label="This week">
