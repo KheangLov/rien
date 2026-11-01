@@ -827,7 +827,8 @@ input {
   gap: 14px;
   padding: 20px;
   color: #fff;
-  background: linear-gradient(145deg, #0f766e, #115e59 60%, #134e4a);
+  /* Darker shades of her main colour (--rien-brand, app/utils/accents.ts). */
+  background: linear-gradient(145deg, var(--rien-brand, #0f766e), color-mix(in srgb, var(--rien-brand, #0f766e) 80%, #000) 60%, color-mix(in srgb, var(--rien-brand, #0f766e) 66%, #000));
 }
 
 .rien-hero h2 {
@@ -869,7 +870,7 @@ input {
   font: inherit;
   font-size: 17px;
   font-weight: 700;
-  color: #0f766e;
+  color: var(--rien-brand, #0f766e);
   background: #fff;
   cursor: pointer;
 }
@@ -1261,7 +1262,7 @@ html.rien-dark .rien-tank {
   font-weight: 600;
   text-align: left;
   color: #fff;
-  background: linear-gradient(135deg, #0e7490, #0f766e);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--rien-brand, #0f766e) 75%, #0ea5e9), var(--rien-brand, #0f766e));
   box-shadow: 0 10px 30px rgb(0 0 0 / 25%);
   cursor: pointer;
 }
@@ -1430,9 +1431,9 @@ html.rien-glass.rien-dark {
 html.rien-glass body,
 html.rien-glass .sq-app {
   background:
-    radial-gradient(60vmax 60vmax at 0% 0%, rgb(45 212 191 / 28%), transparent 60%),
-    radial-gradient(55vmax 55vmax at 100% 20%, rgb(56 189 248 / 24%), transparent 60%),
-    radial-gradient(60vmax 60vmax at 30% 100%, rgb(244 114 182 / 16%), transparent 60%),
+    radial-gradient(60vmax 60vmax at 0% 0%, color-mix(in srgb, var(--rien-tint-1, #2dd4bf) 28%, transparent), transparent 60%),
+    radial-gradient(55vmax 55vmax at 100% 20%, color-mix(in srgb, var(--rien-tint-2, #38bdf8) 24%, transparent), transparent 60%),
+    radial-gradient(60vmax 60vmax at 30% 100%, color-mix(in srgb, var(--rien-tint-3, #f472b6) 16%, transparent), transparent 60%),
     var(--sq-background, #f7f7f5);
   background-attachment: fixed;
 }
@@ -1464,7 +1465,7 @@ html.rien-glass .rien-actionbar {
 
 /* The hero keeps its colour, with a glass sheen on top. */
 html.rien-glass .rien-hero {
-  box-shadow: 0 14px 40px rgb(15 118 110 / 30%), inset 0 1px 0 rgb(255 255 255 / 35%);
+  box-shadow: 0 14px 40px color-mix(in srgb, var(--rien-brand, #0f766e) 30%, transparent), inset 0 1px 0 rgb(255 255 255 / 35%);
 }
 
 html.rien-glass .rien-hero-step,
