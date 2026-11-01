@@ -86,6 +86,12 @@ async function sayIt() {
   }
   catch (error) {
     console.error('[rien] listening failed', error)
+    // The browser refused the microphone (web only; the app asks first).
+    if (/not-allowed|service-not-allowed/.test(String(error))) {
+      blocked.value = 'permission'
+      phase.value = 'ready'
+      return
+    }
     listenError.value = 'The phone did not catch that. Tap Say it and try again.'
     phase.value = tries.value > 0 ? 'heard' : 'ready'
   }
@@ -131,8 +137,8 @@ function next() {
       v-else-if="blocked === 'unsupported'"
       type="info"
       variant="tonal"
-      title="Say It is in the Rien app"
-      text="Web apps on the iPhone Home Screen cannot use speech recognition, so Say It runs in the Rien app for iPhone and Android."
+      title="Say It cannot listen here"
+      text="This browser has no speech recognition. Open Rien in Chrome, Edge, Samsung Internet or Safari, or use the Rien app. (iPhone Home Screen web apps cannot listen; open it in Safari instead.)"
     />
 
     <SqAlert
@@ -140,7 +146,7 @@ function next() {
       type="warning"
       variant="tonal"
       title="Rien needs the microphone"
-      text="Allow the microphone (and Speech Recognition on iPhone) for Rien in the phone's Settings app, then come back."
+      text="Allow the microphone for Rien (in the phone's Settings app, or the browser's site settings), then come back."
     />
 
     <SqAlert

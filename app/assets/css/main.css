@@ -2981,3 +2981,282 @@ html.rien-motion .rien-speed-card-enter-active {
   background: linear-gradient(145deg, #22c55e, #15803d);
   box-shadow: 0 8px 20px rgb(22 163 74 / 30%);
 }
+
+/* ---------------------------------------------------------------------------
+   Couple Talk
+   ------------------------------------------------------------------------ */
+.rien-talk-topic .rien-activity-head {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  text-align: left;
+}
+
+.rien-talk-topic .rien-activity-head > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.rien-talk-topic .rien-activity-head p {
+  margin: 2px 0 0;
+  font-size: 14px;
+}
+
+.rien-talk-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
+  color: #db2777;
+  background: color-mix(in srgb, #ec4899 15%, transparent);
+}
+
+.rien-talk-title {
+  font-size: 21px;
+}
+
+.rien-talk-tip {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-size: 15px;
+  background: color-mix(in srgb, var(--sq-primary, #0f766e) 9%, transparent);
+}
+
+.rien-talk-topic .sq-btn {
+  justify-self: start;
+  gap: 4px;
+}
+
+.rien-talk-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.rien-talk-timer {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+  background: var(--sq-primary, #0f766e);
+}
+
+.rien-talk-timer.is-paused {
+  color: var(--sq-primary, #0f766e);
+  background: color-mix(in srgb, var(--sq-primary, #0f766e) 14%, transparent);
+}
+
+.rien-talk-timer.is-over {
+  background: #db2777;
+}
+
+.rien-talk-dots {
+  flex: 1;
+  display: flex;
+  gap: 5px;
+}
+
+.rien-talk-dots i {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--sq-on-surface, #18181b) 12%, transparent);
+  transition: background 0.25s ease;
+}
+
+.rien-talk-dots i.is-done {
+  background: color-mix(in srgb, var(--sq-primary, #0f766e) 55%, transparent);
+}
+
+.rien-talk-dots i.is-now {
+  background: var(--sq-primary, #0f766e);
+}
+
+.rien-talk-turn {
+  justify-self: start;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0369a1;
+  background: color-mix(in srgb, #0ea5e9 15%, transparent);
+}
+
+.rien-talk-turn.is-her {
+  color: #be185d;
+  background: color-mix(in srgb, #ec4899 15%, transparent);
+}
+
+.rien-talk-question {
+  margin: 0;
+  font-size: 23px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--sq-on-surface, #18181b);
+}
+
+.rien-talk-hear {
+  justify-self: start;
+  gap: 4px;
+}
+
+.rien-talk-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--sq-muted, #6b7280);
+}
+
+.rien-talk-chip {
+  padding: 7px 12px;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--sq-primary, #0f766e);
+  background: color-mix(in srgb, var(--sq-primary, #0f766e) 11%, transparent);
+}
+
+.rien-talk-chip.is-soft {
+  font-size: 14px;
+  color: var(--sq-on-surface, #18181b);
+  background: color-mix(in srgb, var(--sq-on-surface, #18181b) 6%, transparent);
+}
+
+.rien-talk-bingo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.rien-talk-word {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 48px;
+  padding: 6px 10px;
+  border: 2px dashed color-mix(in srgb, var(--sq-primary, #0f766e) 40%, transparent);
+  border-radius: 14px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--sq-on-surface, #18181b);
+  background: var(--sq-surface, #fff);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.12s ease;
+}
+
+.rien-talk-word.is-used {
+  border-style: solid;
+  border-color: var(--sq-success, #16a34a);
+  color: #fff;
+  background: var(--sq-success, #16a34a);
+}
+
+html.rien-motion .rien-talk-word.is-used {
+  animation: rien-combo-pop 0.4s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+
+.rien-talk-slipcount {
+  margin: 0;
+  text-align: center;
+}
+
+.rien-talk-finish {
+  justify-self: center;
+}
+
+.rien-talk-sliptypes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 12px 0 14px;
+}
+
+.rien-talk-sliptype {
+  min-height: 46px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 14px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--sq-on-surface, #18181b);
+  background: color-mix(in srgb, var(--sq-on-surface, #18181b) 7%, transparent);
+}
+
+.rien-talk-sliptype.is-on {
+  color: #fff;
+  background: var(--sq-primary, #0f766e);
+}
+
+.rien-talk-note {
+  margin-bottom: 14px;
+}
+
+.rien-talk-stats {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 8px;
+}
+
+.rien-talk-stats div {
+  display: grid;
+  justify-items: center;
+  padding: 10px 4px;
+  border-radius: 16px;
+  background: var(--sq-surface, #fff);
+}
+
+.rien-talk-stats b {
+  font-size: 26px;
+  color: var(--sq-primary, #0f766e);
+}
+
+.rien-talk-stats span {
+  font-size: 13px;
+  color: var(--sq-muted, #6b7280);
+}
+
+.rien-talk-slips {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rien-talk-slips li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+}
+
+html.rien-motion .rien-talk-card-enter-active {
+  animation: rien-speed-in 0.25s ease-out;
+}
+
+.rien-talk-card-leave-active {
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+
+.rien-talk-card-leave-to {
+  opacity: 0;
+  transform: translateX(-24px);
+}

@@ -51,7 +51,7 @@ describe('every fish is its own', () => {
 
 describe('achievements', () => {
   const stats = (over: Partial<TankStats> = {}): TankStats =>
-    ({ sessions: [], words: 0, learned: 0, bosses: [], talks: 0, native: false, ...over })
+    ({ sessions: [], words: 0, learned: 0, bosses: [], talks: 0, speech: false, ...over })
 
   it('counts the longest run of days', () => {
     expect(longestStreak(['2026-11-01', '2026-11-02', '2026-11-03', '2026-11-05', '2026-11-06'])).toBe(3)
@@ -72,9 +72,9 @@ describe('achievements', () => {
     expect(awards([{ game: 'fix-it', clean: 8, total: 8 }])).toBe(true)
   })
 
-  it('Explorer needs every activity available on this device', () => {
+  it('Explorer needs every activity this device can run', () => {
     const all = ['word-recall', 'fix-it', 'sound-hunter', 'sentence-builder', 'gap-radio', 'speed-round', 'listen-pick', 'picture-match', 'file-boss', 'couple-talk']
-    const explorer = (native: boolean) => achievementFish(stats({ native, sessions: [day(0, all)] })).find(a => a.id === 'award:all-games')!
+    const explorer = (speech: boolean) => achievementFish(stats({ speech, sessions: [day(0, all)] })).find(a => a.id === 'award:all-games')!
     expect(explorer(false).unlocked).toBe(true)
     expect(explorer(true)).toMatchObject({ unlocked: false, have: 10, need: 11 })
   })
@@ -84,7 +84,7 @@ describe('tankChanges', () => {
   it('announces new fish, hatching, growth and revival', () => {
     const s = (sessions: ReturnType<typeof day>[], words = 0) => ({
       skills: skillFish(sessions, today, false),
-      awards: achievementFish({ sessions, words, learned: 0, bosses: [], talks: 0, native: false }),
+      awards: achievementFish({ sessions, words, learned: 0, bosses: [], talks: 0, speech: false }),
     })
     const four = Array.from({ length: 4 }, () => 'fix-it')
     const messages = tankChanges(s([day(5, four)]), s([day(5, four), day(0, ['fix-it', 'gap-radio'])], 1))

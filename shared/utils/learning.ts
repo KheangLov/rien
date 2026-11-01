@@ -29,7 +29,8 @@ export const SESSION_LENGTH = 4
 export function planSession(input: {
   dueWords: number
   mistakeCounts: Partial<Record<MistakeType, number>>
-  native: boolean
+  // Say It works here (the Rien app, or a browser with speech recognition).
+  speech: boolean
   // Rotates the filler activities from day to day.
   dayIndex: number
 }): ActivityId[] {
@@ -44,7 +45,7 @@ export function planSession(input: {
   for (const id of weak) if (!plan.includes(id)) plan.push(id)
 
   const fillers: ActivityId[] = ['fix-it', 'sound-hunter', 'sentence-builder', 'gap-radio', 'speed-round', 'listen-pick', 'picture-match']
-  if (input.native) fillers.push('say-it')
+  if (input.speech) fillers.push('say-it')
   const start = input.dayIndex % fillers.length
   const rotated = [...fillers.slice(start), ...fillers.slice(0, start)]
   for (const id of rotated) if (!plan.includes(id)) plan.push(id)

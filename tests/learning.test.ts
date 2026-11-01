@@ -4,23 +4,23 @@ import { comesBackLabel, hintFor, isTricky, limitNew, maxHintLevel, nextReviewLa
 
 describe('planSession', () => {
   it('puts due words first, then her weakest areas, four activities in all', () => {
-    const plan = planSession({ dueWords: 5, mistakeCounts: { 'listening': 4, 'final-sound': 6, 'tense': 1 }, native: false, dayIndex: 0 })
+    const plan = planSession({ dueWords: 5, mistakeCounts: { 'listening': 4, 'final-sound': 6, 'tense': 1 }, speech: false, dayIndex: 0 })
     expect(plan).toEqual(['word-recall', 'sound-hunter', 'gap-radio', 'fix-it'])
   })
 
   it('fills with a rotating mix when there are no slips or due words', () => {
-    const a = planSession({ dueWords: 0, mistakeCounts: {}, native: false, dayIndex: 0 })
-    const b = planSession({ dueWords: 0, mistakeCounts: {}, native: false, dayIndex: 1 })
+    const a = planSession({ dueWords: 0, mistakeCounts: {}, speech: false, dayIndex: 0 })
+    const b = planSession({ dueWords: 0, mistakeCounts: {}, speech: false, dayIndex: 1 })
     expect(a).toHaveLength(4)
     expect(new Set(a).size).toBe(4)
     expect(a).not.toEqual(b)
   })
 
-  it('only offers Say It in the native app', () => {
-    const plans = [0, 1, 2, 3, 4].flatMap(d => planSession({ dueWords: 0, mistakeCounts: {}, native: false, dayIndex: d }))
+  it('only offers Say It where it can listen', () => {
+    const plans = [0, 1, 2, 3, 4, 5, 6, 7].flatMap(d => planSession({ dueWords: 0, mistakeCounts: {}, speech: false, dayIndex: d }))
     expect(plans).not.toContain('say-it')
-    const native = [0, 1, 2, 3, 4].flatMap(d => planSession({ dueWords: 0, mistakeCounts: {}, native: true, dayIndex: d }))
-    expect(native).toContain('say-it')
+    const listening = [0, 1, 2, 3, 4, 5, 6, 7].flatMap(d => planSession({ dueWords: 0, mistakeCounts: {}, speech: true, dayIndex: d }))
+    expect(listening).toContain('say-it')
   })
 })
 

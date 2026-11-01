@@ -10,7 +10,15 @@
       "questions": [
         "What did you do last Saturday, from morning to night?",
         "What was the best moment of the weekend, and why?",
-        "What did you eat, and who cooked it?"
+        "What did you eat, and who cooked it?",
+        "Who did you see or talk to?",
+        "Did anything funny or surprising happen?",
+        "What didn't you have time to do?"
+      ],
+      "starters": [
+        "On Saturday morning, I …",
+        "After that, we …",
+        "The best part was …"
       ]
     },
     {
@@ -21,7 +29,15 @@
       "questions": [
         "Where did you live when you were ten?",
         "What games did you use to play with your friends?",
-        "Who was your favourite teacher, and what did they teach?"
+        "Who was your favourite teacher, and what did they teach?",
+        "What did you use to be afraid of?",
+        "What was your favourite food when you were small?",
+        "Tell me about a birthday you remember."
+      ],
+      "starters": [
+        "When I was ten, I …",
+        "I used to …",
+        "I didn't use to …"
       ]
     },
     {
@@ -32,7 +48,15 @@
       "questions": [
         "What are you going to do next weekend?",
         "Who are you going to see, and where?",
-        "What is one thing you are not going to do?"
+        "What is one thing you are not going to do?",
+        "Where are you going to eat?",
+        "What are you going to wear?",
+        "What are you going to do if it rains?"
+      ],
+      "starters": [
+        "On Saturday I'm going to …",
+        "I'm not going to …",
+        "After that, I'm going to …"
       ]
     },
     {
@@ -43,7 +67,15 @@
       "questions": [
         "Have you ever been on a plane? Tell the story.",
         "What is the best film you have ever seen?",
-        "Have you ever lost something important? What happened?"
+        "Have you ever lost something important? What happened?",
+        "Have you ever met someone famous?",
+        "What is the most delicious food you have ever eaten?",
+        "Have you ever been really lost?"
+      ],
+      "starters": [
+        "I have been to …",
+        "I have never …",
+        "The best … I have ever … was …"
       ]
     },
     {
@@ -54,7 +86,15 @@
       "questions": [
         "What does your mother or father do on a normal day?",
         "Who in your family gets up first, and what does he or she do?",
-        "What does your favourite relative like doing?"
+        "What does your favourite relative like doing?",
+        "What does your brother or sister like to eat?",
+        "Who in your family watches TV most, and what does he or she watch?",
+        "What does your family do together on Sundays?"
+      ],
+      "starters": [
+        "My mother usually …",
+        "My father never …",
+        "Every morning my …"
       ]
     },
     {
@@ -65,7 +105,15 @@
       "questions": [
         "What time does your day start, and what do you do first?",
         "What does the person next to you at work or class do?",
-        "Who helps you most at work or at school, and how?"
+        "Who helps you most at work or at school, and how?",
+        "What does your teacher or boss say when you are late?",
+        "Who works the hardest, and what does he or she do?",
+        "What time does your day finish?"
+      ],
+      "starters": [
+        "My day starts at …",
+        "My boss usually …",
+        "After lunch, she …"
       ]
     },
     {
@@ -76,7 +124,15 @@
       "questions": [
         "What is the best dish your family makes? Describe how to cook it.",
         "Which do you prefer, a market or a supermarket? Why?",
-        "What did you eat for breakfast today?"
+        "What did you eat for breakfast today?",
+        "Can you describe a dish from another country?",
+        "What do you eat when you are sick?",
+        "What is the strangest food you have ever tried?"
+      ],
+      "starters": [
+        "I usually have a …",
+        "The best dish is …",
+        "An easy dish to cook is …"
       ]
     },
     {
@@ -87,7 +143,15 @@
       "questions": [
         "Which is better for living, Phnom Penh or the countryside? Why?",
         "What is the most beautiful place you know in Cambodia?",
-        "What would you change about our neighbourhood?"
+        "What would you change about our neighbourhood?",
+        "What is the busiest place in our city?",
+        "Where is the best place to watch the sunset?",
+        "What is the most difficult thing about living here?"
+      ],
+      "starters": [
+        "The best place is …",
+        "The busiest street is …",
+        "In the countryside there is a …"
       ]
     },
     {
@@ -98,7 +162,15 @@
       "questions": [
         "What things did you buy last month?",
         "How many things are in your bag right now? Name them all.",
-        "Do you like shopping online? Why or why not?"
+        "Do you like shopping online? Why or why not?",
+        "What things do you never buy online?",
+        "Which shops do you go to most often?",
+        "What three things do you need to buy this week?"
+      ],
+      "starters": [
+        "I bought two …",
+        "I need some new …",
+        "There are many … in my bag."
       ]
     },
     {
@@ -109,7 +181,15 @@
       "questions": [
         "Describe our home room by room.",
         "How many people and things are in the living room right now?",
-        "What three things would you like to change at home?"
+        "What three things would you like to change at home?",
+        "How many windows and doors are there in our home?",
+        "Which rooms do you like best, and why?",
+        "What things do we have too many of?"
+      ],
+      "starters": [
+        "In the kitchen there are …",
+        "We have two …",
+        "I'd like some new …"
       ]
     },
     {
@@ -120,7 +200,15 @@
       "questions": [
         "Describe a family member's favourite thing.",
         "Which is better, your phone or your friend's phone? Why?",
-        "Tell me about your grandparents' house."
+        "Tell me about your grandparents' house.",
+        "What is your best friend's favourite food?",
+        "Whose clothes are the nicest in your family?",
+        "Describe your parents' wedding photo or another old photo."
+      ],
+      "starters": [
+        "My sister's … is …",
+        "My father's favourite …",
+        "My grandparents' house has …"
       ]
     },
     {
@@ -131,7 +219,15 @@
       "questions": [
         "What time do you usually go to bed, and get up?",
         "What do you do on Sundays?",
-        "Which month do you like most, and why?"
+        "Which month do you like most, and why?",
+        "What do you do in the evening after dinner?",
+        "What did you do on your last birthday?",
+        "What do people in Cambodia do in April?"
+      ],
+      "starters": [
+        "I get up at …",
+        "On Mondays I …",
+        "In April we …"
       ]
     },
     {
@@ -142,7 +238,15 @@
       "questions": [
         "How did your family celebrate the last Khmer New Year?",
         "What do you do every year at Pchum Ben?",
-        "Which holiday do you like most, and why?"
+        "Which holiday do you like most, and why?",
+        "What food do you always eat at Khmer New Year?",
+        "What did you do last Pchum Ben?",
+        "Which holiday would you like to celebrate in another country?"
+      ],
+      "starters": [
+        "Every year we …",
+        "Last year we …",
+        "At New Year we always …"
       ]
     },
     {
@@ -153,7 +257,15 @@
       "questions": [
         "Where did we first meet? Tell the story in English.",
         "What was our best day together, and what did we do?",
-        "What should we do on our next free day?"
+        "What should we do on our next free day?",
+        "What did you think when you first saw me?",
+        "What was the funniest thing that happened to us?",
+        "Where did we go on our first trip together?"
+      ],
+      "starters": [
+        "The first time we met, …",
+        "Then we …",
+        "I remember when …"
       ]
     },
     {
@@ -164,7 +276,15 @@
       "questions": [
         "Which app does your family use most, and what does it do?",
         "How has your phone changed your day?",
-        "What did people do before smartphones?"
+        "What did people do before smartphones?",
+        "What does your mother do on her phone?",
+        "Which app helps you most in your day?",
+        "What do you do when your phone battery is low?"
+      ],
+      "starters": [
+        "My mother uses her phone to …",
+        "This app shows …",
+        "When the battery is low, I …"
       ]
     },
     {
@@ -175,7 +295,15 @@
       "questions": [
         "Why are you learning English?",
         "What are you good at in English, and what is hard?",
-        "What new English word did you learn this week? Use it in a sentence."
+        "What new English word did you learn this week? Use it in a sentence.",
+        "What are you interested in reading or watching in English?",
+        "Who do you practise English with?",
+        "What are you afraid of when you speak English?"
+      ],
+      "starters": [
+        "I'm good at …",
+        "I'm interested in …",
+        "I'm worried about …"
       ]
     }
   ]
