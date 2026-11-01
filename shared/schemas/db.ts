@@ -14,6 +14,11 @@ export const BOOK_LABELS: Record<Book, string> = {
 }
 
 // English File Pre-Intermediate 4th edition has 12 Files.
+// CEFR levels, with the steps English File's books take between them
+// (shared/utils/skills.ts places each book and File on this scale).
+export const LEVELS = ['A1', 'A2', 'A2+', 'B1', 'B1+', 'B2', 'B2+', 'C1'] as const
+export type Level = typeof LEVELS[number]
+
 export const FILE_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const
 
 export const MISTAKE_TYPES = [
@@ -144,6 +149,26 @@ export const sessionSchema = z.object({
   rounds: z.array(roundSchema).default([]),
 })
 
+// One answer in a practice game, for the skill model (shared/utils/mastery.ts):
+// right or wrong, how fast, and which skill it used. Word reviews have their
+// own log (reviews), so words are not repeated here.
+export const ATTEMPT_KINDS = ['fix-it', 'sound', 'builder', 'radio', 'listen', 'picture', 'speed', 'boss', 'say-it'] as const
+export type AttemptKind = typeof ATTEMPT_KINDS[number]
+
+export const attemptSchema = z.object({
+  id: z.number().int().optional(),
+  itemId: z.string().min(1),
+  kind: z.enum(ATTEMPT_KINDS),
+  // A grammar point or sound (shared/utils/skills.ts).
+  skill: z.string().min(1).max(60),
+  // The item's level when she answered (its starting difficulty).
+  level: z.enum(LEVELS).default('A2+'),
+  // 1 right first time, 0 wrong, in between for nearly right or helped.
+  score: z.number().min(0).max(1),
+  ms: z.number().int().min(0).default(0),
+  at: z.coerce.date(),
+})
+
 // One finished File Boss quiz.
 export const bossResultSchema = z.object({
   id: z.number().int().optional(),
@@ -193,6 +218,9 @@ export const settingsSchema = z.object({
   // When she last saved a backup file, and when the app last kept its own
   // weekly copy (native app; utils/backups.ts).
   lastBackupAt: z.coerce.date().optional(),
+  // FSRS parameters fitted to her own reviews (shared/utils/fsrsFit.ts), and when.
+  fsrsParams: z.array(z.number()).length(21).optional(),
+  fsrsFittedAt: z.coerce.date().optional(),
   lastAutoBackupAt: z.coerce.date().optional(),
 })
 
@@ -210,6 +238,8 @@ export const backupSchema = z.object({
   bosses: z.array(bossResultSchema).default([]),
   // Added in week 4.
   talks: z.array(talkResultSchema).default([]),
+  // Added with the skill model.
+  attempts: z.array(attemptSchema).default([]),
   settings: settingsSchema,
 })
 
@@ -225,5 +255,6 @@ export type RoundScore = z.output<typeof roundSchema>
 export type GrammarRow = z.output<typeof grammarSchema>
 export type BossResult = z.output<typeof bossResultSchema>
 export type TalkResult = z.output<typeof talkResultSchema>
+export type AttemptRow = z.output<typeof attemptSchema>
 export type Settings = z.output<typeof settingsSchema>
 export type Backup = z.output<typeof backupSchema>

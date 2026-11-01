@@ -12,6 +12,7 @@ import { builderCards } from '#shared/utils/builder'
 import { WORD_BANK } from '#shared/utils/quick'
 import { GAP_EVERY, radioAnswers, radioTokens } from '#shared/utils/radio'
 import { useDb } from '~/composables/useDb'
+import { resetLearner, useLearner, weakSkills, workingLevelOf } from '~/composables/useLearner'
 import { usePacks } from '~/composables/usePacks'
 
 const WORDS = [
@@ -372,6 +373,8 @@ async function run() {
     }
   }
 
+  // For host scripts (profiling with a year of data): the database and router.
+  Object.assign(window, { __rienDb: db, __rienNav: navigateTo })
   log(`START ${navigator.userAgent}`)
   const packs = await usePacks()
 
@@ -580,7 +583,10 @@ async function run() {
   })
 
   await step('Progress tab shows totals and the File Boss result', async () => {
-    await goTo('/progress', 'Weak spots')
+    await goTo('/progress', 'Days studied')
+    // Weak spots from slip counts until the skill model has enough answers,
+    // then its Skills card.
+    await waitFor(() => /weak spots|skills/i.test(pageText()), 'Weak spots or Skills')
     await waitText('3 words saved')
     await waitText('File 9:')
     // The study calendar: today is studied, and the grid keeps seven columns
@@ -615,13 +621,38 @@ async function run() {
     await screen('settings')
   })
 
+  await step('Skill model: answers logged, built in the background thread', async () => {
+    const attempts = await db.attemptsSince(new Date(0))
+    const kinds = new Set(attempts.map(a => a.kind))
+    for (const kind of ['fix-it', 'sound', 'builder', 'radio', 'picture', 'speed'] as const) {
+      if (!kinds.has(kind)) throw new Error(`no ${kind} answers logged (have ${[...kinds].join(', ')})`)
+    }
+    // Rebuild from the log, and fail if the background thread could not start.
+    const warn = console.warn
+    let fellBack = false
+    console.warn = (...args: unknown[]) => { if (String(args[0]).includes('main thread')) fellBack = true; warn(...args) }
+    try {
+      resetLearner()
+      const learner = await useLearner()
+      if (fellBack) throw new Error('the skill model was built on the main thread')
+      const reviews = (await db.reviewsSince(new Date(0))).length
+      if (learner.answers !== attempts.length + reviews) throw new Error(`model saw ${learner.answers} answers, log has ${attempts.length + reviews}`)
+      const skills = weakSkills(learner, new Date())
+      if (!skills.length) throw new Error('no skills reported')
+      return `${attempts.length} attempts + ${reviews} reviews; weakest: ${skills.slice(0, 2).map(s => `${s.skill} ${Math.round(s.p * 100)}%`).join(', ')}; working at ${workingLevelOf(learner)}`
+    }
+    finally {
+      console.warn = warn
+    }
+  })
+
   await step('Backup round trip through the storage layer', async () => {
     const before = await db.exportAll()
     await db.importAll(JSON.parse(JSON.stringify(before)))
     const after = await db.exportAll()
-    const counts = (b: typeof before) => [b.cards, b.reviews, b.mistakes, b.sessions, b.grammar, b.bosses, b.talks].map(r => r.length).join('/')
+    const counts = (b: typeof before) => [b.cards, b.reviews, b.mistakes, b.sessions, b.grammar, b.bosses, b.talks, b.attempts].map(r => r.length).join('/')
     if (counts(before) !== counts(after)) throw new Error(`${counts(before)} before, ${counts(after)} after`)
-    return `cards/reviews/mistakes/sessions/grammar/bosses/talks = ${counts(after)}`
+    return `cards/reviews/mistakes/sessions/grammar/bosses/talks/attempts = ${counts(after)}`
   })
 
   await step('Sound stops when a sheet closes or the screen changes', async () => {
@@ -640,7 +671,7 @@ async function run() {
       document.querySelector<HTMLElement>('.ios-sheet-close')!.click()
       await waitFor(() => stops > before, 'stop on sheet close')
       before = stops
-      await goTo('/progress', 'Weak spots')
+      await goTo('/progress', 'Days studied')
       if (stops <= before) throw new Error('no stop on screen change')
       before = stops
       Object.defineProperty(document, 'visibilityState', { value: 'hidden', configurable: true })

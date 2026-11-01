@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { fixItItemSchema, packIndexSchema, packSchema } from '#shared/schemas/pack'
 import { correctedText } from '#shared/utils/fixit'
+import { GRAMMAR_SKILLS } from '#shared/utils/skills'
 
 const read = (name: string) => JSON.parse(readFileSync(new URL(`../public/packs/${name}`, import.meta.url), 'utf8'))
 const index = packIndexSchema.parse(read('index.json'))
@@ -26,6 +27,12 @@ describe.each(index.packs)('content pack %s', (name) => {
     for (const talk of pack.talks) {
       expect(talk.questions.length, talk.id).toBeGreaterThanOrEqual(6)
       expect(talk.starters.length, talk.id).toBeGreaterThanOrEqual(3)
+    }
+  })
+
+  it('names only known grammar points as skills (a typo would make a skill of its own)', () => {
+    for (const item of [...pack.fixIt, ...pack.builder].filter(item => item.skill)) {
+      expect(Object.keys(GRAMMAR_SKILLS), `${pack.id}:${item.id}`).toContain(item.skill)
     }
   })
 

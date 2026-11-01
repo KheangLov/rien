@@ -1,0 +1,209 @@
+{
+  "id": "ef-int-file-01",
+  "title": "English File Intermediate, File 1: present tenses, future forms",
+  "book": "english-file-intermediate-4e",
+  "file": 1,
+  "fixIt": [
+    {
+      "id": "is-crying",
+      "text": "Listen! The baby cries.",
+      "wrong": "cries",
+      "fix": "is crying",
+      "distractors": [
+        "cry",
+        "crying"
+      ],
+      "type": "tense",
+      "explain": "Happening now: present continuous (is crying).",
+      "skill": "present-continuous",
+      "when": "now"
+    },
+    {
+      "id": "cooks-sunday",
+      "text": "My mother cook fish amok every Sunday.",
+      "wrong": "cook",
+      "fix": "cooks",
+      "distractors": [
+        "cooking",
+        "is cook"
+      ],
+      "type": "third-person-s",
+      "explain": "Habits: present simple, with -s for he, she, it.",
+      "skill": "present-simple",
+      "when": "always"
+    },
+    {
+      "id": "is-raining",
+      "text": "Look, it rains. Take an umbrella.",
+      "wrong": "rains",
+      "fix": "is raining",
+      "distractors": [
+        "rain",
+        "raining"
+      ],
+      "type": "tense",
+      "explain": "Look! = now: it is raining.",
+      "skill": "present-continuous",
+      "when": "now"
+    },
+    {
+      "id": "are-having",
+      "text": "We have lunch at the moment, so I can't talk.",
+      "wrong": "have",
+      "fix": "are having",
+      "distractors": [
+        "had",
+        "will have"
+      ],
+      "type": "tense",
+      "explain": "at the moment: present continuous.",
+      "skill": "present-continuous",
+      "when": "now"
+    },
+    {
+      "id": "thinking-about",
+      "text": "What are you think about?",
+      "wrong": "think",
+      "fix": "thinking",
+      "distractors": [
+        "thinks",
+        "thought"
+      ],
+      "type": "tense",
+      "explain": "are + -ing: What are you thinking about?",
+      "skill": "present-continuous",
+      "when": "now"
+    },
+    {
+      "id": "going-to-rain",
+      "text": "Look at those clouds. It's going rain.",
+      "wrong": "rain",
+      "fix": "to rain",
+      "distractors": [
+        "raining",
+        "rains"
+      ],
+      "type": "tense",
+      "explain": "be going to + verb, for what you can see coming.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "are-meeting",
+      "text": "We meet my parents for dinner tomorrow. It's all arranged.",
+      "wrong": "meet",
+      "fix": "are meeting",
+      "distractors": [
+        "met",
+        "meeting"
+      ],
+      "type": "tense",
+      "explain": "Arrangements for the future: present continuous (we're meeting).",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "will-rain",
+      "text": "I think it rains tomorrow.",
+      "wrong": "rains",
+      "fix": "will rain",
+      "distractors": [
+        "rain",
+        "raining"
+      ],
+      "type": "tense",
+      "explain": "Predictions after I think: will.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "will-help",
+      "text": "Don't worry, I help you with your bags.",
+      "wrong": "help",
+      "fix": "will help",
+      "distractors": [
+        "helping",
+        "helped"
+      ],
+      "type": "tense",
+      "explain": "Offers made now: I'll help you.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "is-a-doctor",
+      "text": "My brother-in-law are a doctor.",
+      "wrong": "are",
+      "fix": "is",
+      "distractors": [
+        "be",
+        "am"
+      ],
+      "type": "other",
+      "explain": "One person (he): is.",
+      "skill": "present-simple"
+    },
+    {
+      "id": "does-leave",
+      "text": "What time does the bus leaves?",
+      "wrong": "leaves",
+      "fix": "leave",
+      "distractors": [
+        "leaving",
+        "left"
+      ],
+      "type": "third-person-s",
+      "explain": "After does, the verb has no -s: does the bus leave?",
+      "skill": "present-simple",
+      "when": "always"
+    },
+    {
+      "id": "doesnt-eat",
+      "text": "She doesn't eats meat.",
+      "wrong": "eats",
+      "fix": "eat",
+      "distractors": [
+        "eating",
+        "ate"
+      ],
+      "type": "third-person-s",
+      "explain": "After doesn't, the verb has no -s.",
+      "skill": "present-simple",
+      "when": "always"
+    }
+  ],
+  "builder": [
+    {
+      "id": "cooking-tonight",
+      "text": "What are you cooking tonight?",
+      "tip": "are you + -ing: a plan or now.",
+      "skill": "present-continuous"
+    },
+    {
+      "id": "meeting-dara",
+      "text": "I'm meeting Dara after work.",
+      "tip": "Arrangement: present continuous.",
+      "skill": "future-forms",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "going-to-rain-soon",
+      "text": "It's going to rain soon.",
+      "tip": "be going to: you can see it coming.",
+      "skill": "future-forms"
+    },
+    {
+      "id": "doesnt-like-spicy",
+      "text": "She doesn't like spicy food.",
+      "tip": "doesn't + verb with no -s.",
+      "skill": "present-simple"
+    }
+  ],
+  "radio": [
+    {
+      "id": "family-lunch",
+      "title": "Sunday lunch",
+      "text": "Every Sunday my whole family has lunch at my grandmother's house. She usually cooks fish amok, and my uncle always brings fruit from his garden. This week is different. My grandmother is staying with my aunt in Battambang, so we are having lunch at our house instead. My husband is cooking for the first time. He says it is going to be a surprise. I think we will probably order pizza."
+    }
+  ]
+}

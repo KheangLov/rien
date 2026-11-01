@@ -83,6 +83,8 @@ export async function listAutoBackups(): Promise<{ name: string, date: Date }[]>
 export async function restoreAutoBackup(name: string): Promise<number> {
   const { Directory, Encoding, Filesystem } = await filesystem()
   const { data } = await Filesystem.readFile({ path: `${AUTO_DIR}/${name}`, directory: Directory.Data, encoding: Encoding.UTF8 })
-  const { cards } = await useDb().importAll(JSON.parse(String(data)))
+  const { cards } = await useDb().importAll(String(data))
+  // Her answers changed under the skill model: rebuild it on next use.
+  resetLearner()
   return cards
 }

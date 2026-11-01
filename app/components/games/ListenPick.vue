@@ -63,11 +63,17 @@ function play(rate = 0.85) {
   speak(current.value.answer, rate)
 }
 
+// When the current word was first played, for the answer's time.
+let shownAt = performance.now()
+watch(index, () => { shownAt = performance.now() })
+
 function pick(option: string) {
   const question = current.value
   if (!question || picked.value !== null) return
   picked.value = option
   const right = option === question.answer
+  const item = { itemId: `listen:${question.answer}`, skill: 'listening', level: 'A2' as const }
+  void db.saveAttempts([attemptFor(item, 'listen', right ? 1 : 0, performance.now() - shownAt)]).catch(() => {})
   if (right) {
     score.value++
     hit()

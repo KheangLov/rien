@@ -1,4 +1,5 @@
 import {
+  attemptSchema,
   backupSchema,
   bossResultSchema,
   cardSchema,
@@ -52,9 +53,14 @@ const MIGRATIONS = [
   CREATE TABLE bosses (id INTEGER PRIMARY KEY AUTOINCREMENT, at INTEGER NOT NULL, data TEXT NOT NULL);
   CREATE TABLE talks (id INTEGER PRIMARY KEY AUTOINCREMENT, talk_id TEXT NOT NULL, at INTEGER NOT NULL, data TEXT NOT NULL);
   `,
+  `
+  CREATE TABLE attempts (id INTEGER PRIMARY KEY AUTOINCREMENT, item_id TEXT NOT NULL, skill TEXT NOT NULL, at INTEGER NOT NULL, data TEXT NOT NULL);
+  CREATE INDEX attempts_at ON attempts (at);
+  CREATE INDEX reviews_at ON reviews (at);
+  `,
 ]
 
-export const TABLES = ['cards', 'reviews', 'mistakes', 'sessions', 'settings', 'grammar', 'bosses', 'talks'] as const
+export const TABLES = ['cards', 'reviews', 'mistakes', 'sessions', 'settings', 'grammar', 'bosses', 'talks', 'attempts'] as const
 
 async function migrate(driver: SqlDriver) {
   const [row] = await driver.all<{ user_version: number }>('PRAGMA user_version')
@@ -99,9 +105,24 @@ export async function openSqlRepository(driver: SqlDriver): Promise<StudyReposit
     `INSERT OR REPLACE INTO sessions (date, data) VALUES (?, ?)`, [row.date, json(row)])
   const addBoss = (row: { id?: number, at: Date }) => driver.run(
     `INSERT INTO bosses (id, at, data) VALUES (?, ?, ?)`, [row.id ?? null, row.at.getTime(), json({ ...row, id: undefined })])
+  const addAttempt = (row: { id?: number, itemId: string, skill: string, at: Date }) => driver.run(
+    `INSERT INTO attempts (id, item_id, skill, at, data) VALUES (?, ?, ?, ?, ?)`,
+    [row.id ?? null, row.itemId, row.skill, row.at.getTime(), json({ ...row, id: undefined })])
   const addTalk = (row: { id?: number, talkId: string, at: Date }) => driver.run(
     `INSERT INTO talks (id, talk_id, at, data) VALUES (?, ?, ?, ?)`,
     [row.id ?? null, row.talkId, row.at.getTime(), json({ ...row, id: undefined })])
+
+  // Many rows per statement: the app's SQLite plugin makes one native call per
+  // statement, so restoring a year of reviews row by row took seconds. Chunks
+  // stay under SQLite's limit of 999 parameters per statement.
+  async function insertMany(table: string, columns: string[], rows: SqlValue[][]) {
+    const size = Math.max(1, Math.floor(900 / columns.length))
+    const one = `(${columns.map(() => '?').join(', ')})`
+    for (let i = 0; i < rows.length; i += size) {
+      const chunk = rows.slice(i, i + size)
+      await driver.run(`INSERT INTO ${table} (${columns.join(', ')}) VALUES ${chunk.map(() => one).join(', ')}`, chunk.flat())
+    }
+  }
 
   async function getSettings(): Promise<Settings> {
     const [row] = await driver.all<DataRow>(`SELECT data FROM settings WHERE key = 'settings'`)
@@ -178,11 +199,28 @@ export async function openSqlRepository(driver: SqlDriver): Promise<StudyReposit
       return parseRows(await driver.all<DataRow>(`SELECT data FROM grammar`), raw => grammarSchema.parse(raw))
     },
 
-    async saveGrammarAnswer(row, mistake) {
+    async saveGrammarAnswer(row, mistake, attempt) {
       await driver.transaction(async () => {
         await putGrammar(row)
         if (mistake) await addMistake(mistake)
+        if (attempt) await addAttempt(attemptSchema.parse(attempt))
       })
+    },
+
+    async saveAttempts(attempts) {
+      await driver.transaction(async () => {
+        for (const attempt of attempts) await addAttempt(attemptSchema.parse(attempt))
+      })
+    },
+
+    async attemptsSince(since) {
+      const rows = await driver.all<DataRow>(`SELECT id, data FROM attempts WHERE at >= ? ORDER BY at`, [since.getTime()])
+      return parseRows(rows, raw => attemptSchema.parse(raw))
+    },
+
+    async reviewsSince(since) {
+      const rows = await driver.all<DataRow>(`SELECT id, data FROM reviews WHERE at >= ? ORDER BY at`, [since.getTime()])
+      return parseRows(rows, raw => reviewSchema.parse(raw))
     },
 
     async mistakeCounts(since) {
@@ -256,21 +294,25 @@ export async function openSqlRepository(driver: SqlDriver): Promise<StudyReposit
         grammar: await all('grammar', raw => grammarSchema.parse(raw)),
         bosses: await all('bosses', raw => bossResultSchema.parse(raw), true),
         talks: await all('talks', raw => talkResultSchema.parse(raw), true),
+        attempts: await all('attempts', raw => attemptSchema.parse(raw), true),
         settings: await getSettings(),
       }
     },
 
     async importAll(raw) {
-      const backup = backupSchema.parse(raw)
+      const backup = backupSchema.parse(typeof raw === 'string' ? JSON.parse(raw) : raw)
+      const noId = <T extends { id?: number }>(row: T) => json({ ...row, id: undefined })
       await driver.transaction(async () => {
         for (const table of TABLES) await driver.run(`DELETE FROM ${table}`)
-        for (const card of backup.cards) await putCard(card)
-        for (const review of backup.reviews) await addReview(review)
-        for (const mistake of backup.mistakes) await addMistake(mistake)
-        for (const session of backup.sessions) await putSession(session)
-        for (const row of backup.grammar) await putGrammar(row)
-        for (const boss of backup.bosses) await addBoss(boss)
-        for (const talk of backup.talks) await addTalk(talk)
+        await insertMany('cards', ['id', 'due', 'answer_key', 'book', 'file', 'state', 'created_at', 'data'], backup.cards.map(card =>
+          [card.id, card.due.getTime(), card.answerKey, card.book, card.file, card.fsrs.state, card.createdAt.getTime(), json(card)]))
+        await insertMany('reviews', ['id', 'card_id', 'at', 'data'], backup.reviews.map(r => [r.id ?? null, r.cardId, r.at.getTime(), noId(r)]))
+        await insertMany('mistakes', ['id', 'type', 'item_id', 'at', 'data'], backup.mistakes.map(m => [m.id ?? null, m.type, m.itemId, m.at.getTime(), noId(m)]))
+        await insertMany('sessions', ['date', 'data'], backup.sessions.map(row => [row.date, json(row)]))
+        await insertMany('grammar', ['item_id', 'due', 'data'], backup.grammar.map(row => [row.itemId, row.due.getTime(), json(row)]))
+        await insertMany('bosses', ['id', 'at', 'data'], backup.bosses.map(row => [row.id ?? null, row.at.getTime(), noId(row)]))
+        await insertMany('talks', ['id', 'talk_id', 'at', 'data'], backup.talks.map(row => [row.id ?? null, row.talkId, row.at.getTime(), noId(row)]))
+        await insertMany('attempts', ['id', 'item_id', 'skill', 'at', 'data'], backup.attempts.map(row => [row.id ?? null, row.itemId, row.skill, row.at.getTime(), noId(row)]))
         await driver.run(`INSERT INTO settings (key, data) VALUES ('settings', ?)`, [json(backup.settings)])
       })
       return { cards: backup.cards.length }

@@ -81,11 +81,18 @@ watch(clock.finished, (over) => {
   emit('done', { clean: score.value, total: answered.value })
 })
 
+// When the current sentence appeared, for the answer's time.
+let shownAt = performance.now()
+watch(index, () => { shownAt = performance.now() })
+
 function call(saysRight: boolean) {
   const question = current.value
   if (!question || feedback.value || phase.value !== 'playing') return
   const right = saysRight === question.correct
   answered.value++
+  // Spotting whether a sentence is right trains the same grammar as Fix It.
+  const card = cards.value.find(c => c.itemId === question.itemId)
+  if (card) void useDb().saveAttempts([attemptFor(card, 'speed', right ? 1 : 0, performance.now() - shownAt)]).catch(() => {})
   if (right) {
     score.value++
     hit()

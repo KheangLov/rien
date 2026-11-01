@@ -1,5 +1,5 @@
 import type { Card } from 'ts-fsrs'
-import type { GrammarRow, MistakeRow, MistakeType } from '../schemas/db'
+import type { GrammarRow, Level, MistakeRow, MistakeType } from '../schemas/db'
 import { newFsrsState, nextFsrsState, type Grade } from './scheduler'
 
 // Anything from a content pack she practises: a Fix It sentence or a sound pair.
@@ -7,6 +7,9 @@ export interface PracticeItem {
   // Unique across packs: "<pack id>:<item id>".
   itemId: string
   type: MistakeType
+  // What it trains and how hard it starts out (shared/utils/skills.ts).
+  skill: string
+  level: Level
 }
 
 // Answered this recently, a due item waits (missed items come back within
@@ -27,6 +30,9 @@ export function pickRound<T extends PracticeItem>(
   now: Date,
   size: number,
   random: () => number = Math.random,
+  // From the skill model (useLearner): how well each unseen item suits her
+  // now, about 0 to 1.5. Without it, her recent mistake counts decide.
+  rank?: (item: T) => number,
 ): T[] {
   const at = now.getTime()
   const dueAt = (item: T) => states.get(item.itemId)?.due.getTime()
@@ -42,11 +48,13 @@ export function pickRound<T extends PracticeItem>(
     .sort((a, b) => dueAt(a)! - dueAt(b)!)
   const recent = (item: T) => (seenAt(item) ?? 0) > at - RECENT_MS
 
-  // Weighted random order (a key of random^(1/weight)): weaker types come
-  // earlier more often, never always.
+  // Weighted random order (a key of random^(1/weight)): items that suit her
+  // best (or, without the model, her weaker types) come earlier more often,
+  // never always.
+  const weight = (item: T) => rank ? 0.25 + 3 * rank(item) : 1 + Math.min(4, mistakeCounts[item.type] ?? 0)
   const fresh = items
     .filter(item => !states.has(item.itemId))
-    .map(item => ({ item, key: random() ** (1 / (1 + Math.min(4, mistakeCounts[item.type] ?? 0))) }))
+    .map(item => ({ item, key: random() ** (1 / weight(item)) }))
     .sort((a, b) => b.key - a.key)
     .map(({ item }) => item)
 

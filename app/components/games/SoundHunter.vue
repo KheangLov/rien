@@ -27,7 +27,7 @@ onMounted(async () => {
   try {
     const practice = await loadPractice()
     states.value = practice.states
-    round.value = topUpRound(pickRound(practice.soundCards, practice.states, practice.counts, practice.now, ROUND_SIZE), practice.soundCards, practice.states, ROUND_SIZE)
+    round.value = topUpRound(pickRound(practice.soundCards, practice.states, practice.counts, practice.now, ROUND_SIZE, Math.random, practice.rank), practice.soundCards, practice.states, ROUND_SIZE)
   }
   catch (error) {
     console.error('[rien] could not start Final Sound Hunter', error)

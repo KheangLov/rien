@@ -3,8 +3,9 @@ import type { BuilderItem, Pack } from '../schemas/pack'
 import { normalizeAnswer } from './answer'
 import { gradePractice, shuffle, type PracticeItem } from './rounds'
 import { Rating } from './scheduler'
+import { packLevel } from './skills'
 
-export interface BuilderCard extends BuilderItem, PracticeItem {}
+export interface BuilderCard extends Omit<BuilderItem, 'skill' | 'level'>, PracticeItem {}
 
 export interface Tile {
   id: number
@@ -12,7 +13,13 @@ export interface Tile {
 }
 
 export function builderCards(packs: Pack[]): BuilderCard[] {
-  return packs.flatMap(pack => pack.builder.map(item => ({ ...item, itemId: `${pack.id}:${item.id}`, type: 'word-order' as const })))
+  return packs.flatMap(pack => pack.builder.map(item => ({
+    ...item,
+    itemId: `${pack.id}:${item.id}`,
+    type: 'word-order' as const,
+    skill: item.skill ?? 'word-order',
+    level: item.level ?? packLevel(pack),
+  })))
 }
 
 // The end mark (. ? !) stays fixed after the tiles.

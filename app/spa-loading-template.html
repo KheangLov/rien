@@ -265,14 +265,12 @@
           splash.style.setProperty('--rs-brand', colours.brand)
           for (var i = 0; i < 3; i++) splash.style.setProperty('--rs-t' + (i + 1), colours.tints[i])
         }
-        // The logo takes her colour too, but only in a browser tab: an
-        // installed app (PWA or the phone app) opens on the system's launch
-        // screen with the teal home-screen logo, and this one must match it.
+        // The logo takes her colour too, except on iPhone home-screen and
+        // native apps, whose system launch screen is a fixed teal logo that
+        // this one must match. Android's own launch screen has no logo.
         var cap = window.Capacitor
-        var installed = (cap && (cap.isNativePlatform ? cap.isNativePlatform() : cap.platform !== 'web'))
-          || window.androidBridge || navigator.standalone
-          || matchMedia('(display-mode: standalone), (display-mode: fullscreen)').matches
-        if (colours && colours.logo && !installed) {
+        var iphoneLaunch = (cap && cap.getPlatform && cap.getPlatform() === 'ios') || navigator.standalone === true
+        if (colours && colours.logo && !iphoneLaunch) {
           splash.style.setProperty('--rs-logo-top', colours.logo.top)
           splash.style.setProperty('--rs-logo-bottom', colours.logo.bottom)
           splash.style.setProperty('--rs-logo-bar', colours.logo.bar)

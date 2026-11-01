@@ -1,0 +1,208 @@
+{
+  "id": "ef-int-file-02",
+  "title": "English File Intermediate, File 2: present perfect and past simple, present perfect continuous",
+  "book": "english-file-intermediate-4e",
+  "file": 2,
+  "fixIt": [
+    {
+      "id": "bought-ago",
+      "text": "I buy this phone two weeks ago.",
+      "wrong": "buy",
+      "fix": "bought",
+      "distractors": [
+        "have bought",
+        "am buying"
+      ],
+      "type": "tense",
+      "explain": "ago = a finished time: past simple.",
+      "skill": "past-simple",
+      "when": "past"
+    },
+    {
+      "id": "ever-borrowed",
+      "text": "Have you ever borrow money from a friend?",
+      "wrong": "borrow",
+      "fix": "borrowed",
+      "distractors": [
+        "borrows",
+        "borrowing"
+      ],
+      "type": "tense",
+      "explain": "Have you ever + past participle.",
+      "skill": "present-perfect",
+      "when": "past-to-now"
+    },
+    {
+      "id": "saved-this-year",
+      "text": "She has save a lot of money this year.",
+      "wrong": "save",
+      "fix": "saved",
+      "distractors": [
+        "saving",
+        "saves"
+      ],
+      "type": "tense",
+      "explain": "this year is not finished: has + past participle.",
+      "skill": "present-perfect",
+      "when": "past-to-now"
+    },
+    {
+      "id": "did-cost",
+      "text": "How much did that bag costs?",
+      "wrong": "costs",
+      "fix": "cost",
+      "distractors": [
+        "costed",
+        "costing"
+      ],
+      "type": "tense",
+      "explain": "After did, use the base form: did it cost?",
+      "skill": "past-simple",
+      "when": "past"
+    },
+    {
+      "id": "waiting-for-hour",
+      "text": "I've been waiting here since an hour.",
+      "wrong": "since",
+      "fix": "for",
+      "distractors": [
+        "from",
+        "during"
+      ],
+      "type": "preposition",
+      "explain": "for + a length of time (an hour).",
+      "skill": "present-perfect-continuous"
+    },
+    {
+      "id": "been-learning",
+      "text": "How long have you been learn English?",
+      "wrong": "learn",
+      "fix": "learning",
+      "distractors": [
+        "learnt",
+        "learns"
+      ],
+      "type": "tense",
+      "explain": "have been + -ing: an activity from the past until now.",
+      "skill": "present-perfect-continuous",
+      "when": "past-to-now"
+    },
+    {
+      "id": "has-been-working",
+      "text": "She is working here for six months.",
+      "wrong": "is",
+      "fix": "has been",
+      "distractors": [
+        "have been",
+        "is been"
+      ],
+      "type": "tense",
+      "explain": "From six months ago until now: has been working.",
+      "skill": "present-perfect-continuous",
+      "when": "past-to-now"
+    },
+    {
+      "id": "been-running",
+      "text": "I'm exhausted because I've been run all morning.",
+      "wrong": "run",
+      "fix": "running",
+      "distractors": [
+        "ran",
+        "runs"
+      ],
+      "type": "tense",
+      "explain": "have been + -ing explains why you are tired now.",
+      "skill": "present-perfect-continuous",
+      "when": "past-to-now"
+    },
+    {
+      "id": "met-at-school",
+      "text": "We've been friends since we meet at university.",
+      "wrong": "meet",
+      "fix": "met",
+      "distractors": [
+        "meeting",
+        "meets"
+      ],
+      "type": "tense",
+      "explain": "since + a past moment in the past simple: since we met.",
+      "skill": "past-simple",
+      "when": "past"
+    },
+    {
+      "id": "grandfather-died",
+      "text": "My grandfather dies in 2015.",
+      "wrong": "dies",
+      "fix": "died",
+      "distractors": [
+        "has died",
+        "dying"
+      ],
+      "type": "tense",
+      "explain": "in 2015 is a finished time: past simple.",
+      "skill": "past-simple",
+      "when": "past"
+    },
+    {
+      "id": "have-lived-since",
+      "text": "We live here since 2020.",
+      "wrong": "live",
+      "fix": "have lived",
+      "distractors": [
+        "lived",
+        "are living"
+      ],
+      "type": "tense",
+      "explain": "since 2020 = from then until now: present perfect.",
+      "skill": "present-perfect",
+      "when": "past-to-now"
+    },
+    {
+      "id": "amazing-film",
+      "text": "The film was really amazed.",
+      "wrong": "amazed",
+      "fix": "amazing",
+      "distractors": [
+        "amaze",
+        "amazes"
+      ],
+      "type": "other",
+      "explain": "-ing describes the thing (an amazing film); -ed describes how you feel (I was amazed).",
+      "skill": "ed-ing-adjectives"
+    }
+  ],
+  "builder": [
+    {
+      "id": "how-long-waiting",
+      "text": "How long have you been waiting?",
+      "tip": "have been + -ing: until now.",
+      "skill": "present-perfect-continuous"
+    },
+    {
+      "id": "bought-last-week",
+      "text": "I bought it last week.",
+      "tip": "last week: past simple.",
+      "skill": "past-simple",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "ever-lost-wallet",
+      "text": "Have you ever lost your wallet?",
+      "tip": "Have you ever + past participle.",
+      "skill": "present-perfect"
+    },
+    {
+      "id": "worked-since-may",
+      "text": "She has worked here since May.",
+      "tip": "since + a starting point.",
+      "skill": "present-perfect"
+    }
+  ],
+  "radio": [
+    {
+      "id": "saving-motorbike",
+      "title": "Saving for a motorbike",
+      "text": "Sokha has been saving for a new motorbike since January. Last year she spent most of her money on clothes and eating out, but this year she has changed her habits. She has cooked at home every day this month, and she hasn't bought any new clothes. She has already saved four hundred dollars. Yesterday she went to look at motorbikes with her brother. She hasn't chosen one yet, but she is very excited."
+    }
+  ]
+}

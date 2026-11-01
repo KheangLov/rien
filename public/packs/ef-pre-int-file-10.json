@@ -14,7 +14,8 @@
         "at"
       ],
       "type": "preposition",
-      "explain": "Movement inside: into the room."
+      "explain": "Movement inside: into the room.",
+      "skill": "prepositions"
     },
     {
       "id": "passive-built",
@@ -27,7 +28,8 @@
       ],
       "type": "tense",
       "explain": "Passive: was + past participle.",
-      "when": "past"
+      "when": "past",
+      "skill": "passive"
     },
     {
       "id": "passive-grown",
@@ -40,7 +42,224 @@
       ],
       "type": "tense",
       "explain": "Passive: is + past participle.",
+      "when": "always",
+      "skill": "passive"
+    },
+    {
+      "id": "was-built",
+      "text": "Angkor Wat was builded in the twelfth century.",
+      "wrong": "builded",
+      "fix": "built",
+      "distractors": [
+        "build",
+        "building"
+      ],
+      "type": "tense",
+      "explain": "build is irregular: build, built, built. Passive: was + past participle.",
+      "skill": "passive",
+      "when": "past"
+    },
+    {
+      "id": "are-made",
+      "text": "These shirts are make in Cambodia.",
+      "wrong": "make",
+      "fix": "made",
+      "distractors": [
+        "making",
+        "makes"
+      ],
+      "type": "tense",
+      "explain": "Passive: are + past participle (made).",
+      "skill": "passive",
       "when": "always"
+    },
+    {
+      "id": "is-spoken",
+      "text": "English is speak in many countries.",
+      "wrong": "speak",
+      "fix": "spoken",
+      "distractors": [
+        "spoke",
+        "speaking"
+      ],
+      "type": "tense",
+      "explain": "Passive: is + past participle. speak, spoke, spoken.",
+      "skill": "passive",
+      "when": "always"
+    },
+    {
+      "id": "was-stolen",
+      "text": "My phone was stole on the bus.",
+      "wrong": "stole",
+      "fix": "stolen",
+      "distractors": [
+        "steal",
+        "stealing"
+      ],
+      "type": "tense",
+      "explain": "Passive: was + past participle. steal, stole, stolen.",
+      "skill": "passive",
+      "when": "past"
+    },
+    {
+      "id": "is-sold",
+      "text": "The rice is grown by farmers in the countryside, and it is sell in the market.",
+      "wrong": "sell",
+      "fix": "sold",
+      "distractors": [
+        "selling",
+        "sells"
+      ],
+      "type": "tense",
+      "explain": "Passive: is + past participle (sold).",
+      "skill": "passive",
+      "when": "always"
+    },
+    {
+      "id": "was-written",
+      "text": "This song was wrote by a Cambodian singer.",
+      "wrong": "wrote",
+      "fix": "written",
+      "distractors": [
+        "write",
+        "writing"
+      ],
+      "type": "tense",
+      "explain": "Passive: was + past participle. write, wrote, written.",
+      "skill": "passive",
+      "when": "past"
+    },
+    {
+      "id": "are-delivered",
+      "text": "The letters are deliver every morning.",
+      "wrong": "deliver",
+      "fix": "delivered",
+      "distractors": [
+        "delivering",
+        "delivers"
+      ],
+      "type": "tense",
+      "explain": "Passive: are + past participle (delivered).",
+      "skill": "passive",
+      "when": "always"
+    },
+    {
+      "id": "were-destroyed",
+      "text": "Many old buildings were destroy in the war.",
+      "wrong": "destroy",
+      "fix": "destroyed",
+      "distractors": [
+        "destroying",
+        "destroys"
+      ],
+      "type": "tense",
+      "explain": "Passive: were + past participle (destroyed).",
+      "skill": "passive",
+      "when": "past"
+    },
+    {
+      "id": "up-stairs",
+      "text": "She ran along the stairs.",
+      "wrong": "along",
+      "fix": "up",
+      "distractors": [
+        "across",
+        "through"
+      ],
+      "type": "preposition",
+      "explain": "You go up or down stairs; along is for a road or a river.",
+      "skill": "prepositions"
+    },
+    {
+      "id": "through-tunnel",
+      "text": "The bus went under the tunnel.",
+      "wrong": "under",
+      "fix": "through",
+      "distractors": [
+        "between",
+        "at"
+      ],
+      "type": "preposition",
+      "explain": "through = in one side and out of the other.",
+      "skill": "prepositions"
+    },
+    {
+      "id": "out-of",
+      "text": "He got out the tuk-tuk and paid the driver.",
+      "wrong": "out",
+      "fix": "out of",
+      "distractors": [
+        "for",
+        "by"
+      ],
+      "type": "preposition",
+      "explain": "get out of a car, taxi or tuk-tuk; get off a bus, bike or moto.",
+      "skill": "prepositions"
+    },
+    {
+      "id": "turn-left",
+      "text": "Walk past the market and turn on the left.",
+      "wrong": "on",
+      "fix": "to",
+      "distractors": [
+        "at",
+        "in"
+      ],
+      "type": "preposition",
+      "explain": "turn left, or turn to the left.",
+      "skill": "prepositions"
+    },
+    {
+      "id": "turn-off",
+      "text": "Please turn on the TV. I want to sleep.",
+      "wrong": "on",
+      "fix": "off",
+      "distractors": [
+        "in",
+        "out"
+      ],
+      "type": "other",
+      "explain": "To stop a machine: turn it off.",
+      "skill": "phrasal-verbs"
+    },
+    {
+      "id": "look-up",
+      "text": "I need to look after a word in the dictionary.",
+      "wrong": "after",
+      "fix": "up",
+      "distractors": [
+        "in",
+        "off"
+      ],
+      "type": "other",
+      "explain": "look up a word = find it in a dictionary. look after = take care of.",
+      "skill": "phrasal-verbs"
+    },
+    {
+      "id": "take-off-shoes",
+      "text": "Please put off your shoes before you go into the temple.",
+      "wrong": "put",
+      "fix": "take",
+      "distractors": [
+        "turn",
+        "give"
+      ],
+      "type": "other",
+      "explain": "take off clothes or shoes; put on is the opposite.",
+      "skill": "phrasal-verbs"
+    },
+    {
+      "id": "gave-up",
+      "text": "I gave on smoking last year.",
+      "wrong": "on",
+      "fix": "up",
+      "distractors": [
+        "off",
+        "in"
+      ],
+      "type": "other",
+      "explain": "give up = stop doing something for good.",
+      "skill": "phrasal-verbs"
     }
   ],
   "builder": [
@@ -48,7 +267,48 @@
       "id": "turn-it-off",
       "text": "Please turn it off.",
       "alternatives": [],
-      "tip": "With it, the pronoun goes in the middle: turn it off."
+      "tip": "With it, the pronoun goes in the middle: turn it off.",
+      "skill": "phrasal-verbs"
+    },
+    {
+      "id": "made-in-cambodia",
+      "text": "This bag was made in Cambodia.",
+      "tip": "Passive: was + past participle.",
+      "skill": "passive"
+    },
+    {
+      "id": "built-by-king",
+      "text": "The temple was built by the king.",
+      "tip": "Passive with by: who did it.",
+      "skill": "passive"
+    },
+    {
+      "id": "shoes-off-tiles",
+      "text": "Please take off your shoes.",
+      "tip": "take off = remove clothes or shoes.",
+      "skill": "phrasal-verbs",
+      "alternatives": [
+        "Please take your shoes off."
+      ]
+    },
+    {
+      "id": "across-bridge",
+      "text": "We walked across the bridge.",
+      "tip": "across = from one side to the other.",
+      "skill": "prepositions"
+    },
+    {
+      "id": "spoken-everywhere",
+      "text": "English is spoken all over the world.",
+      "tip": "Passive: is + past participle.",
+      "skill": "passive"
+    }
+  ],
+  "radio": [
+    {
+      "id": "silk-island",
+      "title": "The silk island",
+      "text": "Last Sunday we took a boat across the Mekong to Koh Dach, a small island near Phnom Penh. Silk is made there in the traditional way. The cloth is woven by hand on wooden machines under the houses. A woman showed us how the silk is dyed with colours from plants. We walked along the river, and then we got back on the boat before the rain started. I bought a scarf for my mother. It was made by the woman we met."
     }
   ]
 }

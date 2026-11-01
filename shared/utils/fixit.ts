@@ -1,18 +1,29 @@
-import type { GrammarRow, MistakeRow, Settings } from '../schemas/db'
+import { BOOKS, type Book, type GrammarRow, type MistakeRow, type Settings } from '../schemas/db'
 import type { FixItItem, Pack } from '../schemas/pack'
 import { normalizeAnswer } from './answer'
 import { gradePractice, type PracticeItem } from './rounds'
 import { Rating, type Grade } from './scheduler'
+import { packLevel, skillOf } from './skills'
 
-export interface FixItCard extends FixItItem, PracticeItem {}
+export interface FixItCard extends Omit<FixItItem, 'skill' | 'level'>, PracticeItem {}
 
-// Core packs apply at every level; book packs up to her current File.
+// Core packs apply at every level; her book's packs up to her current File;
+// and every pack of the books before it (ACE moves her through English File
+// in order), so what she learned there keeps coming back for review.
 export function packsFor(packs: Pack[], settings: Pick<Settings, 'book' | 'file'>): Pack[] {
-  return packs.filter(pack => !pack.book || (pack.book === settings.book && (pack.file ?? 1) <= settings.file))
+  const order = (book: Book) => BOOKS.indexOf(book)
+  return packs.filter(pack => !pack.book
+    || order(pack.book) < order(settings.book)
+    || (pack.book === settings.book && (pack.file ?? 1) <= settings.file))
 }
 
 export function fixItCards(packs: Pack[]): FixItCard[] {
-  return packs.flatMap(pack => pack.fixIt.map(item => ({ ...item, itemId: `${pack.id}:${item.id}` })))
+  return packs.flatMap(pack => pack.fixIt.map(item => ({
+    ...item,
+    itemId: `${pack.id}:${item.id}`,
+    skill: skillOf(item),
+    level: item.level ?? packLevel(pack),
+  })))
 }
 
 export function tokenize(text: string): string[] {

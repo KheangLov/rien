@@ -16,7 +16,7 @@ const word = {
   book: 'english-file-pre-intermediate-4e' as const,
   file: 7,
 }
-const item: FixItCard = { itemId: 'core:a', id: 'a', text: 'She go home.', wrong: 'go', fix: 'went', distractors: ['goes'], type: 'tense', explain: '' }
+const item: FixItCard = { itemId: 'core:a', id: 'a', text: 'She go home.', wrong: 'go', fix: 'went', distractors: ['goes'], type: 'tense', explain: '', skill: 'past-simple', level: 'A2' }
 
 interface Store {
   repo: StudyRepository
@@ -54,6 +54,49 @@ describe.each(Object.entries(stores))('%s repository', (_, open) => {
 
   afterEach(async () => {
     await store.close()
+  })
+
+  it('logs answers for the skill model, and keeps them in backups', async () => {
+    const attempt = { itemId: 'core:a', kind: 'fix-it' as const, skill: 'tense:past', score: 1, ms: 2500, at: now }
+    await repo.saveGrammarAnswer(gradeFixIt(item, undefined, { wrongTaps: 0, wrongChoice: false }, now).row, undefined, attempt)
+    await repo.saveAttempts([
+      { ...attempt, itemId: 'quick:pig', kind: 'picture', skill: 'vocabulary', score: 0, at: new Date(now.getTime() + 1000) },
+      { ...attempt, itemId: 'old', at: new Date('2026-01-01T00:00:00Z') },
+    ])
+    const since = await repo.attemptsSince(new Date(now.getTime() - 60_000))
+    expect(since.map(a => a.itemId)).toEqual(['core:a', 'quick:pig'])
+    expect(since[0]).toMatchObject({ skill: 'tense:past', score: 1, ms: 2500 })
+
+    const card = await repo.addWord(word, now)
+    await repo.saveAnswer(gradeAnswer(card, { result: 'correct' }, 'borrow', 2000, now))
+    expect((await repo.reviewsSince(new Date(now.getTime() - 60_000))).map(r => r.cardId)).toEqual([card.id])
+
+    const json = JSON.parse(JSON.stringify(await repo.exportAll(now)))
+    expect(json.attempts).toHaveLength(3)
+    const other = await open()
+    await other.repo.importAll(json)
+    expect(await other.repo.attemptsSince(new Date(0))).toHaveLength(3)
+    await other.close()
+  })
+
+  it('restores from the backup file\'s text as well as its parsed JSON', async () => {
+    await repo.addWord(word, now)
+    const text = JSON.stringify(await repo.exportAll(now))
+    const other = await open()
+    expect(await other.repo.importAll(text)).toEqual({ cards: 1 })
+    await expect(other.repo.importAll('not json')).rejects.toThrow()
+    expect(await other.repo.countCards()).toBe(1)
+    await other.close()
+  })
+
+  it('restores a large backup (more rows than one SQL statement holds)', async () => {
+    const card = await repo.addWord(word, now)
+    const backup = JSON.parse(JSON.stringify(await repo.exportAll(now)))
+    backup.reviews = Array.from({ length: 1234 }, (_, i) => ({ cardId: card.id, at: new Date(now.getTime() - i * 60_000), rating: 3, correct: true, typed: 'borrow', ms: 1000 }))
+    backup.attempts = Array.from({ length: 777 }, (_, i) => ({ itemId: `x${i}`, kind: 'listen', skill: 'listening', score: i % 2, ms: 0, at: now }))
+    await repo.importAll(backup)
+    expect(await store.reviewCount()).toBe(1234)
+    expect(await repo.attemptsSince(new Date(0))).toHaveLength(777)
   })
 
   it('starts with default settings and saves changes', async () => {

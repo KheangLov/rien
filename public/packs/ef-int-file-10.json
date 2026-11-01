@@ -1,0 +1,197 @@
+{
+  "id": "ef-int-file-10",
+  "title": "English File Intermediate, File 10: relative clauses, question tags",
+  "book": "english-file-intermediate-4e",
+  "file": 10,
+  "fixIt": [
+    {
+      "id": "who-lives",
+      "text": "The woman which lives next door is a nurse.",
+      "wrong": "which",
+      "fix": "who",
+      "distractors": [
+        "what",
+        "whose"
+      ],
+      "type": "other",
+      "explain": "People: who (or that).",
+      "skill": "relative-clauses"
+    },
+    {
+      "id": "that-bought",
+      "text": "This is the phone what I bought yesterday.",
+      "wrong": "what",
+      "fix": "that",
+      "distractors": [
+        "who",
+        "whose"
+      ],
+      "type": "other",
+      "explain": "Things: that or which.",
+      "skill": "relative-clauses"
+    },
+    {
+      "id": "brother-who",
+      "text": "My brother, that lives in Japan, is coming home.",
+      "wrong": "that",
+      "fix": "who",
+      "distractors": [
+        "which",
+        "what"
+      ],
+      "type": "other",
+      "explain": "With commas (extra information), use who or which, never that.",
+      "skill": "relative-clauses"
+    },
+    {
+      "id": "whose-car",
+      "text": "That's the man who car was stolen.",
+      "wrong": "who",
+      "fix": "whose",
+      "distractors": [
+        "which",
+        "who's"
+      ],
+      "type": "other",
+      "explain": "whose = his, her or their: the man whose car …",
+      "skill": "relative-clauses"
+    },
+    {
+      "id": "where-born",
+      "text": "The village which I was born is near Takeo.",
+      "wrong": "which",
+      "fix": "where",
+      "distractors": [
+        "what",
+        "who"
+      ],
+      "type": "other",
+      "explain": "Places: where (where I was born).",
+      "skill": "relative-clauses"
+    },
+    {
+      "id": "angkor-is",
+      "text": "Angkor Wat, which was built in the twelfth century, are visited by millions.",
+      "wrong": "are",
+      "fix": "is",
+      "distractors": [
+        "were",
+        "be"
+      ],
+      "type": "other",
+      "explain": "The subject is Angkor Wat (one thing): is.",
+      "skill": "relative-clauses"
+    },
+    {
+      "id": "arent-you",
+      "text": "You're from Kampot, aren't it?",
+      "wrong": "it",
+      "fix": "you",
+      "distractors": [
+        "they",
+        "we"
+      ],
+      "type": "other",
+      "explain": "The tag uses the same subject: You're …, aren't you?",
+      "skill": "question-tags"
+    },
+    {
+      "id": "doesnt-she",
+      "text": "She works here, isn't she?",
+      "wrong": "isn't",
+      "fix": "doesn't",
+      "distractors": [
+        "don't",
+        "is"
+      ],
+      "type": "other",
+      "explain": "Present simple: the tag uses does (doesn't she?).",
+      "skill": "question-tags"
+    },
+    {
+      "id": "didnt-they",
+      "text": "The police caught the thief, didn't it?",
+      "wrong": "it",
+      "fix": "they",
+      "distractors": [
+        "he",
+        "we"
+      ],
+      "type": "other",
+      "explain": "The police = they: didn't they?",
+      "skill": "question-tags"
+    },
+    {
+      "id": "have-you",
+      "text": "You haven't seen my keys, did you?",
+      "wrong": "did",
+      "fix": "have",
+      "distractors": [
+        "do",
+        "had"
+      ],
+      "type": "other",
+      "explain": "haven't …, have you? Same helper verb, positive.",
+      "skill": "question-tags"
+    },
+    {
+      "id": "isnt-it",
+      "text": "It's a beautiful day, is it?",
+      "wrong": "is",
+      "fix": "isn't",
+      "distractors": [
+        "it's",
+        "was"
+      ],
+      "type": "other",
+      "explain": "Positive sentence, negative tag: isn't it?",
+      "skill": "question-tags"
+    },
+    {
+      "id": "wont-he",
+      "text": "He'll call the police, will he?",
+      "wrong": "will",
+      "fix": "won't",
+      "distractors": [
+        "doesn't",
+        "isn't"
+      ],
+      "type": "other",
+      "explain": "He'll (will) …, won't he?",
+      "skill": "question-tags"
+    }
+  ],
+  "builder": [
+    {
+      "id": "woman-next-door",
+      "text": "That's the woman who lives next door.",
+      "tip": "who for people.",
+      "skill": "relative-clauses"
+    },
+    {
+      "id": "cold-isnt-it",
+      "text": "It's cold today, isn't it?",
+      "tip": "Positive sentence, negative tag.",
+      "skill": "question-tags"
+    },
+    {
+      "id": "dont-eat-meat-tag",
+      "text": "You don't eat meat, do you?",
+      "tip": "Negative sentence, positive tag.",
+      "skill": "question-tags"
+    },
+    {
+      "id": "phone-that-broke",
+      "text": "The phone that I bought broke.",
+      "tip": "that for things.",
+      "skill": "relative-clauses"
+    }
+  ],
+  "radio": [
+    {
+      "id": "missing-laptop",
+      "title": "The missing laptop",
+      "text": "Last Monday a laptop was stolen from the office where my husband works. The police officer who came to the office asked everyone a lot of questions. You were here all day, weren't you, she asked my husband. He said he had gone out for lunch. In the end, they found the laptop in the car park. The thief, who was a young delivery man, had hidden it under his motorbike seat. Nobody could believe it, could they?"
+    }
+  ]
+}

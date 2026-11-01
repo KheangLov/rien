@@ -42,7 +42,7 @@ async function start() {
   try {
     const practice = await loadPractice()
     states.value = practice.states
-    const picked = topUpRound(pickRound(practice.radioCards, practice.states, practice.counts, practice.now, 1), practice.radioCards, practice.states, 1)[0]
+    const picked = topUpRound(pickRound(practice.radioCards, practice.states, practice.counts, practice.now, 1, Math.random, practice.rank), practice.radioCards, practice.states, 1)[0]
     // Different gaps each time the same text comes round.
     card.value = picked ? { ...picked, start: Math.floor(Math.random() * GAP_EVERY) } : null
     typed.value = answers.value.map(() => '')
@@ -105,7 +105,9 @@ async function check() {
   right.value = graded.right
   haptic(graded.mistakes.length === 0 ? 'success' : right.value >= answers.value.length / 2 ? 'warning' : 'error')
   const [first, ...rest] = graded.mistakes
-  await db.saveGrammarAnswer(graded.row, first)
+  // The share of gaps caught.
+  const attempt = attemptFor(current, 'radio', answers.value.length ? graded.right / answers.value.length : 0, 0)
+  await db.saveGrammarAnswer(graded.row, first, attempt)
   for (const mistake of rest) await db.saveMistake(mistake)
 }
 

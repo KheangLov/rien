@@ -2,7 +2,8 @@
 import type { CardRow } from '#shared/schemas/db'
 import { blankExample, checkAnswer, normalizeAnswer, type Verdict } from '#shared/utils/answer'
 import { comesBackLabel, hintFor, maxHintLevel } from '#shared/utils/learning'
-import { gradeAnswer } from '#shared/utils/scheduler'
+import { expectedWordMs, gradeAnswer } from '#shared/utils/scheduler'
+import { levelFor } from '#shared/utils/skills'
 import { vPlainInput } from '~/directives/plainInput'
 
 // One word question: she sees the meaning and types the English word. A hint
@@ -49,7 +50,17 @@ async function submit(giveUp = false) {
   if (result.result === 'correct' && hintLevel.value > 0) result = { result: 'almost', hint: 'Right, with a hint' }
   verdict.value = result
   haptic(result.result === 'correct' ? 'success' : result.result === 'almost' ? 'warning' : 'error')
-  const graded = gradeAnswer(props.card, result, typed.value, performance.now() - shownAt, new Date())
+  // Her usual pace (from the skill model) lets a fast right answer count as Easy.
+  const perLetter = learnerNow()?.perLetter
+  const graded = gradeAnswer(props.card, result, typed.value, performance.now() - shownAt, new Date(),
+    perLetter ? expectedWordMs(props.card.answer, perLetter) : undefined)
+  learnerHeard({
+    itemId: props.card.id,
+    skill: 'vocabulary',
+    level: levelFor(props.card.book, props.card.file),
+    score: graded.review.rating <= 1 ? 0 : graded.review.rating === 2 ? 0.6 : 1,
+    at: graded.review.at,
+  })
   comesBack.value = comesBackLabel(graded.card.due, new Date())
   await db.saveAnswer(graded)
   emit('answered', { card: graded.card, result: result.result })

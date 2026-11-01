@@ -15,7 +15,8 @@
       ],
       "type": "tense",
       "explain": "Second conditional: if + past, would + verb.",
-      "when": "imagined"
+      "when": "imagined",
+      "skill": "conditionals"
     },
     {
       "id": "for-years",
@@ -27,7 +28,8 @@
         "during"
       ],
       "type": "preposition",
-      "explain": "For + a period of time (five years); since + a starting point."
+      "explain": "For + a period of time (five years); since + a starting point.",
+      "skill": "present-perfect"
     },
     {
       "id": "since-year",
@@ -39,7 +41,228 @@
         "at"
       ],
       "type": "preposition",
-      "explain": "Since + a starting point: since 2019."
+      "explain": "Since + a starting point: since 2019.",
+      "skill": "present-perfect"
+    },
+    {
+      "id": "if-lived",
+      "text": "If she lives near the school, she would walk every day.",
+      "wrong": "lives",
+      "fix": "lived",
+      "distractors": [
+        "live",
+        "will live"
+      ],
+      "type": "tense",
+      "explain": "Second conditional: if + past simple, would + verb.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "would-visit",
+      "text": "If we had more time, we will visit Kampot.",
+      "wrong": "will",
+      "fix": "would",
+      "distractors": [
+        "shall",
+        "won't"
+      ],
+      "type": "tense",
+      "explain": "Imagined situations use would, not will: if + past, would + verb.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "would-get",
+      "text": "If I spoke better English, I would gets a better job.",
+      "wrong": "gets",
+      "fix": "get",
+      "distractors": [
+        "got",
+        "getting"
+      ],
+      "type": "tense",
+      "explain": "After would, use the verb with no -s: would get.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "if-found",
+      "text": "What would you do if you find a lot of money in the street?",
+      "wrong": "find",
+      "fix": "found",
+      "distractors": [
+        "finds",
+        "will find"
+      ],
+      "type": "tense",
+      "explain": "Imagined: if + past simple (found), even when you mean now or the future.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "would-call",
+      "text": "If he knew her number, he will call her.",
+      "wrong": "will",
+      "fix": "would",
+      "distractors": [
+        "is going to",
+        "can"
+      ],
+      "type": "tense",
+      "explain": "Second conditional: if + past, would + verb.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "for-married",
+      "text": "We have been married since three years.",
+      "wrong": "since",
+      "fix": "for",
+      "distractors": [
+        "ago",
+        "from"
+      ],
+      "type": "preposition",
+      "explain": "for + a length of time (three years); since + a starting point (2023).",
+      "skill": "present-perfect"
+    },
+    {
+      "id": "since-children",
+      "text": "I have known Sokha for we were children.",
+      "wrong": "for",
+      "fix": "since",
+      "distractors": [
+        "ago",
+        "from"
+      ],
+      "type": "preposition",
+      "explain": "since + when it started: since we were children.",
+      "skill": "present-perfect"
+    },
+    {
+      "id": "since-march",
+      "text": "They have lived in this house for March.",
+      "wrong": "for",
+      "fix": "since",
+      "distractors": [
+        "in",
+        "ago"
+      ],
+      "type": "preposition",
+      "explain": "March is a starting point, so: since March.",
+      "skill": "present-perfect"
+    },
+    {
+      "id": "ever-been",
+      "text": "Have you ever went to Thailand?",
+      "wrong": "went",
+      "fix": "been",
+      "distractors": [
+        "go",
+        "going"
+      ],
+      "type": "tense",
+      "explain": "Present perfect: have + past participle. Have you ever been…?",
+      "skill": "present-perfect",
+      "when": "past-to-now"
+    },
+    {
+      "id": "never-eaten",
+      "text": "She has never eat durian.",
+      "wrong": "eat",
+      "fix": "eaten",
+      "distractors": [
+        "ate",
+        "eating"
+      ],
+      "type": "tense",
+      "explain": "has + past participle: eaten, not eat or ate.",
+      "skill": "present-perfect",
+      "when": "past-to-now"
+    },
+    {
+      "id": "when-did",
+      "text": "We go to Kep last weekend.",
+      "wrong": "go",
+      "fix": "went",
+      "distractors": [
+        "goes",
+        "have gone"
+      ],
+      "type": "tense",
+      "explain": "last weekend is a finished time: past simple, we went.",
+      "skill": "past-simple",
+      "when": "past"
+    },
+    {
+      "id": "havent-seen",
+      "text": "I haven't saw Dara since Monday.",
+      "wrong": "saw",
+      "fix": "seen",
+      "distractors": [
+        "see",
+        "seeing"
+      ],
+      "type": "tense",
+      "explain": "since Monday means until now: haven't + past participle (seen).",
+      "skill": "present-perfect",
+      "when": "past-to-now"
+    },
+    {
+      "id": "how-long-known",
+      "text": "How long have you know your best friend?",
+      "wrong": "know",
+      "fix": "known",
+      "distractors": [
+        "knew",
+        "knowing"
+      ],
+      "type": "tense",
+      "explain": "How long have you + past participle: known.",
+      "skill": "present-perfect",
+      "when": "past-to-now"
+    },
+    {
+      "id": "he-knows",
+      "text": "He has lived in Phnom Penh all his life, so he know every street.",
+      "wrong": "know",
+      "fix": "knows",
+      "distractors": [
+        "knowing",
+        "known"
+      ],
+      "type": "third-person-s",
+      "explain": "He, she, it + -s in the present simple: he knows.",
+      "skill": "third-person-s"
+    },
+    {
+      "id": "already-finished",
+      "text": "Have you already finish your homework?",
+      "wrong": "finish",
+      "fix": "finished",
+      "distractors": [
+        "finishing",
+        "finishes"
+      ],
+      "type": "tense",
+      "explain": "Present perfect: have + past participle (finished).",
+      "skill": "present-perfect",
+      "when": "past-to-now"
+    },
+    {
+      "id": "just-left",
+      "text": "She has just leave the office.",
+      "wrong": "leave",
+      "fix": "left",
+      "distractors": [
+        "leaving",
+        "leaves"
+      ],
+      "type": "tense",
+      "explain": "has just + past participle: She has just left.",
+      "skill": "present-perfect",
+      "when": "past-to-now"
     }
   ],
   "builder": [
@@ -47,13 +270,56 @@
       "id": "how-long",
       "text": "How long have you lived here?",
       "alternatives": [],
-      "tip": "How long + present perfect."
+      "tip": "How long + present perfect.",
+      "skill": "present-perfect"
     },
     {
       "id": "when-start",
       "text": "When did you start learning English?",
       "alternatives": [],
-      "tip": "A finished time (when?) takes the past simple."
+      "tip": "A finished time (when?) takes the past simple.",
+      "skill": "past-simple"
+    },
+    {
+      "id": "if-rich",
+      "text": "If I were rich, I would travel.",
+      "tip": "Imagined: if + past, would + verb. The if part can come first or second.",
+      "skill": "conditionals",
+      "alternatives": [
+        "I would travel if I were rich."
+      ]
+    },
+    {
+      "id": "ever-kampot",
+      "text": "Have you ever been to Kampot?",
+      "tip": "Have you ever + been: a question about your whole life.",
+      "skill": "present-perfect"
+    },
+    {
+      "id": "lived-ten-years",
+      "text": "We have lived here for ten years.",
+      "tip": "for + a length of time.",
+      "skill": "present-perfect"
+    },
+    {
+      "id": "if-won",
+      "text": "What would you do if you won?",
+      "tip": "would + verb, if + past simple.",
+      "skill": "conditionals"
+    },
+    {
+      "id": "not-seen-since",
+      "text": "I haven't seen her since Monday.",
+      "tip": "since + a starting point.",
+      "skill": "present-perfect",
+      "keepFirstCapital": true
+    }
+  ],
+  "radio": [
+    {
+      "id": "cousin-in-the-city",
+      "title": "My cousin in the city",
+      "text": "My cousin Vanna moved to Phnom Penh three years ago. She has worked in a small hotel since then, and she has learned a lot of English from the guests. She has never been abroad, but she has met people from many countries. If she had more money, she would study at university in the evenings. For now, she saves a little every month and practises with her friends at the weekend."
     }
   ]
 }

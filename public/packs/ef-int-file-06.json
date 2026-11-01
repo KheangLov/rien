@@ -1,0 +1,203 @@
+{
+  "id": "ef-int-file-06",
+  "title": "English File Intermediate, File 6: the passive, might, can't, must",
+  "book": "english-file-intermediate-4e",
+  "file": 6,
+  "fixIt": [
+    {
+      "id": "being-shown",
+      "text": "The film is being show in cinemas next month.",
+      "wrong": "show",
+      "fix": "shown",
+      "distractors": [
+        "showing",
+        "shows"
+      ],
+      "type": "tense",
+      "explain": "Passive: is being + past participle.",
+      "skill": "passive",
+      "when": "future"
+    },
+    {
+      "id": "been-watched",
+      "text": "The film has been watch by millions of people.",
+      "wrong": "watch",
+      "fix": "watched",
+      "distractors": [
+        "watching",
+        "watches"
+      ],
+      "type": "tense",
+      "explain": "Passive: has been + past participle.",
+      "skill": "passive",
+      "when": "past-to-now"
+    },
+    {
+      "id": "were-chosen",
+      "text": "The actors were chose after a long search.",
+      "wrong": "chose",
+      "fix": "chosen",
+      "distractors": [
+        "choose",
+        "choosing"
+      ],
+      "type": "tense",
+      "explain": "Passive: were + past participle (chosen).",
+      "skill": "passive",
+      "when": "past"
+    },
+    {
+      "id": "will-be-built",
+      "text": "A new cinema will be build near the river.",
+      "wrong": "build",
+      "fix": "built",
+      "distractors": [
+        "building",
+        "builds"
+      ],
+      "type": "tense",
+      "explain": "Passive: will be + past participle.",
+      "skill": "passive",
+      "when": "future"
+    },
+    {
+      "id": "had-been-sold",
+      "text": "The tickets had been sell before we arrived.",
+      "wrong": "sell",
+      "fix": "sold",
+      "distractors": [
+        "selling",
+        "sells"
+      ],
+      "type": "tense",
+      "explain": "Passive: had been + past participle.",
+      "skill": "passive",
+      "when": "earlier-past"
+    },
+    {
+      "id": "was-filmed",
+      "text": "The scene was filming in Kampot.",
+      "wrong": "filming",
+      "fix": "filmed",
+      "distractors": [
+        "film",
+        "films"
+      ],
+      "type": "tense",
+      "explain": "Passive: was + past participle.",
+      "skill": "passive",
+      "when": "past"
+    },
+    {
+      "id": "directed-by",
+      "text": "The film was directed from a young Cambodian woman.",
+      "wrong": "from",
+      "fix": "by",
+      "distractors": [
+        "with",
+        "of"
+      ],
+      "type": "preposition",
+      "explain": "Passive: by + the person who did it.",
+      "skill": "passive"
+    },
+    {
+      "id": "must-be-tired",
+      "text": "She can't be tired after working since six this morning.",
+      "wrong": "can't",
+      "fix": "must",
+      "distractors": [
+        "mustn't",
+        "doesn't"
+      ],
+      "type": "other",
+      "explain": "You are almost sure it's true: must be.",
+      "skill": "modals-deduction"
+    },
+    {
+      "id": "must-be-home",
+      "text": "He must being at home. His motorbike is outside.",
+      "wrong": "being",
+      "fix": "be",
+      "distractors": [
+        "is",
+        "been"
+      ],
+      "type": "other",
+      "explain": "must + be.",
+      "skill": "modals-deduction"
+    },
+    {
+      "id": "cant-be-dara",
+      "text": "That can't is Dara. He's in Japan this week.",
+      "wrong": "is",
+      "fix": "be",
+      "distractors": [
+        "been",
+        "being"
+      ],
+      "type": "other",
+      "explain": "can't + be: you are almost sure it isn't true.",
+      "skill": "modals-deduction"
+    },
+    {
+      "id": "cant-be-japanese",
+      "text": "She mustn't be Japanese. She doesn't speak a word of it.",
+      "wrong": "mustn't",
+      "fix": "can't",
+      "distractors": [
+        "might",
+        "must"
+      ],
+      "type": "other",
+      "explain": "Sure something is not true: can't (mustn't is for rules).",
+      "skill": "modals-deduction"
+    },
+    {
+      "id": "might-have-flu",
+      "text": "She's got a headache and a sore throat. She might has the flu.",
+      "wrong": "has",
+      "fix": "have",
+      "distractors": [
+        "having",
+        "had"
+      ],
+      "type": "other",
+      "explain": "might + verb with no -s.",
+      "skill": "modals-deduction"
+    }
+  ],
+  "builder": [
+    {
+      "id": "shot-in-kampot",
+      "text": "The film was shot in Kampot.",
+      "tip": "Passive: was + past participle.",
+      "skill": "passive"
+    },
+    {
+      "id": "must-be-expensive",
+      "text": "It must be expensive.",
+      "tip": "must: almost sure it's true.",
+      "skill": "modals-deduction"
+    },
+    {
+      "id": "tickets-sold",
+      "text": "The tickets have been sold.",
+      "tip": "Passive: have been + past participle.",
+      "skill": "passive"
+    },
+    {
+      "id": "cant-be-at-work",
+      "text": "He can't be at work.",
+      "tip": "can't: almost sure it isn't true.",
+      "skill": "modals-deduction"
+    }
+  ],
+  "radio": [
+    {
+      "id": "behind-the-scenes",
+      "title": "Behind the scenes",
+      "text": "A new Cambodian film is being made in Kampot this month. Most of the scenes are being filmed by the river, and some local people have been given small parts. My cousin was chosen to be a market seller. She says the director is very kind, but the days are long. The actors must be exhausted, because they start at five in the morning. The film will be shown in cinemas next year, and it might be sent to festivals abroad."
+    }
+  ]
+}

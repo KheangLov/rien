@@ -27,6 +27,30 @@ const shown = computed(() => {
     .filter(c => !q || normalizeAnswer(`${c.answer} ${c.meaning} ${c.khmer}`).includes(q))
 })
 
+// Rows are drawn PAGE at a time, more as she scrolls near the end: with a
+// year of words (1500) drawing them all at once held the screen for a fifth of
+// a second on a phone-speed CPU.
+const PAGE = 60
+const limit = ref(PAGE)
+watch([search, filter], () => { limit.value = PAGE })
+const visible = computed(() => shown.value.slice(0, limit.value))
+const more = ref<HTMLElement | null>(null)
+let watcher: IntersectionObserver | undefined
+onMounted(() => {
+  if (!('IntersectionObserver' in window)) {
+    limit.value = Number.POSITIVE_INFINITY
+    return
+  }
+  watcher = new IntersectionObserver((entries) => {
+    if (entries.some(e => e.isIntersecting) && limit.value < shown.value.length) limit.value += PAGE
+  }, { rootMargin: '800px 0px' })
+})
+watch(more, (el, old) => {
+  if (old) watcher?.unobserve(old)
+  if (el) watcher?.observe(el)
+})
+onBeforeUnmount(() => watcher?.disconnect())
+
 const pictureFor = ref<string | null>(null)
 const pictureInput = ref<HTMLInputElement | null>(null)
 
@@ -111,7 +135,7 @@ async function remove(card: CardRow) {
     </p>
 
     <Squircle v-else class="rien-list" :radius="22"><ul class="rien-list-items">
-      <li v-for="card in shown" :key="card.id">
+      <li v-for="card in visible" :key="card.id">
         <button type="button" class="rien-list-row" @click="show(card.id)">
           <Squircle v-if="card.image" :radius="10" :surface="false" class="rien-word-thumb">
             <img :src="card.image" alt="">
@@ -128,6 +152,7 @@ async function remove(card: CardRow) {
         </button>
       </li>
     </ul></Squircle>
+    <div v-if="limit < shown.length" ref="more" class="rien-list-more" aria-hidden="true" />
 
     <IosSheet :open="Boolean(openCard)" :title="openCard?.answer" @close="open = null">
       <template v-if="openCard">

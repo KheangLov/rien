@@ -4,6 +4,9 @@ import { IOS_SCREENS, SPLASH_DARK, SPLASH_LIGHT, splashFile } from './scripts/br
 const native = process.env.RIEN_NATIVE === '1'
 // Test builds only: plays every game through the real screens (e2e/runner.client.ts).
 const e2e = process.env.RIEN_E2E === '1'
+// Profiling builds (RIEN_PROFILE=1): source maps, so slow frames can be traced
+// back to the code that caused them.
+const profile = process.env.RIEN_PROFILE === '1'
 
 // Client-only static build: no server rendering, no backend (see plan "Technical plan").
 export default defineNuxtConfig({
@@ -16,6 +19,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   plugins: e2e ? ['~~/e2e/runner.client.ts'] : [],
+  sourcemap: { client: profile ? 'hidden' : false },
 
   app: {
     // Overridden per navigation by middleware/transition.global.ts.

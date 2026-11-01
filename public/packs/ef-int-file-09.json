@@ -1,0 +1,205 @@
+{
+  "id": "ef-int-file-09",
+  "title": "English File Intermediate, File 9: third conditional, quantifiers",
+  "book": "english-file-intermediate-4e",
+  "file": 9,
+  "fixIt": [
+    {
+      "id": "would-have-caught",
+      "text": "If I had left earlier, I would catch the bus.",
+      "wrong": "catch",
+      "fix": "have caught",
+      "distractors": [
+        "caught",
+        "catching"
+      ],
+      "type": "tense",
+      "explain": "Third conditional: if + had + past participle, would have + past participle.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "would-have-passed",
+      "text": "If she had studied, she would have pass.",
+      "wrong": "pass",
+      "fix": "passed",
+      "distractors": [
+        "passing",
+        "passes"
+      ],
+      "type": "tense",
+      "explain": "would have + past participle.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "hadnt-come",
+      "text": "We wouldn't have met if you hadn't came to the party.",
+      "wrong": "came",
+      "fix": "come",
+      "distractors": [
+        "comes",
+        "coming"
+      ],
+      "type": "tense",
+      "explain": "hadn't + past participle: come, came, come.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "had-known",
+      "text": "If I knew about the party, I would have gone.",
+      "wrong": "knew",
+      "fix": "had known",
+      "distractors": [
+        "know",
+        "have known"
+      ],
+      "type": "tense",
+      "explain": "Imagined past: if + had + past participle.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "would-have-gone",
+      "text": "If it hadn't rained, we would have went to the beach.",
+      "wrong": "went",
+      "fix": "gone",
+      "distractors": [
+        "go",
+        "going"
+      ],
+      "type": "tense",
+      "explain": "would have + past participle: go, went, gone.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "much-time",
+      "text": "I don't have many time to check my messages.",
+      "wrong": "many",
+      "fix": "much",
+      "distractors": [
+        "a lot",
+        "few"
+      ],
+      "type": "other",
+      "explain": "time is uncountable: much time.",
+      "skill": "quantifiers"
+    },
+    {
+      "id": "many-apps",
+      "text": "There are too much apps on my phone.",
+      "wrong": "much",
+      "fix": "many",
+      "distractors": [
+        "little",
+        "lot"
+      ],
+      "type": "other",
+      "explain": "apps are countable: too many apps.",
+      "skill": "quantifiers"
+    },
+    {
+      "id": "little-money",
+      "text": "I have a few money left, so I can't buy a new laptop.",
+      "wrong": "few",
+      "fix": "little",
+      "distractors": [
+        "many",
+        "several"
+      ],
+      "type": "other",
+      "explain": "money is uncountable: a little money.",
+      "skill": "quantifiers"
+    },
+    {
+      "id": "are-enough",
+      "text": "Is there enough batteries for the camera?",
+      "wrong": "Is",
+      "fix": "Are",
+      "distractors": [
+        "Was",
+        "Has"
+      ],
+      "type": "other",
+      "explain": "batteries is plural: Are there enough …?",
+      "skill": "quantifiers"
+    },
+    {
+      "id": "any-milk",
+      "text": "There isn't some milk in the fridge.",
+      "wrong": "some",
+      "fix": "any",
+      "distractors": [
+        "many",
+        "few"
+      ],
+      "type": "other",
+      "explain": "In negatives: any.",
+      "skill": "quantifiers"
+    },
+    {
+      "id": "speaks-well",
+      "text": "She speaks English very good.",
+      "wrong": "good",
+      "fix": "well",
+      "distractors": [
+        "nice",
+        "best"
+      ],
+      "type": "other",
+      "explain": "How she speaks is an adverb: well.",
+      "skill": "adjectives-adverbs"
+    },
+    {
+      "id": "lucky-escape",
+      "text": "Luckily, nobody was hurt. It was a luck escape.",
+      "wrong": "luck",
+      "fix": "lucky",
+      "distractors": [
+        "luckily",
+        "lucks"
+      ],
+      "type": "other",
+      "explain": "Before a noun, an adjective: a lucky escape.",
+      "skill": "adjectives-adverbs"
+    }
+  ],
+  "builder": [
+    {
+      "id": "if-known-come",
+      "text": "If I'd known, I would have come.",
+      "tip": "if + had + past participle, would have + past participle.",
+      "skill": "conditionals",
+      "alternatives": [
+        "I would have come if I'd known."
+      ]
+    },
+    {
+      "id": "how-much-time",
+      "text": "How much time do you have?",
+      "tip": "much + uncountable nouns.",
+      "skill": "quantifiers"
+    },
+    {
+      "id": "too-many-people",
+      "text": "There are too many people here.",
+      "tip": "many + countable nouns.",
+      "skill": "quantifiers"
+    },
+    {
+      "id": "drives-carefully",
+      "text": "She drives very carefully.",
+      "tip": "How she drives: an adverb.",
+      "skill": "adjectives-adverbs"
+    }
+  ],
+  "radio": [
+    {
+      "id": "lucky-day",
+      "title": "A lucky day",
+      "text": "Last year I nearly missed my sister's wedding. My bus broke down on the way to Siem Reap, and there wasn't any phone signal. If a kind farmer hadn't stopped, I would have waited for hours. He took me to the next town on his motorbike, and I caught another bus. I arrived just in time. If he hadn't helped me, I wouldn't have seen my sister get married. I have very few photos of that day, but I will never forget it."
+    }
+  ]
+}
