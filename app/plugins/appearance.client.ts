@@ -51,6 +51,7 @@ export default defineNuxtPlugin(() => {
       document.head.append(accent)
     }
     accent.textContent = accentCss(look.accent)
+    saveSplashColours(look.accent)
     root.classList.toggle('rien-motion', motion)
     if (Capacitor.isNativePlatform()) {
       void import('@capacitor/status-bar').then(({ StatusBar, Style }) =>

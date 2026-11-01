@@ -40,3 +40,14 @@ export function accentCss(accent: Accent): string {
   return `:root.sq-theme--light,:root .sq-theme--light{${primary(light?.colors.primary)}${tints}${background(BACKGROUND.light, 5)}}`
     + `:root.sq-theme--dark,:root .sq-theme--dark{${primary(dark?.colors.primary)}${tints}${background(BACKGROUND.dark, 7)}}`
 }
+
+// Saved on this device each time her colour is applied, for the opening
+// screen (scripts/splash.html), which shows before the app or its database
+// have loaded.
+export function saveSplashColours(accent: Accent): void {
+  const choice = ACCENTS.find(a => a.id === accent) ?? ACCENTS[0]!
+  try {
+    localStorage.setItem('rien-splash-colours', JSON.stringify({ brand: choice.color, tints: choice.tints }))
+  }
+  catch {}
+}

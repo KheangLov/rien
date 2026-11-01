@@ -4,7 +4,7 @@
     #rien-splash {
       --rs-bg: #f8f9fb;
       --rs-ink: rgb(24 24 27 / 55%);
-      --rs-accent: #0f766e;
+      --rs-accent: var(--rs-brand, #0f766e);
       position: fixed;
       inset: 0;
       z-index: 2147483000;
@@ -20,7 +20,7 @@
       #rien-splash {
         --rs-bg: #0f1013;
         --rs-ink: rgb(235 235 245 / 55%);
-        --rs-accent: #2dd4bf;
+        --rs-accent: var(--rs-t1, #2dd4bf);
       }
     }
 
@@ -34,9 +34,9 @@
       animation: rs-fade 1.1s ease-out 0.1s forwards, rs-drift 9s ease-in-out 0.1s infinite alternate;
     }
 
-    .rs-aurora i:nth-child(1) { left: -45vmax; top: -45vmax; background: radial-gradient(closest-side, rgb(45 212 191 / 30%), transparent); }
-    .rs-aurora i:nth-child(2) { right: -50vmax; top: -25vmax; background: radial-gradient(closest-side, rgb(56 189 248 / 24%), transparent); animation-delay: 0.25s, 0.25s; }
-    .rs-aurora i:nth-child(3) { left: -20vmax; bottom: -55vmax; background: radial-gradient(closest-side, rgb(244 114 182 / 18%), transparent); animation-delay: 0.4s, 0.4s; }
+    .rs-aurora i:nth-child(1) { left: -45vmax; top: -45vmax; background: radial-gradient(closest-side, color-mix(in srgb, var(--rs-t1, #2dd4bf) 30%, transparent), transparent); }
+    .rs-aurora i:nth-child(2) { right: -50vmax; top: -25vmax; background: radial-gradient(closest-side, color-mix(in srgb, var(--rs-t2, #38bdf8) 24%, transparent), transparent); animation-delay: 0.25s, 0.25s; }
+    .rs-aurora i:nth-child(3) { left: -20vmax; bottom: -55vmax; background: radial-gradient(closest-side, color-mix(in srgb, var(--rs-t3, #f472b6) 18%, transparent), transparent); animation-delay: 0.4s, 0.4s; }
 
     .rs-center {
       position: absolute;
@@ -57,7 +57,7 @@
 
     .rs-glow {
       border-radius: 50%;
-      background: radial-gradient(closest-side, rgb(20 184 166 / 45%), transparent);
+      background: radial-gradient(closest-side, color-mix(in srgb, var(--rs-t1, #14b8a6) 45%, transparent), transparent);
       opacity: 0;
       transform: scale(1.9);
       animation: rs-fade 0.9s ease-out 0.15s forwards;
@@ -244,6 +244,17 @@
     (function () {
       var splash = document.getElementById('rien-splash')
       document.body.appendChild(splash)
+      // Her main colour (Settings), saved on this device by the app each time
+      // it is applied (app/utils/accents.ts): the colour fields, glow,
+      // ripples, fish and tagline take it; the logo stays Rien's teal.
+      try {
+        var colours = JSON.parse(localStorage.getItem('rien-splash-colours') || 'null')
+        if (colours && colours.brand && colours.tints) {
+          splash.style.setProperty('--rs-brand', colours.brand)
+          for (var i = 0; i < 3; i++) splash.style.setProperty('--rs-t' + (i + 1), colours.tints[i])
+        }
+      }
+      catch (error) {}
       // If the app never starts, do not cover the page for ever.
       setTimeout(function () {
         if (!splash.isConnected) return
