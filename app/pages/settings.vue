@@ -48,7 +48,14 @@ onBeforeUnmount(() => {
   window.removeEventListener('offline', refreshStatus)
 })
 
+const { $setAppearance } = useNuxtApp()
+
+// The screen changes as soon as she taps, then the setting is saved: waiting
+// for the database (a round trip on the phone) made every switch feel slow.
 async function update(patch: Partial<Settings>) {
+  if (!settings.value) return
+  settings.value = { ...settings.value, ...patch }
+  if ('appearance' in patch || 'liquidGlass' in patch || 'motion' in patch) $setAppearance(settings.value)
   settings.value = await db.saveSettings(patch)
 }
 

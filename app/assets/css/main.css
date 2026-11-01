@@ -2401,3 +2401,31 @@ html.rien-revealing .rien-shell {
     animation: none;
   }
 }
+
+/* Switching light ↔ dark (plugins/appearance.client.ts): no per-element
+   colour fades, so the whole page changes in one frame... */
+html.rien-theme-switching *,
+html.rien-theme-switching *::before,
+html.rien-theme-switching *::after {
+  transition: none !important;
+}
+
+/* ...revealed as a circle growing from where she tapped. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  animation: rien-theme-reveal 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes rien-theme-reveal {
+  from {
+    clip-path: circle(0 at var(--rien-reveal-x, 50%) var(--rien-reveal-y, 50%));
+  }
+  to {
+    clip-path: circle(var(--rien-reveal-r, 150%) at var(--rien-reveal-x, 50%) var(--rien-reveal-y, 50%));
+  }
+}
