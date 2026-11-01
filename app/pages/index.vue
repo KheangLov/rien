@@ -164,6 +164,16 @@ const talkedThisWeek = computed(() => {
         </NuxtLink>
       </li>
       <li>
+        <NuxtLink to="/ielts" class="rien-list-row">
+          <span class="rien-list-icon"><RienIcon name="goal" weight="duotone" :size="26" /></span>
+          <span class="rien-list-text">
+            <span class="rien-list-title">IELTS practice</span>
+            <span class="rien-list-sub">Speaking, writing, reading, listening, academic words</span>
+          </span>
+          <span class="rien-list-end"><RienIcon name="next" :size="16" weight="bold" /></span>
+        </NuxtLink>
+      </li>
+      <li>
         <NuxtLink to="/slips" class="rien-list-row">
           <span class="rien-list-icon"><RienIcon name="lightbulb" weight="duotone" :size="26" /></span>
           <span class="rien-list-text">

@@ -42,6 +42,9 @@ export const GUESS_BY_KIND: Record<AttemptKind | 'word', number> = {
   'speed': 0.5,
   'boss': 0.2,
   'say-it': 0,
+  // True / False / Not Given: one in three by luck. Form gaps are typed.
+  'ielts-reading': 1 / 3,
+  'ielts-listening': 0,
   'word': 0,
 }
 

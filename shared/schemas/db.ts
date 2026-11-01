@@ -152,7 +152,7 @@ export const sessionSchema = z.object({
 // One answer in a practice game, for the skill model (shared/utils/mastery.ts):
 // right or wrong, how fast, and which skill it used. Word reviews have their
 // own log (reviews), so words are not repeated here.
-export const ATTEMPT_KINDS = ['fix-it', 'sound', 'builder', 'radio', 'listen', 'picture', 'speed', 'boss', 'say-it'] as const
+export const ATTEMPT_KINDS = ['fix-it', 'sound', 'builder', 'radio', 'listen', 'picture', 'speed', 'boss', 'say-it', 'ielts-reading', 'ielts-listening'] as const
 export type AttemptKind = typeof ATTEMPT_KINDS[number]
 
 export const attemptSchema = z.object({

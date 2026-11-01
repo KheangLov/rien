@@ -3468,3 +3468,200 @@ html.rien-motion .rien-talk-card-enter-active {
 .rien-new-content .sq-card-actions {
   justify-content: flex-end;
 }
+
+/* IELTS (pages/ielts) */
+.rien-ielts-step {
+  margin: 0;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.rien-cue-title {
+  font-size: 19px;
+  line-height: 1.35;
+}
+
+.rien-cue-points {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 4px;
+}
+
+.rien-ielts-timer {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  color: var(--sq-primary, #0f766e);
+}
+
+.rien-ielts-notes {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.rien-ielts-live,
+.rien-ielts-transcript {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.rien-ielts-live {
+  min-height: 120px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--sq-primary, #0f766e) 8%, transparent);
+}
+
+.rien-ielts-stats {
+  grid-auto-flow: row;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.rien-ielts-tips,
+.rien-ielts-checks {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rien-ielts-tips li::before {
+  content: '→ ';
+  color: var(--sq-primary, #0f766e);
+}
+
+.rien-ielts-checks li {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 8px;
+  color: var(--sq-error, #dc2626);
+}
+
+.rien-ielts-checks li.is-ok {
+  color: var(--sq-success, #16a34a);
+}
+
+.rien-ielts-checks strong {
+  color: var(--sq-on-surface, #18181b);
+}
+
+.rien-ielts-checks p {
+  margin: 2px 0 0;
+}
+
+.rien-ielts-error {
+  margin: 0;
+  color: var(--sq-error, #dc2626);
+}
+
+.rien-ielts-writebar {
+  display: flex;
+  justify-content: space-between;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.rien-ielts-writebar .is-over {
+  color: var(--sq-error, #dc2626);
+}
+
+.rien-ielts-writebar .is-ok {
+  color: var(--sq-success, #16a34a);
+}
+
+.rien-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.rien-ielts-reading {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.rien-tfng {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding-left: 22px;
+}
+
+.rien-tfng li p {
+  margin: 0 0 8px;
+}
+
+.rien-tfng li.is-right > p:first-child {
+  color: var(--sq-success, #16a34a);
+}
+
+.rien-tfng li.is-wrong > p:first-child {
+  color: var(--sq-error, #dc2626);
+}
+
+.rien-tfng-choices {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.rien-tfng-choices button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 14px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--sq-on-surface, #18181b);
+  background: var(--ios-fill, #7676801f);
+}
+
+.rien-tfng-choices button.is-on {
+  color: var(--sq-on-primary, #fff);
+  background: var(--sq-primary, #0f766e);
+}
+
+.rien-tfng-choices button.is-answer {
+  box-shadow: inset 0 0 0 2px var(--sq-success, #16a34a);
+}
+
+.rien-ielts-form {
+  display: grid;
+  gap: 12px;
+}
+
+.rien-ielts-form label {
+  display: grid;
+  gap: 4px;
+}
+
+.rien-ielts-form input {
+  min-height: 44px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 12px;
+  font: inherit;
+  font-size: 17px;
+  color: var(--sq-on-surface, #18181b);
+  background: var(--ios-fill, #7676801f);
+}
+
+.rien-ielts-form .is-right input {
+  box-shadow: inset 0 0 0 2px var(--sq-success, #16a34a);
+}
+
+.rien-ielts-form .is-wrong input {
+  box-shadow: inset 0 0 0 2px var(--sq-error, #dc2626);
+}
+
+.rien-ielts-form small {
+  color: var(--sq-success, #16a34a);
+  font-weight: 600;
+}
