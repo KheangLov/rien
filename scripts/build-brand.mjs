@@ -128,16 +128,16 @@ write(`${IOS}SplashBackground.colorset/Contents.json`, `${JSON.stringify({
   info: { author: 'xcode', version: 1 },
 }, null, 2)}\n`)
 
-// Android: launcher icons (48 dp, adaptive foreground 108 dp) and the splash
-// icon (drawn at 288 dp, inside a 192 dp circle): the tile is 128 dp, the same
-// size as on the iPhone and in the web splash, so the hand-over does not jump.
+// Android: launcher icons (48 dp, adaptive foreground 108 dp). Android's own
+// launch screen shows no logo (styles.xml), only the background: the first
+// logo she sees is the web splash's, in her main colour.
 const RES = 'android/app/src/main/res/'
 const DENSITIES = { mdpi: 1, hdpi: 1.5, xhdpi: 2, xxhdpi: 3, xxxhdpi: 4 }
 for (const [name, scale] of Object.entries(DENSITIES)) {
   write(`${RES}mipmap-${name}/ic_launcher.png`, render(tile(), 48 * scale))
   write(`${RES}mipmap-${name}/ic_launcher_round.png`, render(round(), 48 * scale))
   write(`${RES}mipmap-${name}/ic_launcher_foreground.png`, render(foreground(), 108 * scale))
-  write(`${RES}drawable-${name}/splash_icon.png`, render(tile(128 / 288), 288 * scale))
+  rmSync(new URL(`${RES}drawable-${name}/splash_icon.png`, ROOT), { force: true })
   for (const old of [`drawable-port-${name}`, `drawable-land-${name}`]) rmSync(new URL(`${RES}${old}/`, ROOT), { recursive: true, force: true })
 }
 rmSync(new URL(`${RES}drawable/splash.png`, ROOT), { force: true })

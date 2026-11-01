@@ -372,6 +372,8 @@ async function run() {
     }
   }
 
+  // For host scripts (profiling with a year of data): the database and router.
+  Object.assign(window, { __rienDb: db, __rienNav: navigateTo })
   log(`START ${navigator.userAgent}`)
   const packs = await usePacks()
 
