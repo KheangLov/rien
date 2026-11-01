@@ -22,8 +22,6 @@ const SELECTOR = [
   '.rien-skip',
   '.rien-token',
   '.rien-built',
-  '.rien-gap',
-  '.rien-gap-result',
   '.rien-spoken-word',
   '.rien-chip-c',
   '.rien-box',
