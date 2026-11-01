@@ -2333,10 +2333,23 @@ a {
   justify-content: flex-end;
 }
 
+.rien-install-note {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 15px;
+  background: color-mix(in srgb, var(--sq-warning, #d97706) 14%, transparent);
+}
+
+.rien-install-after {
+  margin: 0 0 18px;
+  font-size: 15px;
+}
+
 .rien-install-steps {
   display: grid;
   gap: 14px;
-  margin: 0 0 20px;
+  margin: 0 0 14px;
   padding: 0;
   list-style: none;
   font-size: 17px;

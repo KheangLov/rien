@@ -37,6 +37,9 @@ export default defineNuxtConfig({
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' },
         { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+        // The web app's manifest (from pwa.manifest below). Browsers only offer to
+        // install a site whose page links one; @vite-pwa/nuxt does not add it.
+        ...(native ? [] : [{ rel: 'manifest' as const, href: '/manifest.webmanifest' }]),
         // iPhone home-screen splash screens, light and dark (scripts/build-brand.mjs).
         ...IOS_SCREENS.flatMap(screen => (['light', 'dark'] as const).map(mode => ({
           rel: 'apple-touch-startup-image' as const,
