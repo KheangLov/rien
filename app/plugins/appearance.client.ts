@@ -1,4 +1,4 @@
-import { Capacitor, registerPlugin } from '@capacitor/core'
+import { Capacitor } from '@capacitor/core'
 import { useTheme } from '@squirkle-ui/ui'
 import type { Settings } from '#shared/schemas/db'
 
@@ -8,13 +8,6 @@ import type { Settings } from '#shared/schemas/db'
 // the status bar. Motion also stays off when the phone asks for reduced motion.
 // Settings applies a change at once through $setAppearance (animated for
 // light ↔ dark); saved settings reach here too, through sync.
-// Android only (android/…/RienLookPlugin.java): her Appearance for the
-// system's own splash screen at launch.
-const RienLook = registerPlugin<{
-  setAppearance: (options: { appearance: Settings['appearance'] }) => Promise<void>
-  // The home-screen icon's colour, switched when she next leaves the app.
-  setLauncherIcon: (options: { accent: Settings['accent'] }) => Promise<void>
-}>('RienLook')
 
 type Look = Pick<Settings, 'appearance' | 'liquidGlass' | 'motion' | 'accent' | 'iconFollowsColour'>
 

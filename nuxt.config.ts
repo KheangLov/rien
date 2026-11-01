@@ -128,6 +128,14 @@ export default defineNuxtConfig({
         // Full-bleed, so the phone's own icon shape cuts it cleanly.
         { src: '/pwa-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
       ],
+      // Long-press the app icon (Android): straight to these screens. The
+      // Android app has the same (RienShortcuts.java); icons from build-brand.mjs.
+      shortcuts: [
+        { name: 'Today\'s session', short_name: 'Session', url: '/session', icons: [{ src: '/shortcuts/session.png', sizes: '96x96', type: 'image/png' }] },
+        { name: 'Word Recall', short_name: 'Words', url: '/games/word-recall', icons: [{ src: '/shortcuts/words.png', sizes: '96x96', type: 'image/png' }] },
+        { name: 'Add a word', short_name: 'Add word', url: '/add-words', icons: [{ src: '/shortcuts/add.png', sizes: '96x96', type: 'image/png' }] },
+        { name: 'IELTS practice', short_name: 'IELTS', url: '/ielts', icons: [{ src: '/shortcuts/ielts.png', sizes: '96x96', type: 'image/png' }] },
+      ],
     },
     workbox: {
       // Client-only app: every route is the same shell, so precache only index.html
