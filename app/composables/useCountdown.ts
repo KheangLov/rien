@@ -70,5 +70,11 @@ export function useCountdown(totalMs: number) {
     return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`
   })
 
-  return { remaining, running, elapsedMs, label, finished: computed(() => remaining.value === 0), start, pause }
+  // Back to the full time, stopped (for another go).
+  function reset() {
+    stopTimer()
+    remaining.value = totalMs
+  }
+
+  return { remaining, running, elapsedMs, label, finished: computed(() => remaining.value === 0), start, pause, reset }
 }

@@ -4,6 +4,7 @@ import type { CardRow, MistakeType } from '../schemas/db'
 
 export type ActivityId =
   | 'word-recall' | 'fix-it' | 'sound-hunter' | 'sentence-builder' | 'gap-radio' | 'say-it'
+  | 'speed-round' | 'listen-pick' | 'picture-match'
 
 // Which activity trains each kind of slip best.
 const PRACTICE_FOR: Partial<Record<MistakeType, ActivityId>> = {
@@ -42,7 +43,7 @@ export function planSession(input: {
     .filter((id): id is ActivityId => Boolean(id))
   for (const id of weak) if (!plan.includes(id)) plan.push(id)
 
-  const fillers: ActivityId[] = ['fix-it', 'sound-hunter', 'sentence-builder', 'gap-radio']
+  const fillers: ActivityId[] = ['fix-it', 'sound-hunter', 'sentence-builder', 'gap-radio', 'speed-round', 'listen-pick', 'picture-match']
   if (input.native) fillers.push('say-it')
   const start = input.dayIndex % fillers.length
   const rotated = [...fillers.slice(start), ...fillers.slice(0, start)]

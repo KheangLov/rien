@@ -43,6 +43,9 @@ const ICONS = {
   'menu': 'menu-dots-vertical',
   'stop': 'stop',
   'slower': 'playback-speed',
+  'speed-round': 'stopwatch',
+  'listen-pick': 'headphones-round-sound',
+  'picture-match': 'gallery',
 } as const
 
 export type IconName = keyof typeof ICONS
