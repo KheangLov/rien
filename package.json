@@ -17,6 +17,8 @@
     "typecheck": "nuxt typecheck",
     "build:ios": "RIEN_NATIVE=1 nuxt generate && cap sync ios",
     "open:ios": "cap open ios",
+    "build:android": "RIEN_NATIVE=1 nuxt generate && cap sync android",
+    "apk": "scripts/build-apk.sh",
     "build:e2e": "RIEN_E2E=1 nuxt generate",
     "build:ios:e2e": "RIEN_NATIVE=1 RIEN_E2E=1 nuxt generate && cap sync ios",
     "install:iphone": "scripts/install-iphone.sh",
@@ -34,6 +36,7 @@
   },
   "dependencies": {
     "@capacitor-community/sqlite": "^8.1.1",
+    "@capacitor/android": "^8.5.3",
     "@capacitor/core": "^8.5.3",
     "@capacitor/filesystem": "^8.1.5",
     "@capacitor/haptics": "^8.0.2",

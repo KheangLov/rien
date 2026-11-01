@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   // changing the bundle ID once the App Store Connect record exists.
   appId: 'io.github.kheanglov.rien',
   appName: 'Rien',
-  // The static build from `pnpm build:ios`.
+  // The static build from `pnpm build:ios` or `pnpm build:android`.
   webDir: '.output/public',
   ios: {
     contentInset: 'never',
@@ -15,6 +15,13 @@ const config: CapacitorConfig = {
     // sits above the keyboard instead of behind it.
     Keyboard: {
       resize: 'native',
+      // Android: still shrink the web view when it draws under the status bar.
+      resizeOnFullScreen: true,
+    },
+    // Android: edge to edge like the iPhone app; env(safe-area-inset-*) works.
+    SystemBars: {
+      insetsHandling: 'css',
+      initialViewportFitValueHint: 'cover',
     },
     CapacitorSQLite: {
       iosDatabaseLocation: 'Library/CapacitorDatabase',

@@ -51,6 +51,29 @@ pnpm open:ios      # open in Xcode; pick a team under Signing & Capabilities
   `cp scripts/rien-renew.plist ~/Library/LaunchAgents/ && launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/rien-renew.plist`.
   To turn it off: `launchctl bootout gui/$(id -u)/io.github.kheanglov.rien.renew && rm ~/Library/LaunchAgents/rien-renew.plist`.
 
+## Android app (Capacitor)
+
+Same build and SQLite storage as the iPhone app. Needs JDK 21 and the Android SDK
+(no Android Studio):
+
+```bash
+brew install openjdk@21 && brew install --cask android-commandlinetools   # once
+export JAVA_HOME=$(brew --prefix openjdk@21)/libexec/openjdk.jdk/Contents/Home
+sdkmanager --sdk_root=$HOME/Library/Android/sdk --licenses                  # once
+sdkmanager --sdk_root=$HOME/Library/Android/sdk "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+pnpm apk           # builds ~/Desktop/Rien.apk; installs it too if a phone is connected with debugging on
+```
+
+- Install without a cable or developer options: send `Rien.apk` to the phone (Telegram,
+  Google Drive, email), tap it, and allow installing apps from that app once. To update,
+  install a newer `Rien.apk` the same way; words and progress are kept. It never expires.
+- The APK is a debug build, app ID `io.github.kheanglov.rien.dev`, signed with this Mac's
+  `~/.android/debug.keystore`. Updates must come from the same Mac (or that keystore).
+- Say It and reading aloud use Android's own speech services
+  (`android/app/src/main/java/io/github/kheanglov/rien/RienSpeechPlugin.java`): Android's
+  web view has no speechSynthesis. Android gives whole-sentence readings only (no per-word
+  confidence) and no playback of her recording.
+
 ## Layout
 
 - `shared/schemas/db.ts`: Zod schemas for every stored row and the JSON backup.
