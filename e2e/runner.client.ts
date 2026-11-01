@@ -4,11 +4,13 @@
 // "[e2e] PASS …" or "[e2e] FAIL …", ending with "[e2e] DONE pass=… fail=…".
 // "[e2e] SCREEN name" asks the host script for a screenshot.
 // The same build runs in the iOS simulator and in Chrome.
+import { Capacitor } from '@capacitor/core'
 import { defineNuxtPlugin, navigateTo } from '#app'
 import type { Pack } from '#shared/schemas/pack'
 import { normalizeAnswer } from '#shared/utils/answer'
 import { builderCards } from '#shared/utils/builder'
-import { radioAnswers, radioTokens } from '#shared/utils/radio'
+import { WORD_BANK } from '#shared/utils/quick'
+import { GAP_EVERY, radioAnswers, radioTokens } from '#shared/utils/radio'
 import { useDb } from '~/composables/useDb'
 import { usePacks } from '~/composables/usePacks'
 
@@ -58,7 +60,8 @@ async function screen(name: string) {
   })
   if (spill.length) throw new Error(`${spill.length} element(s) stick out of a card on ${name}, e.g. ${spill[0]!.className || spill[0]!.tagName}`)
   log(`SCREEN ${name}`)
-  await sleep(1500)
+  // Time for the host script to take the picture: only the phone scripts do.
+  if (Capacitor.isNativePlatform()) await sleep(1500)
 }
 
 function button(label: string, root: ParentNode = document): HTMLElement | undefined {
@@ -82,6 +85,7 @@ async function fill(label: string, value: string) {
     return (lab?.htmlFor && document.getElementById(lab.htmlFor) as HTMLInputElement | null)
       || lab?.closest('.sq-field')?.querySelector<HTMLInputElement>('input, textarea')
       || lab?.parentElement?.parentElement?.querySelector<HTMLInputElement>('input, textarea')
+      || document.querySelector<HTMLInputElement>(`input[aria-label="${label}"], textarea[aria-label="${label}"]`)
   }, `field "${label}"`)
   setValue(field, value)
 }
@@ -237,9 +241,16 @@ async function playRadio(packs: Pack[], missOne: boolean) {
   const radio = packs.flatMap(p => p.radio).find(r => r.title === title)
   if (!radio) throw new Error(`no text "${title}"`)
   const shownText = (await waitFor(() => document.querySelector('.rien-radio'), 'radio text')).textContent!.replace(/\s+/g, ' ')
-  if (!shownText.includes(radio.text.split(/\s+/).slice(0, 3).join(' '))) throw new Error('words run together')
   await click('Play')
-  const answers = radioAnswers(radioTokens(radio.text))
+  // Each round starts its gaps at a different word: find the start whose
+  // remaining words are the ones on screen, spaces and all (so words that
+  // run together fail here too).
+  const flat = (t: string) => t.replace(/\s+/g, ' ').trim()
+  const start = Array.from({ length: GAP_EVERY }, (_, i) => i).find(i =>
+    flat(radioTokens(radio.text, GAP_EVERY, i).map(t => (t.gap === undefined ? `${t.before}${t.word}${t.after}` : `${t.before}${t.after}`)).join(' '))
+      === flat(shownText))
+  if (start === undefined) throw new Error(`text on screen does not match the gaps (words run together?): ${shownText.slice(0, 80)}`)
+  const answers = radioAnswers(radioTokens(radio.text, GAP_EVERY, start))
   const inputs = [...document.querySelectorAll<HTMLInputElement>('.rien-gap')]
   if (inputs.length !== answers.length) throw new Error(`${inputs.length} gaps on screen, ${answers.length} expected`)
   inputs.forEach((input, i) => setValue(input, missOne && i === 0 ? 'zzz' : answers[i]!))
@@ -248,6 +259,91 @@ async function playRadio(packs: Pack[], missOne: boolean) {
   await waitText(`${missOne ? answers.length - 1 : answers.length} of ${answers.length} right`)
   await screen('gap-radio-checked')
   await click('Done')
+}
+
+// --- Quick games (Picture Match, Listen & Pick, Speed Round) -----------------------
+
+// A quick game is over: its own end card, or (in the daily session) the
+// session's "Nice work" or "Session complete".
+const quickOver = () => /Round done|Nice work|Session complete/.test(pageText())
+
+// Taps the choice with this text, then waits for the next question or the end.
+async function pickChoice(answer: string) {
+  const choice = await waitFor(() => [...document.querySelectorAll<HTMLButtonElement>('.rien-quick-choice:not([disabled])')]
+    .find(b => b.textContent?.trim() === answer), `choice "${answer}"`)
+  choice.click()
+  await waitFor(() => document.querySelector('.rien-quick-choice.is-right'), 'right answer shown')
+  await waitFor(() => quickOver() || document.querySelector('.rien-quick-choice:not([disabled])'), 'next question', 5000)
+}
+
+async function playPictures() {
+  for (let i = 0; i < 12; i++) {
+    // The picture fades out and in while the new choices already show, so wait
+    // until the picture on screen is one of the choices' (her only photo is
+    // the one added for "borrow").
+    const answer = await waitFor(() => {
+      if (quickOver()) return 'done'
+      const options = [...document.querySelectorAll<HTMLButtonElement>('.rien-quick-choice:not([disabled])')].map(b => b.textContent!.trim())
+      const emoji = document.querySelector('.rien-picture-emoji')?.textContent?.trim()
+      const word = emoji ? WORD_BANK.find(w => w.emoji === emoji)?.word : document.querySelector('.rien-picture-photo') && 'borrow'
+      return word && options.includes(word) ? word : undefined
+    }, 'picture and its choices')
+    if (answer === 'done') return
+    await pickChoice(answer)
+  }
+  if (!quickOver()) throw new Error('Picture Match did not finish')
+}
+
+// The answer is only spoken, so listen in on the voice to know it.
+async function playListen() {
+  const synth = window.speechSynthesis
+  if (!synth || pageText().includes('cannot read aloud')) {
+    await click('Skip')
+    return
+  }
+  let heard = ''
+  const realSpeak = synth.speak.bind(synth)
+  synth.speak = (utterance) => { heard = utterance.text; realSpeak(utterance) }
+  try {
+    await click('Play the word')
+    for (let i = 0; i < 12; i++) {
+      await waitFor(() => quickOver() || document.querySelector('.rien-quick-choice:not([disabled])'), 'listen question')
+      if (quickOver()) return
+      await waitFor(() => heard, 'spoken word')
+      const answer = heard
+      heard = ''
+      await pickChoice(answer)
+    }
+    if (!quickOver()) throw new Error('Listen & Pick did not finish')
+  }
+  finally {
+    synth.speak = realSpeak
+  }
+}
+
+// A few right calls (a sentence with a Fix It mistake in it is wrong), then
+// the clock is moved past the minute.
+async function playSpeed(packs: Pack[]) {
+  const withMistakes = new Set(packs.flatMap(p => p.fixIt).map(i => i.text))
+  await click('Start')
+  for (let i = 0; i < 4; i++) {
+    const card = await waitFor(() => document.querySelector('.rien-speed-sentence'), 'speed sentence')
+    const sentence = card.textContent!.trim()
+    await waitFor(() => document.querySelector<HTMLButtonElement>('.rien-speed-btn:not([disabled])'), 'speed buttons')
+    document.querySelector<HTMLButtonElement>(withMistakes.has(sentence) ? '.rien-speed-btn.is-no' : '.rien-speed-btn.is-yes')!.click()
+    await waitFor(() => document.querySelector('.rien-speed-sentence')?.textContent?.trim() !== sentence
+      && document.querySelector('.rien-speed-btn:not([disabled])'), 'next sentence', 5000)
+  }
+  const score = Number(document.querySelector('.rien-speed-score')?.textContent)
+  if (score !== 4) throw new Error(`Speed Round: ${score} of 4 right`)
+  const realNow = Date.now.bind(Date)
+  Date.now = () => realNow() + 61_000
+  try {
+    await waitText('Time!')
+  }
+  finally {
+    Date.now = realNow
+  }
 }
 
 export default defineNuxtPlugin({
@@ -380,6 +476,9 @@ async function run() {
       else if (label.includes('Sentence Builder')) { await playBuilder(packs, true); played.push('builder') }
       else if (label.includes('Gap Radio')) { await playRadio(packs, true); played.push('radio') }
       else if (label.includes('Say It')) { await click('Skip'); played.push('say-it skipped') }
+      else if (label.includes('Picture Match')) { await playPictures(); played.push('pictures') }
+      else if (label.includes('Listen & Pick')) { await playListen(); played.push('listen') }
+      else if (label.includes('Speed Round')) { await playSpeed(packs); played.push('speed') }
       else throw new Error(`unknown step ${label}`)
       await waitFor(() => text().includes('Nice work') || text().includes('Session complete'), 'between steps')
       if (text().includes('Nice work')) {
@@ -431,11 +530,15 @@ async function run() {
   await step('Sentence Builder on its own', () => practise('sentence-builder', () => playBuilder(packs, false), 'Round done'))
   await step('Gap Radio on its own, one gap missed', async () => {
     const before = (await db.mistakeCounts(new Date(0))).listening ?? 0
-    await goTo('/games/gap-radio', 'Listen, then type')
+    await goTo('/games/gap-radio', 'Listen, then fill the gaps')
     await playRadio(packs, true)
     const after = (await db.mistakeCounts(new Date(0))).listening ?? 0
     if (after <= before) throw new Error('no listening mistake saved')
   })
+
+  await step('Picture Match on its own', () => practise('picture-match', playPictures, 'Round done'))
+  await step('Listen & Pick on its own', () => practise('listen-pick', playListen, 'Round done'))
+  await step('Speed Round on its own', () => practise('speed-round', () => playSpeed(packs), 'Time!'))
 
   await step('File Boss: all 15 questions', async () => {
     await goTo('/games/file-boss', 'questions mixing')
@@ -454,21 +557,26 @@ async function run() {
     return text().match(/\d+ \/ 15/)?.[0]
   })
 
-  await step('Couple Talk: start, timer ends, save', async () => {
+  await step('Couple Talk: every question, a slip noted, saved', async () => {
+    const talksBefore = (await db.exportAll()).talks.length
+    const mistakesBefore = (await db.exportAll()).mistakes.length
     // The Start button sits in the pinned bar (teleported outside <main>).
     await goTo('/games/couple-talk', 'Take turns')
-    await click('Start 10 minutes')
-    await waitFor(() => document.querySelector('.rien-timer')?.textContent?.startsWith('9:5'), 'timer running')
-    const realNow = Date.now.bind(Date)
-    Date.now = () => realNow() + 11 * 60_000
-    try {
-      await waitText('Time!')
-    }
-    finally {
-      Date.now = realNow
-    }
-    await click('We’re done')
+    await click('Start talking')
+    await waitFor(() => document.querySelector('.rien-talk-timer [role=timer]')?.textContent?.startsWith('9:5'), 'timer running')
+    await click('Note a slip')
+    ;(await waitFor(() => document.querySelector<HTMLElement>('.rien-talk-sliptype'), 'slip types')).click()
+    await fill('The right way to say it', 'She goes, not she go')
+    await click('Save slip')
+    await waitText('1 slip noted for later')
+    await screen('couple-talk')
+    for (let i = 0; i < 12 && button('Next question'); i++) await click('Next question')
+    await click('We\'re done')
     await waitText('Nice talk')
+    await waitText('To go over together')
+    const after = await db.exportAll()
+    if (after.talks.length !== talksBefore + 1) throw new Error('the talk was not saved')
+    if (after.mistakes.length !== mistakesBefore + 1) throw new Error('the slip was not saved as a mistake')
   })
 
   await step('Progress tab shows totals and the File Boss result', async () => {
