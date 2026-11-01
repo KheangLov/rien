@@ -27,7 +27,7 @@ const round = (c = TEAL_LOGO) => svg(`<circle cx="256" cy="256" r="256" fill="ur
 const foreground = (c = TEAL_LOGO) => svg(scaled(0.7, logoMark(c.bar)), c)
 // Android's themed icon (Android 13+, Samsung One UI): the mark in one colour;
 // the phone tints it to match the wallpaper.
-const monochrome = () => svg(scaled(0.7, logoMark('#ffffff')))
+const monochrome = () => svg(scaled(0.7, logoMark('#f8fafc')))
 
 // PNG out, RGB when nothing is see-through (App Store icons must have no alpha).
 function png(pixels, width, height) {
@@ -217,8 +217,8 @@ for (const [id, glyph] of Object.entries(SHORTCUTS)) {
   const body = solarIcons[`${glyph}-bold-duotone`].body
   const icon = (size, glyphSize, background) => `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${background}`
     + `<svg x="${(size - glyphSize) / 2}" y="${(size - glyphSize) / 2}" width="${glyphSize}" height="${glyphSize}" viewBox="0 0 24 24" color="${TEAL}" style="color:${TEAL}">${body}</svg></svg>`
-  write(`${RES}drawable-nodpi/shortcut_${id}.png`, png(...pixelsOf(icon(432, 176, '<rect width="432" height="432" fill="#ffffff"/>'))))
-  write(`public/shortcuts/${id}.png`, png(...pixelsOf(icon(96, 52, '<circle cx="48" cy="48" r="48" fill="#ffffff"/>'))))
+  write(`${RES}drawable-nodpi/shortcut_${id}.png`, png(...pixelsOf(icon(432, 176, '<rect width="432" height="432" fill="#f8fafc"/>'))))
+  write(`public/shortcuts/${id}.png`, png(...pixelsOf(icon(96, 52, '<circle cx="48" cy="48" r="48" fill="#f8fafc"/>'))))
 }
 
 console.log('Logo, icons and splash screens written.')

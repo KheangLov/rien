@@ -113,15 +113,15 @@ const pattern = computed(() => (props.silhouette ? undefined : props.species.pat
   >
     <defs>
       <radialGradient :id="`${id}-egg`" cx="35%" cy="30%" r="70%">
-        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+        <stop offset="0%" stop-color="#f8fafc" stop-opacity="0.95" />
         <stop offset="55%" :stop-color="species.belly" stop-opacity="0.75" />
         <stop offset="100%" :stop-color="species.back" stop-opacity="0.85" />
       </radialGradient>
     </defs>
     <g v-for="(e, i) in [[34, 40, 14], [62, 42, 13], [48, 22, 12], [74, 24, 9]]" :key="i">
-      <circle :cx="e[0]" :cy="e[1]" :r="e[2]" :fill="`url(#${id}-egg)`" stroke="#ffffff" stroke-opacity="0.8" stroke-width="1.5" />
+      <circle :cx="e[0]" :cy="e[1]" :r="e[2]" :fill="`url(#${id}-egg)`" stroke="#f8fafc" stroke-opacity="0.8" stroke-width="1.5" />
       <circle :cx="e[0]! + 2" :cy="e[1]! + 2" :r="e[2]! * 0.28" fill="#1f2937" opacity="0.55" />
-      <circle :cx="e[0]! - e[2]! * 0.4" :cy="e[1]! - e[2]! * 0.45" :r="e[2]! * 0.18" fill="#ffffff" opacity="0.9" />
+      <circle :cx="e[0]! - e[2]! * 0.4" :cy="e[1]! - e[2]! * 0.45" :r="e[2]! * 0.18" fill="#f8fafc" opacity="0.9" />
     </g>
   </svg>
 
@@ -146,8 +146,8 @@ const pattern = computed(() => (props.silhouette ? undefined : props.species.pat
         <stop offset="100%" :stop-color="paint(species.fin)" stop-opacity="0.9" />
       </linearGradient>
       <radialGradient :id="`${id}-shine`" cx="65%" cy="25%" r="55%">
-        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.45" />
-        <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+        <stop offset="0%" stop-color="#f8fafc" stop-opacity="0.45" />
+        <stop offset="100%" stop-color="#f8fafc" stop-opacity="0" />
       </radialGradient>
       <pattern :id="`${id}-scales`" width="7" height="6" patternUnits="userSpaceOnUse">
         <path d="M0 6C1.5 2.5 5.5 2.5 7 6" fill="none" stroke="#000000" stroke-opacity="0.12" stroke-width="0.8" />
@@ -218,7 +218,7 @@ const pattern = computed(() => (props.silhouette ? undefined : props.species.pat
 
     <template v-if="!silhouette">
       <!-- Lateral line, gill and mouth -->
-      <path d="M40 34C62 30 84 30 104 33" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="0.9" />
+      <path d="M40 34C62 30 84 30 104 33" fill="none" stroke="#f8fafc" stroke-opacity="0.35" stroke-width="0.9" />
       <path :d="`M${shape.eye[0] - 9} ${shape.eye[1] - 9}C${shape.eye[0] - 14} ${shape.eye[1]} ${shape.eye[0] - 14} ${shape.eye[1] + 9} ${shape.eye[0] - 9} ${shape.eye[1] + 16}`" fill="none" stroke="#000000" stroke-opacity="0.22" stroke-width="1.2" stroke-linecap="round" />
       <path :d="`M${shape.eye[0] + 12} ${shape.eye[1] + 8}q-3 2 -6 1`" fill="none" stroke="#1f2937" stroke-opacity="0.7" stroke-width="1.2" stroke-linecap="round" />
 
@@ -237,10 +237,10 @@ const pattern = computed(() => (props.silhouette ? undefined : props.species.pat
         <path :d="`M${shape.eye[0] - 3.5} ${shape.eye[1] - 3.5}l7 7m0 -7l-7 7`" />
       </g>
       <g v-else>
-        <circle :cx="shape.eye[0]" :cy="shape.eye[1]" r="5" fill="#ffffff" />
+        <circle :cx="shape.eye[0]" :cy="shape.eye[1]" r="5" fill="#f8fafc" />
         <circle :cx="shape.eye[0] + 0.8" :cy="shape.eye[1]" r="3.6" fill="#b45309" />
         <circle :cx="shape.eye[0] + 1.2" :cy="shape.eye[1]" r="2.4" fill="#0f172a" />
-        <circle :cx="shape.eye[0] + 2.2" :cy="shape.eye[1] - 1.4" r="0.9" fill="#ffffff" />
+        <circle :cx="shape.eye[0] + 2.2" :cy="shape.eye[1] - 1.4" r="0.9" fill="#f8fafc" />
       </g>
     </template>
   </svg>

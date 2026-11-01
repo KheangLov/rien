@@ -64,7 +64,9 @@ export default defineNuxtConfig({
     theme: {
       defaultTheme: 'light',
       themes: {
-        light: { colors: { primary: '#0f766e' } },
+        // Soft whites, never pure #ffffff (harsh on screens): cards just off
+        // white, so they still lift off the page, and text on colour in slate-50.
+        light: { colors: { 'primary': '#0f766e', 'on-primary': '#f8fafc', 'surface': '#fcfcfd', 'surface-raised': '#fdfdfe' } },
         // A lighter teal so buttons and links stay readable on dark surfaces.
         dark: { dark: true, colors: { primary: '#2dd4bf' } },
       },

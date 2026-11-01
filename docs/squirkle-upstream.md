@@ -118,3 +118,17 @@ from its own icon set.
 
 - Rien: had `patches/@squirkle-ui__ui@0.1.1.patch`, now removed.
 - Fixed: `@squirkle-ui/ui` 0.1.2 also applies an alias whose key is a bare built-in name.
+
+## 13. Hard-coded pure white in controls
+
+Several components set `color: #fff` or `background: #fff` directly: `.sq-select__check`,
+`.sq-checkbox--checked .sq-checkbox__box`, `.sq-treeview__check`, the date and time picker's selected
+states, `.sq-slider__thumb` and its label, `.sq-switch__thumb`, `.sq-timeline-item__dot`, and the color
+picker's knob and handle. The light theme also defaults `surface` and `surface-raised` to `#ffffff`, and
+the derived `on-primary` falls back to `#ffffff`.
+
+- Effect: an app that avoids pure white (Rien uses `#f8fafc` on colour and `#fcfcfd` for cards) has to
+  override each rule with a higher-specificity selector, and theme changes do not reach these controls.
+- Rien: `:root .sq-…` overrides at the end of `app/assets/css/main.css`.
+- Suggested fix: use `var(--sq-on-primary)` for text and marks on a coloured fill, and a new
+  `--sq-on-color-surface` (or `--sq-surface-raised`) token for thumbs and knobs, so a theme sets white once.
