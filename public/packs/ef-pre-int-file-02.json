@@ -14,7 +14,8 @@
         "swims"
       ],
       "type": "tense",
-      "explain": "Swim is irregular: swam."
+      "explain": "Swim is irregular: swam.",
+      "when": "past"
     },
     {
       "id": "past-lost",
@@ -22,11 +23,12 @@
       "wrong": "losed",
       "fix": "lost",
       "distractors": [
-        "lose",
+        "losted",
         "loosed"
       ],
       "type": "tense",
-      "explain": "Lose is irregular: lost."
+      "explain": "Lose is irregular: lost.",
+      "when": "past"
     },
     {
       "id": "pastcont-sleeping",
@@ -38,7 +40,8 @@
         "sleeps"
       ],
       "type": "tense",
-      "explain": "Past continuous: was + -ing."
+      "explain": "Past continuous: was + -ing.",
+      "when": "past-continuous"
     },
     {
       "id": "pastcont-were",
@@ -50,7 +53,8 @@
         "be"
       ],
       "type": "tense",
-      "explain": "They, we and you take were."
+      "explain": "They, we and you take were.",
+      "when": "past-continuous"
     },
     {
       "id": "prep-in-year",

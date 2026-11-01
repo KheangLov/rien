@@ -163,7 +163,7 @@ function next() {
             :text="card.tip"
           />
           <p class="rien-sentence-fixed rien-pop">{{ card.text }}</p>
-          <RuleVisual v-if="!solved || attempts > 1" type="word-order" :sentence="card.text" />
+          <RuleVisual v-if="!solved || attempts > 1" type="word-order" />
         </template>
 
         <ActionBar>

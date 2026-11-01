@@ -21,6 +21,12 @@ describe.each(index.packs)('content pack %s', (name) => {
       expect(fixed, item.id).not.toMatch(/\s{2}/)
     }
   })
+
+  it('says when every tense sentence happens, for its timeline', () => {
+    for (const item of pack.fixIt.filter(item => item.type === 'tense')) {
+      expect(item.when, item.id).toBeDefined()
+    }
+  })
 })
 
 describe('fixItItemSchema', () => {

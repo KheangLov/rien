@@ -4,6 +4,14 @@ import { bookSchema, fileNumberSchema, mistakeTypeSchema } from './db'
 
 const PACK_ID = /^[a-z0-9-]+$/
 
+// When a tense sentence happens, for its timeline picture. Set by hand on every
+// tense item: guessing from time words gets "didn't see … today" and "since"
+// wrong, and a wrong picture teaches the wrong rule.
+export const TENSE_TIMES = [
+  'past', 'past-continuous', 'past-habit', 'earlier-past', 'past-to-now', 'now', 'always', 'future', 'imagined',
+] as const
+export type TenseTime = typeof TENSE_TIMES[number]
+
 // Each Fix It sentence has exactly one mistake, in one word she can tap.
 // A missing word (often an article) is marked on the word next to the gap:
 // "My mother is teacher" taps "teacher" and fixes it to "a teacher".
@@ -17,6 +25,9 @@ export const fixItItemSchema = z
     distractors: z.array(z.string().trim().min(1)).min(1).max(3),
     type: mistakeTypeSchema,
     explain: z.string().trim().min(1).max(200),
+    // Optional so one missing value never stops a whole pack loading; the pack
+    // tests require it on every tense item.
+    when: z.enum(TENSE_TIMES).optional(),
   })
   .superRefine((item, ctx) => {
     const key = normalizeAnswer(item.wrong)

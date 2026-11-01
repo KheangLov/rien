@@ -14,7 +14,8 @@
         "uses"
       ],
       "type": "tense",
-      "explain": "Used to for the past."
+      "explain": "Used to for the past.",
+      "when": "past-habit"
     },
     {
       "id": "did-use-to",
@@ -26,7 +27,8 @@
         "uses"
       ],
       "type": "tense",
-      "explain": "After did: use to, not used to."
+      "explain": "After did: use to, not used to.",
+      "when": "past-habit"
     },
     {
       "id": "might-come",

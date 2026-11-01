@@ -14,7 +14,8 @@
         "finishes"
       ],
       "type": "tense",
-      "explain": "Present perfect: have + past participle."
+      "explain": "Present perfect: have + past participle.",
+      "when": "past-to-now"
     },
     {
       "id": "do-washing-up",
@@ -38,7 +39,8 @@
         "going"
       ],
       "type": "tense",
-      "explain": "Has + past participle: gone, not went."
+      "explain": "Has + past participle: gone, not went.",
+      "when": "past-to-now"
     },
     {
       "id": "pp-ever-bought",
@@ -50,7 +52,8 @@
         "buys"
       ],
       "type": "tense",
-      "explain": "Have you ever + past participle: bought."
+      "explain": "Have you ever + past participle: bought.",
+      "when": "past-to-now"
     },
     {
       "id": "anything",
@@ -58,8 +61,8 @@
       "wrong": "nothing",
       "fix": "anything",
       "distractors": [
-        "something",
-        "everything"
+        "no",
+        "none"
       ],
       "type": "other",
       "explain": "After not, use anything."

@@ -14,7 +14,8 @@
         "cooks"
       ],
       "type": "tense",
-      "explain": "Past perfect: had + past participle."
+      "explain": "Past perfect: had + past participle.",
+      "when": "earlier-past"
     },
     {
       "id": "told-me",

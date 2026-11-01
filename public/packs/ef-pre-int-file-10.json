@@ -6,7 +6,7 @@
   "fixIt": [
     {
       "id": "into",
-      "text": "She walked in the room.",
+      "text": "She opened the door and walked in the room.",
       "wrong": "in",
       "fix": "into",
       "distractors": [
@@ -26,7 +26,8 @@
         "builds"
       ],
       "type": "tense",
-      "explain": "Passive: was + past participle."
+      "explain": "Passive: was + past participle.",
+      "when": "past"
     },
     {
       "id": "passive-grown",
@@ -38,7 +39,8 @@
         "growing"
       ],
       "type": "tense",
-      "explain": "Passive: is + past participle."
+      "explain": "Passive: is + past participle.",
+      "when": "always"
     }
   ],
   "builder": [
