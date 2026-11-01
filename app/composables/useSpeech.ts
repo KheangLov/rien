@@ -32,6 +32,9 @@ let onNativeWord: ((charIndex: number) => void) | null = null
 let wordListener: Promise<PluginListenerHandle> | null = null
 
 export function useSpeech() {
+  // Whatever this screen or item was reading stops when it goes away (the next
+  // step of a session, the next question of a game).
+  if (getCurrentScope()) onScopeDispose(() => stopSpeaking())
   const native = import.meta.client && usesNativeReader()
   const supported = native || (import.meta.client && 'speechSynthesis' in window)
 

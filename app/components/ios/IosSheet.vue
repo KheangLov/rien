@@ -23,6 +23,8 @@ function up() {
 function key(e: KeyboardEvent) {
   if (e.key === 'Escape' && props.open) emit('close')
 }
+// Anything the sheet was reading aloud stops when it closes.
+watch(() => props.open, (open) => { if (!open) stopAllSound() })
 onMounted(() => window.addEventListener('keydown', key))
 onBeforeUnmount(() => window.removeEventListener('keydown', key))
 </script>

@@ -3,9 +3,23 @@ import { RienSpeech, type Heard } from '~/utils/rienSpeech'
 
 export type { Heard }
 
+// Her recording being played back, so it can be stopped.
+let playback: HTMLAudioElement | null = null
+
+// Stops everything that makes or takes sound: reading aloud, her recording
+// playing back, and listening. Runs on every screen change, when the app goes
+// to the background, and when a sheet closes.
+export function stopAllSound() {
+  stopSpeaking()
+  playback?.pause()
+  playback = null
+  if (Capacitor.isNativePlatform()) void RienSpeech.stop().catch(() => {})
+}
+
 // Speech recognition for Say It. Native apps only (iPhone and Android): iPhone
 // Home Screen web apps cannot use speech recognition.
 export function useListen() {
+  if (getCurrentScope()) onScopeDispose(() => stopAllSound())
   const supported = Capacitor.isNativePlatform()
 
   async function ensurePermission(): Promise<boolean> {
@@ -26,9 +40,12 @@ export function useListen() {
     }
   }
 
-  // Plays her last recording back through the web view.
+  // Plays her last recording back through the web view (one at a time).
   function playRecording(url: string) {
-    void new Audio(Capacitor.convertFileSrc(url)).play().catch(() => {})
+    stopSpeaking()
+    playback?.pause()
+    playback = new Audio(Capacitor.convertFileSrc(url))
+    void playback.play().catch(() => {})
   }
 
   return { supported, ensurePermission, listen, playRecording, stop: () => RienSpeech.stop() }
