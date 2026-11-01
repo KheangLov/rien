@@ -18,6 +18,14 @@ const played = Math.random() < 0.5 ? props.card.a : props.card.b
 // Show the two words in random order so position gives nothing away.
 const options = shuffle([props.card.a, props.card.b])
 const listened = ref(false)
+
+// The part of each word that differs (want|s, ba|g / ba|ck), to see the sound.
+const split = computed(() => {
+  const [a, b] = [props.card.a, props.card.b]
+  let i = 0
+  while (i < a.length && i < b.length && a[i] === b[i]) i++
+  return [a, b].map(w => ({ same: w.slice(0, i), diff: w.slice(i) }))
+})
 const picked = ref<string | null>(null)
 
 function play() {
@@ -36,7 +44,7 @@ async function choose(option: string) {
 </script>
 
 <template>
-  <SqCard>
+  <SqCard class="rien-rise">
     <SqCardText class="rien-stack rien-card-body">
       <SqAlert
         v-if="!canSpeak"
@@ -66,16 +74,20 @@ async function choose(option: string) {
         </div>
 
         <template v-if="picked">
+          <p class="rien-ending rien-pop" aria-label="The sound that differs">
+            <span v-for="w in split" :key="w.same + w.diff">{{ w.same }}<mark v-if="w.diff">{{ w.diff }}</mark></span>
+          </p>
           <SqAlert
+            :class="picked === played ? 'rien-pop' : 'rien-shake'"
             :type="picked === played ? 'success' : 'error'"
             variant="tonal"
             :title="picked === played ? `Yes: ${played}` : `It was “${played}”`"
             :text="SOUND_FOCUS_TIPS[card.focus]"
           />
-          <div class="rien-row rien-actions">
+          <ActionBar>
             <SqBtn color="primary" size="large" @click="emit('next')">Next</SqBtn>
             <SqBtn variant="tonal" size="large" @click="speak([card.a, card.b])">Hear both</SqBtn>
-          </div>
+          </ActionBar>
         </template>
       </template>
     </SqCardText>

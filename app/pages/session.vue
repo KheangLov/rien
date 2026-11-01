@@ -97,12 +97,13 @@ function continueSession() {
         <h2>Nice work!</h2>
         <p class="rien-muted">Next up: {{ ACTIVITIES[nextUp].title }}. {{ ACTIVITIES[nextUp].blurb }}.</p>
       </div>
-      <div class="rien-row rien-actions">
+      <ActionBar>
         <SqBtn color="primary" size="large" @click="continueSession">Continue</SqBtn>
-      </div>
+      </ActionBar>
     </template>
 
     <template v-else-if="phase === 'finished'">
+      <Confetti />
       <div class="rien-celebrate">
         <span class="rien-celebrate-icon is-big"><RienIcon name="flame" :size="48" /></span>
         <h2>Session complete</h2>
@@ -111,9 +112,9 @@ function continueSession() {
           Words you missed will come back just before you forget them.
         </p>
       </div>
-      <div class="rien-row rien-actions">
+      <ActionBar>
         <SqBtn color="primary" size="large" @click="navigateTo('/')">Back to Today</SqBtn>
-      </div>
+      </ActionBar>
     </template>
   </div>
 </template>

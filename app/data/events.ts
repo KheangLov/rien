@@ -9,6 +9,7 @@ const WRITES = [
   'saveSettings',
   'addWord',
   'deleteCard',
+  'setCardImage',
   'saveAnswer',
   'saveGrammarAnswer',
   'saveMistake',

@@ -74,6 +74,25 @@ async function fill(label: string, value: string) {
   setValue(field, value)
 }
 
+// Puts a generated picture into a file input, as if chosen from the library.
+async function choosePictureIn(input: HTMLInputElement) {
+  const canvas = document.createElement('canvas')
+  canvas.width = 600
+  canvas.height = 400
+  const g = canvas.getContext('2d')!
+  g.fillStyle = '#0ea5e9'
+  g.fillRect(0, 0, 600, 400)
+  g.fillStyle = '#facc15'
+  g.beginPath()
+  g.arc(300, 200, 120, 0, Math.PI * 2)
+  g.fill()
+  const blob = await new Promise<Blob>(resolve => canvas.toBlob(b => resolve(b!), 'image/png'))
+  const files = new DataTransfer()
+  files.items.add(new File([blob], 'pen.png', { type: 'image/png' }))
+  input.files = files.files
+  input.dispatchEvent(new Event('change', { bubbles: true }))
+}
+
 async function goTo(path: string, ready: string) {
   await navigateTo(path)
   await waitText(ready)
@@ -102,11 +121,14 @@ async function playRecall(options: { hintFirst?: boolean, wrongFirst?: Record<st
       seen.add(word.answer)
       continue
     }
+    if (word.answer === 'borrow' && !document.querySelector('.rien-word-image')) throw new Error('borrow should show its picture')
     const wrong = wrongFirst[word.answer]
     delete wrongFirst[word.answer]
     await fill('Type the English word', wrong ?? word.answer)
     await click('Check')
     if (wrong && word.answer === 'walked') await waitText('Check the ending: -ed')
+    const back = document.querySelector('.rien-next-review')?.textContent ?? ''
+    if (!/comes back|see you/i.test(back)) throw new Error(`no "comes back" line, got "${back}"`)
     if (text().includes('Type it once')) {
       if (button('Next')) throw new Error('Next is enabled before the word is retyped')
       await screen('word-recall-retype')
@@ -138,6 +160,10 @@ async function answerFixIt(packs: Pack[]) {
 async function playFixIt(packs: Pack[]) {
   for (let i = 0; i < 8; i++) {
     await answerFixIt(packs)
+    if (i === 0) {
+      await waitFor(() => document.querySelector('.rien-rule'), 'rule picture')
+      await screen('fix-it-rule')
+    }
     await click('Next')
   }
 }
@@ -246,6 +272,9 @@ async function run() {
     if ((await db.countCards()) !== 0) throw new Error('expected a fresh install')
     const tabs = [...document.querySelectorAll('.rien-tab')].map(t => t.textContent!.trim())
     if (tabs.join(',') !== 'Today,Words,Tank,Progress,Me') throw new Error(`tabs: ${tabs.join(',')}`)
+    if (!document.querySelector('.rien-tab-lens')) throw new Error('no tab lens')
+    if (!document.documentElement.classList.contains('rien-glass')) throw new Error('Liquid Glass should be on by default')
+    if (!document.documentElement.classList.contains('rien-motion') && !matchMedia('(prefers-reduced-motion: reduce)').matches) throw new Error('motion should be on by default')
     await screen('today-empty')
   })
 
@@ -260,6 +289,11 @@ async function run() {
       await fill('Meaning in English', word.meaning)
       if (word.khmer) await fill('Khmer hint', word.khmer)
       if (word.example) await fill('Example sentence', word.example)
+      if (i === 0) {
+        await choosePictureIn(document.querySelector<HTMLInputElement>('input[type=file]')!)
+        await waitFor(() => document.querySelector('img.rien-picture-thumb'), 'picture preview')
+        await screen('add-word-picture')
+      }
       await click('Save word')
       await waitText(`Saved “${word.answer}”`)
       if (i === 0) {
@@ -274,7 +308,9 @@ async function run() {
     await waitText('is already in your words')
     await fill('English word', '')
     await fill('Meaning in English', '')
-    return `${await db.countCards()} saved, duplicate refused`
+    const borrow = (await db.allCards()).find(c => c.answer === 'borrow')
+    if (!borrow?.image?.startsWith('data:image/jpeg')) throw new Error('the picture was not saved as a small JPEG')
+    return `${await db.countCards()} saved, picture ${Math.round(borrow.image.length / 1024)} KB, duplicate refused`
   })
 
   await step('Words tab: search, filters and details', async () => {
@@ -385,7 +421,8 @@ async function run() {
   })
 
   await step('Couple Talk: start, timer ends, save', async () => {
-    await goTo('/games/couple-talk', 'Start 10 minutes')
+    // The Start button sits in the pinned bar (teleported outside <main>).
+    await goTo('/games/couple-talk', 'Take turns')
     await click('Start 10 minutes')
     await waitFor(() => document.querySelector('.rien-timer')?.textContent?.startsWith('9:5'), 'timer running')
     const realNow = Date.now.bind(Date)
@@ -407,8 +444,14 @@ async function run() {
     await screen('progress')
   })
 
-  await step('Settings tab includes the new-word limit', async () => {
+  await step('Settings: new-word limit, and Liquid Glass and motion switch off and on', async () => {
     await goTo('/settings', 'New words')
+    const root = document.documentElement
+    await db.saveSettings({ liquidGlass: false, motion: false })
+    await waitFor(() => !root.classList.contains('rien-glass') && !root.classList.contains('rien-motion'), 'glass and motion off')
+    await screen('settings-plain')
+    await db.saveSettings({ liquidGlass: true, motion: true })
+    await waitFor(() => root.classList.contains('rien-glass'), 'glass back on')
     await screen('settings')
   })
 

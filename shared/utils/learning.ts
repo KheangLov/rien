@@ -96,6 +96,14 @@ export function limitNew(due: CardRow[], newAllowed: number, limit: number): Car
 export const TRICKY_LAPSES = 3
 export const isTricky = (card: Pick<CardRow, 'fsrs'>) => card.fsrs.lapses >= TRICKY_LAPSES
 
+// Shown right after an answer, so the spacing is visible: "See you in 4 days".
+export function comesBackLabel(due: Date, now: Date): string {
+  const minutes = (due.getTime() - now.getTime()) / 60_000
+  if (minutes < 60) return 'Comes back in a few minutes'
+  const label = nextReviewLabel(due, now)
+  return label === 'Later today' ? 'Comes back later today' : `See you ${label.toLowerCase()}`
+}
+
 export function nextReviewLabel(due: Date, now: Date): string {
   const startOf = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime()
   if (due.getTime() <= now.getTime()) return 'Due now'

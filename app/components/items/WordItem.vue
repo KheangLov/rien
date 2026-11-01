@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { CardRow } from '#shared/schemas/db'
 import { blankExample, checkAnswer, normalizeAnswer, type Verdict } from '#shared/utils/answer'
-import { hintFor, maxHintLevel } from '#shared/utils/learning'
+import { comesBackLabel, hintFor, maxHintLevel } from '#shared/utils/learning'
 import { gradeAnswer } from '#shared/utils/scheduler'
 import { vPlainInput } from '~/directives/plainInput'
 
@@ -21,6 +21,7 @@ const typed = ref('')
 const retyped = ref('')
 const hintLevel = ref(0)
 const verdict = ref<Verdict | null>(null)
+const comesBack = ref('')
 const shownAt = performance.now()
 const answerField = ref<{ focus?: () => void } | null>(null)
 const retypeField = ref<{ focus?: () => void } | null>(null)
@@ -49,6 +50,7 @@ async function submit(giveUp = false) {
   verdict.value = result
   haptic(result.result === 'correct' ? 'success' : result.result === 'almost' ? 'warning' : 'error')
   const graded = gradeAnswer(props.card, result, typed.value, performance.now() - shownAt, new Date())
+  comesBack.value = comesBackLabel(graded.card.due, new Date())
   await db.saveAnswer(graded)
   emit('answered', { card: graded.card, result: result.result })
   if (result.result === 'wrong') nextTick(() => retypeField.value?.focus?.())
@@ -69,7 +71,10 @@ const feedback = computed(() => {
 </script>
 
 <template>
-  <SqCard>
+  <SqCard class="rien-rise">
+    <Squircle v-if="card.image" :radius="20" :surface="false" class="rien-word-image-wrap">
+      <img :src="card.image" alt="" class="rien-word-image">
+    </Squircle>
     <SqCardText class="rien-stack rien-card-body">
       <p v-if="card.meaning" class="rien-cue">{{ card.meaning }}</p>
       <p v-if="showKhmer" class="rien-cue rien-khmer">{{ card.khmer }}</p>
@@ -87,18 +92,24 @@ const feedback = computed(() => {
           <SqBtn variant="text" :disabled="!canHint" @click="hint">{{ hintLevel ? 'Another letter' : 'Hint' }}</SqBtn>
           <SqBtn variant="text" @click="submit(true)">I don't know</SqBtn>
         </div>
-        <div class="rien-row rien-actions">
-          <SqBtn type="submit" color="primary" size="large" :disabled="!typed.trim()">Check</SqBtn>
-        </div>
+        <ActionBar>
+          <SqBtn color="primary" size="large" :disabled="!typed.trim()" @click="submit()">Check</SqBtn>
+        </ActionBar>
       </form>
 
       <template v-else>
-        <SqAlert :type="feedback!.type" variant="tonal" :title="feedback!.title">
+        <SqAlert
+          :type="feedback!.type"
+          variant="tonal"
+          :title="feedback!.title"
+          :class="verdict.result === 'wrong' ? 'rien-shake' : 'rien-pop'"
+        >
           <template v-if="verdict.result !== 'correct' && typed.trim()">
             You typed “{{ typed.trim() }}”.
           </template>
         </SqAlert>
-        <p class="rien-answer">{{ card.answer }}</p>
+        <p class="rien-answer rien-pop">{{ card.answer }}</p>
+        <p class="rien-next-review"><RienIcon name="sparkles" :size="16" />{{ comesBack }}</p>
         <p v-if="card.example" class="rien-example">{{ card.example }}</p>
         <p v-if="card.khmer && !showKhmer" class="rien-muted rien-khmer">{{ card.khmer }}</p>
 
@@ -112,14 +123,14 @@ const feedback = computed(() => {
           />
         </form>
 
-        <div class="rien-row rien-actions">
+        <ActionBar>
           <SqBtn color="primary" size="large" :disabled="needsRetype && !retypeOk" @click="next">
             {{ needsRetype && !retypeOk ? 'Type the word to continue' : 'Next' }}
           </SqBtn>
           <SqBtn v-if="canSpeak" variant="tonal" size="large" aria-label="Hear it" @click="speak(card.answer)">
             <RienIcon name="sound-hunter" />
           </SqBtn>
-        </div>
+        </ActionBar>
       </template>
     </SqCardText>
   </SqCard>

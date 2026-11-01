@@ -18,6 +18,21 @@ export default defineNuxtPlugin(() => {
   apply()
   dark.addEventListener('change', apply)
 
+  // Liquid Glass and motion follow her settings; motion also stays off when the
+  // phone asks for reduced motion. Applied as classes on <html>.
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)')
+  const root = document.documentElement
+  root.classList.add('rien-glass', 'rien-motion')
+  const db = useDb()
+  const sync = async () => {
+    const settings = await db.getSettings()
+    root.classList.toggle('rien-glass', settings.liquidGlass)
+    root.classList.toggle('rien-motion', settings.motion && !reduce.matches)
+  }
+  void sync()
+  db.subscribe(() => void sync())
+  reduce.addEventListener('change', () => void sync())
+
   if (Capacitor.isNativePlatform()) {
     void import('@capacitor/keyboard').then(({ Keyboard }) =>
       Keyboard.setAccessoryBarVisible({ isVisible: false })).catch(() => {})

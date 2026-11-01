@@ -29,10 +29,10 @@ function openTank() {
     </SqMain>
     <TabBar v-if="hasTabs" />
     <Transition name="rien-toast">
-      <button v-if="current" :key="current" type="button" class="rien-toast" role="status" @click="openTank">
+      <Squircle v-if="current" :key="current" tag="button" :surface="false" :radius="22" type="button" class="rien-toast" role="status" @click="openTank">
         <RienIcon name="fish" :size="26" />
         <span>{{ current }}</span>
-      </button>
+      </Squircle>
     </Transition>
     <SqSnackbar
       v-if="$pwa?.needRefresh"

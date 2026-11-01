@@ -9,6 +9,8 @@ export interface StudyRepository {
 
   addWord(input: NewWordInput, now?: Date): Promise<CardRow>
   deleteCard(id: string): Promise<void>
+  // Adds, replaces or (with undefined) removes a word's picture.
+  setCardImage(id: string, image: string | undefined): Promise<void>
   recentCards(limit: number): Promise<CardRow[]>
   dueCards(now: Date, limit: number): Promise<CardRow[]>
   countDue(now: Date): Promise<number>

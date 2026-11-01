@@ -66,7 +66,8 @@ function next() {
       <SqBtn to="/add-words" color="primary">Add words</SqBtn>
     </SqEmptyState>
 
-    <SqCard v-else-if="finished" title="Round done" variant="tonal">
+    <SqCard v-else-if="finished" title="Round done" variant="tonal" class="rien-pop">
+      <Confetti />
       <SqCardText>
         <p class="rien-big">{{ right }} / {{ right + missed.size }}</p>
         <p class="rien-muted">

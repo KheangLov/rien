@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IconName } from './RienIcon.vue'
 
+// A floating glass capsule. A glass lens slides to the selected tab.
 const tabs: { to: string, label: string, icon: IconName }[] = [
   { to: '/', label: 'Today', icon: 'today' },
   { to: '/words', label: 'Words', icon: 'words' },
@@ -11,25 +12,25 @@ const tabs: { to: string, label: string, icon: IconName }[] = [
 
 const route = useRoute()
 const active = (to: string) => (to === '/' ? route.path === '/' : route.path.startsWith(to))
-
-function select() {
-  haptic('tap')
-}
+const index = computed(() => Math.max(0, tabs.findIndex(t => active(t.to))))
 </script>
 
 <template>
-  <nav class="rien-tabbar" aria-label="Main">
-    <NuxtLink
-      v-for="tab in tabs"
-      :key="tab.to"
-      :to="tab.to"
-      class="rien-tab"
-      :class="{ 'is-active': active(tab.to) }"
-      :aria-current="active(tab.to) ? 'page' : undefined"
-      @click="select"
-    >
-      <RienIcon :name="tab.icon" :size="26" />
-      <span>{{ tab.label }}</span>
-    </NuxtLink>
+  <nav class="rien-tabbar-wrap" aria-label="Main">
+    <Squircle class="rien-tabbar rien-glass-surface" :radius="30">
+      <Squircle class="rien-tab-lens" :radius="24" :style="{ '--i': index }" aria-hidden="true" />
+      <NuxtLink
+        v-for="tab in tabs"
+        :key="tab.to"
+        :to="tab.to"
+        class="rien-tab"
+        :class="{ 'is-active': active(tab.to) }"
+        :aria-current="active(tab.to) ? 'page' : undefined"
+        @click="haptic('tap')"
+      >
+        <RienIcon :name="tab.icon" :size="24" />
+        <span>{{ tab.label }}</span>
+      </NuxtLink>
+    </Squircle>
   </nav>
 </template>

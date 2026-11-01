@@ -13,9 +13,26 @@ const form = reactive({
   meaning: '',
   khmer: '',
   example: '',
+  image: undefined as string | undefined,
   book: 'english-file-pre-intermediate-4e' as Book,
-  file: 7,
+  file: 9,
 })
+const pictureInput = ref<HTMLInputElement | null>(null)
+
+// A photo or picture for the word (camera or library on iPhone), kept small.
+async function pickPicture(event: Event) {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0]
+  input.value = ''
+  if (!file) return
+  try {
+    form.image = await shrinkImage(file)
+    haptic('tap')
+  }
+  catch {
+    errors.image = 'That picture could not be opened. Try another one.'
+  }
+}
 const errors = reactive<Record<string, string>>({})
 const saving = ref(false)
 const saved = ref('')
@@ -47,7 +64,7 @@ async function save() {
     // Remember the book and File for the next word and the next class.
     await db.saveSettings({ book: form.book, file: form.file })
     saved.value = `Saved “${card.answer}”`
-    Object.assign(form, { answer: '', meaning: '', khmer: '', example: '' })
+    Object.assign(form, { answer: '', meaning: '', khmer: '', example: '', image: undefined })
     answerField.value?.focus?.()
   }
   catch (error) {
@@ -92,6 +109,18 @@ async function save() {
             :rows="2"
             auto-grow
           />
+          <div class="rien-picture-picker">
+            <Squircle v-if="form.image" :radius="16" :surface="false" class="rien-picture-thumb">
+              <img :src="form.image" alt="Picture for this word" class="rien-picture-thumb">
+            </Squircle>
+            <SqBtn variant="tonal" @click="pictureInput?.click()">
+              <RienIcon name="camera" :size="18" />&nbsp;{{ form.image ? 'Change picture' : 'Add a picture' }}
+            </SqBtn>
+            <SqBtn v-if="form.image" variant="text" @click="form.image = undefined">Remove</SqBtn>
+            <input ref="pictureInput" type="file" accept="image/*" hidden @change="pickPicture">
+          </div>
+          <p v-if="errors.image" class="rien-muted">{{ errors.image }}</p>
+          <p v-else class="rien-muted">A picture of the meaning helps the word stick.</p>
           <div class="rien-row">
             <SqSelect v-model="form.book" :items="bookItems" label="Book" style="flex: 2 1 200px" />
             <SqSelect v-model="form.file" :items="fileItems" label="File" style="flex: 1 1 100px" />

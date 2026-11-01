@@ -25,6 +25,28 @@ const shown = computed(() => {
     .filter(c => !q || normalizeAnswer(`${c.answer} ${c.meaning} ${c.khmer}`).includes(q))
 })
 
+const pictureFor = ref<string | null>(null)
+const pictureInput = ref<HTMLInputElement | null>(null)
+
+function choosePicture(id: string) {
+  pictureFor.value = id
+  pictureInput.value?.click()
+}
+
+async function pickPicture(event: Event) {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0]
+  input.value = ''
+  if (!file || !pictureFor.value) return
+  try {
+    await db.setCardImage(pictureFor.value, await shrinkImage(file))
+    haptic('success')
+  }
+  catch {
+    window.alert('That picture could not be opened. Try another one.')
+  }
+}
+
 function toggle(id: string) {
   open.value = open.value === id ? null : id
   haptic('tap')
@@ -48,11 +70,14 @@ async function remove(card: CardRow) {
     </PageHeader>
 
     <SqTextField v-model="search" label="Search words" clearable />
+    <input ref="pictureInput" type="file" accept="image/*" hidden @change="pickPicture">
 
-    <div class="rien-segments" role="tablist" aria-label="Filter words">
-      <button
+    <Squircle class="rien-segments" :radius="14" role="tablist" aria-label="Filter words">
+      <Squircle
         v-for="option in (['all', 'due', 'tricky'] as const)"
         :key="option"
+        tag="button"
+        :radius="11"
         type="button"
         role="tab"
         class="rien-segment"
@@ -61,8 +86,8 @@ async function remove(card: CardRow) {
         @click="filter = option"
       >
         {{ option === 'all' ? 'All' : option === 'due' ? 'Due' : 'Tricky' }} {{ counts[option] }}
-      </button>
-    </div>
+      </Squircle>
+    </Squircle>
 
     <SqEmptyState
       v-if="counts.all === 0"
@@ -76,7 +101,7 @@ async function remove(card: CardRow) {
       {{ filter === 'tricky' ? 'No tricky words. Words you forget three times show up here.' : 'No words match.' }}
     </p>
 
-    <ul v-else class="rien-list">
+    <Squircle v-else class="rien-list" :radius="22"><ul class="rien-list-items">
       <li v-for="card in shown" :key="card.id">
         <button
           type="button"
@@ -93,7 +118,10 @@ async function remove(card: CardRow) {
             <span class="rien-due-label">{{ nextReviewLabel(card.due, now) }}</span>
           </span>
         </button>
-        <div v-if="open === card.id" class="rien-list-static rien-word-detail">
+        <div v-if="open === card.id" class="rien-list-static rien-word-detail rien-rise">
+          <Squircle v-if="card.image" :radius="18" :surface="false">
+            <img :src="card.image" alt="" class="rien-word-image">
+          </Squircle>
           <p v-if="card.example" class="rien-example">{{ card.example }}</p>
           <p v-if="card.khmer" class="rien-khmer">{{ card.khmer }}</p>
           <p class="rien-muted">
@@ -105,10 +133,12 @@ async function remove(card: CardRow) {
           </p>
           <div class="rien-row">
             <SqBtn v-if="canSpeak" variant="tonal" @click="speak(card.answer)">Hear it</SqBtn>
+            <SqBtn variant="tonal" @click="choosePicture(card.id)">{{ card.image ? 'Change picture' : 'Add picture' }}</SqBtn>
+            <SqBtn v-if="card.image" variant="text" @click="db.setCardImage(card.id, undefined)">Remove picture</SqBtn>
             <SqBtn variant="text" color="error" @click="remove(card)">Delete</SqBtn>
           </div>
         </div>
       </li>
-    </ul>
+    </ul></Squircle>
   </div>
 </template>

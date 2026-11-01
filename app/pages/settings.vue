@@ -132,6 +132,24 @@ async function importBackup(event: Event) {
       </SqCardText>
     </SqCard>
 
+    <SqCard v-if="settings" title="Look & feel">
+      <SqCardText class="rien-stack">
+        <SqSwitch
+          :model-value="settings.liquidGlass"
+          label="Liquid Glass"
+          color="primary"
+          @update:model-value="update({ liquidGlass: $event })"
+        />
+        <SqSwitch
+          :model-value="settings.motion"
+          label="Animation and motion"
+          color="primary"
+          @update:model-value="update({ motion: $event })"
+        />
+        <p class="rien-muted">Motion also stays off when Reduce Motion is on in the iPhone's settings.</p>
+      </SqCardText>
+    </SqCard>
+
     <SqCard v-if="native && settings" title="Say It">
       <SqCardText class="rien-stack">
         <SqSwitch

@@ -112,7 +112,8 @@ async function next() {
       />
     </template>
 
-    <SqCard v-if="finished" :title="strong ? 'File beaten' : 'Good try'" variant="tonal">
+    <SqCard v-if="finished" :title="strong ? 'File beaten' : 'Good try'" variant="tonal" class="rien-pop">
+      <Confetti v-if="strong" />
       <SqCardText>
         <p class="rien-big">{{ score }} / {{ quiz.length }}</p>
         <p class="rien-muted">

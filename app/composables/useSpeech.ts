@@ -27,5 +27,20 @@ export function useSpeech() {
     }
   }
 
-  return { supported, speak }
+  // Reads text and reports the character position of each word as it is spoken
+  // (where the phone sends word boundaries), then -1 at the end.
+  function speakTracked(text: string, rate: number, onWord: (charIndex: number) => void) {
+    if (!supported) return
+    window.speechSynthesis.cancel()
+    const voice = englishVoice()
+    const utterance = new SpeechSynthesisUtterance(text)
+    utterance.lang = voice?.lang ?? 'en-US'
+    if (voice) utterance.voice = voice
+    utterance.rate = rate
+    utterance.onboundary = (e) => { if (e.name === 'word' || e.name === undefined) onWord(e.charIndex) }
+    utterance.onend = () => onWord(-1)
+    window.speechSynthesis.speak(utterance)
+  }
+
+  return { supported, speak, speakTracked }
 }

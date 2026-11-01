@@ -104,6 +104,17 @@ describe.each(Object.entries(stores))('%s repository', (_, open) => {
     expect((await repo.allCards()).map(c => c.answer).sort()).toEqual(['borrow', 'lend'])
   })
 
+  it('keeps a picture with a word, and can change or remove it', async () => {
+    const pic = 'data:image/jpeg;base64,/9j/AAAA'
+    const card = await repo.addWord({ ...word, image: pic }, now)
+    expect((await repo.recentCards(1))[0]!.image).toBe(pic)
+    await repo.setCardImage(card.id, undefined)
+    expect((await repo.recentCards(1))[0]!.image).toBeUndefined()
+    await repo.setCardImage(card.id, pic)
+    const backup = JSON.parse(JSON.stringify(await repo.exportAll(now)))
+    expect(backup.cards[0].image).toBe(pic)
+  })
+
   it('lists due cards oldest first', async () => {
     await repo.addWord(word, new Date('2026-11-02T09:00:00Z'))
     await repo.addWord({ ...word, answer: 'lend' }, new Date('2026-11-02T07:00:00Z'))

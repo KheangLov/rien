@@ -87,6 +87,11 @@ export function createDexieRepository(db = new RienDexie()): StudyRepository {
       return card
     },
 
+    async setCardImage(id, image) {
+      const card = await db.cards.get(id)
+      if (card) await db.cards.put(cardSchema.parse({ ...card, image }))
+    },
+
     async deleteCard(id) {
       await db.transaction('rw', db.cards, db.reviews, db.mistakes, async () => {
         await db.cards.delete(id)

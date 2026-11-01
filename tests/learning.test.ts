@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { CardRow } from '#shared/schemas/db'
-import { hintFor, isTricky, limitNew, maxHintLevel, nextReviewLabel, planSession } from '#shared/utils/learning'
+import { comesBackLabel, hintFor, isTricky, limitNew, maxHintLevel, nextReviewLabel, planSession } from '#shared/utils/learning'
 
 describe('planSession', () => {
   it('puts due words first, then her weakest areas, four activities in all', () => {
@@ -53,6 +53,13 @@ describe('words list', () => {
   it('flags words forgotten three or more times', () => {
     expect(isTricky(card('a', 6, 3))).toBe(true)
     expect(isTricky(card('b', 6, 2))).toBe(false)
+  })
+
+  it('says when a word comes back right after an answer', () => {
+    const now = new Date(2026, 10, 2, 9, 0)
+    expect(comesBackLabel(new Date(2026, 10, 2, 9, 10), now)).toBe('Comes back in a few minutes')
+    expect(comesBackLabel(new Date(2026, 10, 2, 18, 0), now)).toBe('Comes back later today')
+    expect(comesBackLabel(new Date(2026, 10, 6, 9, 0), now)).toBe('See you in 4 days')
   })
 
   it('describes the next review in plain words', () => {

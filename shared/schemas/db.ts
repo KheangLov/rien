@@ -64,12 +64,16 @@ export const fsrsStateSchema = z.object({
   last_review: z.coerce.date().optional(),
 })
 
+// A small JPEG (data URL) shown with the word: pictures help words stick.
+const imageSchema = z.string().startsWith('data:image/').max(300_000)
+
 const wordFields = {
   // The English word or phrase she has to produce.
   answer: z.string().trim().min(1, 'Type the English word').max(80),
   meaning: z.string().trim().max(200).default(''),
   khmer: z.string().trim().max(200).default(''),
   example: z.string().trim().max(300).default(''),
+  image: imageSchema.optional(),
 }
 
 const hasCue = (w: { meaning: string, khmer: string, example: string }) =>
@@ -169,6 +173,9 @@ export const settingsSchema = z.object({
   newPerDay: z.number().int().min(0).max(50).default(10),
   // Study days per week.
   weeklyGoal: z.number().int().min(1).max(7).default(5),
+  // Look and feel. Motion also stays off when the phone asks for reduced motion.
+  liquidGlass: z.boolean().default(true),
+  motion: z.boolean().default(true),
   // Say It: let iOS use Apple's online recognition (usually more accurate;
   // recordings are processed by Apple). Off keeps recognition on the phone.
   speechOnline: z.boolean().default(false),

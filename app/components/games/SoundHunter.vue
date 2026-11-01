@@ -70,7 +70,8 @@ function next() {
       text="Every sound pair is resting. They come back when they are due."
     />
 
-    <SqCard v-else-if="finished" title="Round done" variant="tonal">
+    <SqCard v-else-if="finished" title="Round done" variant="tonal" class="rien-pop">
+      <Confetti />
       <SqCardText>
         <p class="rien-big">{{ clean }} / {{ round.length }}</p>
         <p class="rien-muted">heard right.</p>

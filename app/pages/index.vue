@@ -73,7 +73,7 @@ const talkedThisWeek = computed(() => {
       </template>
     </PageHeader>
 
-    <section class="rien-hero" aria-labelledby="session-title">
+    <Squircle tag="section" class="rien-hero" :surface="false" :radius="30" aria-labelledby="session-title">
       <div>
         <h2 id="session-title">
           {{ sessionComplete ? 'Session done. Well done!' : sessionStarted ? 'Keep going' : 'Today’s session' }}
@@ -103,7 +103,7 @@ const talkedThisWeek = computed(() => {
       >
         {{ sessionStarted ? 'Continue session' : 'Start session' }}
       </button>
-    </section>
+    </Squircle>
 
     <SqCard variant="outlined">
       <SqCardText class="rien-stack rien-card-body">
@@ -128,7 +128,7 @@ const talkedThisWeek = computed(() => {
     </SqCard>
 
     <h2 class="rien-section-title">Practice</h2>
-    <ul class="rien-list">
+    <Squircle class="rien-list" :radius="22"><ul class="rien-list-items">
       <li v-for="item in practice" :key="item.id">
         <NuxtLink :to="item.to" class="rien-list-row">
           <span class="rien-list-icon"><RienIcon :name="item.icon" /></span>
@@ -142,10 +142,10 @@ const talkedThisWeek = computed(() => {
           </span>
         </NuxtLink>
       </li>
-    </ul>
+    </ul></Squircle>
 
     <h2 class="rien-section-title">This week</h2>
-    <ul class="rien-list">
+    <Squircle class="rien-list" :radius="22"><ul class="rien-list-items">
       <li>
         <NuxtLink to="/tank" class="rien-list-row">
           <span class="rien-list-icon"><RienIcon name="fish" /></span>
@@ -179,6 +179,6 @@ const talkedThisWeek = computed(() => {
           </span>
         </NuxtLink>
       </li>
-    </ul>
+    </ul></Squircle>
   </div>
 </template>

@@ -8,7 +8,9 @@ import { vPlainInput } from '~/directives/plainInput'
 const emit = defineEmits<{ done: [summary: { clean: number, total: number }] }>()
 
 const db = useDb()
-const { supported: canSpeak, speak } = useSpeech()
+const { supported: canSpeak, speakTracked } = useSpeech()
+// The word being read aloud, for the highlight.
+const reading = ref(-1)
 
 const loading = ref(true)
 const loadError = ref(false)
@@ -38,8 +40,27 @@ onMounted(async () => {
   }
 })
 
+// Character offset where each token starts in the spoken text.
+const offsets = computed(() => {
+  let at = 0
+  return tokens.value.map((t) => {
+    const start = at
+    at += `${t.before}${t.word}${t.after}`.length + 1
+    return start
+  })
+})
+
 function play(rate: number) {
-  if (card.value) speak(card.value.text, rate)
+  const text = tokens.value.map(t => `${t.before}${t.word}${t.after}`).join(' ')
+  speakTracked(text, rate, (charIndex) => {
+    if (charIndex < 0) {
+      reading.value = -1
+      return
+    }
+    let index = 0
+    while (index + 1 < offsets.value.length && offsets.value[index + 1]! <= charIndex) index++
+    reading.value = index
+  })
 }
 
 async function check() {
@@ -97,8 +118,8 @@ function finish() {
         <SqCardText class="rien-card-body">
           <p class="rien-radio">
             <template v-for="(token, index) in tokens" :key="index">
-              <span v-if="token.gap === undefined">{{ token.before }}{{ token.word }}{{ token.after }}</span>
-              <span v-else class="rien-gap-wrap">{{ token.before }}<input
+              <span v-if="token.gap === undefined" :class="{ 'is-reading': reading === index }">{{ token.before }}{{ token.word }}{{ token.after }}</span>
+              <span v-else class="rien-gap-wrap" :class="{ 'is-reading': reading === index }">{{ token.before }}<input
                 v-if="!verdicts"
                 v-model="typed[token.gap]"
                 v-plain-input
@@ -115,11 +136,11 @@ function finish() {
             </template>
           </p>
         </SqCardText>
-        <div class="rien-row rien-actions">
+        <ActionBar>
           <SqBtn v-if="!verdicts" color="primary" size="large" :disabled="!allTyped" @click="check">Check</SqBtn>
           <SqBtn v-if="!verdicts" variant="tonal" size="large" @click="check">Show answers</SqBtn>
           <SqBtn v-else color="primary" size="large" @click="finish">Done</SqBtn>
-        </div>
+        </ActionBar>
       </SqCard>
 
       <SqCard v-if="verdicts && right === answers.length" title="Every word caught" variant="tonal">

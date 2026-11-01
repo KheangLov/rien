@@ -206,7 +206,7 @@ function next() {
 
         <SqAlert v-if="listenError" type="error" variant="tonal" :text="listenError" />
 
-        <div class="rien-row" :class="{ 'rien-actions': phase !== 'heard' }">
+        <ActionBar :fixed="phase !== 'heard'">
           <SqBtn
             :color="phase === 'heard' ? undefined : 'primary'"
             :variant="phase === 'heard' ? 'tonal' : undefined"
@@ -225,7 +225,7 @@ function next() {
           >
             Hear yourself
           </SqBtn>
-        </div>
+        </ActionBar>
 
         <div v-if="phase === 'heard'" class="rien-stack rien-gap-sm">
           <p class="rien-muted">How did your endings sound to you?</p>

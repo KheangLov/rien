@@ -2,6 +2,7 @@
 import { MISTAKE_LABELS, type GrammarRow } from '#shared/schemas/db'
 import { correctedText, gradeFixIt, tokenize, wrongIndex, type FixItCard } from '#shared/utils/fixit'
 import { shuffle } from '#shared/utils/rounds'
+import RuleVisual from '~/components/learn/RuleVisual.vue'
 
 // After this many wrong taps the mistake is shown, so she is never stuck.
 const MAX_WRONG_TAPS = 2
@@ -52,7 +53,7 @@ async function choose(choice: string) {
 </script>
 
 <template>
-  <SqCard>
+  <SqCard class="rien-rise">
     <SqCardText class="rien-stack rien-card-body">
       <p class="rien-muted">
         {{ phase === 'find' ? 'Tap the word with the mistake.' : phase === 'choose' ? 'Choose the fix.' : MISTAKE_LABELS[card.type] }}
@@ -89,6 +90,7 @@ async function choose(choice: string) {
 
       <template v-if="phase === 'result'">
         <SqAlert
+          :class="fixedRight ? 'rien-pop' : 'rien-shake'"
           :type="fixedRight && wrongTaps.length === 0 ? 'success' : fixedRight ? 'warning' : 'error'"
           variant="tonal"
           :title="fixedRight ? (wrongTaps.length === 0 ? 'Correct' : 'Fixed, after a search') : `Not “${picked}”`"
@@ -96,10 +98,11 @@ async function choose(choice: string) {
         />
         <p class="rien-sentence-fixed">{{ fixed }}</p>
         <p class="rien-muted rien-strike">{{ card.text }}</p>
-        <div class="rien-row rien-actions">
+        <RuleVisual :type="card.type" :sentence="fixed" />
+        <ActionBar>
           <SqBtn color="primary" size="large" @click="emit('next')">Next</SqBtn>
           <SqBtn v-if="canSpeak" variant="tonal" size="large" aria-label="Hear it" @click="speak(fixed)"><RienIcon name="sound-hunter" /></SqBtn>
-        </div>
+        </ActionBar>
       </template>
     </SqCardText>
   </SqCard>

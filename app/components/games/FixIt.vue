@@ -69,7 +69,8 @@ function next() {
       text="You have practised every sentence for now. They come back when they are due."
     />
 
-    <SqCard v-else-if="finished" title="Round done" variant="tonal">
+    <SqCard v-else-if="finished" title="Round done" variant="tonal" class="rien-pop">
+      <Confetti />
       <SqCardText>
         <p class="rien-big">{{ clean }} / {{ round.length }}</p>
         <p class="rien-muted">fixed without a slip.</p>

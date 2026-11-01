@@ -470,39 +470,8 @@ input {
 }
 
 .rien-shell.has-tabs .rien-page {
-  padding-bottom: calc(var(--rien-tabbar-h) + env(safe-area-inset-bottom) + 24px);
-}
-
-/* Tab bar */
-.rien-tabbar {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 50;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  padding: 6px max(8px, env(safe-area-inset-left)) calc(4px + env(safe-area-inset-bottom));
-  background: color-mix(in srgb, var(--sq-surface, #fff) 82%, transparent);
-  -webkit-backdrop-filter: saturate(1.8) blur(20px);
-  backdrop-filter: saturate(1.8) blur(20px);
-  border-top: 0.5px solid var(--sq-border, #e4e4e7);
-}
-
-.rien-tab {
-  display: grid;
-  justify-items: center;
-  align-content: center;
-  gap: 2px;
-  min-height: 48px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--sq-muted, #6b7280);
-  text-decoration: none;
-}
-
-.rien-tab.is-active {
-  color: var(--sq-primary, #0f766e);
+  /* Room for the floating tab bar. */
+  padding-bottom: calc(var(--rien-tabbar-h) + env(safe-area-inset-bottom) + 40px);
 }
 
 /* Headers */
@@ -576,13 +545,15 @@ input {
 }
 
 .rien-list {
+  --sq-bg: var(--sq-surface, #fff);
+  --sq-bd: var(--sq-border, #e4e4e7);
+  --sq-bw: 1px;
+}
+
+.rien-list-items {
   list-style: none;
   margin: 0;
   padding: 0;
-  border-radius: var(--sq-radius-lg, 16px);
-  background: var(--sq-surface, #fff);
-  border: 1px solid var(--sq-border, #e4e4e7);
-  overflow: hidden;
 }
 
 .rien-list-row {
@@ -671,7 +642,7 @@ input {
   margin: 0 -8px;
 }
 
-.rien-game .rien-actions {
+.rien-actionbar {
   position: fixed;
   left: 0;
   right: 0;
@@ -687,7 +658,7 @@ input {
   border-top: 1px solid var(--sq-border, #e4e4e7);
 }
 
-.rien-game .rien-actions > :first-child {
+.rien-actionbar > :first-child {
   flex: 1;
 }
 
@@ -696,7 +667,6 @@ input {
   display: grid;
   gap: 14px;
   padding: 20px;
-  border-radius: 24px;
   color: #fff;
   background: linear-gradient(145deg, #0f766e, #115e59 60%, #134e4a);
 }
@@ -764,10 +734,10 @@ input {
   color: var(--sq-primary, #0f766e);
 }
 
-/* Page transition */
-.page-enter-active,
-.page-leave-active {
-  transition: opacity 140ms ease, transform 140ms ease;
+/* Page transition (only with motion on) */
+html.rien-motion .page-enter-active,
+html.rien-motion .page-leave-active {
+  transition: opacity 180ms ease, transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .page-enter-from {
@@ -878,9 +848,8 @@ input {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 2px;
-  padding: 2px;
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--sq-on-surface, #18181b) 8%, transparent);
+  padding: 3px;
+  --sq-bg: color-mix(in srgb, var(--sq-on-surface, #18181b) 8%, transparent);
 }
 
 .rien-segment {
@@ -896,8 +865,8 @@ input {
 }
 
 .rien-segment.is-active {
-  background: var(--sq-surface, #fff);
-  box-shadow: 0 1px 3px rgb(0 0 0 / 12%);
+  --sq-bg: var(--sq-surface, #fff);
+  --sq-shadow: 0 1px 3px rgb(0 0 0 / 12%);
 }
 
 .rien-due-label {
@@ -927,7 +896,6 @@ input {
   position: relative;
   height: 300px;
   overflow: hidden;
-  border-radius: 24px;
   background:
     radial-gradient(120% 60% at 30% 0%, rgb(255 255 255 / 35%), transparent 60%),
     linear-gradient(180deg, #7dd3fc 0%, #38bdf8 35%, #0e7490 100%);
@@ -1094,9 +1062,9 @@ input {
   width: 100%;
   height: 100%;
   padding: 12px 6px;
-  border: 1px solid var(--sq-border, #e4e4e7);
-  border-radius: 16px;
-  background: var(--sq-surface, #fff);
+  --sq-bg: var(--sq-surface, #fff);
+  --sq-bd: var(--sq-border, #e4e4e7);
+  --sq-bw: 1px;
   color: var(--sq-on-surface, #18181b);
   font: inherit;
   font-size: 12px;
@@ -1114,7 +1082,7 @@ input {
 
 .rien-award.is-locked {
   cursor: default;
-  background: color-mix(in srgb, var(--sq-surface, #fff) 70%, transparent);
+  --sq-bg: color-mix(in srgb, var(--sq-surface, #fff) 70%, transparent);
 }
 
 .rien-award-bar {
@@ -1169,4 +1137,466 @@ input {
 .rien-toast-leave-to {
   opacity: 0;
   transform: translate(-50%, -20px);
+}
+
+/* ---------------------------------------------------------------------------
+   Squircles (Squirkle UI mechanism, see components/Squircle.vue)
+   ------------------------------------------------------------------------ */
+/* Zero specificity, so an element's own position (fixed toast, absolute lens) wins. */
+:where(.rien-sq) {
+  position: relative;
+  border-radius: var(--sq-r);
+}
+
+/* Shape-only squircles (gradients) get the native corner too. */
+@supports (corner-shape: squircle) {
+  .rien-sq:not(.sq-surface) {
+    border-radius: calc(var(--sq-r) * (1 + var(--sq-smoothing, 0.6)));
+    corner-shape: squircle;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Floating tab bar
+   ------------------------------------------------------------------------ */
+:root {
+  --rien-tabbar-h: 66px;
+}
+
+.rien-tabbar-wrap {
+  position: fixed;
+  z-index: 50;
+  left: max(14px, env(safe-area-inset-left));
+  right: max(14px, env(safe-area-inset-right));
+  bottom: calc(env(safe-area-inset-bottom) + 8px);
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.rien-tabbar {
+  pointer-events: auto;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  width: min(100%, 520px);
+  height: var(--rien-tabbar-h);
+  padding: 6px;
+  box-sizing: border-box;
+  --sq-bg: var(--sq-surface, #fff);
+  --sq-bd: var(--sq-border, #e4e4e7);
+  --sq-bw: 1px;
+  --sq-shadow: 0 10px 30px rgb(15 23 42 / 12%);
+}
+
+.rien-tabbar .rien-tab-lens {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: calc(6px + var(--i) * (100% - 12px) / 5);
+  width: calc((100% - 12px) / 5);
+  --sq-bg: color-mix(in srgb, var(--sq-primary, #0f766e) 14%, transparent);
+}
+
+html.rien-motion .rien-tab-lens {
+  transition: left 480ms cubic-bezier(0.34, 1.45, 0.5, 1);
+}
+
+.rien-tab {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 2px;
+  min-height: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--sq-muted, #6b7280);
+  text-decoration: none;
+}
+
+.rien-tab.is-active {
+  color: var(--sq-primary, #0f766e);
+}
+
+html.rien-motion .rien-tab.is-active .rien-icon {
+  animation: rien-tab-pop 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes rien-tab-pop {
+  0% { transform: scale(0.8) translateY(2px); }
+  60% { transform: scale(1.15) translateY(-2px); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+/* ---------------------------------------------------------------------------
+   Liquid Glass (Me → Liquid Glass)
+   ------------------------------------------------------------------------ */
+html.rien-glass {
+  --rien-glass-bg: rgb(255 255 255 / 58%);
+  --rien-glass-strong: rgb(255 255 255 / 72%);
+  --rien-glass-edge: rgb(255 255 255 / 75%);
+  --rien-glass-shadow: 0 8px 32px rgb(15 23 42 / 10%);
+}
+
+@media (prefers-color-scheme: dark) {
+  html.rien-glass {
+    --rien-glass-bg: rgb(30 41 59 / 52%);
+    --rien-glass-strong: rgb(30 41 59 / 70%);
+    --rien-glass-edge: rgb(255 255 255 / 14%);
+    --rien-glass-shadow: 0 8px 32px rgb(0 0 0 / 35%);
+  }
+}
+
+/* A soft colour field behind everything, so the glass has something to show. */
+html.rien-glass body,
+html.rien-glass .sq-app {
+  background:
+    radial-gradient(60vmax 60vmax at 0% 0%, rgb(45 212 191 / 28%), transparent 60%),
+    radial-gradient(55vmax 55vmax at 100% 20%, rgb(56 189 248 / 24%), transparent 60%),
+    radial-gradient(60vmax 60vmax at 30% 100%, rgb(244 114 182 / 16%), transparent 60%),
+    var(--sq-background, #f7f7f5);
+  background-attachment: fixed;
+}
+
+html.rien-glass .sq-card,
+html.rien-glass .rien-list,
+html.rien-glass .rien-award,
+html.rien-glass .rien-segments,
+html.rien-glass .rien-glass-surface {
+  --sq-bg: var(--rien-glass-bg);
+  --sq-bd: var(--rien-glass-edge);
+  --sq-bw: 1px;
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  backdrop-filter: blur(22px) saturate(180%);
+  box-shadow: var(--rien-glass-shadow), inset 0 1px 0 var(--rien-glass-edge);
+}
+
+html.rien-glass .rien-tab-lens {
+  --sq-bg: var(--rien-glass-strong);
+  --sq-bd: var(--rien-glass-edge);
+  --sq-bw: 1px;
+}
+
+html.rien-glass .rien-actionbar {
+  background: var(--rien-glass-bg);
+  border-top-color: var(--rien-glass-edge);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  backdrop-filter: blur(22px) saturate(180%);
+}
+
+/* The hero keeps its colour, with a glass sheen on top. */
+html.rien-glass .rien-hero {
+  box-shadow: 0 14px 40px rgb(15 118 110 / 30%), inset 0 1px 0 rgb(255 255 255 / 35%);
+}
+
+html.rien-glass .rien-hero-step,
+html.rien-glass .rien-hero-btn {
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+html.rien-glass .rien-token {
+  background: var(--rien-glass-strong);
+  border-color: var(--rien-glass-edge);
+}
+
+/* ---------------------------------------------------------------------------
+   Motion (Me → Motion)
+   ------------------------------------------------------------------------ */
+html.rien-motion .rien-rise {
+  animation: rien-rise-in 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes rien-rise-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+html.rien-motion .rien-pop {
+  animation: rien-pop-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes rien-pop-in {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+html.rien-motion .rien-shake {
+  animation: rien-shake 420ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes rien-shake {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(4px); }
+  30%, 50%, 70% { transform: translateX(-6px); }
+  40%, 60% { transform: translateX(6px); }
+}
+
+html.rien-motion .sq-btn,
+html.rien-motion .rien-token,
+html.rien-motion .rien-list-row,
+html.rien-motion .rien-award,
+html.rien-motion .rien-hero-btn {
+  transition: transform 160ms ease;
+}
+
+html.rien-motion .sq-btn:active,
+html.rien-motion .rien-token:active,
+html.rien-motion .rien-list-row:active,
+html.rien-motion .rien-award:active,
+html.rien-motion .rien-hero-btn:active {
+  transform: scale(0.96);
+}
+
+html.rien-motion .rien-list li,
+html.rien-motion .rien-awards li {
+  animation: rien-rise-in 380ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+html.rien-motion .rien-list li:nth-child(2),
+html.rien-motion .rien-awards li:nth-child(2) { animation-delay: 40ms; }
+html.rien-motion .rien-list li:nth-child(3),
+html.rien-motion .rien-awards li:nth-child(3) { animation-delay: 80ms; }
+html.rien-motion .rien-list li:nth-child(4),
+html.rien-motion .rien-awards li:nth-child(4) { animation-delay: 120ms; }
+html.rien-motion .rien-list li:nth-child(5),
+html.rien-motion .rien-awards li:nth-child(5) { animation-delay: 160ms; }
+html.rien-motion .rien-list li:nth-child(n + 6),
+html.rien-motion .rien-awards li:nth-child(n + 6) { animation-delay: 200ms; }
+
+html.rien-motion .rien-hero {
+  animation: rien-rise-in 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* Without motion the tank holds still too. */
+html:not(.rien-motion) .rien-fish,
+html:not(.rien-motion) .rien-fish-bob,
+html:not(.rien-motion) .rien-plant,
+html:not(.rien-motion) .rien-bubble,
+html:not(.rien-motion) .rien-celebrate-icon {
+  animation: none;
+}
+
+/* Confetti for a finished round */
+.rien-confetti {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.rien-confetti i {
+  position: absolute;
+  top: -12px;
+  width: 8px;
+  height: 14px;
+  border-radius: 2px;
+  animation: rien-fall var(--d, 1.6s) cubic-bezier(0.2, 0.6, 0.4, 1) var(--delay, 0s) forwards;
+}
+
+@keyframes rien-fall {
+  0% { transform: translate(0, 0) rotate(0); opacity: 1; }
+  100% { transform: translate(var(--x, 0), 105vh) rotate(var(--r, 540deg)); opacity: 0.6; }
+}
+
+/* ---------------------------------------------------------------------------
+   Rule pictures
+   ------------------------------------------------------------------------ */
+.rien-rule {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 14px;
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--sq-primary, #0f766e) 8%, transparent);
+  color: var(--sq-on-surface, #18181b);
+  font-size: 15px;
+}
+
+.rien-rule figcaption {
+  color: var(--sq-muted, #6b7280);
+  font-size: 14px;
+}
+
+.rien-rule-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.rien-rule-big {
+  font-size: 18px;
+}
+
+.rien-rule b {
+  color: var(--sq-primary, #0f766e);
+}
+
+.rien-arrow {
+  color: var(--sq-muted, #6b7280);
+}
+
+.rien-chip-a,
+.rien-chip-b,
+.rien-chip-c {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.rien-chip-a { background: rgb(56 189 248 / 18%); }
+.rien-chip-b { background: rgb(45 212 191 / 22%); }
+.rien-chip-c { background: rgb(244 114 182 / 18%); }
+
+.rien-timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding-top: 10px;
+}
+
+.rien-timeline-line {
+  position: absolute;
+  left: 16%;
+  right: 16%;
+  top: 17px;
+  height: 3px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--sq-on-surface, #18181b) 18%, transparent);
+}
+
+.rien-timeline-point {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sq-muted, #6b7280);
+}
+
+.rien-timeline-point i {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--sq-surface, #fff);
+  border: 3px solid color-mix(in srgb, var(--sq-on-surface, #18181b) 25%, transparent);
+}
+
+.rien-timeline-point.is-on {
+  color: var(--sq-primary, #0f766e);
+}
+
+.rien-timeline-point.is-on i {
+  background: var(--sq-primary, #0f766e);
+  border-color: var(--sq-primary, #0f766e);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--sq-primary, #0f766e) 20%, transparent);
+}
+
+html.rien-motion .rien-timeline-point.is-on i {
+  animation: rien-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes rien-pulse {
+  50% { box-shadow: 0 0 0 10px color-mix(in srgb, var(--sq-primary, #0f766e) 8%, transparent); }
+}
+
+.rien-box {
+  display: grid;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-size: 14px;
+}
+
+.rien-box.is-in { background: rgb(56 189 248 / 16%); }
+.rien-box.is-on { background: rgb(45 212 191 / 22%); }
+.rien-box.is-at { background: rgb(250 204 21 / 30%); }
+
+.rien-blocks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.rien-blocks span {
+  padding: 6px 12px;
+  border-radius: 12px;
+}
+
+.rien-blocks .b1 { background: rgb(244 114 182 / 22%); }
+.rien-blocks .b2 { background: rgb(250 204 21 / 32%); }
+.rien-blocks .b3 { background: rgb(56 189 248 / 22%); }
+.rien-blocks .b4 { background: rgb(45 212 191 / 26%); }
+
+/* Word pictures */
+.rien-word-image {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.rien-picture-picker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rien-picture-thumb {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.rien-next-review {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sq-primary, #0f766e);
+}
+
+/* Final Sound Hunter: the sound that differs */
+.rien-ending {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.rien-ending mark {
+  padding: 0 3px;
+  border-radius: 6px;
+  color: inherit;
+  background: rgb(250 204 21 / 45%);
+}
+
+/* Gap Radio: the word being read */
+.rien-radio .is-reading {
+  border-radius: 6px;
+  background: rgb(250 204 21 / 45%);
+  transition: background 120ms ease;
+}
+
+.rien-word-image-wrap {
+  margin: 12px 12px 0;
+  overflow: hidden;
+}
+
+/* Squirkle's SVG squircle fallback (iOS Safari today) extends a few pixels past
+   each surface for its shadow; near the screen edge that made pages scroll
+   sideways. Clip horizontal overflow without creating a scroll container. */
+.rien-shell,
+.rien-page {
+  overflow-x: clip;
 }

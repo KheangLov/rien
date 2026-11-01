@@ -141,6 +141,11 @@ export async function openSqlRepository(driver: SqlDriver): Promise<StudyReposit
       return card
     },
 
+    async setCardImage(id, image) {
+      const [card] = await cards(`WHERE id = ?`, [id])
+      if (card) await putCard(cardSchema.parse({ ...card, image }))
+    },
+
     async deleteCard(id) {
       await driver.transaction(async () => {
         await driver.run(`DELETE FROM cards WHERE id = ?`, [id])

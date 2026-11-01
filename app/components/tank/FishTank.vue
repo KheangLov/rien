@@ -49,7 +49,7 @@ const bubbles = Array.from({ length: 8 }, (_, i) => ({ left: `${8 + i * 11}%`, d
 </script>
 
 <template>
-  <div class="rien-tank" role="group" aria-label="Your fish tank">
+  <Squircle class="rien-tank" :surface="false" :radius="30" role="group" aria-label="Your fish tank">
     <span
       v-for="(b, i) in bubbles"
       :key="i"
@@ -100,5 +100,5 @@ const bubbles = Array.from({ length: 8 }, (_, i) => ({ left: `${8 + i * 11}%`, d
         />
       </span>
     </button>
-  </div>
+  </Squircle>
 </template>

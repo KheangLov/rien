@@ -78,7 +78,7 @@ function select(id: string) {
     </p>
 
     <h2 class="rien-section-title">Study fish</h2>
-    <ul class="rien-list">
+    <Squircle class="rien-list" :radius="22"><ul class="rien-list-items">
       <li v-for="fish in tank.skills" :key="fish.id">
         <NuxtLink :to="`/games/${fish.game}`" class="rien-list-row">
           <span class="rien-fish-thumb">
@@ -99,12 +99,14 @@ function select(id: string) {
           </span>
         </NuxtLink>
       </li>
-    </ul>
+    </ul></Squircle>
 
     <h2 class="rien-section-title">Awards</h2>
     <ul class="rien-awards">
       <li v-for="award in tank.awards" :key="award.id">
-        <button
+        <Squircle
+          tag="button"
+          :radius="20"
           type="button"
           class="rien-award"
           :class="{ 'is-locked': !award.unlocked }"
@@ -118,7 +120,7 @@ function select(id: string) {
             <span :style="{ width: `${(award.have / award.need) * 100}%` }" />
           </span>
           <span v-if="!award.unlocked" class="rien-award-count">{{ award.have }} / {{ award.need }}</span>
-        </button>
+        </Squircle>
       </li>
     </ul>
 

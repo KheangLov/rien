@@ -2,6 +2,7 @@
 import type { GrammarRow } from '#shared/schemas/db'
 import { builderTiles, endMark, gradeBuilder, isCorrect, type BuilderCard, type Tile } from '#shared/utils/builder'
 import { pickRound } from '#shared/utils/rounds'
+import RuleVisual from '~/components/learn/RuleVisual.vue'
 
 const ROUND_SIZE = 6
 const MAX_ATTEMPTS = 2
@@ -111,7 +112,8 @@ function next() {
       text="Every sentence is resting. They come back when they are due."
     />
 
-    <SqCard v-else-if="finished" title="Round done" variant="tonal">
+    <SqCard v-else-if="finished" title="Round done" variant="tonal" class="rien-pop">
+      <Confetti />
       <SqCardText>
         <p class="rien-big">{{ clean }} / {{ round.length }}</p>
         <p class="rien-muted">built right first time.</p>
@@ -121,7 +123,7 @@ function next() {
       </SqCardActions>
     </SqCard>
 
-    <SqCard v-else-if="card" :key="`${card.itemId}-${position}`">
+    <SqCard v-else-if="card" :key="`${card.itemId}-${position}`" class="rien-rise">
       <SqCardText class="rien-stack rien-card-body">
         <p class="rien-muted">Tap the words in order. Tap a placed word to send it back.</p>
 
@@ -151,7 +153,7 @@ function next() {
           </button>
         </div>
 
-        <SqAlert v-if="phase === 'retry'" type="warning" variant="tonal" text="Not quite. Move some words and try again." />
+        <SqAlert v-if="phase === 'retry'" class="rien-shake" type="warning" variant="tonal" text="Not quite. Move some words and try again." />
 
         <template v-if="phase === 'result'">
           <SqAlert
@@ -160,14 +162,15 @@ function next() {
             :title="solved ? (attempts === 1 ? 'Correct' : 'Correct on the second try') : 'Here it is'"
             :text="card.tip"
           />
-          <p class="rien-sentence-fixed">{{ card.text }}</p>
+          <p class="rien-sentence-fixed rien-pop">{{ card.text }}</p>
+          <RuleVisual v-if="!solved || attempts > 1" type="word-order" :sentence="card.text" />
         </template>
 
-        <div class="rien-row rien-actions">
+        <ActionBar>
           <SqBtn v-if="phase !== 'result'" color="primary" size="large" :disabled="pool.length > 0" @click="check">Check</SqBtn>
           <SqBtn v-else color="primary" size="large" @click="next">Next</SqBtn>
           <SqBtn v-if="phase === 'result' && canSpeak" variant="tonal" size="large" aria-label="Hear it" @click="speak(card.text)"><RienIcon name="sound-hunter" /></SqBtn>
-        </div>
+        </ActionBar>
       </SqCardText>
     </SqCard>
   </section>
