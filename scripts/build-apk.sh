@@ -27,8 +27,13 @@ APK=android/app/build/outputs/apk/debug/app-debug.apk
 cp "$APK" ~/Desktop/Rien.apk
 echo "APK: ~/Desktop/Rien.apk ($(du -h "$APK" | cut -f1))"
 
-if command -v adb >/dev/null && adb get-state >/dev/null 2>&1; then
-  adb install -r "$APK"
-  adb shell monkey -p io.github.kheanglov.rien.dev -c android.intent.category.LAUNCHER 1 >/dev/null 2>&1 || true
-  echo "Installed on the connected phone."
+# A phone connected by cable or wireless debugging (one paired phone can show
+# up twice over Wi-Fi, so take the first).
+DEVICE=${RIEN_ANDROID:-$(adb devices 2>/dev/null | awk 'NR > 1 && $2 == "device" { print $1; exit }')}
+if [[ -n "$DEVICE" ]]; then
+  adb -s "$DEVICE" install -r "$APK"
+  adb -s "$DEVICE" shell monkey -p io.github.kheanglov.rien.dev -c android.intent.category.LAUNCHER 1 >/dev/null 2>&1 || true
+  echo "Installed on the connected phone ($DEVICE)."
+else
+  echo "No phone connected; send the APK to it instead."
 fi
