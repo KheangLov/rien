@@ -81,7 +81,10 @@ export const talkSchema = z.object({
   topic: z.string().trim().min(1).max(60),
   focus: mistakeTypeSchema,
   tip: z.string().trim().min(1).max(160),
-  questions: z.array(z.string().trim().min(1).max(160)).length(3),
+  // Asked one at a time, taking turns.
+  questions: z.array(z.string().trim().min(1).max(160)).min(3).max(8),
+  // Ways to begin an answer, for the grammar this topic practises.
+  starters: z.array(z.string().trim().min(1).max(60)).max(4).default([]),
 })
 
 // Sentence Builder: the words of `text` are shuffled and she puts them in order.

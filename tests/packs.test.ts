@@ -22,6 +22,13 @@ describe.each(index.packs)('content pack %s', (name) => {
     }
   })
 
+  it('gives every Couple Talk topic six questions and ways to start an answer', () => {
+    for (const talk of pack.talks) {
+      expect(talk.questions.length, talk.id).toBeGreaterThanOrEqual(6)
+      expect(talk.starters.length, talk.id).toBeGreaterThanOrEqual(3)
+    }
+  })
+
   it('says when every tense sentence happens, for its timeline', () => {
     for (const item of pack.fixIt.filter(item => item.type === 'tense')) {
       expect(item.when, item.id).toBeDefined()
