@@ -14,7 +14,8 @@
         "will going"
       ],
       "type": "tense",
-      "explain": "Be going to: I am going to visit."
+      "explain": "Be going to: I am going to visit.",
+      "when": "future"
     },
     {
       "id": "arrive-in",
@@ -38,7 +39,8 @@
         "does"
       ],
       "type": "tense",
-      "explain": "Plans: present continuous, are you doing?"
+      "explain": "Plans: present continuous, are you doing?",
+      "when": "future"
     },
     {
       "id": "rel-who",

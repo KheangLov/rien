@@ -1,38 +1,48 @@
 <script setup lang="ts">
 import type { MistakeType } from '#shared/schemas/db'
+import type { TenseTime } from '#shared/schemas/pack'
 
 // A small picture of the rule behind a mistake, shown with the answer.
 // Pictures make a rule easier to remember than words alone.
-const props = defineProps<{ type: MistakeType, sentence?: string }>()
+// `when` places a tense sentence on the timeline (set on each pack item).
+const props = defineProps<{ type: MistakeType, when?: TenseTime }>()
 
-const s = computed(() => (props.sentence ?? '').toLowerCase())
-// Where the sentence sits in time, from its time words.
-const when = computed(() => {
-  if (/\b(tomorrow|next|going to|will|plan|soon)\b/.test(s.value)) return 'future'
-  if (/\b(yesterday|ago|last|was|were|did|born|when i arrived|in \d{4}|had)\b/.test(s.value)) return 'past'
-  return 'now'
-})
+type Point = 'past' | 'now' | 'future'
+const POINTS: Point[] = ['past', 'now', 'future']
+const POINT_LABELS: Record<Point, string> = { past: 'Past', now: 'Now / always', future: 'Future' }
+
+const TIMELINE: Record<TenseTime, { on: Point[], caption: string }> = {
+  'past': { on: ['past'], caption: 'Finished time: past simple (went, saw). After did or didn\'t, the base verb: didn\'t see.' },
+  'past-continuous': { on: ['past'], caption: 'In progress at a moment in the past: was or were + -ing.' },
+  'past-habit': { on: ['past'], caption: 'A past habit that has stopped: used to + verb. After did: use to.' },
+  'earlier-past': { on: ['past'], caption: 'Earlier than another past moment: had + past participle (had cooked).' },
+  'past-to-now': { on: ['past', 'now'], caption: 'From the past up to now: have or has + past participle (have eaten, has lived).' },
+  'now': { on: ['now'], caption: 'Happening now: am, is or are + -ing.' },
+  'always': { on: ['now'], caption: 'Habits and facts: present simple (he goes, rice is grown).' },
+  'future': { on: ['future'], caption: 'Plans and predictions: going to, will, or am, is or are + -ing.' },
+  'imagined': { on: ['now'], caption: 'Imagined, not real: if + past simple, would + verb. It is about now, not the past.' },
+}
+
+const timeline = computed(() => props.when ? TIMELINE[props.when] : undefined)
 </script>
 
 <template>
   <figure class="rien-rule rien-pop" :aria-label="`Rule picture: ${type}`">
     <template v-if="type === 'tense'">
-      <div class="rien-timeline">
+      <div class="rien-timeline" :class="{ 'is-span': when === 'past-to-now' }">
         <span class="rien-timeline-line" />
         <span
-          v-for="point in (['past', 'now', 'future'] as const)"
+          v-for="point in POINTS"
           :key="point"
           class="rien-timeline-point"
-          :class="{ 'is-on': when === point }"
+          :class="{ 'is-on': timeline?.on.includes(point), 'is-imagined': when === 'imagined' }"
         >
           <i />
-          {{ point === 'past' ? 'Past' : point === 'now' ? 'Now / always' : 'Future' }}
+          {{ POINT_LABELS[point] }}
         </span>
       </div>
       <figcaption>
-        {{ when === 'past' ? 'Finished time: past simple (went, saw) or was + -ing.'
-          : when === 'future' ? 'Plans and predictions: going to, will, or am/is/are + -ing.'
-            : 'Habits: present simple. Happening now: am/is/are + -ing.' }}
+        {{ timeline?.caption ?? 'Past: went, saw. Now: am, is or are + -ing. Habits: present simple. Future: going to, will.' }}
       </figcaption>
     </template>
 

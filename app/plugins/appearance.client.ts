@@ -19,7 +19,11 @@ export default defineNuxtPlugin(() => {
     theme.name.value = dark ? 'dark' : 'light'
     root.classList.toggle('rien-dark', dark)
     root.style.colorScheme = dark ? 'dark' : 'light'
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#0b1220' : '#f7f7f5')
+    // Her setting wins over the light/dark pair in nuxt.config.ts.
+    for (const meta of document.querySelectorAll('meta[name="theme-color"]')) {
+      meta.setAttribute('content', dark ? '#0b1220' : '#f7f7f5')
+      meta.removeAttribute('media')
+    }
     root.classList.toggle('rien-glass', settings.liquidGlass)
     root.classList.toggle('rien-motion', settings.motion && !reduce.matches)
     if (Capacitor.isNativePlatform()) {

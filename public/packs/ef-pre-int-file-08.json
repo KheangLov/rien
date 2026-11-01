@@ -18,7 +18,7 @@
     },
     {
       "id": "first-cond",
-      "text": "If you study hard, you pass the test.",
+      "text": "If you study hard, you pass the test next week.",
       "wrong": "pass",
       "fix": "will pass",
       "distractors": [
@@ -26,7 +26,8 @@
         "would pass"
       ],
       "type": "tense",
-      "explain": "First conditional: if + present, will + verb."
+      "explain": "First conditional: if + present, will + verb.",
+      "when": "future"
     },
     {
       "id": "mine",

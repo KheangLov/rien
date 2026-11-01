@@ -14,7 +14,8 @@
         "rained"
       ],
       "type": "tense",
-      "explain": "After will, use the base form."
+      "explain": "After will, use the base form.",
+      "when": "future"
     },
     {
       "id": "will-help",
@@ -26,7 +27,8 @@
         "helped"
       ],
       "type": "tense",
-      "explain": "Will + base form: will help."
+      "explain": "Will + base form: will help.",
+      "when": "future"
     },
     {
       "id": "review-met",
@@ -38,7 +40,8 @@
         "meets"
       ],
       "type": "tense",
-      "explain": "Yesterday: past simple, met."
+      "explain": "Yesterday: past simple, met.",
+      "when": "past"
     }
   ],
   "builder": [

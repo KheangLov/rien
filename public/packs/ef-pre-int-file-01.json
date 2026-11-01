@@ -62,7 +62,8 @@
         "rained"
       ],
       "type": "tense",
-      "explain": "Look! means now: present continuous."
+      "explain": "Look! means now: present continuous.",
+      "when": "now"
     },
     {
       "id": "pc-is-wearing",
@@ -71,10 +72,11 @@
       "fix": "is wearing",
       "distractors": [
         "wear",
-        "wears"
+        "is wear"
       ],
       "type": "tense",
-      "explain": "Present continuous needs am, is or are."
+      "explain": "Present continuous needs am, is or are.",
+      "when": "now"
     }
   ],
   "builder": [

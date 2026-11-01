@@ -1,3 +1,5 @@
+import { IOS_SCREENS, SPLASH_DARK, SPLASH_LIGHT, splashFile } from './scripts/brand'
+
 // The native iPhone app bundles its files, so it needs no service worker.
 const native = process.env.RIEN_NATIVE === '1'
 // Test builds only: plays every game through the real screens (e2e/runner.client.ts).
@@ -24,7 +26,9 @@ export default defineNuxtConfig({
       meta: [
         // viewport-fit=cover is required for env(safe-area-inset-*) on iPhone.
         { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
-        { name: 'theme-color', content: '#f7f7f5' },
+        // Set again by plugins/appearance.client.ts from her appearance setting.
+        { name: 'theme-color', content: SPLASH_LIGHT, media: '(prefers-color-scheme: light)' },
+        { name: 'theme-color', content: SPLASH_DARK, media: '(prefers-color-scheme: dark)' },
         { name: 'apple-mobile-web-app-capable', content: 'yes' },
         { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
         { name: 'color-scheme', content: 'light dark' },
@@ -33,6 +37,12 @@ export default defineNuxtConfig({
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' },
         { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+        // iPhone home-screen splash screens, light and dark (scripts/build-brand.mjs).
+        ...IOS_SCREENS.flatMap(screen => (['light', 'dark'] as const).map(mode => ({
+          rel: 'apple-touch-startup-image' as const,
+          href: splashFile(screen, mode),
+          media: `(device-width: ${screen[0]}px) and (device-height: ${screen[1]}px) and (-webkit-device-pixel-ratio: ${screen[2]}) and (orientation: portrait) and (prefers-color-scheme: ${mode})`,
+        }))),
       ],
     },
   },
@@ -91,20 +101,25 @@ export default defineNuxtConfig({
     disable: native,
     registerType: 'prompt',
     manifest: {
+      id: '/',
       name: 'Rien: English study',
       short_name: 'Rien',
       description: 'Daily English practice, ACE Level 6 to Level 12.',
       lang: 'en',
       display: 'standalone',
+      display_override: ['standalone'],
+      categories: ['education'],
       orientation: 'portrait',
       start_url: '/',
       scope: '/',
       theme_color: '#0f766e',
-      background_color: '#f7f7f5',
+      // Android's launch screen for the installed app: this colour and the icon.
+      background_color: SPLASH_LIGHT,
       icons: [
-        { src: '/pwa-192.png', sizes: '192x192', type: 'image/png' },
-        { src: '/pwa-512.png', sizes: '512x512', type: 'image/png' },
-        { src: '/pwa-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+        { src: '/pwa-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+        { src: '/pwa-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+        // Full-bleed, so the phone's own icon shape cuts it cleanly.
+        { src: '/pwa-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
       ],
     },
     workbox: {
@@ -114,6 +129,10 @@ export default defineNuxtConfig({
       // and one failed download aborts the whole offline install.
       navigateFallback: '/',
       globPatterns: ['index.html', '**/*.{js,css,png,svg,ico,json,woff2,mp3}'],
+      // iOS keeps its own copy of the splash images when the app is added to
+      // the home screen; precaching all twenty would only slow the offline install.
+      globIgnores: ['splash/**'],
+      cleanupOutdatedCaches: true,
     },
     client: { installPrompt: true },
     devOptions: { enabled: false },
