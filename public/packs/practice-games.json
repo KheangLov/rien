@@ -160,6 +160,117 @@
       ],
       "tip": "Place, then people: in Phnom Penh with my family.",
       "keepFirstCapital": true
+    },
+    {
+      "id": "mother-cooks",
+      "text": "My mother cooks dinner every evening.",
+      "alternatives": [
+        "Every evening my mother cooks dinner."
+      ],
+      "tip": "Who + verb + what, then when."
+    },
+    {
+      "id": "glass-of-water",
+      "text": "Can I have a glass of water?",
+      "alternatives": [],
+      "tip": "Asking for something: Can I have …?"
+    },
+    {
+      "id": "never-japan",
+      "text": "She has never been to Japan.",
+      "alternatives": [],
+      "tip": "Never goes between has and the past participle."
+    },
+    {
+      "id": "how-long-take",
+      "text": "How long does it take to get there?",
+      "alternatives": [],
+      "tip": "How long does it take + to + verb?"
+    },
+    {
+      "id": "cinema-tonight",
+      "text": "We are going to the cinema tonight.",
+      "alternatives": [
+        "Tonight we are going to the cinema."
+      ],
+      "tip": "Present continuous for a plan, then the time."
+    },
+    {
+      "id": "bed-at-eleven",
+      "text": "I usually go to bed at eleven.",
+      "alternatives": [
+        "At eleven I usually go to bed.",
+        "Usually I go to bed at eleven."
+      ],
+      "tip": "Usually goes before the main verb.",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "whose-phone",
+      "text": "Whose phone is this?",
+      "alternatives": [
+        "Whose is this phone?"
+      ],
+      "tip": "Whose + thing + is this?"
+    },
+    {
+      "id": "way-to-station",
+      "text": "Could you tell me the way to the station?",
+      "alternatives": [],
+      "tip": "Polite questions: Could you tell me …?"
+    },
+    {
+      "id": "if-time-call",
+      "text": "If I have time, I will call you.",
+      "alternatives": [
+        "I will call you if I have time."
+      ],
+      "tip": "If + present simple, will + verb."
+    },
+    {
+      "id": "friend-river",
+      "text": "My friend lives near the river.",
+      "alternatives": [],
+      "tip": "He, she or it + -s: lives."
+    },
+    {
+      "id": "two-banks",
+      "text": "There are two banks on this street.",
+      "alternatives": [
+        "On this street there are two banks."
+      ],
+      "tip": "There are + plural noun."
+    },
+    {
+      "id": "breakfast-did",
+      "text": "What did you have for breakfast?",
+      "alternatives": [],
+      "tip": "Past questions: did + base verb (have, not had)."
+    },
+    {
+      "id": "meat-or-fish",
+      "text": "She doesn't eat meat or fish.",
+      "alternatives": [
+        "She doesn't eat fish or meat."
+      ],
+      "tip": "Doesn't + base verb, with no -s."
+    },
+    {
+      "id": "learning-two-years",
+      "text": "I have been learning English for two years.",
+      "alternatives": [
+        "For two years I have been learning English."
+      ],
+      "tip": "Have been + -ing + for a period of time.",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "late-for-class",
+      "text": "Please don't be late for class.",
+      "alternatives": [
+        "Don't be late for class, please."
+      ],
+      "tip": "Don't be + adjective, for a request."
     }
   ],
   "radio": [
@@ -202,6 +313,36 @@
       "id": "new-year-plans",
       "title": "Plans for Khmer New Year",
       "text": "This year we are going to spend Khmer New Year in my father's village. We are going to leave on the first morning and take the bus with my aunt and cousins. My mother is going to bring cakes and fruit for the pagoda. In the afternoon the young people will play traditional games. In the evening everyone is going to dance and throw water and powder at each other."
+    },
+    {
+      "id": "first-job",
+      "title": "My first job",
+      "text": "My first job was in a small coffee shop near the university. I worked there every weekend when I was a student. I opened the shop at seven o'clock and cleaned the tables. Then I made coffee and tea for the customers. Some of them came every day, so I learned their names. The work was hard, but I enjoyed talking to people. I saved my money and bought my first phone."
+    },
+    {
+      "id": "the-doctor",
+      "title": "A visit to the doctor",
+      "text": "Last Tuesday I woke up with a sore throat and a headache. I felt hot, so my sister took me to the doctor. We waited for half an hour because the clinic was busy. The doctor looked at my throat and listened to my chest. She said I had a cold and gave me some medicine. She told me to drink a lot of water and rest for two days. Now I feel much better."
+    },
+    {
+      "id": "the-wedding",
+      "title": "My cousin's wedding",
+      "text": "Next month my cousin is getting married in Battambang. The wedding will last for two days, and more than three hundred guests are coming. My aunt is very busy because she has to prepare everything. I am going to help her with the flowers and the food. I have already bought a new dress for the party. I hope it will not rain, because the tables will be outside."
+    },
+    {
+      "id": "saturday-morning",
+      "title": "Saturday mornings",
+      "text": "On Saturday mornings I don't have to get up early, so I usually sleep until eight. After breakfast I clean my room and wash my clothes. Then I call my parents, who live in the countryside. My mother always asks if I am eating well. In the afternoon I meet my friends at a café near the river. We talk, play cards and sometimes watch a film together."
+    },
+    {
+      "id": "learning-swim",
+      "title": "Learning to swim",
+      "text": "When I was a child, I was afraid of water. My father wanted me to learn to swim, so he took me to the river every Sunday. At first I cried and held his arm very tightly. He was patient and never shouted at me. After a few months I could swim across the river alone. Now swimming is my favourite sport, and I teach my little brother too."
+    },
+    {
+      "id": "shopping-online",
+      "title": "Shopping online",
+      "text": "Last week I bought a pair of shoes online for the first time. The website was easy to use, and the shoes were cheaper than in the shops. I paid with my phone and waited for the delivery. Four days later a man brought a small box to my house. I opened it quickly, but the shoes were too small! I sent them back, and the shop gave me a bigger pair."
     }
   ]
 }

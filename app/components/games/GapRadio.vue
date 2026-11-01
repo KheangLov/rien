@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { GrammarRow } from '#shared/schemas/db'
 import type { Verdict } from '#shared/utils/answer'
-import { checkGaps, gradeRadio, radioAnswers, radioTokens, type RadioCard } from '#shared/utils/radio'
+import { checkGaps, GAP_EVERY, gradeRadio, radioAnswers, radioTokens, type RadioCard } from '#shared/utils/radio'
 import { pickRound } from '#shared/utils/rounds'
 import { vInputAttrs } from '~/directives/inputAttrs'
 import { vPlainInput } from '~/directives/plainInput'
@@ -27,7 +27,7 @@ const right = ref(0)
 // takes over instead).
 const finished = ref(false)
 
-const tokens = computed(() => (card.value ? radioTokens(card.value.text) : []))
+const tokens = computed(() => (card.value ? radioTokens(card.value.text, GAP_EVERY, card.value.start) : []))
 const answers = computed(() => radioAnswers(tokens.value))
 const filled = computed(() => typed.value.filter(t => t.trim()).length)
 const allTyped = computed(() => filled.value === answers.value.length)
@@ -42,7 +42,9 @@ async function start() {
   try {
     const practice = await loadPractice()
     states.value = practice.states
-    card.value = pickRound(practice.radioCards, practice.states, practice.counts, practice.now, 1)[0] ?? null
+    const picked = pickRound(practice.radioCards, practice.states, practice.counts, practice.now, 1)[0]
+    // Different gaps each time the same text comes round.
+    card.value = picked ? { ...picked, start: Math.floor(Math.random() * GAP_EVERY) } : null
     typed.value = answers.value.map(() => '')
   }
   catch (error) {

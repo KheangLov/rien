@@ -9,8 +9,17 @@ export interface PracticeItem {
   type: MistakeType
 }
 
-// Picks a round: items already seen and now due come first, oldest first, then
-// new ones, starting with the mistake types she gets wrong most often.
+// Answered this recently, a due item waits (missed items come back within
+// minutes, which made rounds feel like the same few sentences again).
+export const RECENT_MS = 15 * 60_000
+
+// Picks a round. Spaced repetition decides what is due, then the round is mixed
+// so it does not feel the same each time:
+// - due items come first, oldest first, except ones she answered in the last
+//   RECENT_MS, which fill in only when the round would be short;
+// - new items are drawn at random, leaning towards her weaker mistake types,
+//   but one type takes at most half the round;
+// - the chosen items are shuffled.
 export function pickRound<T extends PracticeItem>(
   items: T[],
   states: Map<string, GrammarRow>,
@@ -19,21 +28,45 @@ export function pickRound<T extends PracticeItem>(
   size: number,
   random: () => number = Math.random,
 ): T[] {
+  const at = now.getTime()
   const dueAt = (item: T) => states.get(item.itemId)?.due.getTime()
+  const seenAt = (item: T) => {
+    const last = (states.get(item.itemId)?.fsrs as { last_review?: Date | string } | undefined)?.last_review
+    return last ? new Date(last).getTime() : undefined
+  }
   const due = items
     .filter((item) => {
-      const at = dueAt(item)
-      return at !== undefined && at <= now.getTime()
+      const when = dueAt(item)
+      return when !== undefined && when <= at
     })
     .sort((a, b) => dueAt(a)! - dueAt(b)!)
+  const recent = (item: T) => (seenAt(item) ?? 0) > at - RECENT_MS
 
+  // Weighted random order (a key of random^(1/weight)): weaker types come
+  // earlier more often, never always.
   const fresh = items
     .filter(item => !states.has(item.itemId))
-    .map(item => ({ item, weight: (mistakeCounts[item.type] ?? 0) + random() }))
-    .sort((a, b) => b.weight - a.weight)
+    .map(item => ({ item, key: random() ** (1 / (1 + Math.min(4, mistakeCounts[item.type] ?? 0))) }))
+    .sort((a, b) => b.key - a.key)
     .map(({ item }) => item)
 
-  return [...due, ...fresh].slice(0, size)
+  const picked: T[] = []
+  const perType = new Map<MistakeType, number>()
+  const cap = Math.max(1, Math.ceil(size / 2))
+  const take = (list: T[], capped: boolean) => {
+    for (const item of list) {
+      if (picked.length >= size) return
+      if (picked.includes(item)) continue
+      if (capped && (perType.get(item.type) ?? 0) >= cap) continue
+      picked.push(item)
+      perType.set(item.type, (perType.get(item.type) ?? 0) + 1)
+    }
+  }
+  take(due.filter(item => !recent(item)), false)
+  take(fresh, true)
+  take(fresh, false)
+  take(due.filter(recent), false)
+  return shuffle(picked, random)
 }
 
 // Reschedules one practice item and, if she slipped, tags the mistake.

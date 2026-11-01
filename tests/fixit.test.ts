@@ -56,22 +56,51 @@ describe('grading', () => {
 
 describe('pickRound', () => {
   const noRandom = () => 0
+  const ids = (round: { id: string }[]) => round.map(x => x.id).sort()
 
-  it('puts due sentences first, oldest first, and skips ones not yet due', () => {
+  it('takes due sentences and new ones, and skips ones not yet due', () => {
     const [a, b, c] = [card('a'), card('b'), card('c')]
     const states = new Map([
       [a.itemId, state(a, new Date('2026-11-01T00:00:00Z'))],
       [b.itemId, state(b, new Date('2026-10-30T00:00:00Z'))],
       [c.itemId, state(c, new Date('2026-11-09T00:00:00Z'))],
     ])
-    const round = pickRound([a, b, c, card('d')], states, {}, now, 10, noRandom)
-    expect(round.map(x => x.id)).toEqual(['b', 'a', 'd'])
+    expect(ids(pickRound([a, b, c, card('d')], states, {}, now, 10, noRandom))).toEqual(['a', 'b', 'd'])
   })
 
-  it('brings her weakest mistake types forward among new sentences', () => {
+  it('prefers the oldest due sentences when the round is full', () => {
+    const [a, b] = [card('a'), card('b')]
+    const states = new Map([
+      [a.itemId, state(a, new Date('2026-11-01T00:00:00Z'))],
+      [b.itemId, state(b, new Date('2026-10-30T00:00:00Z'))],
+    ])
+    expect(ids(pickRound([a, b, card('d')], states, {}, now, 1, noRandom))).toEqual(['b'])
+  })
+
+  it('holds back a sentence answered minutes ago unless the round is short', () => {
+    const [a, b] = [card('a'), card('b')]
+    const just = { ...state(a, new Date(now.getTime() - 60_000)), fsrs: { ...state(a, now).fsrs, last_review: new Date(now.getTime() - 5 * 60_000) } }
+    const states = new Map([[a.itemId, just], [b.itemId, state(b, new Date('2026-10-30T00:00:00Z'))]])
+    expect(ids(pickRound([a, b, card('n')], states, {}, now, 2, noRandom))).toEqual(['b', 'n'])
+    expect(ids(pickRound([a, b], states, {}, now, 2, noRandom))).toEqual(['a', 'b'])
+  })
+
+  it('leans towards her weakest mistake types among new sentences', () => {
     const cards = [card('t', 'tense'), card('a', 'article'), card('p', 'preposition')]
-    const round = pickRound(cards, new Map(), { article: 5, preposition: 2 }, now, 2, noRandom)
-    expect(round.map(x => x.id)).toEqual(['a', 'p'])
+    const random = () => 0.5
+    expect(ids(pickRound(cards, new Map(), { article: 5, preposition: 2 }, now, 2, random))).toEqual(['a', 'p'])
+  })
+
+  it('lets one mistake type fill at most half the round', () => {
+    const cards = [...['1', '2', '3', '4'].map(id => card(`a${id}`, 'article')), card('t', 'tense'), card('p', 'preposition')]
+    const round = pickRound(cards, new Map(), { article: 9 }, now, 4, () => 0.5)
+    expect(round.filter(c => c.type === 'article')).toHaveLength(2)
+  })
+
+  it('mixes the order and the choice of new sentences from round to round', () => {
+    const cards = Array.from({ length: 30 }, (_, i) => card(`c${i}`))
+    const rounds = new Set(Array.from({ length: 6 }, () => pickRound(cards, new Map(), {}, now, 10).map(c => c.id).join()))
+    expect(rounds.size).toBeGreaterThan(1)
   })
 })
 
