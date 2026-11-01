@@ -1,8 +1,6 @@
 import { Capacitor } from '@capacitor/core'
 import { RienSpeech, type Heard } from '~/utils/rienSpeech'
 
-export type { Heard }
-
 // Her recording being played back, so it can be stopped.
 let playback: HTMLAudioElement | null = null
 

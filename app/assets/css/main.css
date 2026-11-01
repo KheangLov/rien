@@ -2217,3 +2217,63 @@ html.rien-motion .rien-cal-day:not(:disabled):active {
   min-height: 1.4em;
   font-size: 13px;
 }
+
+/* ---------------------------------------------------------------------------
+   Native touch: holding a button or link does not show a URL preview, a
+   "copy / open in Safari" callout or text selection, as in native apps.
+   Text fields still select, copy and paste.
+   ------------------------------------------------------------------------ */
+html {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input,
+textarea,
+[contenteditable='true'] {
+  -webkit-touch-callout: default;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+img,
+a {
+  -webkit-user-drag: none;
+}
+
+/* Words search bar, as in iOS: a flat grey field with a muted Solar
+   magnifier, no border or focus ring. */
+.rien-search.sq-field .sq-field__control {
+  --sq-bg: var(--ios-fill);
+  --sq-bd: transparent;
+  min-height: 38px;
+  padding-inline: 8px;
+  box-shadow: none !important;
+}
+
+.rien-search.sq-field--focused.sq-field .sq-field__control {
+  --sq-bg: var(--ios-fill);
+  --sq-bd: transparent;
+  --sq-shadow-filter: none !important;
+}
+
+.rien-search.sq-field .sq-field__inner-icon,
+.rien-search.sq-field .sq-field__clear {
+  color: var(--ios-secondary);
+}
+
+.rien-search.sq-field .sq-field__clear {
+  background: transparent;
+}
+
+.rien-search .sq-field__input input {
+  font-size: 17px;
+}
+
+/* No "×" from the browser on type="search": Squirkle's clear button is the one. */
+.rien-search input::-webkit-search-cancel-button,
+.rien-search input::-webkit-search-decoration {
+  -webkit-appearance: none;
+}

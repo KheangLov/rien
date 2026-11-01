@@ -9,6 +9,7 @@ overrides:
 
 patchedDependencies:
   '@squirkle-ui/core@0.1.1': 0d8f587316eea941ce644ca48bc836b7f441c619438a0a10c069d713c1092c20
+  '@squirkle-ui/ui@0.1.1': bfd538234c7bc420d3d3cd712e98015bfcbafa8d3176750adaf0415998b16432
 
 importers:
 
@@ -44,21 +45,18 @@ importers:
       '@capacitor/status-bar':
         specifier: ^8.0.4
         version: 8.0.4(@capacitor/core@8.5.3)
-      '@squirkle-ui/calendar':
-        specifier: ^0.1.2
-        version: 0.1.2(@squirkle-ui/ui@0.1.1(vue@3.5.44(typescript@6.0.3)))(vue@3.5.44(typescript@6.0.3))
       '@squirkle-ui/charts':
         specifier: ^0.1.1
-        version: 0.1.1(@squirkle-ui/ui@0.1.1(vue@3.5.44(typescript@6.0.3)))(vue@3.5.44(typescript@6.0.3))
+        version: 0.1.1(@squirkle-ui/ui@0.1.1(patch_hash=bfd538234c7bc420d3d3cd712e98015bfcbafa8d3176750adaf0415998b16432)(vue@3.5.44(typescript@6.0.3)))(vue@3.5.44(typescript@6.0.3))
       '@squirkle-ui/core':
         specifier: ^0.1.1
         version: 0.1.1(patch_hash=0d8f587316eea941ce644ca48bc836b7f441c619438a0a10c069d713c1092c20)
       '@squirkle-ui/nuxt':
         specifier: ^0.1.1
-        version: 0.1.1(@nuxt/schema@4.6.2)(@squirkle-ui/ui@0.1.1(vue@3.5.44(typescript@6.0.3)))(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.3)(mlly@1.8.2)(rolldown@1.2.15)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.15)(rollup@4.65.0)(vite@8.3.5(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)))
+        version: 0.1.1(@nuxt/schema@4.6.2)(@squirkle-ui/ui@0.1.1(patch_hash=bfd538234c7bc420d3d3cd712e98015bfcbafa8d3176750adaf0415998b16432)(vue@3.5.44(typescript@6.0.3)))(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.3)(mlly@1.8.2)(rolldown@1.2.15)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.15)(rollup@4.65.0)(vite@8.3.5(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)))
       '@squirkle-ui/ui':
         specifier: ^0.1.1
-        version: 0.1.1(vue@3.5.44(typescript@6.0.3))
+        version: 0.1.1(patch_hash=bfd538234c7bc420d3d3cd712e98015bfcbafa8d3176750adaf0415998b16432)(vue@3.5.44(typescript@6.0.3))
       dexie:
         specifier: ^4.4.7
         version: 4.4.7
@@ -1514,12 +1512,6 @@ packages:
 
   '@speed-highlight/core@1.2.24':
     resolution: {integrity: sha512-qeW2e1l78afw8VhRPfPQ1Gjj+KU5XFQ/OFV5ti6eTa9bruO7mJyZtA4vw0ofqmA3tKCkROE9xLk3VZoeRc98nw==}
-
-  '@squirkle-ui/calendar@0.1.2':
-    resolution: {integrity: sha512-aCmbzEkRqJSbMGdlA6ZDjP4AqGuicwgTeAWVostdIvWG0N5Bc3SpbbaiWOZ8YXKAR1flUDSO3KsObtm8G4Ol6A==}
-    peerDependencies:
-      '@squirkle-ui/ui': ^0.1.1
-      vue: ^2.7.0 || ^3.3.0
 
   '@squirkle-ui/charts@0.1.1':
     resolution: {integrity: sha512-dDMid1wM60eB/FtCbkJV3jq4n5W4bP5eUpdRm3rgZ6yCcpn3hPVGD2IM2cNWO0M+ZVDCsnePkYCR0YlUSHQ+kA==}
@@ -6268,24 +6260,18 @@ snapshots:
 
   '@speed-highlight/core@1.2.24': {}
 
-  '@squirkle-ui/calendar@0.1.2(@squirkle-ui/ui@0.1.1(vue@3.5.44(typescript@6.0.3)))(vue@3.5.44(typescript@6.0.3))':
+  '@squirkle-ui/charts@0.1.1(@squirkle-ui/ui@0.1.1(patch_hash=bfd538234c7bc420d3d3cd712e98015bfcbafa8d3176750adaf0415998b16432)(vue@3.5.44(typescript@6.0.3)))(vue@3.5.44(typescript@6.0.3))':
     dependencies:
       '@squirkle-ui/core': 0.1.1(patch_hash=0d8f587316eea941ce644ca48bc836b7f441c619438a0a10c069d713c1092c20)
-      '@squirkle-ui/ui': 0.1.1(vue@3.5.44(typescript@6.0.3))
-      vue: 3.5.44(typescript@6.0.3)
-
-  '@squirkle-ui/charts@0.1.1(@squirkle-ui/ui@0.1.1(vue@3.5.44(typescript@6.0.3)))(vue@3.5.44(typescript@6.0.3))':
-    dependencies:
-      '@squirkle-ui/core': 0.1.1(patch_hash=0d8f587316eea941ce644ca48bc836b7f441c619438a0a10c069d713c1092c20)
-      '@squirkle-ui/ui': 0.1.1(vue@3.5.44(typescript@6.0.3))
+      '@squirkle-ui/ui': 0.1.1(patch_hash=bfd538234c7bc420d3d3cd712e98015bfcbafa8d3176750adaf0415998b16432)(vue@3.5.44(typescript@6.0.3))
       vue: 3.5.44(typescript@6.0.3)
 
   '@squirkle-ui/core@0.1.1(patch_hash=0d8f587316eea941ce644ca48bc836b7f441c619438a0a10c069d713c1092c20)': {}
 
-  '@squirkle-ui/nuxt@0.1.1(@nuxt/schema@4.6.2)(@squirkle-ui/ui@0.1.1(vue@3.5.44(typescript@6.0.3)))(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.3)(mlly@1.8.2)(rolldown@1.2.15)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.15)(rollup@4.65.0)(vite@8.3.5(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)))':
+  '@squirkle-ui/nuxt@0.1.1(@nuxt/schema@4.6.2)(@squirkle-ui/ui@0.1.1(patch_hash=bfd538234c7bc420d3d3cd712e98015bfcbafa8d3176750adaf0415998b16432)(vue@3.5.44(typescript@6.0.3)))(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.3)(mlly@1.8.2)(rolldown@1.2.15)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.15)(rollup@4.65.0)(vite@8.3.5(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)))':
     dependencies:
       '@nuxt/kit': 4.6.2(@nuxt/schema@4.6.2)(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.3)(mlly@1.8.2)(rolldown@1.2.15)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.15)(rollup@4.65.0)(vite@8.3.5(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)))
-      '@squirkle-ui/ui': 0.1.1(vue@3.5.44(typescript@6.0.3))
+      '@squirkle-ui/ui': 0.1.1(patch_hash=bfd538234c7bc420d3d3cd712e98015bfcbafa8d3176750adaf0415998b16432)(vue@3.5.44(typescript@6.0.3))
     transitivePeerDependencies:
       - '@nuxt/schema'
       - confbox
@@ -6298,7 +6284,7 @@ snapshots:
       - rolldown
       - unplugin
 
-  '@squirkle-ui/ui@0.1.1(vue@3.5.44(typescript@6.0.3))':
+  '@squirkle-ui/ui@0.1.1(patch_hash=bfd538234c7bc420d3d3cd712e98015bfcbafa8d3176750adaf0415998b16432)(vue@3.5.44(typescript@6.0.3))':
     dependencies:
       '@squirkle-ui/core': 0.1.1(patch_hash=0d8f587316eea941ce644ca48bc836b7f441c619438a0a10c069d713c1092c20)
       vue: 3.5.44(typescript@6.0.3)

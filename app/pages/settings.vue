@@ -175,7 +175,7 @@ async function importBackup(event: Event) {
     </IosGroup>
 
     <p class="rien-muted rien-credits">
-      Icons: Solar by 480 Design, CC BY 4.0. Fish drawn for Rien.
+      Built with Squirkle UI.
     </p>
   </div>
 </template>
