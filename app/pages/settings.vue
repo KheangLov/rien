@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { BOOK_LABELS, BOOKS, FILE_NUMBERS, type Settings } from '#shared/schemas/db'
+import { backupAgeLabel } from '#shared/utils/backups'
 
 const db = useDb()
 const { $pwa } = useNuxtApp()
@@ -69,15 +70,38 @@ async function updateReminder(patch: Partial<Settings['reminder']>) {
   await update({ reminder })
 }
 
-async function exportBackup() {
-  const backup = await db.exportAll()
+const autoBackups = ref<{ name: string, date: Date }[]>([])
+const autoOpen = ref(false)
+const lastSaved = computed(() => backupAgeLabel(settings.value?.lastBackupAt, new Date()))
+const lastAuto = computed(() => backupAgeLabel(settings.value?.lastAutoBackupAt, new Date()))
+
+async function saveBackup() {
   try {
-    await saveBackupFile(`rien-backup-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(backup, null, 2))
-    message.value = { type: 'success', text: `Backup saved with ${backup.cards.length} words.` }
+    const words = await exportBackup()
+    settings.value = await db.getSettings()
+    message.value = { type: 'success', text: `Backup saved with ${words} words.` }
   }
   catch (error) {
     // Closing the share sheet without choosing is not a failure worth reporting.
     if (!String(error).includes('cancel')) message.value = { type: 'error', text: 'Could not save the backup.' }
+  }
+}
+
+async function openAutoBackups() {
+  autoBackups.value = await listAutoBackups()
+  autoOpen.value = true
+}
+
+async function restoreAuto(name: string, date: Date) {
+  if (!window.confirm(`Replace everything on this phone with the copy from ${date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })}?`)) return
+  autoOpen.value = false
+  try {
+    const cards = await restoreAutoBackup(name)
+    settings.value = await db.getSettings()
+    message.value = { type: 'success', text: `Restored ${cards} words.` }
+  }
+  catch {
+    message.value = { type: 'error', text: 'Could not read that copy. Nothing was changed.' }
   }
 }
 
@@ -168,12 +192,28 @@ async function importBackup(event: Event) {
     <IosGroup
       header="Backup"
       :footer="native
-        ? 'Your words live only on this phone. Save a backup to Files every week or two. Moving from the web app? Save a backup there, then Restore here.'
-        : 'Your words live only on this device; clearing Safari website data deletes them. Save a backup every week or two.'"
+        ? 'Rien keeps a copy every week (the last four), and your phone\'s own backup to Google or iCloud includes them. For a copy you hold yourself, Save backup to Files. Moving from the web app? Save a backup there, then Restore here.'
+        : 'Your words live only in this browser; clearing its website data deletes them. Rien reminds you on Today when it is time to save a backup.'"
     >
-      <IosRow label="Save backup" icon="download" tint="primary" @click="exportBackup" />
-      <IosRow label="Restore from a backup" icon="upload" tint="primary" @click="fileInput?.click()" />
+      <IosRow label="Save backup" icon="download" tint="primary" :value="settings ? `Last: ${lastSaved}` : undefined" @click="saveBackup" />
+      <IosRow v-if="native" label="Automatic backups" icon="calendar" :value="settings ? `Weekly · ${lastAuto}` : undefined" chevron @click="openAutoBackups" />
+      <IosRow label="Restore from a file" icon="upload" tint="primary" @click="fileInput?.click()" />
     </IosGroup>
+
+    <IosSheet :open="autoOpen" title="Automatic backups" @close="autoOpen = false">
+      <p class="rien-muted">Rien keeps a copy of everything every week. Tap one to go back to it; everything on this phone is replaced.</p>
+      <IosGroup v-if="autoBackups.length">
+        <IosRow
+          v-for="copy in autoBackups"
+          :key="copy.name"
+          :label="copy.date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })"
+          icon="calendar"
+          chevron
+          @click="restoreAuto(copy.name, copy.date)"
+        />
+      </IosGroup>
+      <p v-else class="rien-muted">No copy yet. The first one is saved a few seconds after Rien opens, once you have words.</p>
+    </IosSheet>
     <input ref="fileInput" type="file" accept="application/json,.json" hidden @change="importBackup">
 
     <SqAlert v-if="message" :type="message.type" variant="tonal" :text="message.text" class="rien-pop" />
