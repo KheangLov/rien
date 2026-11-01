@@ -56,7 +56,7 @@ const { $setAppearance } = useNuxtApp()
 async function update(patch: Partial<Settings>) {
   if (!settings.value) return
   settings.value = { ...settings.value, ...patch }
-  if ('appearance' in patch || 'liquidGlass' in patch || 'motion' in patch) $setAppearance(settings.value)
+  if ('appearance' in patch || 'liquidGlass' in patch || 'motion' in patch || 'accent' in patch) $setAppearance(settings.value)
   settings.value = await db.saveSettings(patch)
 }
 
@@ -164,6 +164,25 @@ async function importBackup(event: Event) {
             @update:model-value="update({ appearance: $event })"
           />
         </li>
+        <li class="ios-control-row rien-accents" role="radiogroup" aria-label="Main colour">
+          <span class="rien-accents-label">Colour</span>
+          <div class="rien-accents-swatches">
+            <button
+              v-for="accent in ACCENTS"
+              :key="accent.id"
+              type="button"
+              role="radio"
+              class="rien-accent"
+              :class="{ 'is-on': settings.accent === accent.id }"
+              :style="{ '--swatch': accent.color }"
+              :aria-checked="settings.accent === accent.id"
+              :aria-label="accent.name"
+              @click="update({ accent: accent.id })"
+            >
+              <RienIcon v-if="settings.accent === accent.id" name="check" :size="16" weight="bold" />
+            </button>
+          </div>
+        </li>
         <IosRow label="Liquid Glass" icon="sparkles" @click="update({ liquidGlass: !settings.liquidGlass })">
           <template #end>
             <IosSwitch :model-value="settings.liquidGlass" label="Liquid Glass" @update:model-value="update({ liquidGlass: $event })" />
@@ -207,8 +226,8 @@ async function importBackup(event: Event) {
         ? 'Rien keeps a copy every week (the last four), and your phone\'s own backup to Google or iCloud includes them. For a copy you hold yourself, Save backup to Files. Moving from the web app? Save a backup there, then Restore here.'
         : 'Your words live only in this browser; clearing its website data deletes them. Rien reminds you on Today when it is time to save a backup.'"
     >
-      <IosRow label="Save backup" icon="download" tint="primary" :value="settings ? `Last: ${lastSaved}` : undefined" @click="saveBackup" />
-      <IosRow v-if="native" label="Automatic backups" icon="calendar" :value="settings ? `Weekly · ${lastAuto}` : undefined" chevron @click="openAutoBackups" />
+      <IosRow label="Save backup" icon="download" tint="primary" :value="settings ? lastSaved : undefined" @click="saveBackup" />
+      <IosRow v-if="native" label="Auto backup" icon="calendar" :value="settings ? lastAuto : undefined" chevron @click="openAutoBackups" />
       <IosRow label="Restore from a file" icon="upload" tint="primary" @click="fileInput?.click()" />
     </IosGroup>
 
