@@ -38,6 +38,8 @@ const ICONS = {
   'translate': 'translation',
   'calendar': 'calendar',
   'goal': 'cup-first',
+  'install': 'home-add',
+  'share': 'square-arrow-up',
 } as const
 
 export type IconName = keyof typeof ICONS

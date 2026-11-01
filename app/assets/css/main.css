@@ -2306,3 +2306,55 @@ a {
 .rien-search input::-webkit-search-decoration {
   -webkit-appearance: none;
 }
+
+/* Install Rien: the Today card and the iPhone steps sheet. */
+.rien-install {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.rien-install-logo {
+  flex: none;
+  width: 52px;
+  height: 52px;
+}
+
+.rien-install strong {
+  font-size: 17px;
+}
+
+.rien-install p {
+  margin: 2px 0 0;
+  font-size: 15px;
+}
+
+.rien-install-card .sq-card-actions {
+  justify-content: flex-end;
+}
+
+.rien-install-steps {
+  display: grid;
+  gap: 14px;
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+  font-size: 17px;
+}
+
+.rien-install-steps li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rien-install-step-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  color: var(--sq-primary, #0f766e);
+  background: color-mix(in srgb, var(--sq-primary, #0f766e) 14%, transparent);
+}

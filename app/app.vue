@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { $pwa } = useNuxtApp()
+const native = isNativeApp()
 const route = useRoute()
 
 // The four tab pages show the tab bar; games and sub-pages are full screen.
@@ -34,6 +35,7 @@ function openTank() {
         <span>{{ current }}</span>
       </Squircle>
     </Transition>
+    <InstallGuide v-if="!native" />
     <SqSnackbar
       v-if="$pwa?.needRefresh"
       :model-value="true"
