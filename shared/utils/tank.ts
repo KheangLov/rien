@@ -54,13 +54,14 @@ export interface SkillFish {
   toNext: number | null
 }
 
-export const SKILLS: { game: string, title: string, species: Species, nativeOnly?: boolean }[] = [
+// needsSpeech: only where Say It works (the Rien app, or a browser that can listen).
+export const SKILLS: { game: string, title: string, species: Species, needsSpeech?: boolean }[] = [
   { game: 'word-recall', title: 'Goldie', species: { name: 'Goldfish', back: '#ea580c', belly: '#fde68a', fin: '#fb923c', form: 'deep', tail: 'fan' } },
   { game: 'fix-it', title: 'Fixer', species: { name: 'Blue tang', back: '#1e3a8a', belly: '#60a5fa', fin: '#1d4ed8', form: 'disc', tail: 'lunate', tailColor: '#facc15', pattern: { kind: 'lateral', color: '#0f172a' } } },
   { game: 'sound-hunter', title: 'Echo', species: { name: 'Clownfish', back: '#ea580c', belly: '#fdba74', fin: '#f97316', form: 'deep', tail: 'round', pattern: { kind: 'bands', color: '#ffffff', edge: '#111827' } } },
   { game: 'sentence-builder', title: 'Builder', species: { name: 'Angelfish', back: '#d4d4d8', belly: '#fef9c3', fin: '#e5e7eb', form: 'tall', tail: 'lyre', pattern: { kind: 'bars', color: '#1f2937' } } },
   { game: 'gap-radio', title: 'Radio', species: { name: 'Neon tetra', back: '#334155', belly: '#e2e8f0', fin: '#cbd5e1', form: 'long', tail: 'forked', pattern: { kind: 'lateral', color: '#22d3ee', accent: '#ef4444' } } },
-  { game: 'say-it', title: 'Chatty', species: { name: 'Betta', back: '#5b21b6', belly: '#a78bfa', fin: '#8b5cf6', form: 'torpedo', tail: 'flowing', features: ['sail'] }, nativeOnly: true },
+  { game: 'say-it', title: 'Chatty', species: { name: 'Betta', back: '#5b21b6', belly: '#a78bfa', fin: '#8b5cf6', form: 'torpedo', tail: 'flowing', features: ['sail'] }, needsSpeech: true },
   { game: 'file-boss', title: 'Boss', species: { name: 'Grouper', back: '#57534e', belly: '#d6d3d1', fin: '#78716c', form: 'heavy', tail: 'round', pattern: { kind: 'spots', color: '#292524' } } },
   { game: 'speed-round', title: 'Dash', species: { name: 'Sailfish', back: '#1e40af', belly: '#e0f2fe', fin: '#3b82f6', form: 'long', tail: 'lunate', pattern: { kind: 'bars', color: '#93c5fd' }, features: ['sail', 'snout'] } },
   { game: 'listen-pick', title: 'Ears', species: { name: 'Croaker', back: '#a8a29e', belly: '#fafaf9', fin: '#d6d3d1', form: 'heavy', tail: 'forked', pattern: { kind: 'lateral', color: '#78716c' }, features: ['barbels'] } },
@@ -84,9 +85,9 @@ export function healthFor(daysSince: number | null): Health {
 const daysBetween = (from: string, to: string) =>
   Math.round((new Date(`${to}T12:00:00`).getTime() - new Date(`${from}T12:00:00`).getTime()) / 86_400_000)
 
-export function skillFish(sessions: readonly Pick<SessionRow, 'date' | 'games'>[], today: Date, native: boolean): SkillFish[] {
+export function skillFish(sessions: readonly Pick<SessionRow, 'date' | 'games'>[], today: Date, speech: boolean): SkillFish[] {
   const todayKey = dateKey(today)
-  return SKILLS.filter(s => native || !s.nativeOnly).map((skill) => {
+  return SKILLS.filter(s => speech || !s.needsSpeech).map((skill) => {
     let rounds = 0
     let last: string | null = null
     for (const day of sessions) {
@@ -120,7 +121,7 @@ export interface TankStats {
   learned: number
   bosses: readonly { score: number, total: number }[]
   talks: number
-  native: boolean
+  speech: boolean
 }
 
 export interface Achievement {
@@ -174,7 +175,7 @@ export const ACHIEVEMENTS: Achievement[] = [
   { id: 'talk-5', title: 'Chatterbox', goal: 'Have 5 Couple Talks', species: { name: 'Pearl gourami', back: '#78716c', belly: '#fdba74', fin: '#e7e5e4', form: 'deep', tail: 'lunate', pattern: { kind: 'spots', color: '#fafaf9' }, features: ['feelers'] }, progress: s => [s.talks, 5] },
   { id: 'all-games', title: 'Explorer', goal: 'Try every activity', species: { name: 'Butterflyfish', back: '#facc15', belly: '#fef9c3', fin: '#fde047', form: 'disc', tail: 'round', pattern: { kind: 'bars', color: '#0f172a' }, features: ['snout'] },
     progress: (s) => {
-      const games = SKILLS.filter(k => s.native || !k.nativeOnly).map(k => k.game)
+      const games = SKILLS.filter(k => s.speech || !k.needsSpeech).map(k => k.game)
       const played = new Set(s.sessions.flatMap(d => d.games))
       return [games.filter(g => played.has(g)).length, games.length]
     } },

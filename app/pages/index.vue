@@ -5,7 +5,6 @@ import { dateKey, summarizeStreak, weekStart } from '#shared/utils/streak'
 const db = useDb()
 const now = useClock()
 const todayKey = computed(() => dateKey(now.value))
-const native = isNativeApp()
 
 const queue = useLiveQuery(() => loadWordQueue(now.value), [], now)
 const total = useLiveQuery(() => db.countCards(), 0)
@@ -40,7 +39,7 @@ const today = computed(() =>
 
 const practice = computed(() => {
   const ids: ActivityId[] = ['word-recall', 'fix-it', 'sound-hunter', 'sentence-builder', 'gap-radio', 'speed-round', 'listen-pick', 'picture-match']
-  if (native) ids.push('say-it')
+  if (canListen()) ids.push('say-it')
   return ids.map(id => ({
     id,
     ...ACTIVITIES[id],

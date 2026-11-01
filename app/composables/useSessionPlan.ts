@@ -39,7 +39,7 @@ export async function loadSessionPlan(now = new Date()): Promise<ActivityId[]> {
     loadWordQueue(now),
     db.mistakeCounts(addDays(now, -WEAK_SPOT_DAYS)),
   ])
-  const plan = planSession({ dueWords: queue.length, mistakeCounts: counts, native: isNativeApp(), dayIndex: dayIndex(now) })
+  const plan = planSession({ dueWords: queue.length, mistakeCounts: counts, speech: canListen(), dayIndex: dayIndex(now) })
   try {
     localStorage.setItem(key, JSON.stringify(plan))
   }

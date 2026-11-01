@@ -10,10 +10,10 @@ export async function loadTank(now = new Date()) {
     db.bossResults(),
     db.talkResults(),
   ])
-  const native = isNativeApp()
+  const speech = canListen()
   return {
-    skills: skillFish(sessions, now, native),
-    awards: achievementFish({ sessions, words, learned, bosses, talks: talks.length, native }),
+    skills: skillFish(sessions, now, speech),
+    awards: achievementFish({ sessions, words, learned, bosses, talks: talks.length, speech }),
   }
 }
 
