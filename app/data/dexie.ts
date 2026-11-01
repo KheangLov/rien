@@ -238,7 +238,7 @@ export function createDexieRepository(db = new RienDexie()): StudyRepository {
     },
 
     async importAll(raw) {
-      const backup = backupSchema.parse(raw)
+      const backup = backupSchema.parse(typeof raw === 'string' ? JSON.parse(raw) : raw)
       await db.transaction('rw', [db.cards, db.reviews, db.mistakes, db.sessions, db.grammar, db.bosses, db.talks, db.attempts, db.settings], async () => {
         await Promise.all([db.cards.clear(), db.reviews.clear(), db.mistakes.clear(), db.sessions.clear(), db.grammar.clear(), db.bosses.clear(), db.talks.clear(), db.attempts.clear()])
         await db.cards.bulkAdd(backup.cards)

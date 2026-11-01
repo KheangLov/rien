@@ -15,7 +15,8 @@
       ],
       "type": "tense",
       "explain": "Past perfect: had + past participle.",
-      "when": "earlier-past"
+      "when": "earlier-past",
+      "skill": "past-perfect"
     },
     {
       "id": "told-me",
@@ -27,7 +28,8 @@
         "tell"
       ],
       "type": "other",
-      "explain": "Tell someone; say something."
+      "explain": "Tell someone; say something.",
+      "skill": "reported-speech"
     },
     {
       "id": "said-that",
@@ -39,7 +41,229 @@
         "talked"
       ],
       "type": "other",
-      "explain": "Said that … (no person after it)."
+      "explain": "Said that … (no person after it).",
+      "skill": "reported-speech"
+    },
+    {
+      "id": "had-left",
+      "text": "When we arrived at the station, the train had already leave.",
+      "wrong": "leave",
+      "fix": "left",
+      "distractors": [
+        "leaving",
+        "leaves"
+      ],
+      "type": "tense",
+      "explain": "Past perfect: had + past participle, for what happened before another past moment.",
+      "skill": "past-perfect",
+      "when": "earlier-past"
+    },
+    {
+      "id": "had-forgotten",
+      "text": "I couldn't get in because I had forget my key.",
+      "wrong": "forget",
+      "fix": "forgotten",
+      "distractors": [
+        "forgot",
+        "forgetting"
+      ],
+      "type": "tense",
+      "explain": "had + past participle: forget, forgot, forgotten.",
+      "skill": "past-perfect",
+      "when": "earlier-past"
+    },
+    {
+      "id": "hadnt-eaten",
+      "text": "She was hungry because she hasn't eaten all day.",
+      "wrong": "hasn't",
+      "fix": "hadn't",
+      "distractors": [
+        "didn't",
+        "doesn't"
+      ],
+      "type": "tense",
+      "explain": "The story is in the past, so the earlier action uses had: hadn't eaten.",
+      "skill": "past-perfect",
+      "when": "earlier-past"
+    },
+    {
+      "id": "had-bought",
+      "text": "By the time the film started, we had buyed popcorn.",
+      "wrong": "buyed",
+      "fix": "bought",
+      "distractors": [
+        "buy",
+        "buying"
+      ],
+      "type": "tense",
+      "explain": "buy is irregular: buy, bought, bought.",
+      "skill": "past-perfect",
+      "when": "earlier-past"
+    },
+    {
+      "id": "had-changed",
+      "text": "I didn't recognise him because he had change so much.",
+      "wrong": "change",
+      "fix": "changed",
+      "distractors": [
+        "changing",
+        "changes"
+      ],
+      "type": "tense",
+      "explain": "had + past participle: had changed.",
+      "skill": "past-perfect",
+      "when": "earlier-past"
+    },
+    {
+      "id": "had-finished",
+      "text": "After she had finish her work, she went home.",
+      "wrong": "finish",
+      "fix": "finished",
+      "distractors": [
+        "finishing",
+        "finishes"
+      ],
+      "type": "tense",
+      "explain": "had + past participle: had finished.",
+      "skill": "past-perfect",
+      "when": "earlier-past"
+    },
+    {
+      "id": "had-already",
+      "text": "When I got to class, the lesson already started.",
+      "wrong": "already",
+      "fix": "had already",
+      "distractors": [
+        "has already",
+        "was already"
+      ],
+      "type": "tense",
+      "explain": "It started before I got there: had already started.",
+      "skill": "past-perfect",
+      "when": "earlier-past"
+    },
+    {
+      "id": "said-was",
+      "text": "Dara said that he is tired, but he went out anyway.",
+      "wrong": "is",
+      "fix": "was",
+      "distractors": [
+        "be",
+        "being"
+      ],
+      "type": "tense",
+      "explain": "Reported speech moves back a tense: \"I'm tired\" becomes he said he was tired.",
+      "skill": "reported-speech",
+      "when": "past"
+    },
+    {
+      "id": "told-could",
+      "text": "My teacher told me that I can leave early.",
+      "wrong": "can",
+      "fix": "could",
+      "distractors": [
+        "will",
+        "am"
+      ],
+      "type": "tense",
+      "explain": "In reported speech, can becomes could.",
+      "skill": "reported-speech",
+      "when": "past"
+    },
+    {
+      "id": "asked-if-was",
+      "text": "He asked me if I am hungry.",
+      "wrong": "am",
+      "fix": "was",
+      "distractors": [
+        "be",
+        "were"
+      ],
+      "type": "tense",
+      "explain": "Reported questions move back a tense too: if I was hungry.",
+      "skill": "reported-speech",
+      "when": "past"
+    },
+    {
+      "id": "told-would",
+      "text": "They told us they will call back.",
+      "wrong": "will",
+      "fix": "would",
+      "distractors": [
+        "are",
+        "shall"
+      ],
+      "type": "tense",
+      "explain": "In reported speech, will becomes would.",
+      "skill": "reported-speech",
+      "when": "past"
+    },
+    {
+      "id": "said-had-never",
+      "text": "He said he has never seen the sea before.",
+      "wrong": "has",
+      "fix": "had",
+      "distractors": [
+        "have",
+        "is"
+      ],
+      "type": "tense",
+      "explain": "Reported speech: has seen becomes had seen.",
+      "skill": "reported-speech",
+      "when": "earlier-past"
+    },
+    {
+      "id": "who-lives",
+      "text": "Who live in that big house?",
+      "wrong": "live",
+      "fix": "lives",
+      "distractors": [
+        "living",
+        "did live"
+      ],
+      "type": "other",
+      "explain": "When who is the subject, there is no do: Who lives…? (he/she + -s)",
+      "skill": "question-forms"
+    },
+    {
+      "id": "how-many-passed",
+      "text": "How many students passes the exam last term?",
+      "wrong": "passes",
+      "fix": "passed",
+      "distractors": [
+        "pass",
+        "passing"
+      ],
+      "type": "tense",
+      "explain": "Last term is the past, and the subject question has no did: How many students passed?",
+      "skill": "question-forms",
+      "when": "past"
+    },
+    {
+      "id": "which-bus-goes",
+      "text": "Which bus go to the airport?",
+      "wrong": "go",
+      "fix": "goes",
+      "distractors": [
+        "going",
+        "gone"
+      ],
+      "type": "third-person-s",
+      "explain": "Which bus is the subject, so no do, and it takes -s: Which bus goes…?",
+      "skill": "question-forms"
+    },
+    {
+      "id": "what-time-do-you",
+      "text": "What time you usually get up?",
+      "wrong": "you",
+      "fix": "do you",
+      "distractors": [
+        "are you",
+        "does you"
+      ],
+      "type": "word-order",
+      "explain": "Questions in the present simple need do: What time do you usually get up?",
+      "skill": "question-forms"
     }
   ],
   "builder": [
@@ -47,7 +271,46 @@
       "id": "who-wrote",
       "text": "Who wrote this song?",
       "alternatives": [],
-      "tip": "When who is the subject, no auxiliary: Who wrote?"
+      "tip": "When who is the subject, no auxiliary: Who wrote?",
+      "skill": "question-forms"
+    },
+    {
+      "id": "film-had-started",
+      "text": "The film had already started.",
+      "tip": "had + past participle: it happened before.",
+      "skill": "past-perfect"
+    },
+    {
+      "id": "told-me-tired",
+      "text": "She told me she was tired.",
+      "tip": "told + a person; the tense moves back.",
+      "skill": "reported-speech"
+    },
+    {
+      "id": "who-sent-flowers",
+      "text": "Who sent you these flowers?",
+      "tip": "Who is the subject: no did.",
+      "skill": "question-forms"
+    },
+    {
+      "id": "asked-if-ready",
+      "text": "He asked me if I was ready.",
+      "tip": "Reported question: asked + if + past.",
+      "skill": "reported-speech"
+    },
+    {
+      "id": "never-seen-sea",
+      "text": "I had never seen the sea before.",
+      "tip": "had never + past participle.",
+      "skill": "past-perfect",
+      "keepFirstCapital": true
+    }
+  ],
+  "radio": [
+    {
+      "id": "strange-evening",
+      "title": "A strange evening",
+      "text": "Last Friday I came home late from work. When I opened the door, I saw that somebody had left the lights on. My sister told me that she had gone out at six. I asked her who had been in the house, and she said she didn't know. Then my husband called. He said that he had come home early to cook a surprise dinner, and he had gone to the shop because he had forgotten the rice."
     }
   ]
 }

@@ -7,7 +7,7 @@ import { newFsrsState, Rating } from '#shared/utils/scheduler'
 const now = new Date('2026-11-02T08:00:00Z')
 
 function card(id: string, type: FixItCard['type'] = 'tense'): FixItCard {
-  return { itemId: `core:${id}`, id, text: 'She go home.', wrong: 'go', fix: 'went', distractors: ['goes'], type, explain: '' }
+  return { itemId: `core:${id}`, id, text: 'She go home.', wrong: 'go', fix: 'went', distractors: ['goes'], type, explain: '', skill: 'past-simple', level: 'A2' }
 }
 
 function state(item: FixItCard, due: Date): GrammarRow {
@@ -68,6 +68,19 @@ describe('pickRound', () => {
     expect(ids(pickRound([a, b, c, card('d')], states, {}, now, 10, noRandom))).toEqual(['a', 'b', 'd'])
   })
 
+  it('draws new sentences the skill model ranks higher more often', () => {
+    const items = Array.from({ length: 10 }, (_, i) => card(`n${i}`))
+    let seed = 1
+    const random = () => (seed = (seed * 16807) % 2147483647) / 2147483647
+    let favoured = 0
+    for (let run = 0; run < 400; run++) {
+      const round = pickRound(items, new Map(), {}, now, 3, random, item => (item.id === 'n0' || item.id === 'n1' ? 1.2 : 0.1))
+      favoured += round.filter(x => x.id === 'n0' || x.id === 'n1').length
+    }
+    // 2 of 10 items, but well over a fifth of the picks.
+    expect(favoured / (400 * 3)).toBeGreaterThan(0.4)
+  })
+
   it('prefers the oldest due sentences when the round is full', () => {
     const [a, b] = [card('a'), card('b')]
     const states = new Map([
@@ -115,5 +128,10 @@ describe('packsFor', () => {
 
   it('keeps core packs and her book up to her current File', () => {
     expect(packsFor(packs, { book: 'english-file-pre-intermediate-4e', file: 8 }).map(p => p.id)).toEqual(['core', 'pre-7'])
+  })
+
+  it('keeps every pack of the books before hers, so earlier work is still reviewed', () => {
+    expect(packsFor(packs, { book: 'english-file-intermediate-4e', file: 1 }).map(p => p.id)).toEqual(['core', 'pre-7', 'pre-9', 'int-1'])
+    expect(packsFor(packs, { book: 'english-file-upper-intermediate-4e', file: 1 }).map(p => p.id)).toEqual(['core', 'pre-7', 'pre-9', 'int-1'])
   })
 })

@@ -13,6 +13,7 @@ const WRITES = [
   'saveAnswer',
   'saveGrammarAnswer',
   'saveMistake',
+  'saveAttempts',
   'recordActivity',
   'saveBossResult',
   'saveTalk',

@@ -23,6 +23,9 @@ export function skipStep(id: ActivityId, now = new Date()) {
   catch {}
 }
 
+// Answers the skill model needs before it chooses the session's practice.
+export const MODEL_MIN_ANSWERS = 30
+
 // Today's session, chosen once a day and remembered so it does not reshuffle
 // while she works through it. Storage can fail (private mode); then it is
 // simply worked out again.
@@ -35,11 +38,15 @@ export async function loadSessionPlan(now = new Date()): Promise<ActivityId[]> {
   catch {}
 
   const db = useDb()
-  const [queue, counts] = await Promise.all([
+  const [queue, counts, learner] = await Promise.all([
     loadWordQueue(now),
     db.mistakeCounts(addDays(now, -WEAK_SPOT_DAYS)),
+    useLearner().catch(() => undefined),
   ])
-  const plan = planSession({ dueWords: queue.length, mistakeCounts: counts, speech: canListen(), dayIndex: dayIndex(now) })
+  // Once the skill model has enough answers, its weak skills (right and wrong
+  // answers, fading with time) pick the practice; before that, raw slip counts.
+  const weakness = learner && learner.answers >= MODEL_MIN_ANSWERS ? weaknessByType(learner, now) : counts
+  const plan = planSession({ dueWords: queue.length, mistakeCounts: weakness, speech: canListen(), dayIndex: dayIndex(now) })
   try {
     localStorage.setItem(key, JSON.stringify(plan))
   }

@@ -22,6 +22,11 @@ const BOOK_LEVELS: Record<Book, [Level, Level, Level]> = {
   'english-file-upper-intermediate-4e': ['B2', 'B2', 'B2+'],
 }
 
+// A pack's level: its own, else from its book and File, else the core level.
+export function packLevel(pack: { level?: Level, book?: Book, file?: number }): Level {
+  return pack.level ?? levelFor(pack.book, pack.file, 'A2+')
+}
+
 export function levelFor(book: Book | undefined, file: number | undefined, fallback: Level = 'A2'): Level {
   if (!book) return fallback
   const thirds = BOOK_LEVELS[book]
@@ -52,6 +57,9 @@ export const GRAMMAR_SKILLS = {
   'comparatives': 'Comparing',
   'quantifiers': 'much, many, a few, enough',
   'question-forms': 'Questions',
+  'so-neither': 'So do I / Neither do I',
+  'question-tags': 'Question tags (…, isn\'t it?)',
+  'ed-ing-adjectives': 'bored or boring',
   'articles': 'a, an, the',
   'prepositions': 'Prepositions',
   'third-person-s': 'He, she, it + -s',

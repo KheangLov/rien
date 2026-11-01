@@ -300,7 +300,7 @@ export async function openSqlRepository(driver: SqlDriver): Promise<StudyReposit
     },
 
     async importAll(raw) {
-      const backup = backupSchema.parse(raw)
+      const backup = backupSchema.parse(typeof raw === 'string' ? JSON.parse(raw) : raw)
       const noId = <T extends { id?: number }>(row: T) => json({ ...row, id: undefined })
       await driver.transaction(async () => {
         for (const table of TABLES) await driver.run(`DELETE FROM ${table}`)

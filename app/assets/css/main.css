@@ -300,6 +300,19 @@ a,
   background: var(--sq-series-1, var(--sq-primary, #4f46e5));
 }
 
+.rien-bar-fill.is-strong {
+  background: var(--sq-success, #16a34a);
+}
+
+.rien-list-more {
+  height: 1px;
+}
+
+.rien-skill-note {
+  margin: 12px 0 0;
+  font-size: 13px;
+}
+
 .rien-bar-value {
   text-align: right;
   font-variant-numeric: tabular-nums;

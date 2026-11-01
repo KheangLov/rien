@@ -16,7 +16,7 @@ const word = {
   book: 'english-file-pre-intermediate-4e' as const,
   file: 7,
 }
-const item: FixItCard = { itemId: 'core:a', id: 'a', text: 'She go home.', wrong: 'go', fix: 'went', distractors: ['goes'], type: 'tense', explain: '' }
+const item: FixItCard = { itemId: 'core:a', id: 'a', text: 'She go home.', wrong: 'go', fix: 'went', distractors: ['goes'], type: 'tense', explain: '', skill: 'past-simple', level: 'A2' }
 
 interface Store {
   repo: StudyRepository
@@ -76,6 +76,16 @@ describe.each(Object.entries(stores))('%s repository', (_, open) => {
     const other = await open()
     await other.repo.importAll(json)
     expect(await other.repo.attemptsSince(new Date(0))).toHaveLength(3)
+    await other.close()
+  })
+
+  it('restores from the backup file\'s text as well as its parsed JSON', async () => {
+    await repo.addWord(word, now)
+    const text = JSON.stringify(await repo.exportAll(now))
+    const other = await open()
+    expect(await other.repo.importAll(text)).toEqual({ cards: 1 })
+    await expect(other.repo.importAll('not json')).rejects.toThrow()
+    expect(await other.repo.countCards()).toBe(1)
     await other.close()
   })
 

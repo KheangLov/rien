@@ -33,7 +33,7 @@ onMounted(async () => {
   try {
     const practice = await loadPractice()
     states.value = practice.states
-    round.value = topUpRound(pickRound(practice.builderCards, practice.states, practice.counts, practice.now, ROUND_SIZE), practice.builderCards, practice.states, ROUND_SIZE)
+    round.value = topUpRound(pickRound(practice.builderCards, practice.states, practice.counts, practice.now, ROUND_SIZE, Math.random, practice.rank), practice.builderCards, practice.states, ROUND_SIZE)
     startCard()
   }
   catch (error) {
@@ -45,8 +45,11 @@ onMounted(async () => {
   }
 })
 
+let cardShownAt = performance.now()
+
 function startCard() {
   if (!card.value) return
+  cardShownAt = performance.now()
   pool.value = builderTiles(card.value)
   placed.value = []
   attempts.value = 0
@@ -88,7 +91,9 @@ async function check() {
     hit()
   }
   else miss()
-  await db.saveGrammarAnswer(row, mistake)
+  // Right first time 1, on the second try 0.5, not solved 0.
+  const score = !solved.value ? 0 : attempts.value === 1 ? 1 : 0.5
+  await db.saveGrammarAnswer(row, mistake, attemptFor(current, 'builder', score, performance.now() - cardShownAt))
 }
 
 function next() {

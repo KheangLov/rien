@@ -1,8 +1,13 @@
 import { z } from 'zod'
 import { normalizeAnswer } from '../utils/answer'
-import { bookSchema, fileNumberSchema, mistakeTypeSchema } from './db'
+import { bookSchema, fileNumberSchema, LEVELS, mistakeTypeSchema } from './db'
 
 const PACK_ID = /^[a-z0-9-]+$/
+// A grammar point from shared/utils/skills.ts (GRAMMAR_SKILLS); the pack tests
+// check the name is one of them.
+const skillSchema = z.string().regex(/^[a-z-]+$/).optional()
+// Overrides the pack's level for one harder or easier item.
+const levelSchema = z.enum(LEVELS).optional()
 
 // When a tense sentence happens, for its timeline picture. Set by hand on every
 // tense item: guessing from time words gets "didn't see … today" and "since"
@@ -28,6 +33,8 @@ export const fixItItemSchema = z
     // Optional so one missing value never stops a whole pack loading; the pack
     // tests require it on every tense item.
     when: z.enum(TENSE_TIMES).optional(),
+    skill: skillSchema,
+    level: levelSchema,
   })
   .superRefine((item, ctx) => {
     const key = normalizeAnswer(item.wrong)
@@ -97,6 +104,8 @@ export const builderSchema = z
     // Keep the first word's capital letter on its tile (for "I" and names).
     keepFirstCapital: z.boolean().default(false),
     tip: z.string().trim().min(1).max(160),
+    skill: skillSchema,
+    level: levelSchema,
   })
   .superRefine((item, ctx) => {
     const words = item.text.split(/\s+/)
@@ -125,6 +134,8 @@ export const packSchema = z
     title: z.string().trim().min(1),
     book: bookSchema.optional(),
     file: fileNumberSchema.optional(),
+    // CEFR level of the pack; worked out from the book and File when left out.
+    level: z.enum(LEVELS).optional(),
     fixIt: z.array(fixItItemSchema).default([]),
     soundPairs: z.array(soundPairSchema).default([]),
     talks: z.array(talkSchema).default([]),

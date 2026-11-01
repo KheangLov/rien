@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { BOOK_LABELS } from '#shared/schemas/db'
 import { minutesByDay, minutesThisWeek, weakSpots } from '#shared/utils/progress'
+import { skillLabel, type Level } from '#shared/utils/skills'
 import { addDays } from '#shared/utils/streak'
+import type { Learner } from '~/composables/useLearner'
 
 const db = useDb()
 const now = useClock()
@@ -18,6 +20,30 @@ const daily = computed(() => minutesByDay(sessions.value, now.value, 14))
 const dailyTotal = computed(() => daily.value.values.reduce((a, b) => a + b, 0))
 const spots = computed(() => weakSpots(counts.value))
 const maxSpot = computed(() => Math.max(1, ...spots.value.map(s => s.count)))
+
+// The skill model's view, once it has enough answers: each skill's chance of a
+// right answer on an item at her level, weakest first. It learns in memory as
+// she answers; reading counts.value re-runs this after every save.
+const learner = shallowRef<Learner>()
+onMounted(async () => { learner.value = await useLearner().catch(() => undefined) })
+const skills = computed(() => {
+  void counts.value
+  const l = learner.value
+  if (!l || l.answers < MODEL_MIN_ANSWERS) return []
+  return weakSkills(l, now.value).slice(0, 6).map(s => ({ ...s, label: skillLabel(s.skill), percent: Math.round(s.p * 100) }))
+})
+// ACE's General English levels for each CEFR level (English File, then Ready
+// for IELTS): an estimate to talk about with her teacher, not a test result.
+const ACE_LEVELS: Record<Level, string> = {
+  'A1': 'GEP 1–2', 'A2': 'GEP 3–4', 'A2+': 'GEP 5', 'B1': 'GEP 6–7', 'B1+': 'GEP 8', 'B2': 'GEP 9–10', 'B2+': 'GEP 11', 'C1': 'GEP 12',
+}
+const working = computed(() => {
+  void counts.value
+  const l = learner.value
+  if (!l || l.answers < MODEL_MIN_ANSWERS) return undefined
+  const level = workingLevelOf(l)
+  return { level, ace: ACE_LEVELS[level] }
+})
 
 // Axis ticks can be fractions such as 0.6000000000000001.
 const formatMinutes = (v: number) => `${Number(v.toFixed(1))} min`
@@ -46,7 +72,26 @@ const formatDate = (date: Date) => date.toLocaleDateString('en-GB', { day: 'nume
       </SqCard>
     </div>
 
-    <SqCard title="Weak spots" subtitle="Slips in the last 30 days, most first">
+    <SqCard
+      v-if="skills.length"
+      title="Skills"
+      :subtitle="working ? `Working at about ${working.level} (ACE ${working.ace}) · weakest first` : 'Weakest first'"
+    >
+      <SqCardText>
+        <ul class="rien-bars">
+          <li v-for="skill in skills" :key="skill.skill" class="rien-bar-row">
+            <span class="rien-bar-label">{{ skill.label }}</span>
+            <span class="rien-bar-track" aria-hidden="true">
+              <span class="rien-bar-fill" :class="{ 'is-strong': skill.percent >= 80 }" :style="{ width: `${skill.percent}%` }" />
+            </span>
+            <span class="rien-bar-value" :aria-label="`${skill.percent}% right`">{{ skill.percent }}%</span>
+          </li>
+        </ul>
+        <p class="rien-muted rien-skill-note">How often you get each one right at your level, from all your answers, recent ones counting most.</p>
+      </SqCardText>
+    </SqCard>
+
+    <SqCard v-else title="Weak spots" subtitle="Slips in the last 30 days, most first">
       <SqCardText>
         <p v-if="spots.length === 0" class="rien-muted">No slips yet. Play Fix It or Final Sound Hunter to find them.</p>
         <ul v-else class="rien-bars">

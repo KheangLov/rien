@@ -124,7 +124,8 @@ async function importBackup(event: Event) {
   if (!file) return
   if (!window.confirm('Replace everything on this phone with this backup?')) return
   try {
-    const { cards } = await db.importAll(JSON.parse(await file.text()))
+    const { cards } = await db.importAll(await file.text())
+    resetLearner()
     settings.value = await db.getSettings()
     message.value = { type: 'success', text: `Restored ${cards} words.` }
   }

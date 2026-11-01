@@ -135,3 +135,21 @@ export function suitability(model: Model, item: { itemId: string, skill: string,
   const weakness = 1 - sigmoid(offsetAt(model.skills.get(item.skill), now.getTime()))
   return Math.max(0.02, fit) * (0.5 + weakness)
 }
+
+// Her answer log as evidence: practice attempts as they are, and word reviews
+// as the skill "vocabulary" (Again 0, Hard 0.6, Good and Easy 1), each word at
+// its book and File's level.
+export function evidenceFrom(
+  attempts: readonly { itemId: string, skill: string, level: Level, score: number, at: Date }[],
+  reviews: readonly { cardId: string, rating: number, at: Date }[],
+  wordLevel: (cardId: string) => Level,
+): Evidence[] {
+  const fromReviews = reviews.map(r => ({
+    itemId: r.cardId,
+    skill: 'vocabulary',
+    level: wordLevel(r.cardId),
+    score: r.rating <= 1 ? 0 : r.rating === 2 ? 0.6 : 1,
+    at: r.at,
+  }))
+  return [...attempts.map(({ itemId, skill, level, score, at }) => ({ itemId, skill, level, score, at })), ...fromReviews]
+}

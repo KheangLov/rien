@@ -15,7 +15,8 @@
       ],
       "type": "tense",
       "explain": "Used to for the past.",
-      "when": "past-habit"
+      "when": "past-habit",
+      "skill": "used-to"
     },
     {
       "id": "did-use-to",
@@ -28,7 +29,8 @@
       ],
       "type": "tense",
       "explain": "After did: use to, not used to.",
-      "when": "past-habit"
+      "when": "past-habit",
+      "skill": "used-to"
     },
     {
       "id": "might-come",
@@ -40,7 +42,8 @@
         "to come"
       ],
       "type": "other",
-      "explain": "Might + base form."
+      "explain": "Might + base form.",
+      "skill": "modals"
     },
     {
       "id": "so-do-i",
@@ -52,7 +55,223 @@
         "does"
       ],
       "type": "other",
-      "explain": "Love is a normal verb, so: So do I."
+      "explain": "Love is a normal verb, so: So do I.",
+      "skill": "so-neither"
+    },
+    {
+      "id": "used-to-swim",
+      "text": "When I was young, I use to swim in the river every day.",
+      "wrong": "use",
+      "fix": "used",
+      "distractors": [
+        "using",
+        "uses"
+      ],
+      "type": "tense",
+      "explain": "For past habits: used to + verb. In questions and negatives: did … use to.",
+      "skill": "used-to",
+      "when": "past-habit"
+    },
+    {
+      "id": "didnt-use-to",
+      "text": "We didn't used to have a phone at home.",
+      "wrong": "used",
+      "fix": "use",
+      "distractors": [
+        "using",
+        "uses"
+      ],
+      "type": "tense",
+      "explain": "After didn't, use the base form: didn't use to.",
+      "skill": "used-to",
+      "when": "past-habit"
+    },
+    {
+      "id": "use-to-work",
+      "text": "Did your father use to working in Battambang?",
+      "wrong": "working",
+      "fix": "work",
+      "distractors": [
+        "worked",
+        "works"
+      ],
+      "type": "tense",
+      "explain": "use to + verb: use to work.",
+      "skill": "used-to",
+      "when": "past-habit"
+    },
+    {
+      "id": "used-to-live-wood",
+      "text": "My grandmother used to living in a wooden house.",
+      "wrong": "living",
+      "fix": "live",
+      "distractors": [
+        "lives",
+        "lived"
+      ],
+      "type": "tense",
+      "explain": "used to + verb (live), not -ing.",
+      "skill": "used-to",
+      "when": "past-habit"
+    },
+    {
+      "id": "used-to-liking",
+      "text": "I didn't use to liking vegetables, but now I love them.",
+      "wrong": "liking",
+      "fix": "like",
+      "distractors": [
+        "liked",
+        "likes"
+      ],
+      "type": "tense",
+      "explain": "use to + verb: didn't use to like.",
+      "skill": "used-to",
+      "when": "past-habit"
+    },
+    {
+      "id": "there-used-to",
+      "text": "There use to be a big tree in front of our house.",
+      "wrong": "use",
+      "fix": "used",
+      "distractors": [
+        "using",
+        "uses"
+      ],
+      "type": "tense",
+      "explain": "There used to be = there was, but not now.",
+      "skill": "used-to",
+      "when": "past-habit"
+    },
+    {
+      "id": "used-to-work-farm",
+      "text": "My parents used to worked on a farm.",
+      "wrong": "worked",
+      "fix": "work",
+      "distractors": [
+        "working",
+        "works"
+      ],
+      "type": "tense",
+      "explain": "used to + verb: used to work.",
+      "skill": "used-to",
+      "when": "past-habit"
+    },
+    {
+      "id": "might-rain",
+      "text": "Take an umbrella. It might rains later.",
+      "wrong": "rains",
+      "fix": "rain",
+      "distractors": [
+        "raining",
+        "rained"
+      ],
+      "type": "other",
+      "explain": "might + verb with no -s: it might rain.",
+      "skill": "modals"
+    },
+    {
+      "id": "might-go",
+      "text": "I might going to the party, I'm not sure.",
+      "wrong": "going",
+      "fix": "go",
+      "distractors": [
+        "goes",
+        "went"
+      ],
+      "type": "other",
+      "explain": "might + verb: I might go.",
+      "skill": "modals"
+    },
+    {
+      "id": "may-not-come",
+      "text": "She may not comes to class today.",
+      "wrong": "comes",
+      "fix": "come",
+      "distractors": [
+        "coming",
+        "came"
+      ],
+      "type": "other",
+      "explain": "may not + verb: she may not come.",
+      "skill": "modals"
+    },
+    {
+      "id": "might-be",
+      "text": "Sokha might is at the market.",
+      "wrong": "is",
+      "fix": "be",
+      "distractors": [
+        "are",
+        "been"
+      ],
+      "type": "other",
+      "explain": "might + be: she might be at the market.",
+      "skill": "modals"
+    },
+    {
+      "id": "so-am-i",
+      "text": "I'm tired. So do I.",
+      "wrong": "do",
+      "fix": "am",
+      "distractors": [
+        "have",
+        "was"
+      ],
+      "type": "other",
+      "explain": "Answer with the same verb: I'm tired. So am I.",
+      "skill": "so-neither"
+    },
+    {
+      "id": "neither-can-i",
+      "text": "I can't swim. Neither do I.",
+      "wrong": "do",
+      "fix": "can",
+      "distractors": [
+        "am",
+        "will"
+      ],
+      "type": "other",
+      "explain": "Same verb as the first sentence: can't, so Neither can I.",
+      "skill": "so-neither"
+    },
+    {
+      "id": "so-did-i",
+      "text": "I went to Kep last year. So was I.",
+      "wrong": "was",
+      "fix": "did",
+      "distractors": [
+        "do",
+        "went"
+      ],
+      "type": "other",
+      "explain": "For the past simple, use did: So did I.",
+      "skill": "so-neither"
+    },
+    {
+      "id": "neither-after-not",
+      "text": "I don't eat meat. So do I.",
+      "wrong": "So",
+      "fix": "Neither",
+      "distractors": [
+        "Also",
+        "Too"
+      ],
+      "type": "other",
+      "explain": "After a negative sentence, agree with Neither: Neither do I.",
+      "skill": "so-neither"
+    },
+    {
+      "id": "neither-am-i",
+      "text": "I'm not hungry. Neither is I.",
+      "wrong": "is",
+      "fix": "am",
+      "distractors": [
+        "are",
+        "do"
+      ],
+      "type": "other",
+      "explain": "With I, use am: Neither am I.",
+      "skill": "so-neither"
     }
   ],
   "builder": [
@@ -61,14 +280,55 @@
       "text": "I used to live in the countryside.",
       "alternatives": [],
       "tip": "Used to + base form.",
-      "keepFirstCapital": true
+      "keepFirstCapital": true,
+      "skill": "used-to"
     },
     {
       "id": "neither-do-i",
       "text": "I don't like coffee. Neither do I.",
       "alternatives": [],
       "tip": "Neither + auxiliary + subject.",
+      "keepFirstCapital": true,
+      "skill": "so-neither"
+    },
+    {
+      "id": "used-to-kampot",
+      "text": "I used to live in Kampot.",
+      "tip": "used to + verb: a past habit or state.",
+      "skill": "used-to",
       "keepFirstCapital": true
+    },
+    {
+      "id": "did-you-use-to",
+      "text": "Did you use to play football?",
+      "tip": "Questions: Did you use to + verb?",
+      "skill": "used-to"
+    },
+    {
+      "id": "might-rain-tiles",
+      "text": "It might rain this afternoon.",
+      "tip": "might + verb: maybe.",
+      "skill": "modals"
+    },
+    {
+      "id": "didnt-have-car",
+      "text": "We didn't use to have a car.",
+      "tip": "Negatives: didn't use to + verb.",
+      "skill": "used-to"
+    },
+    {
+      "id": "so-do-i-mango",
+      "text": "I love mangoes. So do I.",
+      "tip": "Agree with So + the same helper verb + I.",
+      "skill": "so-neither",
+      "keepFirstCapital": true
+    }
+  ],
+  "radio": [
+    {
+      "id": "village-childhood",
+      "title": "When I was a child",
+      "text": "When I was a child, we used to live in a village near Takeo. There used to be no electricity in the evenings, so we didn't use to watch TV. My brother and I used to play by the river after school. Now the village has a road and a market, and my parents might move back there next year. My father says he might grow mangoes again. I don't think I would like to live there again, but I love visiting."
     }
   ]
 }

@@ -54,11 +54,18 @@ onMounted(async () => {
 })
 onBeforeUnmount(() => clearTimeout(pause))
 
+// When the current picture appeared, for the answer's time.
+let shownAt = performance.now()
+watch(index, () => { shownAt = performance.now() })
+
 function pick(option: string) {
   const question = current.value
   if (!question || picked.value !== null) return
   picked.value = option
   const right = option === question.answer
+  // Her own photos are her own words; picture words are everyday A2 words.
+  const item = { itemId: `word:${question.answer}`, skill: 'vocabulary', level: question.image ? 'A2+' as const : 'A2' as const }
+  void db.saveAttempts([attemptFor(item, 'picture', right ? 1 : 0, performance.now() - shownAt)]).catch(() => {})
   if (right) {
     score.value++
     hit()

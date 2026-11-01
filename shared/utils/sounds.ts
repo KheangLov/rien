@@ -2,6 +2,7 @@ import type { GrammarRow, MistakeRow } from '../schemas/db'
 import type { Pack, SoundPair } from '../schemas/pack'
 import { gradePractice, type PracticeItem } from './rounds'
 import { Rating } from './scheduler'
+import { packLevel, soundSkill } from './skills'
 
 export interface SoundCard extends SoundPair, PracticeItem {}
 
@@ -11,6 +12,8 @@ export function soundCards(packs: Pack[]): SoundCard[] {
     ...pair,
     itemId: `${pack.id}:${pair.id}`,
     type: pair.focus.startsWith('final-') ? 'final-sound' as const : 'sound' as const,
+    skill: soundSkill(pair.focus),
+    level: packLevel(pack),
   })))
 }
 

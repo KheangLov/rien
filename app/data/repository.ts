@@ -51,7 +51,8 @@ export interface StudyRepository {
   gamesOn(date: string): Promise<string[]>
 
   exportAll(now?: Date): Promise<Backup>
-  // Replaces everything on this device with the backup.
+  // Replaces everything on this device with the backup (its parsed JSON, or
+  // the file's text, which the web app reads in a background thread).
   importAll(backup: unknown): Promise<{ cards: number }>
 }
 

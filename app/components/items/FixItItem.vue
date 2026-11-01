@@ -21,6 +21,7 @@ const phase = ref<'find' | 'choose' | 'result'>('find')
 const wrongTaps = ref<number[]>([])
 const choices = ref<string[]>([])
 const picked = ref<string | null>(null)
+const shownAt = performance.now()
 
 const tokens = computed(() => tokenize(props.card.text))
 const target = computed(() => wrongIndex(props.card))
@@ -47,7 +48,9 @@ async function choose(choice: string) {
   const result = { wrongTaps: wrongTaps.value.length, wrongChoice: choice !== props.card.fix }
   const { row, mistake } = gradeFixIt(props.card, props.previous, result, new Date())
   haptic(!mistake ? 'success' : result.wrongChoice ? 'error' : 'warning')
-  await db.saveGrammarAnswer(row, mistake)
+  // Right first time 1, found only after wrong taps 0.6, wrong fix 0.
+  const score = result.wrongChoice ? 0 : result.wrongTaps > 0 ? 0.6 : 1
+  await db.saveGrammarAnswer(row, mistake, attemptFor(props.card, 'fix-it', score, performance.now() - shownAt))
   emit('answered', { row, slipped: Boolean(mistake) })
 }
 </script>

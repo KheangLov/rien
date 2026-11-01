@@ -20,6 +20,9 @@ export async function loadPractice(now = new Date()) {
     db.mistakeCounts(since),
   ])
   const active = packsFor(packs, settings)
+  // The skill model ranks new items once it is ready; a round never waits more
+  // than a moment for it (the first round after opening the app may not).
+  const learner = learnerNow() ?? await Promise.race([useLearner(), new Promise<undefined>(r => setTimeout(r, 1500))])
   return {
     now,
     since,
@@ -30,5 +33,7 @@ export async function loadPractice(now = new Date()) {
     radioCards: radioCards(active),
     states: new Map<string, GrammarRow>(rows.map(row => [row.itemId, row])),
     counts,
+    learner,
+    rank: rankWith(learner, now),
   }
 }

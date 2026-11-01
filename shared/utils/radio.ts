@@ -3,6 +3,7 @@ import type { Pack, RadioText } from '../schemas/pack'
 import { checkAnswer, normalizeAnswer, type Verdict } from './answer'
 import { gradePractice, type PracticeItem } from './rounds'
 import { Rating } from './scheduler'
+import { packLevel } from './skills'
 
 export interface RadioCard extends RadioText, PracticeItem {
   // Where the gaps start (0 to GAP_EVERY - 1), so the same text has different
@@ -21,7 +22,13 @@ export interface RadioToken {
 export const GAP_EVERY = 7
 
 export function radioCards(packs: Pack[]): RadioCard[] {
-  return packs.flatMap(pack => pack.radio.map(item => ({ ...item, itemId: `${pack.id}:${item.id}`, type: 'listening' as const })))
+  return packs.flatMap(pack => pack.radio.map(item => ({
+    ...item,
+    itemId: `${pack.id}:${item.id}`,
+    type: 'listening' as const,
+    skill: 'listening',
+    level: packLevel(pack),
+  })))
 }
 
 // Splits the text into words and blanks every seventh one, counting from

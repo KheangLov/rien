@@ -27,6 +27,7 @@ const split = computed(() => {
   return [a, b].map(w => ({ same: w.slice(0, i), diff: w.slice(i) }))
 })
 const picked = ref<string | null>(null)
+const shownAt = performance.now()
 
 function play() {
   speak(played)
@@ -38,7 +39,7 @@ async function choose(option: string) {
   picked.value = option
   const { row, mistake } = gradeSound(props.card, props.previous, played, option, new Date())
   haptic(mistake ? 'error' : 'success')
-  await db.saveGrammarAnswer(row, mistake)
+  await db.saveGrammarAnswer(row, mistake, attemptFor(props.card, 'sound', mistake ? 0 : 1, performance.now() - shownAt))
   emit('answered', { row, slipped: Boolean(mistake) })
 }
 </script>

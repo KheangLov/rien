@@ -1,4 +1,5 @@
 import { Capacitor } from '@capacitor/core'
+import { withBackgroundRestore } from '~/data/backgroundRestore'
 import { createDexieRepository } from '~/data/dexie'
 import { lazyRepository, withChangeEvents, type ObservableRepository } from '~/data/events'
 
@@ -10,7 +11,7 @@ export function useDb(): ObservableRepository {
   repository ??= withChangeEvents(
     Capacitor.isNativePlatform()
       ? lazyRepository(import('~/data/native').then(m => m.openNativeRepository()))
-      : createDexieRepository(),
+      : withBackgroundRestore(createDexieRepository()),
   )
   return repository
 }
