@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { partLabel, type Book } from '#shared/schemas/db'
 import { FEW_NEW, newItems, nextLevel, type ContentKind } from '#shared/utils/freshness'
 
 // When she has met nearly everything of these kinds at her File, says so and
@@ -15,7 +16,7 @@ const LABELS: Record<ContentKind, string> = {
 
 const db = useDb()
 const route = useRoute()
-const state = ref<{ file: number, left: number, next?: { file: number, count: number } } | null>(null)
+const state = ref<{ book: Book, file: number, left: number, next?: { file: number, count: number } } | null>(null)
 const moved = ref<number | null>(null)
 
 const what = computed(() => props.kinds.length > 1 ? 'questions' : LABELS[props.kinds[0]!])
@@ -26,7 +27,7 @@ onMounted(async () => {
     const seen = new Set(rows.map(row => row.itemId))
     const left = newItems(packs, settings, seen, props.kinds)
     if (left >= FEW_NEW) return
-    state.value = { file: settings.file, left, next: nextLevel(packs, settings, seen, props.kinds) }
+    state.value = { book: settings.book, file: settings.file, left, next: nextLevel(packs, settings, seen, props.kinds) }
   }
   catch (error) {
     console.error('[rien] could not check for new content', error)
@@ -53,14 +54,14 @@ function playNow() {
       <span class="rien-new-icon"><RienIcon :name="moved ? 'check' : 'sparkles'" :size="26" weight="duotone" /></span>
       <div>
         <template v-if="moved">
-          <strong>Now on File {{ moved }}</strong>
+          <strong>Now on {{ partLabel(state!.book, moved) }}</strong>
           <p class="rien-muted">Your next rounds bring its new {{ what }}.</p>
         </template>
         <template v-else-if="state.next">
           <strong>Ready for something new?</strong>
           <p class="rien-muted">
             {{ state.left === 0 ? `You have met every one of the ${what} up to File ${state.file}.` : `Only ${state.left} new ${what} left up to File ${state.file}.` }}
-            File {{ state.next.file }} adds {{ state.next.count }}. Is the class there yet?
+            {{ partLabel(state.book, state.next.file) }} adds {{ state.next.count }}. Is the class there yet?
           </p>
         </template>
         <template v-else>
@@ -70,7 +71,7 @@ function playNow() {
       </div>
     </SqCardText>
     <SqCardActions v-if="state.next && !moved">
-      <SqBtn color="primary" @click="moveUp">Move to File {{ state.next.file }}</SqBtn>
+      <SqBtn color="primary" @click="moveUp">Move to {{ partLabel(state.book, state.next.file) }}</SqBtn>
     </SqCardActions>
     <SqCardActions v-else-if="moved && route.path.startsWith('/games/')">
       <SqBtn color="primary" @click="playNow">Play a new round</SqBtn>

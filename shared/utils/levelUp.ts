@@ -12,6 +12,8 @@ export const FILES_IN_BOOK: Record<Book, number> = {
   'english-file-pre-intermediate-4e': 12,
   'english-file-intermediate-4e': 10,
   'english-file-upper-intermediate-4e': 10,
+  // Macmillan's contents map: 14 units.
+  'ready-for-ielts': 14,
 }
 
 // ACE's General English levels that use each book (Term 3 2026 timetable).
@@ -19,6 +21,7 @@ export const ACE_LEVELS_FOR_BOOK: Record<Book, string> = {
   'english-file-pre-intermediate-4e': 'GEP 4–6',
   'english-file-intermediate-4e': 'GEP 7–8',
   'english-file-upper-intermediate-4e': 'GEP 9–10',
+  'ready-for-ielts': 'GEP 11–12',
 }
 
 // The model's expected share of her File's sentences she knows.

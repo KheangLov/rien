@@ -20,6 +20,8 @@ const BOOK_LEVELS: Record<Book, [Level, Level, Level]> = {
   'english-file-pre-intermediate-4e': ['A2', 'A2+', 'B1'],
   'english-file-intermediate-4e': ['B1', 'B1+', 'B1+'],
   'english-file-upper-intermediate-4e': ['B2', 'B2', 'B2+'],
+  // IELTS bands 5.0 to 7.0.
+  'ready-for-ielts': ['B2', 'B2+', 'C1'],
 }
 
 // A pack's level: its own, else from its book and File, else the core level.
@@ -69,6 +71,15 @@ export const GRAMMAR_SKILLS = {
   'word-order': 'Word order',
   'phrasal-verbs': 'Phrasal verbs',
   'linkers': 'Linking words',
+  'auxiliary-verbs': 'Helper verbs (do, have, can)',
+  'adjective-order': 'Adjectives (the rich, the elderly)',
+  'wish': 'wish and if only',
+  'past-modals': 'must have, should have',
+  'verbs-of-senses': 'looks, sounds, feels',
+  'countable-nouns': 'Countable and uncountable nouns',
+  'transitive-verbs': 'rise or raise, lie or lay',
+  'reference-words': 'it, they, this, these in a text',
+  'substitution': 'so, not, one, do (short answers)',
 } as const
 export type GrammarSkill = keyof typeof GRAMMAR_SKILLS
 export const GRAMMAR_SKILL_IDS = Object.keys(GRAMMAR_SKILLS) as [GrammarSkill, ...GrammarSkill[]]

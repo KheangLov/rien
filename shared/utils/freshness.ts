@@ -1,4 +1,5 @@
 import { FILE_NUMBERS, type Settings } from '../schemas/db'
+import { FILES_IN_BOOK } from './levelUp'
 import type { Pack } from '../schemas/pack'
 import { packsFor } from './fixit'
 
@@ -29,7 +30,7 @@ export function nextLevel(
   kinds: readonly ContentKind[],
 ): { file: number, count: number } | undefined {
   const now = newItems(packs, level, seen, kinds)
-  for (const file of FILE_NUMBERS.filter(f => f > level.file)) {
+  for (const file of FILE_NUMBERS.filter(f => f > level.file && f <= FILES_IN_BOOK[level.book])) {
     const count = newItems(packs, { book: level.book, file }, seen, kinds) - now
     if (count > 0) return { file, count }
   }

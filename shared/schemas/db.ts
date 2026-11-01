@@ -5,13 +5,19 @@ export const BOOKS = [
   'english-file-pre-intermediate-4e',
   'english-file-intermediate-4e',
   'english-file-upper-intermediate-4e',
+  // ACE GEP 11 and 12.
+  'ready-for-ielts',
 ] as const
 
 export const BOOK_LABELS: Record<Book, string> = {
   'english-file-pre-intermediate-4e': 'English File Pre-Intermediate',
   'english-file-intermediate-4e': 'English File Intermediate',
   'english-file-upper-intermediate-4e': 'English File Upper-Intermediate',
+  'ready-for-ielts': 'Ready for IELTS',
 }
+
+// English File has Files; Ready for IELTS has units.
+export const partLabel = (book: Book, n: number) => `${book === 'ready-for-ielts' ? 'Unit' : 'File'} ${n}`
 
 // English File Pre-Intermediate 4th edition has 12 Files.
 // CEFR levels, with the steps English File's books take between them
@@ -19,7 +25,7 @@ export const BOOK_LABELS: Record<Book, string> = {
 export const LEVELS = ['A1', 'A2', 'A2+', 'B1', 'B1+', 'B2', 'B2+', 'C1'] as const
 export type Level = typeof LEVELS[number]
 
-export const FILE_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const
+export const FILE_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] as const
 
 export const MISTAKE_TYPES = [
   'tense',
@@ -52,7 +58,7 @@ export const MISTAKE_LABELS: Record<MistakeType, string> = {
 }
 
 export const bookSchema = z.enum(BOOKS)
-export const fileNumberSchema = z.number().int().min(1).max(12)
+export const fileNumberSchema = z.number().int().min(1).max(14)
 export const mistakeTypeSchema = z.enum(MISTAKE_TYPES)
 
 // Mirrors ts-fsrs's Card. Dates are coerced so JSON backups restore cleanly.

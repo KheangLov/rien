@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CardRow } from '#shared/schemas/db'
+import { partLabel, type CardRow } from '#shared/schemas/db'
 import { normalizeAnswer } from '#shared/utils/answer'
 import { isTricky, nextReviewLabel } from '#shared/utils/learning'
 import { vInputAttrs } from '~/directives/inputAttrs'
@@ -163,7 +163,7 @@ async function remove(card: CardRow) {
         <p v-if="openCard.example" class="rien-example">{{ openCard.example }}</p>
         <p v-if="openCard.khmer" class="rien-khmer rien-cue">{{ openCard.khmer }}</p>
         <p class="rien-muted">
-          File {{ openCard.file }} · {{ nextReviewLabel(openCard.due, now) }} · reviewed {{ openCard.fsrs.reps }}
+          {{ partLabel(openCard.book, openCard.file) }} · {{ nextReviewLabel(openCard.due, now) }} · reviewed {{ openCard.fsrs.reps }}
           {{ openCard.fsrs.reps === 1 ? 'time' : 'times' }} · forgotten {{ openCard.fsrs.lapses }}
           {{ openCard.fsrs.lapses === 1 ? 'time' : 'times' }}
         </p>

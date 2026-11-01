@@ -18,7 +18,9 @@ describe('moving up a File or book', () => {
   it('goes to the next File, then the next book', () => {
     expect(nextPlace({ book: pre, file: 10 })).toEqual({ book: pre, file: 11 })
     expect(nextPlace({ book: pre, file: 12 })).toEqual({ book: 'english-file-intermediate-4e', file: 1 })
-    expect(nextPlace({ book: 'english-file-upper-intermediate-4e', file: FILES_IN_BOOK['english-file-upper-intermediate-4e'] })).toBeNull()
+    // After English File, ACE's GEP 11 and 12 use Ready for IELTS (14 units), the last book.
+    expect(nextPlace({ book: 'english-file-upper-intermediate-4e', file: 10 })).toEqual({ book: 'ready-for-ielts', file: 1 })
+    expect(nextPlace({ book: 'ready-for-ielts', file: FILES_IN_BOOK['ready-for-ielts'] })).toBeNull()
   })
 
   const base = { place: { book: pre, file: 10 }, items, now }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BOOK_LABELS, BOOKS, FILE_NUMBERS, type Settings } from '#shared/schemas/db'
+import { BOOK_LABELS, BOOKS, FILE_NUMBERS, partLabel, type Settings } from '#shared/schemas/db'
 import { backupAgeLabel } from '#shared/utils/backups'
 import { FILES_IN_BOOK } from '#shared/utils/levelUp'
 
@@ -12,7 +12,7 @@ const bookItems = BOOKS.map(value => ({ title: BOOK_LABELS[value].replace('Engli
 // Only the Files her book has (Pre-Intermediate 12, the others 10).
 const fileItems = computed(() => FILE_NUMBERS
   .filter(value => value <= FILES_IN_BOOK[settings.value?.book ?? BOOKS[0]])
-  .map(value => ({ title: `File ${value}`, value })))
+  .map(value => ({ title: partLabel(settings.value?.book ?? BOOKS[0], value), value })))
 const weeklyGoalItems = [3, 4, 5, 6, 7].map(value => ({ title: `${value} days a week`, value }))
 const roundSizeItems = [10, 15, 20, 30].map(value => ({ title: `${value} words`, value }))
 const newPerDayItems = [5, 10, 15, 20].map(value => ({ title: `${value}`, value }))

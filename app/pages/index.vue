@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { partLabel } from '#shared/schemas/db'
 import type { ActivityId } from '#shared/utils/learning'
 import { dateKey, summarizeStreak, weekStart } from '#shared/utils/streak'
 import LevelUpCard from '~/components/learn/LevelUpCard.vue'
@@ -187,7 +188,7 @@ const talkedThisWeek = computed(() => {
         <NuxtLink to="/games/file-boss" class="rien-list-row">
           <span class="rien-list-icon"><RienIcon name="file-boss" weight="duotone" :size="26" /></span>
           <span class="rien-list-text">
-            <span class="rien-list-title">File {{ settings?.file ?? '' }} Boss</span>
+            <span class="rien-list-title">{{ settings ? partLabel(settings.book, settings.file) : '' }} Boss</span>
             <span class="rien-list-sub">{{ lastBoss ? `Best so far ${lastBoss.score} / ${lastBoss.total}` : 'When you finish the File' }}</span>
           </span>
           <span class="rien-list-end"><RienIcon name="next" :size="16" weight="bold" /></span>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BOOK_LABELS, type GrammarRow, type Settings } from '#shared/schemas/db'
+import { BOOK_LABELS, partLabel, type GrammarRow, type Settings } from '#shared/schemas/db'
 import { buildBossQuiz, type BossQuestion } from '#shared/utils/boss'
 import FixItItem from '~/components/items/FixItItem.vue'
 import SoundItem from '~/components/items/SoundItem.vue'
@@ -99,7 +99,7 @@ async function next() {
 
     <template v-else-if="!finished && position === 0 && settings">
       <p class="rien-muted">
-        File {{ settings.file }}, {{ BOOK_LABELS[settings.book] }}.
+        {{ partLabel(settings.book, settings.file) }}, {{ BOOK_LABELS[settings.book] }}.
         {{ quiz.length }} questions mixing
         <template v-if="wordCount">your {{ wordCount }} {{ wordCount === 1 ? 'word' : 'words' }} from this File,</template>
         grammar and sounds, with your recent mistakes first.

@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import { BOOK_LABELS, BOOKS, FILE_NUMBERS, newWordSchema, type Book } from '#shared/schemas/db'
+import { BOOK_LABELS, BOOKS, FILE_NUMBERS, newWordSchema, partLabel, type Book } from '#shared/schemas/db'
+import { FILES_IN_BOOK } from '#shared/utils/levelUp'
 import { DuplicateWordError } from '~/data/repository'
 import { vPlainInput } from '~/directives/plainInput'
 
 const db = useDb()
 
 const bookItems = BOOKS.map(value => ({ title: BOOK_LABELS[value], value }))
-const fileItems = FILE_NUMBERS.map(value => ({ title: `File ${value}`, value }))
+// Only the Files (or units) her chosen book has.
+const fileItems = computed(() => FILE_NUMBERS
+  .filter(value => value <= FILES_IN_BOOK[form.book])
+  .map(value => ({ title: partLabel(form.book, value), value })))
 
 const form = reactive({
   answer: '',

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BOOK_LABELS } from '#shared/schemas/db'
+import { BOOK_LABELS, partLabel } from '#shared/schemas/db'
 import { builderCards } from '#shared/utils/builder'
 import { fixItCards } from '#shared/utils/fixit'
 import { ACE_LEVELS_FOR_BOOK, SNOOZE_DAYS, suggestLevel, type LevelSuggestion } from '#shared/utils/levelUp'
@@ -35,7 +35,7 @@ watch([settings, bosses], () => void check(), { immediate: true })
 const title = computed(() => {
   const s = suggestion.value
   if (!s) return ''
-  return s.newBook ? `Ready for ${BOOK_LABELS[s.to.book]}?` : `Ready for File ${s.to.file}?`
+  return s.newBook ? `Ready for ${BOOK_LABELS[s.to.book]}?` : `Ready for ${partLabel(s.to.book, s.to.file)}?`
 })
 
 async function moveUp() {
@@ -67,7 +67,7 @@ async function notYet() {
         </div>
       </div>
       <p>
-        Rien expects you know about <b>{{ Math.round(suggestion.mastery * 100) }}%</b> of File {{ settings?.file }}'s sentences,
+        Rien expects you know about <b>{{ Math.round(suggestion.mastery * 100) }}%</b> of {{ settings ? partLabel(settings.book, settings.file) : '' }}'s sentences,
         and you scored <b>{{ suggestion.boss.score }} / {{ suggestion.boss.total }}</b> in its File Boss.
         Check with your teacher too: your class decides when you move.
       </p>
