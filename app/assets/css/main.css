@@ -1158,17 +1158,52 @@ html.rien-dark .rien-tank {
   --sq-shadow: 0 10px 30px rgb(15 23 42 / 12%);
 }
 
+.rien-tabbar {
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* The selected-tab lens: a tinted pill, visible on glass and in dark mode. */
 .rien-tabbar .rien-tab-lens {
   position: absolute;
   top: 6px;
   bottom: 6px;
   left: calc(6px + var(--i) * (100% - 12px) / 5);
   width: calc((100% - 12px) / 5);
-  --sq-bg: color-mix(in srgb, var(--sq-primary, #0f766e) 14%, transparent);
+  --sq-bg: color-mix(in srgb, var(--sq-primary, #0f766e) 15%, transparent);
+  --sq-bw: 0px;
+  transform-origin: center;
+}
+
+html.rien-dark .rien-tabbar .rien-tab-lens {
+  --sq-bg: color-mix(in srgb, var(--sq-primary, #2dd4bf) 22%, transparent);
 }
 
 html.rien-motion .rien-tab-lens {
-  transition: left 480ms cubic-bezier(0.34, 1.45, 0.5, 1);
+  transition: left 520ms cubic-bezier(0.3, 1.35, 0.45, 1), transform 220ms ease;
+}
+
+/* While sliding it stretches sideways and settles, like liquid. */
+html.rien-motion .rien-tab-lens.is-moving-a { animation: rien-lens-stretch-a 520ms cubic-bezier(0.3, 1.2, 0.45, 1); }
+html.rien-motion .rien-tab-lens.is-moving-b { animation: rien-lens-stretch-b 520ms cubic-bezier(0.3, 1.2, 0.45, 1); }
+
+@keyframes rien-lens-stretch-a {
+  0% { transform: scale(1, 1); }
+  35% { transform: scale(1.28, 0.9); }
+  100% { transform: scale(1, 1); }
+}
+
+@keyframes rien-lens-stretch-b {
+  0% { transform: scale(1, 1); }
+  35% { transform: scale(1.28, 0.9); }
+  100% { transform: scale(1, 1); }
+}
+
+/* Held under a finger: follows it directly and lifts a little. */
+.rien-tabbar .rien-tab-lens.is-dragging {
+  transition: transform 220ms ease;
+  transform: scale(1.12, 1.08);
 }
 
 .rien-tab {
@@ -1241,7 +1276,6 @@ html.rien-glass .rien-glass-surface {
 }
 
 html.rien-glass .rien-tab-lens {
-  --sq-bg: var(--rien-glass-strong);
   --sq-bd: var(--rien-glass-edge);
   --sq-bw: 1px;
 }
@@ -2054,4 +2088,120 @@ html:not(.rien-motion) .ios-sheet-leave-active {
 html,
 body {
   overflow-x: clip;
+}
+
+/* ---------------------------------------------------------------------------
+   Study calendar (Progress): seven equal columns, circles that fit any width
+   ------------------------------------------------------------------------ */
+.rien-cal {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.rien-cal-head {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rien-cal-title {
+  flex: 1;
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.rien-cal-nav {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--sq-primary, #0f766e);
+  cursor: pointer;
+}
+
+.rien-cal-nav:disabled {
+  color: var(--ios-tertiary, #c7c7cc);
+  cursor: default;
+}
+
+.rien-cal-nav:not(:disabled):active {
+  background: var(--ios-fill);
+}
+
+.rien-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px 2px;
+}
+
+.rien-cal-weekday {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ios-secondary, #8e8e93);
+}
+
+.rien-cal-day {
+  justify-self: center;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  max-width: 40px;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.rien-cal-day.is-studied {
+  background: color-mix(in srgb, var(--sq-primary, #0f766e) calc(var(--strength, 1) * 100%), transparent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.rien-cal-day.is-today {
+  box-shadow: inset 0 0 0 2px var(--sq-primary, #0f766e);
+  color: var(--sq-primary, #0f766e);
+  font-weight: 700;
+}
+
+.rien-cal-day.is-today.is-studied {
+  box-shadow: inset 0 0 0 2px var(--sq-primary, #0f766e), inset 0 0 0 4px var(--sq-surface, #fff);
+  color: #fff;
+}
+
+.rien-cal-day.is-future {
+  color: var(--ios-tertiary, #c7c7cc);
+  cursor: default;
+}
+
+.rien-cal-day.is-picked:not(.is-today) {
+  outline: 2px solid var(--sq-primary, #0f766e);
+  outline-offset: 2px;
+}
+
+html.rien-motion .rien-cal-day {
+  transition: transform 160ms ease;
+}
+
+html.rien-motion .rien-cal-day:not(:disabled):active {
+  transform: scale(0.88);
+}
+
+.rien-cal-foot {
+  margin: 0;
+  min-height: 1.4em;
+  font-size: 13px;
 }

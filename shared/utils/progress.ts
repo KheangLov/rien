@@ -27,3 +27,20 @@ export function weakSpots(counts: Partial<Record<MistakeType, number>>) {
     .sort((a, b) => b[1] - a[1])
     .map(([type, count]) => ({ type, label: MISTAKE_LABELS[type], count }))
 }
+
+export interface MonthCell {
+  // "2026-11-02", or null for the blank cells before the 1st.
+  key: string | null
+  day: number
+}
+
+// One month as Monday-first calendar cells: blanks up to the 1st, then each day.
+// month is 0-11.
+export function monthCells(year: number, month: number): MonthCell[] {
+  const first = new Date(year, month, 1)
+  const blanks = (first.getDay() + 6) % 7
+  const days = new Date(year, month + 1, 0).getDate()
+  const cells: MonthCell[] = Array.from({ length: blanks }, () => ({ key: null, day: 0 }))
+  for (let day = 1; day <= days; day++) cells.push({ key: dateKey(new Date(year, month, day)), day })
+  return cells
+}

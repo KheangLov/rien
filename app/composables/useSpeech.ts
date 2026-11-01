@@ -1,17 +1,13 @@
-import { Capacitor, registerPlugin, type PluginListenerHandle } from '@capacitor/core'
+import type { PluginListenerHandle } from '@capacitor/core'
+import { Capacitor } from '@capacitor/core'
+import { RienSpeech } from '~/utils/rienSpeech'
 
 // Reading aloud. Safari needs every call to start from a tap, so call speak()
 // directly inside a click handler. Android's web view has no speechSynthesis,
 // so the Android app reads aloud through its own plugin
 // (android/app/src/main/java/io/github/kheanglov/rien/RienSpeechPlugin.java).
 
-interface NativeReader {
-  speak(options: { texts: string[], rate: number, tracked?: boolean }): Promise<void>
-  stopSpeaking(): Promise<void>
-  addListener(event: 'word', listener: (data: { charIndex: number }) => void): Promise<PluginListenerHandle>
-}
-
-const nativeReader = registerPlugin<NativeReader>('RienSpeech')
+const nativeReader = RienSpeech
 
 export function usesNativeReader(): boolean {
   return Capacitor.getPlatform() === 'android'

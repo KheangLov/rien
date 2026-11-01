@@ -285,6 +285,18 @@ async function run() {
     const tabs = [...document.querySelectorAll('.rien-tab')].map(t => t.textContent!.trim())
     if (tabs.join(',') !== 'Today,Words,Tank,Progress,Me') throw new Error(`tabs: ${tabs.join(',')}`)
     if (!document.querySelector('.rien-tab-lens')) throw new Error('no tab lens')
+    // Dragging the lens from Today to Progress opens Progress; then back by tap.
+    const bar = document.querySelector('.rien-tabbar') as HTMLElement
+    const rect = bar.getBoundingClientRect()
+    const at = (i: number) => rect.left + 6 + ((rect.width - 12) / 5) * (i + 0.5)
+    const pointer = (type: string, x: number) => bar.dispatchEvent(new PointerEvent(type, {
+      pointerId: 7, pointerType: 'touch', clientX: x, clientY: rect.top + rect.height / 2, bubbles: true, isPrimary: true,
+    }))
+    pointer('pointerdown', at(0))
+    for (let i = 1; i <= 6; i++) pointer('pointermove', at(0) + ((at(3) - at(0)) * i) / 6)
+    pointer('pointerup', at(3))
+    await waitFor(() => location.pathname.startsWith('/progress'), 'drag to Progress')
+    await goTo('/', 'Today’s session')
     if (!document.documentElement.classList.contains('rien-glass')) throw new Error('Liquid Glass should be on by default')
     if (!document.documentElement.classList.contains('rien-motion') && !matchMedia('(prefers-reduced-motion: reduce)').matches) throw new Error('motion should be on by default')
     await screen('today-empty')
@@ -463,6 +475,17 @@ async function run() {
     await goTo('/progress', 'Weak spots')
     await waitText('3 words saved')
     await waitText('File 9:')
+    // The study calendar: today is studied, and the grid keeps seven columns
+    // inside its card at any width.
+    const cal = document.querySelector('.rien-cal-grid')
+    if (!cal) throw new Error('no study calendar')
+    const today = cal.querySelector('.rien-cal-day.is-today')
+    if (!today?.classList.contains('is-studied')) throw new Error('today is not marked as studied')
+    const firstRow = [...cal.children].slice(0, 7).map(c => c.getBoundingClientRect().top)
+    if (new Set(firstRow).size !== 1) throw new Error('calendar weekdays wrapped')
+    ;(today as HTMLElement).click()
+    await waitText('minute')
+    document.querySelector('.rien-cal')!.scrollIntoView({ block: 'center' })
     await screen('progress')
   })
 
@@ -495,7 +518,7 @@ async function run() {
 
   await step('Say It screen (native) or its notice (web)', async () => {
     await goTo('/games/say-it', 'Say It')
-    await waitFor(() => text().includes('Read it aloud') || text().includes('Say It is in the iPhone app'), 'Say It content')
+    await waitFor(() => text().includes('Read it aloud') || text().includes('Say It is in the Rien app'), 'Say It content')
     await screen('say-it')
     return text().includes('Read it aloud') ? 'sentence ready to read' : 'web notice shown'
   })

@@ -1,28 +1,7 @@
-import { Capacitor, registerPlugin, type PluginListenerHandle } from '@capacitor/core'
-import type { HeardWord } from '#shared/utils/spoken'
+import { Capacitor } from '@capacitor/core'
+import { RienSpeech, type Heard } from '~/utils/rienSpeech'
 
-type Permission = 'granted' | 'denied' | 'prompt'
-
-export interface Heard {
-  // Whole-sentence readings, best first.
-  alternatives: string[]
-  // The best reading word by word, with confidence and other spellings considered.
-  words?: HeardWord[]
-  // file:// URL of her recording.
-  recording?: string
-}
-
-interface RienSpeechPlugin {
-  listen(options: { language?: string, maxSeconds?: number, onDevice?: boolean }): Promise<Heard>
-  stop(): Promise<void>
-  checkPermissions(): Promise<{ speech: Permission, microphone: Permission }>
-  requestPermissions(): Promise<{ speech: Permission, microphone: Permission }>
-  addListener(event: 'partial', listener: (data: { text: string }) => void): Promise<PluginListenerHandle>
-}
-
-// The app's own plugin: ios/App/App/RienSpeechPlugin.swift and
-// android/app/src/main/java/io/github/kheanglov/rien/RienSpeechPlugin.java.
-const RienSpeech = registerPlugin<RienSpeechPlugin>('RienSpeech')
+export type { Heard }
 
 // Speech recognition for Say It. Native apps only (iPhone and Android): iPhone
 // Home Screen web apps cannot use speech recognition.
