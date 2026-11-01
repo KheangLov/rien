@@ -7,7 +7,8 @@ import { getSquirclePath, supportsNativeSquircle } from '@squirkle-ui/core'
 // - Chrome and Android: native `corner-shape: squircle`, radius × (1 + smoothing),
 //   exactly what Squirkle's .sq-surface does.
 // - Safari and iPhone (no corner-shape yet): a clip path with the same shape,
-//   redrawn whenever the element changes size.
+//   redrawn whenever the element changes size, and a smaller border radius
+//   underneath so the clip, not the radius, draws the corner.
 // Elements come and go with every screen, so a MutationObserver finds new ones.
 // Clipping also cuts off outer shadows and outlines, so these elements avoid them.
 const SELECTOR = [
@@ -57,8 +58,13 @@ export default defineNuxtPlugin(() => {
     const w = el.offsetWidth
     const h = el.offsetHeight
     if (!w || !h) return
-    const path = getSquirclePath({ width: w, height: h, radius: radiusOf(el), smoothing: SMOOTHING })
+    const r = radiusOf(el)
+    const path = getSquirclePath({ width: w, height: h, radius: r, smoothing: SMOOTHING })
     el.style.clipPath = path ? `path('${path}')` : ''
+    // The element's own rounding must sit outside the squircle, or its circle
+    // corners show instead (a circle is narrower than a squircle of the same
+    // size). Half the squircle's corner size always does.
+    el.style.borderRadius = `${Math.min(r * (1 + SMOOTHING), Math.min(w, h) / 2) * 0.5}px`
   }
 
   const resized = new ResizeObserver((entries) => {

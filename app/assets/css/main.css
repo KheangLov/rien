@@ -1122,6 +1122,13 @@ html.rien-dark .rien-tank {
   border-radius: var(--sq-r);
 }
 
+/* SVG fallback (Safari, iPhone): SqShape clips the element to the squircle, so its
+   own rounding must sit outside that curve or the plain circle corner shows.
+   Half the squircle's corner (r × 1.6 / 2) always does. */
+.rien-sq[data-sq-shape]:not(.sq-surface) {
+  border-radius: calc(var(--sq-r) * 0.8);
+}
+
 /* Shape-only squircles (gradients) get the native corner too. */
 @supports (corner-shape: squircle) {
   .rien-sq:not(.sq-surface) {

@@ -99,3 +99,10 @@ month grid (`app/components/StudyCalendar.vue`) for showing study days.
 
 - Suggested fix: a compact toolbar below ~480 px (title on its own row, icon-only Today), and a
   dense month mode (square cells, dots instead of event chips).
+
+Related, found the same day: a clipped element that keeps its own `border-radius` shows that
+circle, not the squircle (a circle corner sits inside a squircle corner of the same size, so the clip
+never touches it). `SqShape` with `clip` on an element that paints its own background has this
+problem. Rien sets the element's radius to half the squircle's corner while clipped
+(`.rien-sq[data-sq-shape]:not(.sq-surface)` and `app/plugins/squircles.client.ts`).
+- Suggested fix: `SqShape` sets the host's radius the same way while `clip` is on.
