@@ -131,8 +131,8 @@ function next() {
       v-else-if="blocked === 'unsupported'"
       type="info"
       variant="tonal"
-      title="Say It is in the iPhone app"
-      text="Web apps on the iPhone Home Screen cannot use speech recognition, so Say It runs in the native Rien app."
+      title="Say It is in the Rien app"
+      text="Web apps on the iPhone Home Screen cannot use speech recognition, so Say It runs in the Rien app for iPhone and Android."
     />
 
     <SqAlert
@@ -140,7 +140,7 @@ function next() {
       type="warning"
       variant="tonal"
       title="Rien needs the microphone"
-      text="Allow Microphone and Speech Recognition for Rien in the iPhone Settings app, then come back."
+      text="Allow the microphone (and Speech Recognition on iPhone) for Rien in the phone's Settings app, then come back."
     />
 
     <SqAlert

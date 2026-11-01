@@ -4,6 +4,7 @@ import { BOOK_LABELS, BOOKS, FILE_NUMBERS, type Settings } from '#shared/schemas
 const db = useDb()
 const { $pwa } = useNuxtApp()
 const native = isNativeApp()
+const android = native && usesNativeReader()
 
 const bookItems = BOOKS.map(value => ({ title: BOOK_LABELS[value].replace('English File ', ''), value }))
 const fileItems = FILE_NUMBERS.map(value => ({ title: `File ${value}`, value }))
@@ -50,7 +51,7 @@ async function updateReminder(patch: Partial<Settings['reminder']>) {
   const reminder = { ...settings.value!.reminder, ...patch }
   const allowed = await applyReminder(reminder)
   if (!allowed && reminder.enabled) {
-    message.value = { type: 'error', text: 'Allow notifications for Rien in the iPhone Settings app first.' }
+    message.value = { type: 'error', text: 'Allow notifications for Rien in the phone\'s Settings app first.' }
     return
   }
   await update({ reminder })
@@ -106,7 +107,7 @@ async function importBackup(event: Event) {
         </IosRow>
       </IosGroup>
 
-      <IosGroup header="Look & feel" footer="Motion also stays off when Reduce Motion is on in the iPhone's settings.">
+      <IosGroup header="Look & feel" footer="Motion also stays off when the phone's settings ask for less motion (Reduce Motion on iPhone, Remove animations on Android).">
         <li class="ios-control-row">
           <IosSegmented
             :model-value="settings.appearance"
@@ -127,7 +128,7 @@ async function importBackup(event: Event) {
         </IosRow>
       </IosGroup>
 
-      <IosGroup v-if="native" header="Say It" footer="Online recognition usually hears endings better; your recordings are then processed by Apple. Off keeps everything on this phone.">
+      <IosGroup v-if="native" header="Say It" :footer="`Online recognition usually hears endings better; your voice is then processed by ${android ? 'Google' : 'Apple'}. Off keeps everything on this phone where it can.`">
         <IosRow label="Online speech recognition" icon="say-it" @click="update({ speechOnline: !settings.speechOnline })">
           <template #end>
             <IosSwitch :model-value="settings.speechOnline" label="Online speech recognition" @update:model-value="update({ speechOnline: $event })" />
