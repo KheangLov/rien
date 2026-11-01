@@ -40,6 +40,7 @@ const ICONS = {
   'goal': 'cup-first',
   'install': 'home-add',
   'share': 'square-arrow-up',
+  'menu': 'menu-dots-vertical',
 } as const
 
 export type IconName = keyof typeof ICONS

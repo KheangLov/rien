@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // On Today, until Rien is installed: one tap to put it on the home screen.
-const { showCard, install, dismiss, ios } = useInstall()
+const { showCard, install, dismiss, ios, promptReady } = useInstall()
 </script>
 
 <template>
@@ -17,8 +17,8 @@ const { showCard, install, dismiss, ios } = useInstall()
     <SqCardActions>
       <SqBtn variant="text" @click="dismiss">Not now</SqBtn>
       <SqBtn color="primary" @click="install">
-        <RienIcon :name="ios ? 'share' : 'install'" :size="20" weight="bold" />
-        {{ ios ? 'Show me how' : 'Install' }}
+        <RienIcon :name="ios && !promptReady ? 'share' : 'install'" :size="20" weight="bold" />
+        {{ ios && !promptReady ? 'Show me how' : 'Install' }}
       </SqBtn>
     </SqCardActions>
   </SqCard>
