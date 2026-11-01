@@ -1,0 +1,262 @@
+<!-- Rien's opening screen, shown from the page's own HTML before any code loads.
+     It starts exactly like the phone's launch screen (the same 128 px logo on the
+     same colour), so the hand-over cannot be seen, then comes alive: soft colour
+     fields, squircle ripples, a breathing logo with a shine on its bar, a fish
+     swimming past with bubbles. plugins/splash.client.ts plays the exit once the
+     first screen is ready.
+     Template for scripts/build-brand.mjs, which fills in the logo and writes
+     app/spa-loading-template.html. Edit this file, then run the script. -->
+<div id="rien-splash" aria-hidden="true">
+  <style>
+    #rien-splash {
+      --rs-bg: {{SPLASH_LIGHT}};
+      --rs-ink: rgb(24 24 27 / 55%);
+      --rs-accent: #0f766e;
+      position: fixed;
+      inset: 0;
+      z-index: 2147483000;
+      overflow: hidden;
+      background: var(--rs-bg);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, 'Segoe UI', Roboto, 'Khmer Sangam MN', 'Noto Sans Khmer', sans-serif;
+      transition: opacity 0.45s ease 0.12s;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #rien-splash {
+        --rs-bg: {{SPLASH_DARK}};
+        --rs-ink: rgb(235 235 245 / 55%);
+        --rs-accent: #2dd4bf;
+      }
+    }
+
+    /* The same colour fields as the app's glass background, fading in. */
+    .rs-aurora i {
+      position: absolute;
+      width: 90vmax;
+      height: 90vmax;
+      border-radius: 50%;
+      opacity: 0;
+      animation: rs-fade 1.1s ease-out 0.1s forwards, rs-drift 9s ease-in-out 0.1s infinite alternate;
+    }
+
+    .rs-aurora i:nth-child(1) { left: -45vmax; top: -45vmax; background: radial-gradient(closest-side, rgb(45 212 191 / 30%), transparent); }
+    .rs-aurora i:nth-child(2) { right: -50vmax; top: -25vmax; background: radial-gradient(closest-side, rgb(56 189 248 / 24%), transparent); animation-delay: 0.25s, 0.25s; }
+    .rs-aurora i:nth-child(3) { left: -20vmax; bottom: -55vmax; background: radial-gradient(closest-side, rgb(244 114 182 / 18%), transparent); animation-delay: 0.4s, 0.4s; }
+
+    .rs-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 128px;
+      height: 128px;
+      transform: translate(-50%, -50%);
+    }
+
+    .rs-glow,
+    .rs-logo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .rs-glow {
+      border-radius: 50%;
+      background: radial-gradient(closest-side, rgb(20 184 166 / 45%), transparent);
+      opacity: 0;
+      transform: scale(1.9);
+      animation: rs-fade 0.9s ease-out 0.15s forwards;
+    }
+
+    /* Squircle ripples, drawn inside the logo's SVG (a separately scaled SVG
+       left a dark ghost box in Chrome). */
+    .rs-ring {
+      fill: none;
+      stroke: var(--rs-accent);
+      stroke-width: 1.5px;
+      vector-effect: non-scaling-stroke;
+      transform-box: fill-box;
+      transform-origin: center;
+      opacity: 0;
+      animation: rs-ripple 2.4s cubic-bezier(0.2, 0.6, 0.3, 1) 0.35s infinite;
+    }
+
+    .rs-ring + .rs-ring { animation-delay: 1.55s; }
+
+    .rs-logo {
+      overflow: visible;
+      animation: rs-breathe 2.6s ease-in-out 0.45s infinite;
+    }
+
+    .rs-shine {
+      animation: rs-shine 2.2s ease-in-out 0.6s infinite;
+      transform: translateX(-100px);
+    }
+
+    /* A fish swims past under the logo, bobbing, with bubbles rising. */
+    .rs-swim {
+      position: absolute;
+      left: 50%;
+      top: calc(100% + 34px);
+      opacity: 0;
+      animation: rs-swim 3.4s linear 0.5s infinite;
+    }
+
+    .rs-fish {
+      display: block;
+      width: 30px;
+      height: 30px;
+      margin: -15px 0 0 -15px;
+      color: var(--rs-accent);
+      animation: rs-bob 0.85s ease-in-out infinite alternate;
+    }
+
+    .rs-bubbles i {
+      position: absolute;
+      bottom: 6px;
+      border: 1.5px solid var(--rs-accent);
+      border-radius: 50%;
+      opacity: 0;
+      animation: rs-bubble 2.6s ease-out infinite;
+    }
+
+    .rs-bubbles i:nth-child(1) { left: -26px; width: 8px; height: 8px; animation-delay: 0.7s; }
+    .rs-bubbles i:nth-child(2) { right: -22px; width: 6px; height: 6px; animation-delay: 1.3s; }
+    .rs-bubbles i:nth-child(3) { right: -36px; width: 9px; height: 9px; animation-delay: 2s; }
+
+    .rs-tag {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: calc(env(safe-area-inset-bottom) + 56px);
+      margin: 0;
+      text-align: center;
+      font-size: 15px;
+      letter-spacing: 0.01em;
+      color: var(--rs-ink);
+      opacity: 0;
+      animation: rs-rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.45s forwards;
+    }
+
+    .rs-tag b {
+      margin-right: 6px;
+      font-weight: 600;
+      color: var(--rs-accent);
+    }
+
+    /* Leaving: the logo grows and fades as the first screen comes in. */
+    #rien-splash.is-leaving {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #rien-splash.is-leaving .rs-logo {
+      animation: none;
+      opacity: 0;
+      transform: scale(1.3);
+      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.35s ease;
+    }
+
+    #rien-splash.is-leaving .rs-fx {
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    @keyframes rs-fade { to { opacity: 1; } }
+    @keyframes rs-drift { to { transform: translate(4vmax, 3vmax) scale(1.08); } }
+    @keyframes rs-breathe { 50% { transform: scale(1.04); } }
+    @keyframes rs-ripple {
+      0% { opacity: 0.45; transform: scale(1); }
+      100% { opacity: 0; transform: scale(1.5); }
+    }
+    @keyframes rs-shine {
+      0% { transform: translateX(-100px); }
+      55%, 100% { transform: translateX(420px); }
+    }
+    @keyframes rs-swim {
+      0% { opacity: 0; transform: translateX(-120px); }
+      15%, 80% { opacity: 1; }
+      100% { opacity: 0; transform: translateX(120px); }
+    }
+    @keyframes rs-bob {
+      from { transform: translateY(-3px) rotate(-6deg); }
+      to { transform: translateY(3px) rotate(5deg); }
+    }
+    @keyframes rs-bubble {
+      0% { opacity: 0; transform: translateY(0) scale(0.6); }
+      20% { opacity: 0.7; }
+      100% { opacity: 0; transform: translateY(-110px) scale(1.1); }
+    }
+    @keyframes rs-rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #rien-splash *,
+      #rien-splash.is-leaving .rs-logo {
+        animation: none !important;
+        transition: none !important;
+      }
+      .rs-aurora i,
+      .rs-glow,
+      .rs-tag { opacity: 1; }
+      .rs-ring,
+      .rs-swim,
+      .rs-bubbles { display: none; }
+    }
+  </style>
+
+  <div class="rs-aurora rs-fx"><i></i><i></i><i></i></div>
+
+  <div class="rs-center">
+    <div class="rs-glow rs-fx"></div>
+    <svg class="rs-logo" viewBox="0 0 512 512">
+      <defs>
+        <linearGradient id="rs-tile" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="{{TEAL_LIGHT}}" />
+          <stop offset="1" stop-color="{{TEAL}}" />
+        </linearGradient>
+        <linearGradient id="rs-shine-fill" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#fff" stop-opacity="0" />
+          <stop offset="0.5" stop-color="#fff" stop-opacity="0.9" />
+          <stop offset="1" stop-color="#fff" stop-opacity="0" />
+        </linearGradient>
+        <clipPath id="rs-bar-clip"><rect x="136" y="341" width="240" height="18" rx="9" /></clipPath>
+      </defs>
+      <path class="rs-ring" d="{{SQUIRCLE}}" />
+      <path class="rs-ring" d="{{SQUIRCLE}}" />
+      <path d="{{SQUIRCLE}}" fill="url(#rs-tile)" />
+      <g transform="translate(0 -9)">
+        <path fill="#fff" d="{{WORD}}" />
+        <rect x="136" y="350" width="240" height="18" rx="9" fill="{{MINT}}" />
+      </g>
+      <g clip-path="url(#rs-bar-clip)">
+        <rect class="rs-shine" x="0" y="337" width="90" height="26" fill="url(#rs-shine-fill)" />
+      </g>
+    </svg>
+    <div class="rs-bubbles rs-fx"><i></i><i></i><i></i></div>
+    <div class="rs-swim rs-fx">
+      <svg class="rs-fish" viewBox="0 0 24 24">{{FISH}}</svg>
+    </div>
+  </div>
+
+  <p class="rs-tag rs-fx" lang="en"><b lang="km">រៀន</b>Learn a little every day</p>
+
+  <script>
+    // Out of the app's root element, so mounting the app does not wipe it
+    // (this runs before the first paint, so no animation restarts).
+    (function () {
+      var splash = document.getElementById('rien-splash')
+      document.body.appendChild(splash)
+      // If the app never starts, do not cover the page for ever.
+      setTimeout(function () {
+        if (!splash.isConnected) return
+        splash.classList.add('is-leaving')
+        setTimeout(function () { splash.remove() }, 700)
+      }, 10000)
+    })()
+  </script>
+</div>

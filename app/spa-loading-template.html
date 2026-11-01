@@ -1,0 +1,255 @@
+<!-- Written by scripts/build-brand.mjs from scripts/splash.html: edit that file. -->
+<div id="rien-splash" aria-hidden="true">
+  <style>
+    #rien-splash {
+      --rs-bg: #f8f9fb;
+      --rs-ink: rgb(24 24 27 / 55%);
+      --rs-accent: #0f766e;
+      position: fixed;
+      inset: 0;
+      z-index: 2147483000;
+      overflow: hidden;
+      background: var(--rs-bg);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, 'Segoe UI', Roboto, 'Khmer Sangam MN', 'Noto Sans Khmer', sans-serif;
+      transition: opacity 0.45s ease 0.12s;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #rien-splash {
+        --rs-bg: #0f1013;
+        --rs-ink: rgb(235 235 245 / 55%);
+        --rs-accent: #2dd4bf;
+      }
+    }
+
+    /* The same colour fields as the app's glass background, fading in. */
+    .rs-aurora i {
+      position: absolute;
+      width: 90vmax;
+      height: 90vmax;
+      border-radius: 50%;
+      opacity: 0;
+      animation: rs-fade 1.1s ease-out 0.1s forwards, rs-drift 9s ease-in-out 0.1s infinite alternate;
+    }
+
+    .rs-aurora i:nth-child(1) { left: -45vmax; top: -45vmax; background: radial-gradient(closest-side, rgb(45 212 191 / 30%), transparent); }
+    .rs-aurora i:nth-child(2) { right: -50vmax; top: -25vmax; background: radial-gradient(closest-side, rgb(56 189 248 / 24%), transparent); animation-delay: 0.25s, 0.25s; }
+    .rs-aurora i:nth-child(3) { left: -20vmax; bottom: -55vmax; background: radial-gradient(closest-side, rgb(244 114 182 / 18%), transparent); animation-delay: 0.4s, 0.4s; }
+
+    .rs-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 128px;
+      height: 128px;
+      transform: translate(-50%, -50%);
+    }
+
+    .rs-glow,
+    .rs-logo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .rs-glow {
+      border-radius: 50%;
+      background: radial-gradient(closest-side, rgb(20 184 166 / 45%), transparent);
+      opacity: 0;
+      transform: scale(1.9);
+      animation: rs-fade 0.9s ease-out 0.15s forwards;
+    }
+
+    /* Squircle ripples, drawn inside the logo's SVG (a separately scaled SVG
+       left a dark ghost box in Chrome). */
+    .rs-ring {
+      fill: none;
+      stroke: var(--rs-accent);
+      stroke-width: 1.5px;
+      vector-effect: non-scaling-stroke;
+      transform-box: fill-box;
+      transform-origin: center;
+      opacity: 0;
+      animation: rs-ripple 2.4s cubic-bezier(0.2, 0.6, 0.3, 1) 0.35s infinite;
+    }
+
+    .rs-ring + .rs-ring { animation-delay: 1.55s; }
+
+    .rs-logo {
+      overflow: visible;
+      animation: rs-breathe 2.6s ease-in-out 0.45s infinite;
+    }
+
+    .rs-shine {
+      animation: rs-shine 2.2s ease-in-out 0.6s infinite;
+      transform: translateX(-100px);
+    }
+
+    /* A fish swims past under the logo, bobbing, with bubbles rising. */
+    .rs-swim {
+      position: absolute;
+      left: 50%;
+      top: calc(100% + 34px);
+      opacity: 0;
+      animation: rs-swim 3.4s linear 0.5s infinite;
+    }
+
+    .rs-fish {
+      display: block;
+      width: 30px;
+      height: 30px;
+      margin: -15px 0 0 -15px;
+      color: var(--rs-accent);
+      animation: rs-bob 0.85s ease-in-out infinite alternate;
+    }
+
+    .rs-bubbles i {
+      position: absolute;
+      bottom: 6px;
+      border: 1.5px solid var(--rs-accent);
+      border-radius: 50%;
+      opacity: 0;
+      animation: rs-bubble 2.6s ease-out infinite;
+    }
+
+    .rs-bubbles i:nth-child(1) { left: -26px; width: 8px; height: 8px; animation-delay: 0.7s; }
+    .rs-bubbles i:nth-child(2) { right: -22px; width: 6px; height: 6px; animation-delay: 1.3s; }
+    .rs-bubbles i:nth-child(3) { right: -36px; width: 9px; height: 9px; animation-delay: 2s; }
+
+    .rs-tag {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: calc(env(safe-area-inset-bottom) + 56px);
+      margin: 0;
+      text-align: center;
+      font-size: 15px;
+      letter-spacing: 0.01em;
+      color: var(--rs-ink);
+      opacity: 0;
+      animation: rs-rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.45s forwards;
+    }
+
+    .rs-tag b {
+      margin-right: 6px;
+      font-weight: 600;
+      color: var(--rs-accent);
+    }
+
+    /* Leaving: the logo grows and fades as the first screen comes in. */
+    #rien-splash.is-leaving {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #rien-splash.is-leaving .rs-logo {
+      animation: none;
+      opacity: 0;
+      transform: scale(1.3);
+      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.35s ease;
+    }
+
+    #rien-splash.is-leaving .rs-fx {
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    @keyframes rs-fade { to { opacity: 1; } }
+    @keyframes rs-drift { to { transform: translate(4vmax, 3vmax) scale(1.08); } }
+    @keyframes rs-breathe { 50% { transform: scale(1.04); } }
+    @keyframes rs-ripple {
+      0% { opacity: 0.45; transform: scale(1); }
+      100% { opacity: 0; transform: scale(1.5); }
+    }
+    @keyframes rs-shine {
+      0% { transform: translateX(-100px); }
+      55%, 100% { transform: translateX(420px); }
+    }
+    @keyframes rs-swim {
+      0% { opacity: 0; transform: translateX(-120px); }
+      15%, 80% { opacity: 1; }
+      100% { opacity: 0; transform: translateX(120px); }
+    }
+    @keyframes rs-bob {
+      from { transform: translateY(-3px) rotate(-6deg); }
+      to { transform: translateY(3px) rotate(5deg); }
+    }
+    @keyframes rs-bubble {
+      0% { opacity: 0; transform: translateY(0) scale(0.6); }
+      20% { opacity: 0.7; }
+      100% { opacity: 0; transform: translateY(-110px) scale(1.1); }
+    }
+    @keyframes rs-rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #rien-splash *,
+      #rien-splash.is-leaving .rs-logo {
+        animation: none !important;
+        transition: none !important;
+      }
+      .rs-aurora i,
+      .rs-glow,
+      .rs-tag { opacity: 1; }
+      .rs-ring,
+      .rs-swim,
+      .rs-bubbles { display: none; }
+    }
+  </style>
+
+  <div class="rs-aurora rs-fx"><i></i><i></i><i></i></div>
+
+  <div class="rs-center">
+    <div class="rs-glow rs-fx"></div>
+    <svg class="rs-logo" viewBox="0 0 512 512">
+      <defs>
+        <linearGradient id="rs-tile" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#139483" />
+          <stop offset="1" stop-color="#0f766e" />
+        </linearGradient>
+        <linearGradient id="rs-shine-fill" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#fff" stop-opacity="0" />
+          <stop offset="0.5" stop-color="#fff" stop-opacity="0.9" />
+          <stop offset="1" stop-color="#fff" stop-opacity="0" />
+        </linearGradient>
+        <clipPath id="rs-bar-clip"><rect x="136" y="341" width="240" height="18" rx="9" /></clipPath>
+      </defs>
+      <path class="rs-ring" d="M512.00 256.00L511.78 342.00L511.12 369.38L510.02 389.15L508.47 405.09L506.48 418.58L504.02 430.33L501.09 440.72L497.69 450.01L493.78 458.37L489.36 465.90L484.40 472.71L478.86 478.86L472.71 484.40L465.90 489.36L458.37 493.78L450.01 497.69L440.72 501.09L430.33 504.02L418.58 506.48L405.09 508.47L389.15 510.02L369.38 511.12L342.00 511.78L256.00 512.00L170.00 511.78L142.62 511.12L122.85 510.02L106.91 508.47L93.42 506.48L81.67 504.02L71.28 501.09L61.99 497.69L53.63 493.78L46.10 489.36L39.29 484.40L33.14 478.86L27.60 472.71L22.64 465.90L18.22 458.37L14.31 450.01L10.91 440.72L7.98 430.33L5.52 418.58L3.53 405.09L1.98 389.15L0.88 369.38L0.22 342.00L0.00 256.00L0.22 170.00L0.88 142.62L1.98 122.85L3.53 106.91L5.52 93.42L7.98 81.67L10.91 71.28L14.31 61.99L18.22 53.63L22.64 46.10L27.60 39.29L33.14 33.14L39.29 27.60L46.10 22.64L53.63 18.22L61.99 14.31L71.28 10.91L81.67 7.98L93.42 5.52L106.91 3.53L122.85 1.98L142.62 0.88L170.00 0.22L256.00 0.00L342.00 0.22L369.38 0.88L389.15 1.98L405.09 3.53L418.58 5.52L430.33 7.98L440.72 10.91L450.01 14.31L458.37 18.22L465.90 22.64L472.71 27.60L478.86 33.14L484.40 39.29L489.36 46.10L493.78 53.63L497.69 61.99L501.09 71.28L504.02 81.67L506.48 93.42L508.47 106.91L510.02 122.85L511.12 142.62L511.78 170.00Z" />
+      <path class="rs-ring" d="M512.00 256.00L511.78 342.00L511.12 369.38L510.02 389.15L508.47 405.09L506.48 418.58L504.02 430.33L501.09 440.72L497.69 450.01L493.78 458.37L489.36 465.90L484.40 472.71L478.86 478.86L472.71 484.40L465.90 489.36L458.37 493.78L450.01 497.69L440.72 501.09L430.33 504.02L418.58 506.48L405.09 508.47L389.15 510.02L369.38 511.12L342.00 511.78L256.00 512.00L170.00 511.78L142.62 511.12L122.85 510.02L106.91 508.47L93.42 506.48L81.67 504.02L71.28 501.09L61.99 497.69L53.63 493.78L46.10 489.36L39.29 484.40L33.14 478.86L27.60 472.71L22.64 465.90L18.22 458.37L14.31 450.01L10.91 440.72L7.98 430.33L5.52 418.58L3.53 405.09L1.98 389.15L0.88 369.38L0.22 342.00L0.00 256.00L0.22 170.00L0.88 142.62L1.98 122.85L3.53 106.91L5.52 93.42L7.98 81.67L10.91 71.28L14.31 61.99L18.22 53.63L22.64 46.10L27.60 39.29L33.14 33.14L39.29 27.60L46.10 22.64L53.63 18.22L61.99 14.31L71.28 10.91L81.67 7.98L93.42 5.52L106.91 3.53L122.85 1.98L142.62 0.88L170.00 0.22L256.00 0.00L342.00 0.22L369.38 0.88L389.15 1.98L405.09 3.53L418.58 5.52L430.33 7.98L440.72 10.91L450.01 14.31L458.37 18.22L465.90 22.64L472.71 27.60L478.86 33.14L484.40 39.29L489.36 46.10L493.78 53.63L497.69 61.99L501.09 71.28L504.02 81.67L506.48 93.42L508.47 106.91L510.02 122.85L511.12 142.62L511.78 170.00Z" />
+      <path d="M512.00 256.00L511.78 342.00L511.12 369.38L510.02 389.15L508.47 405.09L506.48 418.58L504.02 430.33L501.09 440.72L497.69 450.01L493.78 458.37L489.36 465.90L484.40 472.71L478.86 478.86L472.71 484.40L465.90 489.36L458.37 493.78L450.01 497.69L440.72 501.09L430.33 504.02L418.58 506.48L405.09 508.47L389.15 510.02L369.38 511.12L342.00 511.78L256.00 512.00L170.00 511.78L142.62 511.12L122.85 510.02L106.91 508.47L93.42 506.48L81.67 504.02L71.28 501.09L61.99 497.69L53.63 493.78L46.10 489.36L39.29 484.40L33.14 478.86L27.60 472.71L22.64 465.90L18.22 458.37L14.31 450.01L10.91 440.72L7.98 430.33L5.52 418.58L3.53 405.09L1.98 389.15L0.88 369.38L0.22 342.00L0.00 256.00L0.22 170.00L0.88 142.62L1.98 122.85L3.53 106.91L5.52 93.42L7.98 81.67L10.91 71.28L14.31 61.99L18.22 53.63L22.64 46.10L27.60 39.29L33.14 33.14L39.29 27.60L46.10 22.64L53.63 18.22L61.99 14.31L71.28 10.91L81.67 7.98L93.42 5.52L106.91 3.53L122.85 1.98L142.62 0.88L170.00 0.22L256.00 0.00L342.00 0.22L369.38 0.88L389.15 1.98L405.09 3.53L418.58 5.52L430.33 7.98L440.72 10.91L450.01 14.31L458.37 18.22L465.90 22.64L472.71 27.60L478.86 33.14L484.40 39.29L489.36 46.10L493.78 53.63L497.69 61.99L501.09 71.28L504.02 81.67L506.48 93.42L508.47 106.91L510.02 122.85L511.12 142.62L511.78 170.00Z" fill="url(#rs-tile)" />
+      <g transform="translate(0 -9)">
+        <path fill="#fff" d="M122.7 246.4L93.2 246.4L93.2 300L65.3 300L65.3 163.3L132.3 163.3Q146.7 163.5 154.5 166.8Q162.2 170 167.6 176.3Q172 181.5 174.6 187.8Q177.2 194.1 177.2 202.2Q177.2 212 172.3 221.4Q167.4 230.8 156.1 234.7Q165.5 238.5 169.5 245.5Q173.4 252.5 173.4 266.9L173.4 276.1Q173.4 285.4 174.2 288.8Q175.3 294.1 179.4 296.6L179.4 300L147.9 300Q146.6 295.5 146.1 292.7Q145 286.9 144.9 280.9L144.7 268.2Q144.5 255.1 139.9 250.7Q135.3 246.4 122.7 246.4ZM140 221.5Q148.6 217.6 148.6 206.1Q148.6 193.7 140.3 189.4Q135.7 187 126.4 187L93.2 187L93.2 223.7L125.6 223.7Q135.2 223.7 140 221.5ZM226.9 198.9L226.9 300L200.1 300L200.1 198.9L226.9 198.9ZM226.9 162.4L226.9 186.8L200.1 186.8L200.1 162.4L226.9 162.4ZM339 270.3Q338 279.3 329.7 288.6Q316.7 303.3 293.3 303.3Q274 303.3 259.2 290.9Q244.5 278.5 244.5 250.5Q244.5 224.2 257.8 210.2Q271.1 196.2 292.4 196.2Q305 196.2 315.1 200.9Q325.2 205.6 331.8 215.9Q337.7 224.9 339.5 236.7Q340.5 243.7 340.3 256.8L271.1 256.8Q271.7 272 280.7 278.1Q286.2 281.9 293.9 281.9Q302 281.9 307.1 277.3Q309.9 274.8 312 270.3L339 270.3ZM312.9 239.3Q312.2 228.8 306.5 223.4Q300.8 218 292.4 218Q283.2 218 278.1 223.7Q273.1 229.5 271.8 239.3L312.9 239.3ZM405.7 218.5Q392.3 218.5 387.3 229.9Q384.7 235.9 384.7 245.3L384.7 300L358.3 300L358.3 199.1L383.8 199.1L383.8 213.8Q388.9 206 393.5 202.6Q401.7 196.5 414.2 196.5Q429.9 196.5 439.8 204.7Q449.8 212.9 449.8 231.9L449.8 300L422.7 300L422.7 238.5Q422.7 230.5 420.6 226.2Q416.7 218.5 405.7 218.5Z" />
+        <rect x="136" y="350" width="240" height="18" rx="9" fill="#5eead4" />
+      </g>
+      <g clip-path="url(#rs-bar-clip)">
+        <rect class="rs-shine" x="0" y="337" width="90" height="26" fill="url(#rs-shine-fill)" />
+      </g>
+    </svg>
+    <div class="rs-bubbles rs-fx"><i></i><i></i><i></i></div>
+    <div class="rs-swim rs-fx">
+      <svg class="rs-fish" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M6 12c2.4-3.6 5.6-5.5 8.8-5.5c2.8 0 5 1.7 6.4 4.4a2.4 2.4 0 0 1 0 2.2c-1.4 2.7-3.6 4.4-6.4 4.4c-3.2 0-6.4-1.9-8.8-5.5Z M18.2 11.2a.9.9 0 1 1-1.8 0a.9.9 0 0 1 1.8 0Z"/><path fill="currentColor" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5" d="M6 12L2.5 8.5v7Z"/></svg>
+    </div>
+  </div>
+
+  <p class="rs-tag rs-fx" lang="en"><b lang="km">រៀន</b>Learn a little every day</p>
+
+  <script>
+    // Out of the app's root element, so mounting the app does not wipe it
+    // (this runs before the first paint, so no animation restarts).
+    (function () {
+      var splash = document.getElementById('rien-splash')
+      document.body.appendChild(splash)
+      // If the app never starts, do not cover the page for ever.
+      setTimeout(function () {
+        if (!splash.isConnected) return
+        splash.classList.add('is-leaving')
+        setTimeout(function () { splash.remove() }, 700)
+      }, 10000)
+    })()
+  </script>
+</div>
