@@ -152,7 +152,7 @@ export const sessionSchema = z.object({
 // One answer in a practice game, for the skill model (shared/utils/mastery.ts):
 // right or wrong, how fast, and which skill it used. Word reviews have their
 // own log (reviews), so words are not repeated here.
-export const ATTEMPT_KINDS = ['fix-it', 'sound', 'builder', 'radio', 'listen', 'picture', 'speed', 'boss', 'say-it'] as const
+export const ATTEMPT_KINDS = ['fix-it', 'sound', 'builder', 'radio', 'listen', 'picture', 'speed', 'boss', 'say-it', 'ielts-reading', 'ielts-listening'] as const
 export type AttemptKind = typeof ATTEMPT_KINDS[number]
 
 export const attemptSchema = z.object({
@@ -220,6 +220,8 @@ export const settingsSchema = z.object({
   lastBackupAt: z.coerce.date().optional(),
   // FSRS parameters fitted to her own reviews (shared/utils/fsrsFit.ts), and when.
   fsrsParams: z.array(z.number()).length(21).optional(),
+  // "Not yet" on a move-up suggestion: hidden for this File until then.
+  levelSnooze: z.object({ book: bookSchema, file: fileNumberSchema, until: z.coerce.date() }).optional(),
   fsrsFittedAt: z.coerce.date().optional(),
   lastAutoBackupAt: z.coerce.date().optional(),
 })

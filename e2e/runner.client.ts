@@ -12,6 +12,7 @@ import { builderCards } from '#shared/utils/builder'
 import { WORD_BANK } from '#shared/utils/quick'
 import { GAP_EVERY, radioAnswers, radioTokens } from '#shared/utils/radio'
 import { useDb } from '~/composables/useDb'
+import { loadIelts } from '~/composables/useIelts'
 import { resetLearner, useLearner, weakSkills, workingLevelOf } from '~/composables/useLearner'
 import { usePacks } from '~/composables/usePacks'
 
@@ -639,7 +640,15 @@ async function run() {
       if (learner.answers !== attempts.length + reviews) throw new Error(`model saw ${learner.answers} answers, log has ${attempts.length + reviews}`)
       const skills = weakSkills(learner, new Date())
       if (!skills.length) throw new Error('no skills reported')
-      return `${attempts.length} attempts + ${reviews} reviews; weakest: ${skills.slice(0, 2).map(s => `${s.skill} ${Math.round(s.p * 100)}%`).join(', ')}; working at ${workingLevelOf(learner)}`
+      // Its self-check: every past answer predicted before learning from it.
+      const { check } = learner
+      if (check.n !== learner.answers - 10 || !(check.accuracy > 0 && check.accuracy <= 1)) throw new Error(`self-check: ${JSON.stringify(check).slice(0, 120)}`)
+      await goTo('/progress', 'Days studied')
+      await waitText('How well Rien knows you')
+      await waitText('Skills')
+      document.querySelector('.rien-calibration')?.scrollIntoView({ block: 'center' })
+      await screen('progress-self-check')
+      return `${attempts.length} attempts + ${reviews} reviews; self-check ${Math.round(check.accuracy * 100)}% on ${check.n}; weakest: ${skills.slice(0, 2).map(s => `${s.skill} ${Math.round(s.p * 100)}%`).join(', ')}; working at ${workingLevelOf(learner)}`
     }
     finally {
       console.warn = warn
@@ -689,6 +698,57 @@ async function run() {
     await waitFor(() => text().includes('Read it aloud') || text().includes('Say It is in the Rien app'), 'Say It content')
     await screen('say-it')
     return text().includes('Read it aloud') ? 'sentence ready to read' : 'web notice shown'
+  })
+
+  await step('IELTS: reading, listening, writing, speaking and academic words', async () => {
+    const ielts = await loadIelts()
+    // Reading: every statement answered as the pack says, so all right.
+    await goTo('/ielts/reading', 'Not given')
+    const text = ielts.reading[0]!
+    const LABEL = { 'true': 'True', 'false': 'False', 'not-given': 'Not given' } as const
+    const items = [...document.querySelectorAll<HTMLElement>('.rien-tfng > li')]
+    if (items.length !== text.statements.length) throw new Error(`${items.length} statements shown`)
+    items.forEach((li, i) => [...li.querySelectorAll<HTMLButtonElement>('button')].find(b => b.textContent!.trim() === LABEL[text.statements[i]!.answer])!.click())
+    await sleep(150)
+    await click('Check')
+    await waitText(`${text.statements.length} / ${text.statements.length}`)
+    await screen('ielts-reading')
+    // Listening: the form filled from the pack's answers, in other accepted forms.
+    await goTo('/ielts/listening', 'Form')
+    const call = ielts.listening[0]!
+    const inputs = [...document.querySelectorAll<HTMLInputElement>('.rien-ielts-form input')]
+    call.form.forEach((f, i) => setValue(inputs[i]!, (f.accept[0] ?? f.answer).toUpperCase()))
+    await sleep(150)
+    await click('Check')
+    await waitText(`${call.form.length} / ${call.form.length}`)
+    // Writing: a short essay gets the checklist.
+    await goTo('/ielts/writing', 'Task 2')
+    await click('Task 2')
+    const essay = await waitFor(() => document.querySelector<HTMLTextAreaElement>('.rien-ielts-essay textarea'), 'essay box')
+    setValue(essay, 'In my opinion, children should learn a foreign language early. However, it is not easy.\n\nFor example, young children copy sounds well, and as a result they speak more naturally.\n\nIn addition, schools need good teachers. Therefore it costs money.\n\nIn conclusion, I believe that the benefits are greater than the costs.')
+    await sleep(150)
+    await click('Check')
+    await waitText('Checklist')
+    await waitText('A conclusion')
+    await screen('ielts-writing')
+    // Speaking: Part 1 asks its first question; Part 2 shows the card and the minute to prepare.
+    await goTo('/ielts/speaking', 'Parts 2 and 3')
+    await click('Start Part 1')
+    await waitText('question 1 of')
+    await goTo('/ielts', 'Academic words')
+    await goTo('/ielts/speaking', 'Parts 2 and 3')
+    await click('Start Part 2')
+    await waitText('You should say')
+    await waitFor(() => /Prepare: 0:5\d|Prepare: 1:00/.test(pageText()), 'preparation minute running')
+    await screen('ielts-speaking-card')
+    // Academic words: ten go into her words.
+    const before = await db.countCards()
+    await goTo('/ielts', 'Academic words')
+    await click('Add 10 to my words')
+    await waitText('Added 10 words')
+    if ((await db.countCards()) !== before + 10) throw new Error('academic words not added')
+    await screen('ielts-hub')
+    return `reading ${text.statements.length}/${text.statements.length}, form ${call.form.length}/${call.form.length}, essay checked, ${before + 10} words`
   })
 
   log(`DONE pass=${pass} fail=${fail}`)

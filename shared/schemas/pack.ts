@@ -128,6 +128,82 @@ export const radioSchema = z.object({
 })
 
 // A pack with no book is a core pack and applies at every level.
+// --- IELTS (original practice material in the exam's formats) -------------------
+
+// Speaking Part 1 (a topic and short questions), or Part 2 (a cue card: talk
+// for two minutes) with its Part 3 discussion questions.
+export const ieltsSpeakingSchema = z
+  .object({
+    id: z.string().regex(PACK_ID),
+    part: z.union([z.literal(1), z.literal(2)]),
+    topic: z.string().trim().min(1).max(60),
+    // Part 1: the questions. Part 2: the Part 3 discussion that follows.
+    questions: z.array(z.string().trim().min(1).max(200)).min(3).max(6),
+    cue: z.string().trim().max(120).optional(),
+    points: z.array(z.string().trim().min(1).max(80)).default([]),
+  })
+  .refine(s => s.part === 1 || (s.cue && s.points.length >= 3), { message: 'A Part 2 card needs a cue and at least three points', path: ['cue'] })
+
+const chartSchema = z.object({
+  title: z.string().trim().min(1).max(120),
+  unit: z.string().trim().max(30),
+  labels: z.array(z.string().trim().min(1)).min(2).max(8),
+  series: z.array(z.object({ name: z.string().trim().min(1), data: z.array(z.number()) })).min(1).max(4),
+})
+
+// Writing Task 1 (describe a chart, 150 words, 20 minutes) or Task 2 (an
+// essay, 250 words, 40 minutes).
+export const ieltsWritingSchema = z
+  .object({
+    id: z.string().regex(PACK_ID),
+    task: z.union([z.literal(1), z.literal(2)]),
+    prompt: z.string().trim().min(20).max(400),
+    chart: chartSchema.optional(),
+  })
+  .superRefine((w, ctx) => {
+    if (w.task === 1 && !w.chart) ctx.addIssue({ code: 'custom', path: ['chart'], message: 'Task 1 needs a chart' })
+    for (const [i, s] of (w.chart?.series ?? []).entries()) {
+      if (s.data.length !== w.chart!.labels.length) ctx.addIssue({ code: 'custom', path: ['chart', 'series', i], message: 'One value per label' })
+    }
+  })
+
+// Reading: a short text and True / False / Not Given statements.
+export const ieltsReadingSchema = z.object({
+  id: z.string().regex(PACK_ID),
+  title: z.string().trim().min(1).max(80),
+  text: z.string().trim().min(200).max(1600),
+  statements: z.array(z.object({
+    id: z.string().regex(PACK_ID),
+    text: z.string().trim().min(5).max(200),
+    answer: z.enum(['true', 'false', 'not-given']),
+    why: z.string().trim().min(5).max(200),
+  })).min(4).max(7),
+})
+
+// Listening: a conversation read aloud, and a form to complete (names spelled,
+// numbers, dates: where marks are often lost).
+export const ieltsListeningSchema = z.object({
+  id: z.string().regex(PACK_ID),
+  title: z.string().trim().min(1).max(80),
+  intro: z.string().trim().min(5).max(200),
+  lines: z.array(z.object({ speaker: z.enum(['A', 'B']), text: z.string().trim().min(1).max(300) })).min(4),
+  form: z.array(z.object({
+    id: z.string().regex(PACK_ID),
+    label: z.string().trim().min(1).max(60),
+    answer: z.string().trim().min(1).max(40),
+    // Other ways to write the same answer ("2" for "two").
+    accept: z.array(z.string().trim().min(1)).default([]),
+  })).min(4).max(8),
+})
+
+// A word from the Academic Word List (Coxhead, 2000), with Rien's own meaning
+// and example.
+export const academicWordSchema = z.object({
+  word: z.string().trim().min(2).max(30),
+  meaning: z.string().trim().min(3).max(120),
+  example: z.string().trim().min(5).max(160),
+})
+
 export const packSchema = z
   .object({
     id: z.string().regex(PACK_ID),
@@ -141,6 +217,11 @@ export const packSchema = z
     talks: z.array(talkSchema).default([]),
     builder: z.array(builderSchema).default([]),
     radio: z.array(radioSchema).default([]),
+    ieltsSpeaking: z.array(ieltsSpeakingSchema).default([]),
+    ieltsWriting: z.array(ieltsWritingSchema).default([]),
+    ieltsReading: z.array(ieltsReadingSchema).default([]),
+    ieltsListening: z.array(ieltsListeningSchema).default([]),
+    academicWords: z.array(academicWordSchema).default([]),
   })
   .superRefine((pack, ctx) => {
     const seen = new Set<string>()
@@ -165,4 +246,9 @@ export type SoundPair = z.output<typeof soundPairSchema>
 export type Talk = z.output<typeof talkSchema>
 export type BuilderItem = z.output<typeof builderSchema>
 export type RadioText = z.output<typeof radioSchema>
+export type IeltsSpeaking = z.output<typeof ieltsSpeakingSchema>
+export type IeltsWriting = z.output<typeof ieltsWritingSchema>
+export type IeltsReading = z.output<typeof ieltsReadingSchema>
+export type IeltsListening = z.output<typeof ieltsListeningSchema>
+export type AcademicWord = z.output<typeof academicWordSchema>
 export type SoundFocus = (typeof SOUND_FOCUSES)[number]

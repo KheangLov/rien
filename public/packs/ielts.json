@@ -1,0 +1,1056 @@
+{
+  "id": "ielts",
+  "title": "IELTS practice (original, in the exam's formats)",
+  "level": "B2",
+  "ieltsSpeaking": [
+    {
+      "id": "p1-home",
+      "part": 1,
+      "topic": "Your home",
+      "questions": [
+        "Do you live in a house or a flat?",
+        "What do you like most about your home?",
+        "Is there anything you would like to change about it?",
+        "Do you think you will live there for a long time?"
+      ]
+    },
+    {
+      "id": "p1-work",
+      "part": 1,
+      "topic": "Work or study",
+      "questions": [
+        "Do you work, or are you a student?",
+        "What do you enjoy about it?",
+        "Why did you choose that job or subject?",
+        "What would you like to do in the future?"
+      ]
+    },
+    {
+      "id": "p1-food",
+      "part": 1,
+      "topic": "Food",
+      "questions": [
+        "What kind of food do you like?",
+        "Do you prefer eating at home or eating out?",
+        "Can you cook? What do you make?",
+        "Has your diet changed since you were a child?"
+      ]
+    },
+    {
+      "id": "p1-free-time",
+      "part": 1,
+      "topic": "Free time",
+      "questions": [
+        "What do you do in your free time?",
+        "Do you prefer spending free time alone or with other people?",
+        "Is there a hobby you would like to try?",
+        "How much free time do you have in a normal week?"
+      ]
+    },
+    {
+      "id": "p1-weather",
+      "part": 1,
+      "topic": "Weather",
+      "questions": [
+        "What's the weather like where you live?",
+        "Which season do you like best, and why?",
+        "Does the weather change your mood?",
+        "What do you usually do when it rains a lot?"
+      ]
+    },
+    {
+      "id": "p1-transport",
+      "part": 1,
+      "topic": "Getting around",
+      "questions": [
+        "How do you usually travel to work or school?",
+        "Is public transport good where you live?",
+        "Do you enjoy long journeys by bus?",
+        "Would you like to learn to drive a car?"
+      ]
+    },
+    {
+      "id": "p1-phones",
+      "part": 1,
+      "topic": "Phones",
+      "questions": [
+        "How often do you use your phone?",
+        "What do you use it for most?",
+        "Could you live without your phone for a week?",
+        "Do you think children should have phones?"
+      ]
+    },
+    {
+      "id": "p2-place",
+      "part": 2,
+      "topic": "A place you like",
+      "cue": "Describe a place in your country that you like to visit.",
+      "points": [
+        "where it is",
+        "how often you go there",
+        "what you do there",
+        "and explain why you like it"
+      ],
+      "questions": [
+        "Why do people like to visit famous places?",
+        "Does tourism help or harm a country's culture?",
+        "How might the way people travel change in the future?"
+      ]
+    },
+    {
+      "id": "p2-helper",
+      "part": 2,
+      "topic": "Someone who helped you",
+      "cue": "Describe a person who has helped you with your studies.",
+      "points": [
+        "who the person is",
+        "how you know them",
+        "how they helped you",
+        "and explain how you felt about their help"
+      ],
+      "questions": [
+        "What makes a good teacher?",
+        "Is it better to learn alone or with other people?",
+        "Will computers ever replace teachers?"
+      ]
+    },
+    {
+      "id": "p2-celebration",
+      "part": 2,
+      "topic": "A celebration",
+      "cue": "Describe a celebration you enjoyed.",
+      "points": [
+        "what it was",
+        "when and where it happened",
+        "who was there",
+        "and explain why you enjoyed it"
+      ],
+      "questions": [
+        "Why are traditional festivals important?",
+        "How have celebrations changed in your country?",
+        "Do people spend too much money on celebrations?"
+      ]
+    },
+    {
+      "id": "p2-object",
+      "part": 2,
+      "topic": "Something important to you",
+      "cue": "Describe something you own that is important to you.",
+      "points": [
+        "what it is",
+        "how you got it",
+        "how often you use it",
+        "and explain why it is important to you"
+      ],
+      "questions": [
+        "Why do people enjoy buying new things?",
+        "Do people today own too many things?",
+        "How do advertisements affect what we buy?"
+      ]
+    },
+    {
+      "id": "p2-skill",
+      "part": 2,
+      "topic": "A skill to learn",
+      "cue": "Describe a skill you would like to learn.",
+      "points": [
+        "what the skill is",
+        "why you want to learn it",
+        "how you would learn it",
+        "and explain how it would help you"
+      ],
+      "questions": [
+        "Which skills are most useful for young people today?",
+        "Should schools teach practical skills like cooking?",
+        "Is it harder to learn new things as we get older?"
+      ]
+    },
+    {
+      "id": "p2-journey",
+      "part": 2,
+      "topic": "A journey you remember",
+      "cue": "Describe a journey you remember well.",
+      "points": [
+        "where you went",
+        "how you travelled",
+        "who you went with",
+        "and explain why you remember it"
+      ],
+      "questions": [
+        "What are the advantages of travelling by train?",
+        "Why do some people prefer to travel alone?",
+        "How can cities reduce traffic?"
+      ]
+    }
+  ],
+  "ieltsWriting": [
+    {
+      "id": "t1-museums",
+      "task": 1,
+      "prompt": "The chart shows the number of visitors to three museums in a city from 2019 to 2023 (invented figures for practice). Summarise the information by selecting and reporting the main features, and make comparisons where relevant. Write at least 150 words.",
+      "chart": {
+        "title": "Visitors to three museums",
+        "unit": "thousand visitors",
+        "labels": [
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023"
+        ],
+        "series": [
+          {
+            "name": "History Museum",
+            "data": [
+              120,
+              40,
+              60,
+              110,
+              140
+            ]
+          },
+          {
+            "name": "Art Gallery",
+            "data": [
+              80,
+              30,
+              50,
+              85,
+              90
+            ]
+          },
+          {
+            "name": "Science Centre",
+            "data": [
+              60,
+              25,
+              70,
+              95,
+              130
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "t1-college-travel",
+      "task": 1,
+      "prompt": "The chart shows how students at a college travelled there in 2015 and 2025 (invented figures for practice). Summarise the information by selecting and reporting the main features, and make comparisons where relevant. Write at least 150 words.",
+      "chart": {
+        "title": "How students travel to college",
+        "unit": "% of students",
+        "labels": [
+          "Motorbike",
+          "Bus",
+          "Bicycle",
+          "Car",
+          "Walking"
+        ],
+        "series": [
+          {
+            "name": "2015",
+            "data": [
+              55,
+              10,
+              20,
+              5,
+              10
+            ]
+          },
+          {
+            "name": "2025",
+            "data": [
+              40,
+              30,
+              8,
+              12,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "t1-water",
+      "task": 1,
+      "prompt": "The chart shows the average amount of water used each day by one person in four countries in 2000 and 2020 (invented figures for practice). Summarise the information by selecting and reporting the main features, and make comparisons where relevant. Write at least 150 words.",
+      "chart": {
+        "title": "Daily water use per person",
+        "unit": "litres",
+        "labels": [
+          "Country A",
+          "Country B",
+          "Country C",
+          "Country D"
+        ],
+        "series": [
+          {
+            "name": "2000",
+            "data": [
+              150,
+              90,
+              60,
+              200
+            ]
+          },
+          {
+            "name": "2020",
+            "data": [
+              130,
+              110,
+              85,
+              160
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "t2-languages",
+      "task": 2,
+      "prompt": "Some people believe that children should start learning a foreign language at primary school. Others think it is better to start at secondary school. Discuss both views and give your own opinion. Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words."
+    },
+    {
+      "id": "t2-traffic",
+      "task": 2,
+      "prompt": "In many cities, traffic is getting worse every year. What are the causes of this problem, and what can be done to solve it? Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words."
+    },
+    {
+      "id": "t2-home-working",
+      "task": 2,
+      "prompt": "More and more people are working from home. Do the advantages of this outweigh the disadvantages? Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words."
+    },
+    {
+      "id": "t2-tourism",
+      "task": 2,
+      "prompt": "Some people think that tourism does more harm than good to a country's traditional culture. To what extent do you agree or disagree? Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words."
+    },
+    {
+      "id": "t2-phones",
+      "task": 2,
+      "prompt": "Young people today spend too much time on their phones. To what extent do you agree or disagree? Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words."
+    }
+  ],
+  "ieltsReading": [
+    {
+      "id": "school-garden",
+      "title": "Learning in the garden",
+      "text": "When the primary school in a small town near the river opened its garden five years ago, many parents were doubtful. The head teacher, Ms Sophea, wanted children to learn science and maths by growing vegetables, but some families worried that it would take time away from reading and writing. Today, the garden covers about half of the school's land. Each class looks after its own section, and pupils measure how fast the plants grow, record the weather and calculate how much they can sell at the weekly market. The money pays for books and for school trips. According to the school's own records, pupils' maths results have improved every year since the garden began, although Ms Sophea admits that a new maths teacher, who joined at the same time, may also have made a difference. Not every school could copy the idea: the garden needs water all year, and in the dry season older pupils carry it from a well. Several schools in the province have visited, and two have started small gardens of their own.",
+      "statements": [
+        {
+          "id": "doubtful",
+          "text": "Some parents were not sure about the garden at first.",
+          "answer": "true",
+          "why": "\"Many parents were doubtful.\""
+        },
+        {
+          "id": "bigger",
+          "text": "The garden is bigger than the school buildings.",
+          "answer": "not-given",
+          "why": "It covers half of the land; the buildings' size is never given."
+        },
+        {
+          "id": "same-veg",
+          "text": "Every class grows the same vegetables.",
+          "answer": "not-given",
+          "why": "Each class has its own section, but the text does not say what they grow."
+        },
+        {
+          "id": "books",
+          "text": "Money from the market is spent on books.",
+          "answer": "true",
+          "why": "\"The money pays for books and for school trips.\""
+        },
+        {
+          "id": "only-reason",
+          "text": "Ms Sophea thinks the garden is the only reason maths results improved.",
+          "answer": "false",
+          "why": "She admits the new maths teacher may also have made a difference."
+        },
+        {
+          "id": "river-water",
+          "text": "In the dry season the garden's water comes from the river.",
+          "answer": "false",
+          "why": "Older pupils carry it from a well."
+        }
+      ]
+    },
+    {
+      "id": "forgetting",
+      "title": "Why we forget new words",
+      "text": "In the 1880s, the German researcher Hermann Ebbinghaus tested his own memory by learning lists of nonsense syllables and checking how many he could remember after different amounts of time. He found that most forgetting happens soon after learning: a lot is lost within the first day, and after that it is lost more slowly. He also found that reviewing material several times, with gaps between the reviews, made it last much longer than studying it many times in one sitting. Modern researchers call this the spacing effect, and many studies since then have confirmed it. Some language-learning apps now use it to decide when to show each word again. However, scientists point out that memory also depends on other things, such as sleep, interest in the subject and whether a word is used in real conversation. A word that you say to a friend may be remembered better than one you only read on a screen.",
+      "statements": [
+        {
+          "id": "others",
+          "text": "Ebbinghaus tested his ideas on other people.",
+          "answer": "false",
+          "why": "He tested his own memory."
+        },
+        {
+          "id": "fast-first",
+          "text": "Forgetting is fastest soon after learning.",
+          "answer": "true",
+          "why": "\"Most forgetting happens soon after learning.\""
+        },
+        {
+          "id": "accepted",
+          "text": "Other scientists of his time did not accept Ebbinghaus's work.",
+          "answer": "not-given",
+          "why": "The text says nothing about how scientists of his time reacted."
+        },
+        {
+          "id": "one-session",
+          "text": "Studying something many times in one session works better than spaced reviews.",
+          "answer": "false",
+          "why": "Spaced reviews made it last much longer."
+        },
+        {
+          "id": "sleep",
+          "text": "Sleep can affect how well we remember.",
+          "answer": "true",
+          "why": "Memory \"also depends on other things, such as sleep\"."
+        },
+        {
+          "id": "most-apps",
+          "text": "Most language-learning apps use the spacing effect.",
+          "answer": "not-given",
+          "why": "It says \"some\" apps use it; it does not say how many."
+        }
+      ]
+    },
+    {
+      "id": "night-market",
+      "title": "The night market",
+      "text": "Every Friday and Saturday evening, the car park behind the town's main bus station becomes a night market. It started three years ago with about twenty food stalls, and it now has more than eighty, selling clothes, phone accessories and handmade jewellery as well as food. The market is run by a group of local sellers rather than by the town council, and each stall pays a small fee to cover cleaning and electricity. Most visitors are young people who come after work or college, but on Saturdays many families bring their children for the live music. The organisers say that the market has helped people who lost their jobs to start small businesses. Not everyone is happy, however. Some shop owners in the town centre complain that they have lost customers since the market opened, and people living nearby have asked for the music to end earlier. The organisers have agreed to stop the music at ten o'clock, but they say they have no plans to open on weekdays.",
+      "statements": [
+        {
+          "id": "car-park",
+          "text": "The market takes place in a car park.",
+          "answer": "true",
+          "why": "\"The car park behind the town's main bus station becomes a night market.\""
+        },
+        {
+          "id": "council",
+          "text": "The town council runs the market.",
+          "answer": "false",
+          "why": "It is run by local sellers \"rather than by the town council\"."
+        },
+        {
+          "id": "fee-rise",
+          "text": "The stall fee has gone up since the market opened.",
+          "answer": "not-given",
+          "why": "The fee is mentioned, but not whether it has changed."
+        },
+        {
+          "id": "families",
+          "text": "Families mostly come on Saturdays.",
+          "answer": "true",
+          "why": "\"On Saturdays many families bring their children.\""
+        },
+        {
+          "id": "shops-unhappy",
+          "text": "Some shop owners are unhappy about the market.",
+          "answer": "true",
+          "why": "They \"complain that they have lost customers\"."
+        },
+        {
+          "id": "weekdays",
+          "text": "The market will soon open on weekdays too.",
+          "answer": "false",
+          "why": "They \"have no plans to open on weekdays\"."
+        }
+      ]
+    }
+  ],
+  "ieltsListening": [
+    {
+      "id": "homestay",
+      "title": "Booking a homestay",
+      "intro": "A woman phones a homestay to book a room. Complete the form.",
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "Good morning, Green River Homestay. How can I help you?"
+        },
+        {
+          "speaker": "B",
+          "text": "Hello. I'd like to book a room for my husband and me, please."
+        },
+        {
+          "speaker": "A",
+          "text": "Of course. Can I have your name?"
+        },
+        {
+          "speaker": "B",
+          "text": "It's Sreymom. That's S, R, E, Y, M, O, M."
+        },
+        {
+          "speaker": "A",
+          "text": "Thank you. And when would you like to come?"
+        },
+        {
+          "speaker": "B",
+          "text": "We'd like to arrive on the fourteenth of April and stay for three nights."
+        },
+        {
+          "speaker": "A",
+          "text": "That's fine. A double room is twenty-five dollars a night, with breakfast."
+        },
+        {
+          "speaker": "B",
+          "text": "Great. Can you also book us a boat trip?"
+        },
+        {
+          "speaker": "A",
+          "text": "Yes. The boat trip leaves at seven thirty in the morning. Can I take a phone number?"
+        },
+        {
+          "speaker": "B",
+          "text": "Sure. It's oh one two, four five eight, nine oh three."
+        }
+      ],
+      "form": [
+        {
+          "id": "name",
+          "label": "Name",
+          "answer": "Sreymom",
+          "accept": []
+        },
+        {
+          "id": "arrive",
+          "label": "Arrival date",
+          "answer": "14 April",
+          "accept": [
+            "April 14",
+            "14/4",
+            "14/04"
+          ]
+        },
+        {
+          "id": "nights",
+          "label": "Number of nights",
+          "answer": "3",
+          "accept": []
+        },
+        {
+          "id": "price",
+          "label": "Price per night ($)",
+          "answer": "25",
+          "accept": []
+        },
+        {
+          "id": "boat",
+          "label": "Boat trip leaves at",
+          "answer": "7.30",
+          "accept": [
+            "seven thirty",
+            "7:30 am"
+          ]
+        },
+        {
+          "id": "phone",
+          "label": "Phone number",
+          "answer": "012458903",
+          "accept": []
+        }
+      ]
+    },
+    {
+      "id": "language-centre",
+      "title": "Joining an English course",
+      "intro": "A man phones a language centre to join a class. Complete the form.",
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "Good afternoon, City Language Centre."
+        },
+        {
+          "speaker": "B",
+          "text": "Hi. I'd like to join the evening speaking class, please."
+        },
+        {
+          "speaker": "A",
+          "text": "Certainly. What's your family name?"
+        },
+        {
+          "speaker": "B",
+          "text": "It's Chhim. C, H, H, I, M."
+        },
+        {
+          "speaker": "A",
+          "text": "And your first name?"
+        },
+        {
+          "speaker": "B",
+          "text": "Dara. D, A, R, A."
+        },
+        {
+          "speaker": "A",
+          "text": "Which level did you finish?"
+        },
+        {
+          "speaker": "B",
+          "text": "I finished level six last term."
+        },
+        {
+          "speaker": "A",
+          "text": "Then you'll be in level seven. The class is on Tuesdays and Thursdays, from six to half past seven."
+        },
+        {
+          "speaker": "B",
+          "text": "How much is it?"
+        },
+        {
+          "speaker": "A",
+          "text": "It's ninety dollars for ten weeks, and the book is twelve dollars."
+        },
+        {
+          "speaker": "B",
+          "text": "And when does it start?"
+        },
+        {
+          "speaker": "A",
+          "text": "On the third of March."
+        }
+      ],
+      "form": [
+        {
+          "id": "surname",
+          "label": "Family name",
+          "answer": "Chhim",
+          "accept": []
+        },
+        {
+          "id": "first",
+          "label": "First name",
+          "answer": "Dara",
+          "accept": []
+        },
+        {
+          "id": "level",
+          "label": "Level",
+          "answer": "7",
+          "accept": []
+        },
+        {
+          "id": "days",
+          "label": "Days",
+          "answer": "Tuesday and Thursday",
+          "accept": [
+            "Tuesdays and Thursdays",
+            "Tuesday Thursday",
+            "Tue Thu"
+          ]
+        },
+        {
+          "id": "fee",
+          "label": "Course fee ($)",
+          "answer": "90",
+          "accept": []
+        },
+        {
+          "id": "start",
+          "label": "Start date",
+          "answer": "3 March",
+          "accept": [
+            "March 3",
+            "3/3",
+            "03/03"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lost-phone",
+      "title": "A lost phone",
+      "intro": "A woman calls the lost property office at a bus station. Complete the form.",
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "Bus station, lost property office. Can I help you?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, I think I left my phone on a bus this morning."
+        },
+        {
+          "speaker": "A",
+          "text": "Which bus was it?"
+        },
+        {
+          "speaker": "B",
+          "text": "The number fifteen, to the airport."
+        },
+        {
+          "speaker": "A",
+          "text": "What time did you get off?"
+        },
+        {
+          "speaker": "B",
+          "text": "At about ten past nine."
+        },
+        {
+          "speaker": "A",
+          "text": "And what does the phone look like?"
+        },
+        {
+          "speaker": "B",
+          "text": "It's a black phone in a red case."
+        },
+        {
+          "speaker": "A",
+          "text": "Can I have your name, please?"
+        },
+        {
+          "speaker": "B",
+          "text": "Vanna Kong. That's K, O, N, G."
+        },
+        {
+          "speaker": "A",
+          "text": "And a number where we can call you?"
+        },
+        {
+          "speaker": "B",
+          "text": "Please call my sister on oh nine seven, two two one, six oh four."
+        }
+      ],
+      "form": [
+        {
+          "id": "bus",
+          "label": "Bus number",
+          "answer": "15",
+          "accept": []
+        },
+        {
+          "id": "time",
+          "label": "Got off at",
+          "answer": "9.10",
+          "accept": [
+            "ten past nine",
+            "9:10 am"
+          ]
+        },
+        {
+          "id": "case",
+          "label": "Colour of case",
+          "answer": "red",
+          "accept": []
+        },
+        {
+          "id": "family-name",
+          "label": "Family name",
+          "answer": "Kong",
+          "accept": []
+        },
+        {
+          "id": "contact",
+          "label": "Contact number",
+          "answer": "097221604",
+          "accept": []
+        }
+      ]
+    }
+  ],
+  "academicWords": [
+    {
+      "word": "analyse",
+      "meaning": "to look at something carefully to understand it",
+      "example": "We analysed the results of the survey."
+    },
+    {
+      "word": "approach",
+      "meaning": "a way of dealing with something",
+      "example": "Our teacher has a friendly approach to mistakes."
+    },
+    {
+      "word": "area",
+      "meaning": "a part of a place, or a subject",
+      "example": "Maths is not my strongest area."
+    },
+    {
+      "word": "assess",
+      "meaning": "to judge how good or big something is",
+      "example": "The exam assesses all four skills."
+    },
+    {
+      "word": "assume",
+      "meaning": "to think something is true without proof",
+      "example": "I assumed the shop was open, but it was closed."
+    },
+    {
+      "word": "authority",
+      "meaning": "the power to decide, or an official group",
+      "example": "The local authority built a new road."
+    },
+    {
+      "word": "available",
+      "meaning": "able to be used or bought",
+      "example": "Tickets are available online."
+    },
+    {
+      "word": "benefit",
+      "meaning": "a good result or help from something",
+      "example": "One benefit of walking is better health."
+    },
+    {
+      "word": "concept",
+      "meaning": "an idea",
+      "example": "The concept of time is different in every culture."
+    },
+    {
+      "word": "consist",
+      "meaning": "to be made of",
+      "example": "The test consists of four parts."
+    },
+    {
+      "word": "constitute",
+      "meaning": "to be or form something",
+      "example": "Women constitute half of the class."
+    },
+    {
+      "word": "context",
+      "meaning": "the situation around something",
+      "example": "Guess the word's meaning from the context."
+    },
+    {
+      "word": "contract",
+      "meaning": "a written legal agreement",
+      "example": "She signed a one-year contract."
+    },
+    {
+      "word": "create",
+      "meaning": "to make something new",
+      "example": "The project created two hundred jobs."
+    },
+    {
+      "word": "data",
+      "meaning": "facts and numbers",
+      "example": "The data shows a rise in prices."
+    },
+    {
+      "word": "define",
+      "meaning": "to say exactly what something means",
+      "example": "How would you define success?"
+    },
+    {
+      "word": "derive",
+      "meaning": "to get something from a source",
+      "example": "Many English words derive from Latin."
+    },
+    {
+      "word": "distribute",
+      "meaning": "to give or share out",
+      "example": "Volunteers distributed food to families."
+    },
+    {
+      "word": "economy",
+      "meaning": "a country's money, work and trade",
+      "example": "Tourism is important for the economy."
+    },
+    {
+      "word": "environment",
+      "meaning": "the natural world, or the place around you",
+      "example": "Plastic bags harm the environment."
+    },
+    {
+      "word": "establish",
+      "meaning": "to start something that lasts",
+      "example": "The school was established in 1995."
+    },
+    {
+      "word": "estimate",
+      "meaning": "to guess a number carefully",
+      "example": "I estimate the trip will take three hours."
+    },
+    {
+      "word": "evident",
+      "meaning": "clear and easy to see",
+      "example": "It was evident that she was tired."
+    },
+    {
+      "word": "export",
+      "meaning": "to sell goods to another country",
+      "example": "Cambodia exports rice and clothes."
+    },
+    {
+      "word": "factor",
+      "meaning": "one thing that affects a result",
+      "example": "Price is an important factor when I buy a phone."
+    },
+    {
+      "word": "finance",
+      "meaning": "money and how it is managed",
+      "example": "He works in finance at a bank."
+    },
+    {
+      "word": "formula",
+      "meaning": "a fixed way of doing or calculating something",
+      "example": "There is no simple formula for happiness."
+    },
+    {
+      "word": "function",
+      "meaning": "the job something does",
+      "example": "The main function of the heart is to pump blood."
+    },
+    {
+      "word": "identify",
+      "meaning": "to find or recognise",
+      "example": "Can you identify the mistake in this sentence?"
+    },
+    {
+      "word": "income",
+      "meaning": "money you receive, usually from work",
+      "example": "Their family income has increased."
+    },
+    {
+      "word": "indicate",
+      "meaning": "to show or point to",
+      "example": "The results indicate a clear trend."
+    },
+    {
+      "word": "individual",
+      "meaning": "one person, or for one person",
+      "example": "Each individual has different needs."
+    },
+    {
+      "word": "interpret",
+      "meaning": "to explain the meaning of something",
+      "example": "How do you interpret this chart?"
+    },
+    {
+      "word": "involve",
+      "meaning": "to include as a necessary part",
+      "example": "The job involves a lot of travel."
+    },
+    {
+      "word": "issue",
+      "meaning": "a problem or subject people discuss",
+      "example": "Traffic is a big issue in the city."
+    },
+    {
+      "word": "labour",
+      "meaning": "work, or workers",
+      "example": "The factory needs more labour."
+    },
+    {
+      "word": "legal",
+      "meaning": "allowed by law, or about the law",
+      "example": "It is not legal to drive without a licence."
+    },
+    {
+      "word": "legislate",
+      "meaning": "to make laws",
+      "example": "The government legislated to protect forests."
+    },
+    {
+      "word": "major",
+      "meaning": "very important or large",
+      "example": "Pollution is a major problem."
+    },
+    {
+      "word": "method",
+      "meaning": "a way of doing something",
+      "example": "Spaced review is an effective learning method."
+    },
+    {
+      "word": "occur",
+      "meaning": "to happen",
+      "example": "Most accidents occur near home."
+    },
+    {
+      "word": "percent",
+      "meaning": "in every hundred (%)",
+      "example": "Forty percent of students walk to school."
+    },
+    {
+      "word": "period",
+      "meaning": "a length of time",
+      "example": "Prices rose over a period of five years."
+    },
+    {
+      "word": "policy",
+      "meaning": "a plan or rule of a government or company",
+      "example": "The company has a no-phones policy in meetings."
+    },
+    {
+      "word": "principle",
+      "meaning": "a basic rule or belief",
+      "example": "Honesty is an important principle for her."
+    },
+    {
+      "word": "proceed",
+      "meaning": "to continue or go on",
+      "example": "After the break, we proceeded with the lesson."
+    },
+    {
+      "word": "process",
+      "meaning": "a series of steps",
+      "example": "Learning a language is a long process."
+    },
+    {
+      "word": "require",
+      "meaning": "to need",
+      "example": "The course requires two hours of homework a week."
+    },
+    {
+      "word": "research",
+      "meaning": "careful study to find new facts",
+      "example": "Research shows that sleep helps memory."
+    },
+    {
+      "word": "respond",
+      "meaning": "to answer or react",
+      "example": "She responded to my message quickly."
+    },
+    {
+      "word": "role",
+      "meaning": "the job or part someone has",
+      "example": "Parents play a big role in children's learning."
+    },
+    {
+      "word": "section",
+      "meaning": "one part of something",
+      "example": "The reading section has three texts."
+    },
+    {
+      "word": "sector",
+      "meaning": "one part of a country's economy",
+      "example": "The tourism sector employs many people."
+    },
+    {
+      "word": "significant",
+      "meaning": "large or important enough to notice",
+      "example": "There was a significant increase in visitors."
+    },
+    {
+      "word": "similar",
+      "meaning": "almost the same",
+      "example": "The two charts are similar."
+    },
+    {
+      "word": "source",
+      "meaning": "where something comes from",
+      "example": "Rice is the main source of food for many families."
+    },
+    {
+      "word": "specific",
+      "meaning": "exact and clear",
+      "example": "Can you give a specific example?"
+    },
+    {
+      "word": "structure",
+      "meaning": "how the parts of something are arranged",
+      "example": "A good essay has a clear structure."
+    },
+    {
+      "word": "theory",
+      "meaning": "an idea that explains something",
+      "example": "There are many theories about how we learn."
+    },
+    {
+      "word": "vary",
+      "meaning": "to be different, or to change",
+      "example": "Prices vary from shop to shop."
+    }
+  ]
+}

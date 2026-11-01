@@ -76,6 +76,8 @@ export const GRAMMAR_SKILL_IDS = Object.keys(GRAMMAR_SKILLS) as [GrammarSkill, .
 // Skills that are not grammar points.
 const OTHER_SKILLS: Record<string, string> = {
   'vocabulary': 'Words',
+  'reading': 'Reading (True / False / Not Given)',
+  'form-filling': 'Listening for details (names, numbers, dates)',
   'listening': 'Listening',
   'speaking': 'Speaking',
   'other': 'Other',

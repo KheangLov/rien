@@ -1,6 +1,6 @@
 import type { AttemptRow, Book, Level, ReviewRow } from '#shared/schemas/db'
 import { fitFsrs, type FsrsFit } from '#shared/utils/fsrsFit'
-import { buildModel, evidenceFrom, type Model } from '#shared/utils/mastery'
+import { evidenceFrom, tune, type Model, type ModelParams, type SelfCheck } from '#shared/utils/mastery'
 import { msPerLetter } from '#shared/utils/scheduler'
 import { levelFor } from '#shared/utils/skills'
 
@@ -20,6 +20,11 @@ export interface LearnerInput {
 
 export interface LearnerOutput {
   model: Model
+  // How well it predicted her past answers, and the speeds it settled on
+  // (fitted to her once she has enough answers).
+  check: SelfCheck
+  params: ModelParams
+  tuned: boolean
   fit: FsrsFit | null
   perLetter: number
   answers: number
@@ -31,8 +36,12 @@ export function buildLearner(input: LearnerInput): LearnerOutput {
   const levels = new Map(input.cards.map(c => [c.id, levelFor(c.book, c.file)]))
   const evidence = evidenceFrom(input.attempts, input.reviews, id => levels.get(id) ?? input.level)
   const recent = input.now.getTime() - PACE_DAYS * 86_400_000
+  const { model, check, params, tuned } = tune(evidence, input.level)
   return {
-    model: buildModel(evidence, input.level),
+    model,
+    check,
+    params,
+    tuned,
     fit: fitFsrs(input.reviews, input.timezoneOffset),
     perLetter: msPerLetter(input.reviews.filter(r => r.at.getTime() >= recent)),
     answers: evidence.length,

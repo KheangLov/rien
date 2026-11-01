@@ -95,12 +95,12 @@ export function useListen() {
   }
 
   // Listens once (call it from a tap).
-  async function listen(onPartial: (text: string) => void, options: { online?: boolean } = {}): Promise<Heard> {
+  async function listen(onPartial: (text: string) => void, options: { online?: boolean, maxSeconds?: number } = {}): Promise<Heard> {
     stopSpeaking()
     if (!native) return listenInBrowser(onPartial)
     const handle = await RienSpeech.addListener('partial', ({ text }) => onPartial(text))
     try {
-      return await RienSpeech.listen({ language: 'en-US', maxSeconds: 12, onDevice: !options.online })
+      return await RienSpeech.listen({ language: 'en-US', maxSeconds: options.maxSeconds ?? 12, onDevice: !options.online })
     }
     finally {
       await handle.remove()

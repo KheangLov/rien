@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ActivityId } from '#shared/utils/learning'
 import { dateKey, summarizeStreak, weekStart } from '#shared/utils/streak'
+import LevelUpCard from '~/components/learn/LevelUpCard.vue'
 
 const db = useDb()
 const now = useClock()
@@ -106,6 +107,7 @@ const talkedThisWeek = computed(() => {
       </button>
     </Squircle>
 
+    <LevelUpCard />
     <InstallCard />
     <BackupCard />
     <NewContent :kinds="['fixIt', 'builder']" />
@@ -157,6 +159,16 @@ const talkedThisWeek = computed(() => {
           <span class="rien-list-text">
             <span class="rien-list-title">Your fish tank</span>
             <span class="rien-list-sub">{{ tankLine }}</span>
+          </span>
+          <span class="rien-list-end"><RienIcon name="next" :size="16" weight="bold" /></span>
+        </NuxtLink>
+      </li>
+      <li>
+        <NuxtLink to="/ielts" class="rien-list-row">
+          <span class="rien-list-icon"><RienIcon name="goal" weight="duotone" :size="26" /></span>
+          <span class="rien-list-text">
+            <span class="rien-list-title">IELTS practice</span>
+            <span class="rien-list-sub">Speaking, writing, reading, listening, academic words</span>
           </span>
           <span class="rien-list-end"><RienIcon name="next" :size="16" weight="bold" /></span>
         </NuxtLink>

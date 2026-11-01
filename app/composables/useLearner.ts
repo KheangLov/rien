@@ -1,6 +1,6 @@
 import { Capacitor } from '@capacitor/core'
 import type { AttemptKind, Level, MistakeType } from '#shared/schemas/db'
-import { learn, skillReport, suitability, workingLevel, type Evidence, type Model, type SkillReport } from '#shared/utils/mastery'
+import { learn, skillReport, suitability, workingLevel, type Evidence, type Model, type SelfCheck, type SkillReport } from '#shared/utils/mastery'
 import { applyFsrsParams, DEFAULT_MS_PER_LETTER } from '#shared/utils/scheduler'
 import { levelFor, mistakeTypeOf } from '#shared/utils/skills'
 import { addDays } from '#shared/utils/streak'
@@ -17,6 +17,10 @@ export interface Learner {
   // Her usual time per letter for a typed word (grading speed).
   perLetter: number
   answers: number
+  // How well it predicted her past answers (each before learning from it).
+  check: SelfCheck
+  // Whether its learning speeds were fitted to her answers.
+  tuned: boolean
 }
 
 // A year of answers is plenty; older ones have faded from the model anyway.
@@ -121,7 +125,7 @@ async function build(): Promise<Learner> {
     const changed = output.fit.params.some((w, i) => w !== settings.fsrsParams?.[i])
     if (changed) await db.saveSettings({ fsrsParams: output.fit.params, fsrsFittedAt: now })
   }
-  return { model: output.model, level, perLetter: output.perLetter || DEFAULT_MS_PER_LETTER, answers: output.answers }
+  return { model: output.model, level, perLetter: output.perLetter || DEFAULT_MS_PER_LETTER, answers: output.answers, check: output.check, tuned: output.tuned }
 }
 
 function inBackground(input: Partial<LearnerInput> & Omit<LearnerInput, 'attempts' | 'reviews' | 'cards'> & { since: Date }): Promise<LearnerOutput> {

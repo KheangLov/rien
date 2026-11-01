@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { BOOK_LABELS, BOOKS, FILE_NUMBERS, type Settings } from '#shared/schemas/db'
 import { backupAgeLabel } from '#shared/utils/backups'
+import { FILES_IN_BOOK } from '#shared/utils/levelUp'
 
 const db = useDb()
 const { $pwa } = useNuxtApp()
@@ -8,7 +9,10 @@ const native = isNativeApp()
 const android = native && usesNativeReader()
 
 const bookItems = BOOKS.map(value => ({ title: BOOK_LABELS[value].replace('English File ', ''), value }))
-const fileItems = FILE_NUMBERS.map(value => ({ title: `File ${value}`, value }))
+// Only the Files her book has (Pre-Intermediate 12, the others 10).
+const fileItems = computed(() => FILE_NUMBERS
+  .filter(value => value <= FILES_IN_BOOK[settings.value?.book ?? BOOKS[0]])
+  .map(value => ({ title: `File ${value}`, value })))
 const weeklyGoalItems = [3, 4, 5, 6, 7].map(value => ({ title: `${value} days a week`, value }))
 const roundSizeItems = [10, 15, 20, 30].map(value => ({ title: `${value} words`, value }))
 const newPerDayItems = [5, 10, 15, 20].map(value => ({ title: `${value}`, value }))
@@ -141,7 +145,7 @@ async function importBackup(event: Event) {
 
     <template v-if="settings">
       <IosGroup header="Class" footer="ACE Level 6 is most likely Files 9 to 12. Ask the teacher which File the class is on.">
-        <IosPicker label="Book" icon="words" :model-value="settings.book" :options="bookItems" @update:model-value="update({ book: $event })" />
+        <IosPicker label="Book" icon="words" :model-value="settings.book" :options="bookItems" @update:model-value="update({ book: $event, file: Math.min(settings.file, FILES_IN_BOOK[$event as Settings['book']]) })" />
         <IosPicker label="File" icon="word-recall" :model-value="settings.file" :options="fileItems" @update:model-value="update({ file: $event })" />
       </IosGroup>
 
