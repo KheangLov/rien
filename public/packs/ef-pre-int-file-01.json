@@ -1,6 +1,6 @@
 {
   "id": "ef-pre-int-file-01",
-  "title": "English File Pre-Intermediate, File 1 (check against the book)",
+  "title": "English File Pre-Intermediate, File 1: questions, present simple, present continuous",
   "book": "english-file-pre-intermediate-4e",
   "file": 1,
   "fixIt": [
@@ -77,6 +77,115 @@
       "type": "tense",
       "explain": "Present continuous needs am, is or are.",
       "when": "now"
+    },
+    {
+      "id": "does-do",
+      "text": "What time does you usually get up?",
+      "wrong": "does",
+      "fix": "do",
+      "distractors": [
+        "are",
+        "is"
+      ],
+      "type": "third-person-s",
+      "explain": "With you: do. With he, she, it: does.",
+      "skill": "question-forms"
+    },
+    {
+      "id": "do-like",
+      "text": "Are you like spicy food?",
+      "wrong": "Are",
+      "fix": "Do",
+      "distractors": [
+        "Is",
+        "Does"
+      ],
+      "type": "other",
+      "explain": "Present simple questions use do: Do you like …?",
+      "skill": "question-forms"
+    },
+    {
+      "id": "does-sister",
+      "text": "What kind of films do your sister like?",
+      "wrong": "do",
+      "fix": "does",
+      "distractors": [
+        "is",
+        "are"
+      ],
+      "type": "third-person-s",
+      "explain": "your sister = she: does.",
+      "skill": "question-forms"
+    },
+    {
+      "id": "parents-live",
+      "text": "My parents lives in Takeo.",
+      "wrong": "lives",
+      "fix": "live",
+      "distractors": [
+        "living",
+        "is live"
+      ],
+      "type": "third-person-s",
+      "explain": "They + verb with no -s.",
+      "skill": "present-simple",
+      "when": "always"
+    },
+    {
+      "id": "doesnt-work",
+      "text": "She doesn't works on Sundays.",
+      "wrong": "works",
+      "fix": "work",
+      "distractors": [
+        "working",
+        "worked"
+      ],
+      "type": "third-person-s",
+      "explain": "After doesn't: no -s.",
+      "skill": "present-simple",
+      "when": "always"
+    },
+    {
+      "id": "usually-walk",
+      "text": "I usually walking to work.",
+      "wrong": "walking",
+      "fix": "walk",
+      "distractors": [
+        "walks",
+        "walked"
+      ],
+      "type": "tense",
+      "explain": "Habits: present simple.",
+      "skill": "present-simple",
+      "when": "always"
+    },
+    {
+      "id": "why-laughing",
+      "text": "Why are you laugh?",
+      "wrong": "laugh",
+      "fix": "laughing",
+      "distractors": [
+        "laughs",
+        "laughed"
+      ],
+      "type": "tense",
+      "explain": "Happening now: are + -ing.",
+      "skill": "present-continuous",
+      "when": "now"
+    },
+    {
+      "id": "is-knocking",
+      "text": "Listen! Somebody knocks at the door.",
+      "wrong": "knocks",
+      "fix": "is knocking",
+      "distractors": [
+        "knock",
+        "has knock"
+      ],
+      "type": "tense",
+      "explain": "Listen! = now: present continuous.",
+      "skill": "present-continuous",
+      "when": "now"
     }
   ],
   "builder": [
@@ -85,6 +194,18 @@
       "text": "What kind of music do you like?",
       "alternatives": [],
       "tip": "Question word + do + you + verb."
+    },
+    {
+      "id": "where-do-you-work",
+      "text": "Where do you work?",
+      "tip": "Question word + do + you + verb.",
+      "skill": "question-forms"
+    },
+    {
+      "id": "is-studying-now",
+      "text": "She is studying right now.",
+      "tip": "Now: is + -ing.",
+      "skill": "present-continuous"
     }
   ]
 }

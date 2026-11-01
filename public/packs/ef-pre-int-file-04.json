@@ -1,6 +1,6 @@
 {
   "id": "ef-pre-int-file-04",
-  "title": "English File Pre-Intermediate, File 4 (check against the book)",
+  "title": "English File Pre-Intermediate, File 4: present perfect, present perfect or past simple, something and nothing",
   "book": "english-file-pre-intermediate-4e",
   "file": 4,
   "fixIt": [
@@ -78,6 +78,89 @@
       ],
       "type": "other",
       "explain": "Things are boring; people feel bored."
+    },
+    {
+      "id": "never-eaten-insects",
+      "text": "I have never eat insects.",
+      "wrong": "eat",
+      "fix": "eaten",
+      "distractors": [
+        "ate",
+        "eating"
+      ],
+      "type": "tense",
+      "explain": "have + past participle: eaten.",
+      "skill": "present-perfect",
+      "when": "past-to-now"
+    },
+    {
+      "id": "just-bought",
+      "text": "He has just buy a new phone.",
+      "wrong": "buy",
+      "fix": "bought",
+      "distractors": [
+        "buying",
+        "buys"
+      ],
+      "type": "tense",
+      "explain": "has just + past participle.",
+      "skill": "present-perfect",
+      "when": "past-to-now"
+    },
+    {
+      "id": "seen-three-times",
+      "text": "I have see that film three times.",
+      "wrong": "see",
+      "fix": "seen",
+      "distractors": [
+        "saw",
+        "seeing"
+      ],
+      "type": "tense",
+      "explain": "have + past participle: seen.",
+      "skill": "present-perfect",
+      "when": "past-to-now"
+    },
+    {
+      "id": "moved-here",
+      "text": "She has lived here since 2015, but she moves here from Battambang.",
+      "wrong": "moves",
+      "fix": "moved",
+      "distractors": [
+        "moving",
+        "is moved"
+      ],
+      "type": "tense",
+      "explain": "One finished past event: past simple (moved).",
+      "skill": "past-simple",
+      "when": "past"
+    },
+    {
+      "id": "didnt-buy-anything",
+      "text": "I didn't buy something at the market.",
+      "wrong": "something",
+      "fix": "anything",
+      "distractors": [
+        "nothing",
+        "somethings"
+      ],
+      "type": "other",
+      "explain": "In negatives: anything.",
+      "skill": "quantifiers"
+    },
+    {
+      "id": "already-done",
+      "text": "Have you done the shopping yet? Yes, I've already did it.",
+      "wrong": "did",
+      "fix": "done",
+      "distractors": [
+        "do",
+        "doing"
+      ],
+      "type": "tense",
+      "explain": "I've already + past participle (done).",
+      "skill": "present-perfect",
+      "when": "past-to-now"
     }
   ],
   "builder": [
@@ -86,6 +169,19 @@
       "text": "Have you finished your homework yet?",
       "alternatives": [],
       "tip": "Yet goes at the end of the question."
+    },
+    {
+      "id": "havent-finished-yet",
+      "text": "I haven't finished yet.",
+      "tip": "yet at the end of negatives.",
+      "skill": "present-perfect",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "nothing-to-do",
+      "text": "There's nothing to do here.",
+      "tip": "nothing = not anything.",
+      "skill": "quantifiers"
     }
   ]
 }

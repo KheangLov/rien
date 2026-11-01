@@ -1,6 +1,6 @@
 {
   "id": "ef-pre-int-file-08",
-  "title": "English File Pre-Intermediate, File 8 (check against the book)",
+  "title": "English File Pre-Intermediate, File 8: should, first conditional, possessive pronouns",
   "book": "english-file-pre-intermediate-4e",
   "file": 8,
   "fixIt": [
@@ -52,6 +52,86 @@
       ],
       "type": "other",
       "explain": "Adverb of manner: well, not good."
+    },
+    {
+      "id": "shouldnt-eat",
+      "text": "You shouldn't eating so late.",
+      "wrong": "eating",
+      "fix": "eat",
+      "distractors": [
+        "ate",
+        "to eat"
+      ],
+      "type": "other",
+      "explain": "shouldn't + base form.",
+      "skill": "modals"
+    },
+    {
+      "id": "should-buy",
+      "text": "Do you think I should buying it?",
+      "wrong": "buying",
+      "fix": "buy",
+      "distractors": [
+        "bought",
+        "to buy"
+      ],
+      "type": "other",
+      "explain": "should + base form.",
+      "skill": "modals"
+    },
+    {
+      "id": "will-be-late",
+      "text": "If you miss the bus, you be late.",
+      "wrong": "be",
+      "fix": "will be",
+      "distractors": [
+        "are",
+        "were"
+      ],
+      "type": "tense",
+      "explain": "First conditional: if + present, will + verb.",
+      "skill": "conditionals",
+      "when": "future"
+    },
+    {
+      "id": "if-need",
+      "text": "I'll call you if I needed help.",
+      "wrong": "needed",
+      "fix": "need",
+      "distractors": [
+        "will need",
+        "needing"
+      ],
+      "type": "tense",
+      "explain": "if + present for the future.",
+      "skill": "conditionals",
+      "when": "future"
+    },
+    {
+      "id": "theirs",
+      "text": "These aren't our bags; they're their.",
+      "wrong": "their",
+      "fix": "theirs",
+      "distractors": [
+        "them",
+        "they"
+      ],
+      "type": "possessive-s",
+      "explain": "Without a noun: theirs.",
+      "skill": "possessive-s"
+    },
+    {
+      "id": "hers",
+      "text": "Whose phone is this? It's her.",
+      "wrong": "her",
+      "fix": "hers",
+      "distractors": [
+        "she",
+        "she's"
+      ],
+      "type": "possessive-s",
+      "explain": "Without a noun: hers.",
+      "skill": "possessive-s"
     }
   ],
   "builder": [
@@ -62,6 +142,18 @@
         "We will stay at home if it rains."
       ],
       "tip": "If + present simple, will + verb."
+    },
+    {
+      "id": "is-it-yours",
+      "text": "Is this bag yours?",
+      "tip": "yours = your bag.",
+      "skill": "possessive-s"
+    },
+    {
+      "id": "if-it-rains-stay",
+      "text": "If it rains, we'll stay in.",
+      "tip": "if + present, will.",
+      "skill": "conditionals"
     }
   ]
 }
