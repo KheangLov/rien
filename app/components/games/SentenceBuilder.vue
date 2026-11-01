@@ -67,6 +67,8 @@ function unplace(tile: Tile) {
   pool.value = [...pool.value, tile]
 }
 
+const { combo, best, cheer, hit, miss } = useCombo()
+
 async function check() {
   const current = card.value
   if (!current || pool.value.length > 0) return
@@ -81,7 +83,11 @@ async function check() {
   phase.value = 'result'
   const { row, mistake } = gradeBuilder(current, states.value.get(current.itemId), attempts.value, solved.value, words.join(' '), new Date())
   states.value.set(row.itemId, row)
-  if (!mistake) clean.value++
+  if (!mistake) {
+    clean.value++
+    hit()
+  }
+  else miss()
   await db.saveGrammarAnswer(row, mistake)
 }
 
@@ -94,7 +100,10 @@ function next() {
 
 <template>
   <section class="rien-stack">
-    <SqProgressLinear :model-value="progress" color="primary" />
+    <div class="rien-round-top">
+      <SqProgressLinear :model-value="progress" color="primary" />
+      <ComboChip :combo="combo" :cheer="cheer" />
+    </div>
 
     <SqSkeleton v-if="loading" height="220" />
 
@@ -116,6 +125,7 @@ function next() {
       <Confetti />
       <SqCardText>
         <p class="rien-big">{{ clean }} / {{ round.length }}</p>
+        <p v-if="best >= 3" class="rien-best-combo"><RienIcon name="flame" :size="18" weight="fill" /> Best streak: {{ best }} in a row</p>
         <p class="rien-muted">built right first time.</p>
       </SqCardText>
       <SqCardActions>

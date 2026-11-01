@@ -2593,3 +2593,80 @@ html.rien-theme-switching *::after {
     clip-path: circle(var(--rien-reveal-r, 150%) at var(--rien-reveal-x, 50%) var(--rien-reveal-y, 50%));
   }
 }
+
+/* A round's progress bar with the combo streak beside it (ComboChip). */
+.rien-round-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 30px;
+}
+
+.rien-round-top .sq-progress-linear {
+  flex: 1;
+}
+
+.rien-combo {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px 4px 7px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #c2410c;
+  background: color-mix(in srgb, #f97316 16%, transparent);
+}
+
+.rien-combo b {
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+.rien-combo.is-hot {
+  color: #fff;
+  background: linear-gradient(135deg, #f97316, #ef4444);
+  box-shadow: 0 4px 14px rgb(239 68 68 / 35%);
+}
+
+.rien-combo.is-blazing {
+  background: linear-gradient(135deg, #f59e0b, #ef4444 55%, #db2777);
+}
+
+html.rien-dark .rien-combo:not(.is-hot) {
+  color: #fdba74;
+}
+
+html.rien-motion .rien-combo-enter-active {
+  animation: rien-combo-pop 0.45s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+
+html.rien-motion .rien-combo.is-hot svg {
+  animation: rien-flicker 0.6s ease-in-out infinite alternate;
+}
+
+.rien-combo-leave-active {
+  position: absolute;
+  opacity: 0;
+}
+
+@keyframes rien-combo-pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@keyframes rien-flicker {
+  from { transform: scale(1) rotate(-4deg); }
+  to { transform: scale(1.15) rotate(4deg); }
+}
+
+.rien-best-combo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0 0;
+  font-weight: 600;
+  color: #ea580c;
+}
