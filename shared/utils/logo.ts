@@ -41,7 +41,7 @@ export function logoSquircle(half = 256, n = 5, steps = 720): string {
 
 // The word and bar, which every version of the logo shares.
 export const logoMark = (bar: string) =>
-  `<g transform="translate(0 -9)"><path fill="#fff" d="${LOGO_WORD}"/><rect x="136" y="350" width="240" height="18" rx="9" fill="${bar}"/></g>`
+  `<g transform="translate(0 -9)"><path fill="#f8fafc" d="${LOGO_WORD}"/><rect x="136" y="350" width="240" height="18" rx="9" fill="${bar}"/></g>`
 
 export const logoGradient = (colours: LogoColours, id = 'tile') =>
   `<linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${colours.top}"/><stop offset="1" stop-color="${colours.bottom}"/></linearGradient>`

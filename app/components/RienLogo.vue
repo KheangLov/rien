@@ -16,7 +16,7 @@ const tile = logoSquircle(256, 5, 96)
     </defs>
     <path :fill="`url(#${id})`" :d="tile" />
     <g transform="translate(0 -9)">
-      <path fill="#fff" :d="LOGO_WORD" />
+      <path fill="#f8fafc" :d="LOGO_WORD" />
       <rect x="136" y="350" width="240" height="18" rx="9" class="rien-logo-bar" />
     </g>
   </svg>

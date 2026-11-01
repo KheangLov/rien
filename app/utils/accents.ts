@@ -30,7 +30,7 @@ export function mixHex(a: string, b: string, share: number): string {
 }
 
 const onColor = (background: string) =>
-  contrastRatio(background, '#ffffff') >= contrastRatio(background, '#000000') ? '#ffffff' : '#000000'
+  contrastRatio(background, '#f8fafc') >= contrastRatio(background, '#000000') ? '#f8fafc' : '#000000'
 
 // Squirkle's own page backgrounds, which the main colour faintly tints.
 const BACKGROUND = { light: '#f8f9fb', dark: '#0f1013' }
