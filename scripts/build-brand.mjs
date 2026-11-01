@@ -4,7 +4,7 @@
 // launch logo, and the Android launcher icons and splash icon.
 // Run after changing the logo or the splash colours:
 //   node scripts/build-brand.mjs
-import { mkdirSync, rmSync, writeFileSync } from 'node:fs'
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { crc32, deflateSync } from 'node:zlib'
 import { Resvg } from '@resvg/resvg-js'
 import { IOS_SCREENS, SPLASH_DARK, SPLASH_LIGHT, splashFile } from './brand.ts'
@@ -145,14 +145,15 @@ write(`${IOS}SplashBackground.colorset/Contents.json`, `${JSON.stringify({
 }, null, 2)}\n`)
 
 // Android: launcher icons (48 dp, adaptive foreground 108 dp) and the splash
-// icon (288 dp, of which a 192 dp circle shows, so the tile is 152 dp).
+// icon (drawn at 288 dp, inside a 192 dp circle): the tile is 128 dp, the same
+// size as on the iPhone and in the web splash, so the hand-over does not jump.
 const RES = 'android/app/src/main/res/'
 const DENSITIES = { mdpi: 1, hdpi: 1.5, xhdpi: 2, xxhdpi: 3, xxxhdpi: 4 }
 for (const [name, scale] of Object.entries(DENSITIES)) {
   write(`${RES}mipmap-${name}/ic_launcher.png`, render(tile(), 48 * scale))
   write(`${RES}mipmap-${name}/ic_launcher_round.png`, render(round(), 48 * scale))
   write(`${RES}mipmap-${name}/ic_launcher_foreground.png`, render(foreground(), 108 * scale))
-  write(`${RES}drawable-${name}/splash_icon.png`, render(tile(152 / 288), 288 * scale))
+  write(`${RES}drawable-${name}/splash_icon.png`, render(tile(128 / 288), 288 * scale))
   for (const old of [`drawable-port-${name}`, `drawable-land-${name}`]) rmSync(new URL(`${RES}${old}/`, ROOT), { recursive: true, force: true })
 }
 rmSync(new URL(`${RES}drawable/splash.png`, ROOT), { force: true })
@@ -164,4 +165,15 @@ const colours = hex => `<?xml version="1.0" encoding="utf-8"?>
 `
 write(`${RES}values/splash.xml`, colours(SPLASH_LIGHT))
 write(`${RES}values-night/splash.xml`, colours(SPLASH_DARK))
+// The animated opening screen (scripts/splash.html), shown from the page's own
+// HTML in the web app and in the phone apps.
+const read = path => readFileSync(new URL(path, ROOT), 'utf8')
+const fish = JSON.parse(read('app/assets/icons/solar.json')).icons['rien-fish-bold'].body
+const fill = {
+  SQUIRCLE: squircle(256, 5, 96), WORD, FISH: fish, TEAL, TEAL_LIGHT, MINT, SPLASH_LIGHT, SPLASH_DARK,
+}
+write('app/spa-loading-template.html', read('scripts/splash.html')
+  .replace(/\{\{(\w+)\}\}/g, (_, key) => fill[key])
+  .replace(/^<!-- Rien's opening screen[\s\S]*?-->\n/, '<!-- Written by scripts/build-brand.mjs from scripts/splash.html: edit that file. -->\n'))
+
 console.log('Logo, icons and splash screens written.')
