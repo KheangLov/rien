@@ -1,5 +1,6 @@
 import {
   attemptSchema,
+  writingSchema,
   backupSchema,
   bossResultSchema,
   cardSchema,
@@ -58,9 +59,12 @@ const MIGRATIONS = [
   CREATE INDEX attempts_at ON attempts (at);
   CREATE INDEX reviews_at ON reviews (at);
   `,
+  `
+  CREATE TABLE writings (prompt_id TEXT PRIMARY KEY, data TEXT NOT NULL);
+  `,
 ]
 
-export const TABLES = ['cards', 'reviews', 'mistakes', 'sessions', 'settings', 'grammar', 'bosses', 'talks', 'attempts'] as const
+export const TABLES = ['cards', 'reviews', 'mistakes', 'sessions', 'settings', 'grammar', 'bosses', 'talks', 'attempts', 'writings'] as const
 
 async function migrate(driver: SqlDriver) {
   const [row] = await driver.all<{ user_version: number }>('PRAGMA user_version')
@@ -213,6 +217,16 @@ export async function openSqlRepository(driver: SqlDriver): Promise<StudyReposit
       })
     },
 
+    async saveWriting(row) {
+      const parsed = writingSchema.parse(row)
+      await driver.run(`INSERT OR REPLACE INTO writings (prompt_id, data) VALUES (?, ?)`, [parsed.promptId, json(parsed)])
+    },
+
+    async writing(promptId) {
+      const [row] = await driver.all<DataRow>(`SELECT data FROM writings WHERE prompt_id = ?`, [promptId])
+      return row ? writingSchema.parse(JSON.parse(row.data)) : undefined
+    },
+
     async attemptsSince(since) {
       const rows = await driver.all<DataRow>(`SELECT id, data FROM attempts WHERE at >= ? ORDER BY at`, [since.getTime()])
       return parseRows(rows, raw => attemptSchema.parse(raw))
@@ -295,6 +309,7 @@ export async function openSqlRepository(driver: SqlDriver): Promise<StudyReposit
         bosses: await all('bosses', raw => bossResultSchema.parse(raw), true),
         talks: await all('talks', raw => talkResultSchema.parse(raw), true),
         attempts: await all('attempts', raw => attemptSchema.parse(raw), true),
+        writings: await all('writings', raw => writingSchema.parse(raw)),
         settings: await getSettings(),
       }
     },
@@ -312,6 +327,7 @@ export async function openSqlRepository(driver: SqlDriver): Promise<StudyReposit
         await insertMany('grammar', ['item_id', 'due', 'data'], backup.grammar.map(row => [row.itemId, row.due.getTime(), json(row)]))
         await insertMany('bosses', ['id', 'at', 'data'], backup.bosses.map(row => [row.id ?? null, row.at.getTime(), noId(row)]))
         await insertMany('talks', ['id', 'talk_id', 'at', 'data'], backup.talks.map(row => [row.id ?? null, row.talkId, row.at.getTime(), noId(row)]))
+        await insertMany('writings', ['prompt_id', 'data'], backup.writings.map(row => [row.promptId, json(row)]))
         await insertMany('attempts', ['id', 'item_id', 'skill', 'at', 'data'], backup.attempts.map(row => [row.id ?? null, row.itemId, row.skill, row.at.getTime(), noId(row)]))
         await driver.run(`INSERT INTO settings (key, data) VALUES ('settings', ?)`, [json(backup.settings)])
       })

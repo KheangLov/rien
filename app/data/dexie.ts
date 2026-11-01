@@ -2,11 +2,13 @@ import Dexie, { type EntityTable } from 'dexie'
 import { State } from 'ts-fsrs'
 import {
   attemptSchema,
+  writingSchema,
   backupSchema,
   cardSchema,
   newWordSchema,
   settingsSchema,
   type AttemptRow,
+  type WritingRow,
   type BossResult,
   type CardRow,
   type GrammarRow,
@@ -33,6 +35,7 @@ export class RienDexie extends Dexie {
   bosses!: EntityTable<BossResult, 'id'>
   talks!: EntityTable<TalkResult, 'id'>
   attempts!: EntityTable<AttemptRow, 'id'>
+  writings!: EntityTable<WritingRow, 'promptId'>
 
   constructor(name = 'rien') {
     super(name)
@@ -54,6 +57,9 @@ export class RienDexie extends Dexie {
     })
     this.version(5).stores({
       attempts: '++id, at, itemId, skill',
+    })
+    this.version(6).stores({
+      writings: 'promptId',
     })
   }
 }
@@ -162,6 +168,11 @@ export function createDexieRepository(db = new RienDexie()): StudyRepository {
       await db.attempts.bulkAdd(attempts.map(a => attemptSchema.parse(a)))
     },
 
+    async saveWriting(row) {
+      await db.writings.put(writingSchema.parse(row))
+    },
+    writing: promptId => db.writings.get(promptId),
+
     attemptsSince: since => db.attempts.where('at').aboveOrEqual(since).sortBy('at'),
     reviewsSince: since => db.reviews.where('at').aboveOrEqual(since).sortBy('at'),
 
@@ -223,7 +234,7 @@ export function createDexieRepository(db = new RienDexie()): StudyRepository {
     },
 
     async exportAll(now = new Date()) {
-      const [cards, reviews, mistakes, sessions, grammar, bosses, talks, attempts, settings] = await Promise.all([
+      const [cards, reviews, mistakes, sessions, grammar, bosses, talks, attempts, writings, settings] = await Promise.all([
         db.cards.toArray(),
         db.reviews.toArray(),
         db.mistakes.toArray(),
@@ -232,15 +243,16 @@ export function createDexieRepository(db = new RienDexie()): StudyRepository {
         db.bosses.toArray(),
         db.talks.toArray(),
         db.attempts.toArray(),
+        db.writings.toArray(),
         getSettings(),
       ])
-      return { app: 'rien', version: 1, exportedAt: now, cards, reviews, mistakes, sessions, grammar, bosses, talks, attempts, settings }
+      return { app: 'rien', version: 1, exportedAt: now, cards, reviews, mistakes, sessions, grammar, bosses, talks, attempts, writings, settings }
     },
 
     async importAll(raw) {
       const backup = backupSchema.parse(typeof raw === 'string' ? JSON.parse(raw) : raw)
-      await db.transaction('rw', [db.cards, db.reviews, db.mistakes, db.sessions, db.grammar, db.bosses, db.talks, db.attempts, db.settings], async () => {
-        await Promise.all([db.cards.clear(), db.reviews.clear(), db.mistakes.clear(), db.sessions.clear(), db.grammar.clear(), db.bosses.clear(), db.talks.clear(), db.attempts.clear()])
+      await db.transaction('rw', [db.cards, db.reviews, db.mistakes, db.sessions, db.grammar, db.bosses, db.talks, db.attempts, db.writings, db.settings], async () => {
+        await Promise.all([db.cards.clear(), db.reviews.clear(), db.mistakes.clear(), db.sessions.clear(), db.grammar.clear(), db.bosses.clear(), db.talks.clear(), db.attempts.clear(), db.writings.clear()])
         await db.cards.bulkAdd(backup.cards)
         await db.reviews.bulkAdd(backup.reviews)
         await db.mistakes.bulkAdd(backup.mistakes)
@@ -249,6 +261,7 @@ export function createDexieRepository(db = new RienDexie()): StudyRepository {
         await db.bosses.bulkAdd(backup.bosses)
         await db.talks.bulkAdd(backup.talks)
         await db.attempts.bulkAdd(backup.attempts)
+        await db.writings.bulkAdd(backup.writings)
         await db.settings.put({ key: 'settings', ...backup.settings })
       })
       return { cards: backup.cards.length }
