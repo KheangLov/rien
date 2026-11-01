@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.SharedPreferences;
 import android.os.Build;
 
+import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
@@ -25,6 +26,17 @@ public class RienLookPlugin extends Plugin {
         { "pink", "IconPink" }, { "red", "IconRed" }, { "orange", "IconOrange" }, { "green", "IconGreen" },
     };
     private static final String PREFS = "rien-look";
+
+    // The screen a long-press shortcut asked for when it started the app.
+    static volatile String pendingRoute;
+
+    @PluginMethod
+    public void takeLaunchRoute(PluginCall call) {
+        JSObject result = new JSObject();
+        result.put("route", pendingRoute);
+        pendingRoute = null;
+        call.resolve(result);
+    }
 
     // Her choice of home-screen icon, applied when she leaves the app
     // (applyLauncherIcon): switching launcher entries can close the app on

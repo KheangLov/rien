@@ -63,6 +63,11 @@ function png(pixels, width, height) {
   ])
 }
 
+const pixelsOf = (source) => {
+  const image = new Resvg(source).render()
+  return [image.pixels, image.width, image.height]
+}
+
 const render = (source, size) => {
   const image = new Resvg(source, { fitTo: { mode: 'width', value: size } }).render()
   return png(image.pixels, image.width, image.height)
@@ -202,5 +207,18 @@ const fill = {
 write('app/spa-loading-template.html', read('scripts/splash.html')
   .replace(/\{\{(\w+)\}\}/g, (_, key) => fill[key])
   .replace(/^<!-- Rien's opening screen[\s\S]*?-->\n/, '<!-- Written by scripts/build-brand.mjs from scripts/splash.html: edit that file. -->\n'))
+
+// Long-press shortcuts (the menu when she holds the app icon): a teal glyph on
+// white, as most apps' shortcuts are. Android: full-bleed adaptive bitmaps the
+// phone cuts to its shape; web app manifest: 96 px on a white circle.
+const solarIcons = JSON.parse(read('app/assets/icons/solar.json')).icons
+const SHORTCUTS = { session: 'play', words: 'layers', add: 'notebook', ielts: 'square-academic-cap' }
+for (const [id, glyph] of Object.entries(SHORTCUTS)) {
+  const body = solarIcons[`${glyph}-bold-duotone`].body
+  const icon = (size, glyphSize, background) => `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${background}`
+    + `<svg x="${(size - glyphSize) / 2}" y="${(size - glyphSize) / 2}" width="${glyphSize}" height="${glyphSize}" viewBox="0 0 24 24" color="${TEAL}" style="color:${TEAL}">${body}</svg></svg>`
+  write(`${RES}drawable-nodpi/shortcut_${id}.png`, png(...pixelsOf(icon(432, 176, '<rect width="432" height="432" fill="#ffffff"/>'))))
+  write(`public/shortcuts/${id}.png`, png(...pixelsOf(icon(96, 52, '<circle cx="48" cy="48" r="48" fill="#ffffff"/>'))))
+}
 
 console.log('Logo, icons and splash screens written.')
