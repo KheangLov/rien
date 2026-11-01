@@ -58,7 +58,10 @@ const { $setAppearance } = useNuxtApp()
 // Android swaps launcher entries to change the icon, which on some phones
 // (Samsung's too) takes the icon off the home screen: say so before turning it on.
 function toggleIconColour(on: boolean) {
-  if (on && !window.confirm('Rien\'s icon will change to this colour when you leave the app. On some phones it then disappears from the home screen (it stays in the app list) and needs adding back. Turn it on?')) return
+  const warning = native
+    ? 'Rien\'s icon will change to this colour when you leave the app. On some phones it then disappears from the home screen (it stays in the app list) and needs adding back. Turn it on?'
+    : 'Rien\'s home-screen icon will change to this colour. Android asks you first, the next time you open Rien from the home screen. On iPhone, the icon is set when you add Rien to the home screen. Turn it on?'
+  if (on && !window.confirm(warning)) return
   void update({ iconFollowsColour: on })
 }
 
@@ -195,9 +198,9 @@ async function importBackup(event: Event) {
             </button>
           </div>
         </li>
-        <IosRow v-if="android" label="Home screen icon in this colour" icon="install" @click="toggleIconColour(!settings.iconFollowsColour)">
+        <IosRow v-if="android || !native" label="Icon in my colour" icon="install" @click="toggleIconColour(!settings.iconFollowsColour)">
           <template #end>
-            <IosSwitch :model-value="settings.iconFollowsColour" label="Home screen icon in this colour" @update:model-value="toggleIconColour($event)" />
+            <IosSwitch :model-value="settings.iconFollowsColour" label="Icon in my colour" @update:model-value="toggleIconColour($event)" />
           </template>
         </IosRow>
         <IosRow label="Liquid Glass" icon="sparkles" @click="update({ liquidGlass: !settings.liquidGlass })">

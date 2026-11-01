@@ -99,6 +99,15 @@ write('public/pwa-192.png', render(tile(), 192))
 write('public/pwa-512.png', render(tile(), 512))
 write('public/pwa-maskable-512.png', render(bleed(0.8), 512))
 write('public/apple-touch-icon.png', render(bleed(), 180))
+// The same in each main colour, for "Icon in my colour" (public/sw-look.js
+// serves them in the installed web app's manifest).
+for (const [id, colours] of Object.entries(ACCENT_LOGOS)) {
+  if (id === 'teal') continue
+  write(`public/icons/${id}/pwa-192.png`, render(tile(1, colours), 192))
+  write(`public/icons/${id}/pwa-512.png`, render(tile(1, colours), 512))
+  write(`public/icons/${id}/pwa-maskable-512.png`, render(bleed(0.8, colours), 512))
+  write(`public/icons/${id}/apple-touch-icon.png`, render(bleed(1, colours), 180))
+}
 
 // iPhone home-screen splash screens for the PWA (iOS shows a blank screen
 // without one). Logo 128 pt, as on the native app.

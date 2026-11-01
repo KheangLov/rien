@@ -62,7 +62,10 @@ export default defineNuxtPlugin(() => {
     }
     accent.textContent = accentCss(look.accent)
     saveSplashColours(look.accent, look.appearance)
-    if (!Capacitor.isNativePlatform()) setTabIcon(look.accent)
+    if (!Capacitor.isNativePlatform()) {
+      setTabIcon(look.accent)
+      saveWebAppLook(look.accent, look.iconFollowsColour, dark ? background.dark : background.light)
+    }
     root.classList.toggle('rien-motion', motion)
     if (Capacitor.getPlatform() === 'android') {
       void RienLook.setAppearance({ appearance: look.appearance }).catch(() => {})
