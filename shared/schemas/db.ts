@@ -188,6 +188,10 @@ export const settingsSchema = z.object({
       minute: z.number().int().min(0).max(59).default(0),
     })
     .default({ enabled: false, hour: 19, minute: 0 }),
+  // When she last saved a backup file, and when the app last kept its own
+  // weekly copy (native app; utils/backups.ts).
+  lastBackupAt: z.coerce.date().optional(),
+  lastAutoBackupAt: z.coerce.date().optional(),
 })
 
 export const backupSchema = z.object({

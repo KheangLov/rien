@@ -160,7 +160,7 @@ async function finish() {
                 <span>{{ slip.note || 'Talk about it now, kindly.' }}</span>
               </li>
             </ul>
-            <p class="rien-muted">These come up more in her practice from now on.</p>
+            <p class="rien-muted">They are in <NuxtLink to="/slips">My slips</NuxtLink> now, to practise.</p>
           </div>
           <p v-else class="rien-muted">No slips noted. Any word you needed but didn't know? Add it while you remember.</p>
         </SqCardText>

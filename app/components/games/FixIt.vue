@@ -2,11 +2,16 @@
 import { MISTAKE_LABELS, type GrammarRow, type MistakeType } from '#shared/schemas/db'
 import type { FixItCard } from '#shared/utils/fixit'
 import { pickRound } from '#shared/utils/rounds'
+import { slipRound } from '#shared/utils/slips'
 import FixItItem from '~/components/items/FixItItem.vue'
 
 const ROUND_SIZE = 8
 
+// slips: a round from her own recent slips (My slips), not the usual mix.
+const props = defineProps<{ slips?: boolean }>()
 const emit = defineEmits<{ done: [summary: { clean: number, total: number }] }>()
+
+const db = useDb()
 
 const loading = ref(true)
 const loadError = ref(false)
@@ -26,7 +31,9 @@ onMounted(async () => {
   try {
     const practice = await loadPractice()
     states.value = practice.states
-    round.value = pickRound(practice.fixCards, practice.states, practice.counts, practice.now, ROUND_SIZE)
+    round.value = props.slips
+      ? slipRound(practice.fixCards, await db.mistakesSince(practice.since), ROUND_SIZE)
+      : pickRound(practice.fixCards, practice.states, practice.counts, practice.now, ROUND_SIZE)
   }
   catch (error) {
     console.error('[rien] could not start Fix It', error)
