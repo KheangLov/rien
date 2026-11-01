@@ -3363,3 +3363,7 @@ html.rien-motion .rien-talk-card-enter-active {
   font-size: 15px;
   color: var(--sq-on-surface, #18181b);
 }
+
+.rien-copy-now {
+  margin-top: 14px;
+}

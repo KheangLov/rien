@@ -17,7 +17,9 @@ export default defineNuxtPlugin(() => {
       const db = useDb()
       const now = new Date()
       const settings = await db.getSettings()
-      if ((await db.countCards()) === 0 || !autoBackupDue(settings.lastAutoBackupAt, now)) return
+      if (!autoBackupDue(settings.lastAutoBackupAt, now)) return
+      // Nothing to keep yet: no words and no study days.
+      if ((await db.countCards()) === 0 && (await db.studyDays()).length === 0) return
       await saveAutoBackup(now)
     })().catch(error => console.error('[rien] automatic backup failed', error))
   }, START_DELAY_MS)

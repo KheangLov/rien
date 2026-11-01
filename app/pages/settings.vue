@@ -92,6 +92,18 @@ async function openAutoBackups() {
   autoOpen.value = true
 }
 
+async function copyNow() {
+  try {
+    await saveAutoBackup()
+    autoBackups.value = await listAutoBackups()
+    settings.value = await db.getSettings()
+  }
+  catch (error) {
+    autoOpen.value = false
+    message.value = { type: 'error', text: `Could not save a copy: ${String(error).slice(0, 120)}` }
+  }
+}
+
 async function restoreAuto(name: string, date: Date) {
   if (!window.confirm(`Replace everything on this phone with the copy from ${date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })}?`)) return
   autoOpen.value = false
@@ -212,7 +224,8 @@ async function importBackup(event: Event) {
           @click="restoreAuto(copy.name, copy.date)"
         />
       </IosGroup>
-      <p v-else class="rien-muted">No copy yet. The first one is saved a few seconds after Rien opens, once you have words.</p>
+      <p v-else class="rien-muted">No copy yet. The first one is saved a few seconds after Rien opens, once you have words or a day of study.</p>
+      <SqBtn variant="tonal" block class="rien-copy-now" @click="copyNow">Save a copy now</SqBtn>
     </IosSheet>
     <input ref="fileInput" type="file" accept="application/json,.json" hidden @change="importBackup">
 
