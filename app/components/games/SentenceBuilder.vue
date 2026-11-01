@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { GrammarRow } from '#shared/schemas/db'
 import { builderTiles, endMark, gradeBuilder, isCorrect, type BuilderCard, type Tile } from '#shared/utils/builder'
-import { pickRound } from '#shared/utils/rounds'
+import { pickRound, topUpRound } from '#shared/utils/rounds'
 import RuleVisual from '~/components/learn/RuleVisual.vue'
 
 const ROUND_SIZE = 6
@@ -33,7 +33,7 @@ onMounted(async () => {
   try {
     const practice = await loadPractice()
     states.value = practice.states
-    round.value = pickRound(practice.builderCards, practice.states, practice.counts, practice.now, ROUND_SIZE)
+    round.value = topUpRound(pickRound(practice.builderCards, practice.states, practice.counts, practice.now, ROUND_SIZE), practice.builderCards, practice.states, ROUND_SIZE)
     startCard()
   }
   catch (error) {
@@ -121,17 +121,20 @@ function next() {
       text="Every sentence is resting. They come back when they are due."
     />
 
-    <SqCard v-else-if="finished" title="Round done" variant="tonal" class="rien-pop">
-      <Confetti />
-      <SqCardText>
-        <p class="rien-big">{{ clean }} / {{ round.length }}</p>
-        <p v-if="best >= 3" class="rien-best-combo"><RienIcon name="flame" :size="18" weight="fill" /> Best streak: {{ best }} in a row</p>
-        <p class="rien-muted">built right first time.</p>
-      </SqCardText>
-      <SqCardActions>
-        <SqBtn to="/" color="primary">Back to today</SqBtn>
-      </SqCardActions>
-    </SqCard>
+    <template v-else-if="finished">
+      <SqCard title="Round done" variant="tonal" class="rien-pop">
+        <Confetti />
+        <SqCardText>
+          <p class="rien-big">{{ clean }} / {{ round.length }}</p>
+          <p v-if="best >= 3" class="rien-best-combo"><RienIcon name="flame" :size="18" weight="fill" /> Best streak: {{ best }} in a row</p>
+          <p class="rien-muted">built right first time.</p>
+        </SqCardText>
+        <SqCardActions>
+          <SqBtn to="/" color="primary">Back to today</SqBtn>
+        </SqCardActions>
+      </SqCard>
+      <NewContent :kinds="['builder']" />
+    </template>
 
     <SqCard v-else-if="card" :key="`${card.itemId}-${position}`" class="rien-rise">
       <SqCardText class="rien-stack rien-card-body">

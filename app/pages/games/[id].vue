@@ -26,6 +26,7 @@ const recorder = useActivityRecorder()
       <h1 class="rien-subbar-title">{{ game.title }}</h1>
       <span />
     </div>
-    <component :is="game.component" @done="recorder.record(id, $event)" />
+    <!-- A new key ("Play a new round") starts the game afresh. -->
+    <component :is="game.component" :key="String(route.query.round ?? '')" @done="recorder.record(id, $event)" />
   </div>
 </template>

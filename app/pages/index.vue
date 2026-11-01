@@ -108,6 +108,7 @@ const talkedThisWeek = computed(() => {
 
     <InstallCard />
     <BackupCard />
+    <NewContent :kinds="['fixIt', 'builder']" />
 
     <SqCard variant="outlined">
       <SqCardText class="rien-stack rien-card-body">

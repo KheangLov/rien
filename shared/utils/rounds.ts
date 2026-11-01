@@ -69,6 +69,29 @@ export function pickRound<T extends PracticeItem>(
   return shuffle(picked, random)
 }
 
+// Fills a short round with items she has already met but that are not due,
+// those met longest ago first (with a little shuffle), so a game never ends in
+// "All caught up". Spaced repetition copes with an early review: it simply
+// counts for less.
+export function topUpRound<T extends PracticeItem>(
+  round: T[],
+  items: T[],
+  states: Map<string, GrammarRow>,
+  size: number,
+  random: () => number = Math.random,
+): T[] {
+  const need = size - round.length
+  if (need <= 0) return round
+  const seenAt = (item: T) => {
+    const last = (states.get(item.itemId)?.fsrs as { last_review?: Date | string } | undefined)?.last_review
+    return last ? new Date(last).getTime() : 0
+  }
+  const older = items
+    .filter(item => states.has(item.itemId) && !round.includes(item))
+    .sort((a, b) => seenAt(a) - seenAt(b))
+  return shuffle([...round, ...shuffle(older.slice(0, need * 2), random).slice(0, need)], random)
+}
+
 // Reschedules one practice item and, if she slipped, tags the mistake.
 export function gradePractice(
   item: PracticeItem,

@@ -2,7 +2,7 @@
 import type { GrammarRow } from '#shared/schemas/db'
 import type { Verdict } from '#shared/utils/answer'
 import { checkGaps, GAP_EVERY, gradeRadio, radioAnswers, radioTokens, type RadioCard } from '#shared/utils/radio'
-import { pickRound } from '#shared/utils/rounds'
+import { pickRound, topUpRound } from '#shared/utils/rounds'
 import { vInputAttrs } from '~/directives/inputAttrs'
 import { vPlainInput } from '~/directives/plainInput'
 
@@ -42,7 +42,7 @@ async function start() {
   try {
     const practice = await loadPractice()
     states.value = practice.states
-    const picked = pickRound(practice.radioCards, practice.states, practice.counts, practice.now, 1)[0]
+    const picked = topUpRound(pickRound(practice.radioCards, practice.states, practice.counts, practice.now, 1), practice.radioCards, practice.states, 1)[0]
     // Different gaps each time the same text comes round.
     card.value = picked ? { ...picked, start: Math.floor(Math.random() * GAP_EVERY) } : null
     typed.value = answers.value.map(() => '')
@@ -128,19 +128,22 @@ function finish() {
       text="Open Rien once while online so it can save them for offline use."
     />
 
-    <SqCard v-else-if="finished && card" title="Round done" variant="tonal" class="rien-pop">
-      <Confetti v-if="right === answers.length" />
-      <SqCardText>
-        <p class="rien-big">{{ right }} / {{ answers.length }}</p>
-        <p class="rien-muted">
-          {{ right === answers.length ? 'Every word caught.' : 'words caught. The missed ones come back in your reviews.' }}
-        </p>
-      </SqCardText>
-      <SqCardActions>
-        <SqBtn variant="tonal" @click="start">Another text</SqBtn>
-        <SqBtn to="/" color="primary">Back to today</SqBtn>
-      </SqCardActions>
-    </SqCard>
+    <template v-else-if="finished && card">
+      <SqCard title="Round done" variant="tonal" class="rien-pop">
+        <Confetti v-if="right === answers.length" />
+        <SqCardText>
+          <p class="rien-big">{{ right }} / {{ answers.length }}</p>
+          <p class="rien-muted">
+            {{ right === answers.length ? 'Every word caught.' : 'words caught. The missed ones come back in your reviews.' }}
+          </p>
+        </SqCardText>
+        <SqCardActions>
+          <SqBtn variant="tonal" @click="start">Another text</SqBtn>
+          <SqBtn to="/" color="primary">Back to today</SqBtn>
+        </SqCardActions>
+      </SqCard>
+      <NewContent :kinds="['radio']" />
+    </template>
 
     <SqEmptyState
       v-else-if="!card"
