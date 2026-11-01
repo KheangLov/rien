@@ -803,6 +803,10 @@ input {
 .rien-list-title {
   font-weight: 600;
   color: var(--sq-on-surface, #18181b);
+  /* One line per row title, as in iOS Settings: a long one ends in "…". */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .rien-list-sub {

@@ -71,6 +71,21 @@ export function saveSplashColours(accent: Accent, appearance: Settings['appearan
   catch {}
 }
 
+// The installed web app's look, for its service worker (public/sw-look.js),
+// which serves the manifest from it: the system bars in her background colour,
+// and, if she chose "Icon in my colour", the icon in her colour. The iPhone
+// takes its home-screen icon when Rien is added there, so its link is set now.
+export function saveWebAppLook(accent: Accent, iconFollowsColour: boolean, background: string): void {
+  const coloured = iconFollowsColour && accent !== 'teal'
+  const touch = document.querySelector<HTMLLinkElement>('link[rel="apple-touch-icon"]')
+  if (touch) touch.href = coloured ? `/icons/${accent}/apple-touch-icon.png` : '/apple-touch-icon.png'
+  if (!('caches' in window)) return
+  const look = JSON.stringify({ accent, iconFollowsColour, background })
+  void caches.open('rien-look')
+    .then(cache => cache.put('/rien-look.json', new Response(look, { headers: { 'Content-Type': 'application/json' } })))
+    .catch(() => {})
+}
+
 // The browser tab's icon in her colour (web only: home-screen icons are set
 // when the app is installed).
 export function setTabIcon(accent: Accent): void {

@@ -138,7 +138,10 @@ export default defineNuxtConfig({
       globPatterns: ['index.html', '**/*.{js,css,png,svg,ico,json,woff2,mp3}'],
       // iOS keeps its own copy of the splash images when the app is added to
       // the home screen; precaching all twenty would only slow the offline install.
-      globIgnores: ['splash/**'],
+      // Icons in each main colour are fetched only if she chooses one.
+      globIgnores: ['splash/**', 'icons/**'],
+      // Serves the manifest in her colours (public/sw-look.js).
+      importScripts: ['sw-look.js'],
       cleanupOutdatedCaches: true,
     },
     client: { installPrompt: true },
