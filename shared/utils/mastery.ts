@@ -283,8 +283,10 @@ export function workingLevel(model: Model, success = 0.7): Level {
 // How well an unseen item suits a round: highest for items she should know
 // about TARGET_SUCCESS of the time, and for skills she is weak at.
 // Distance is measured in log-odds, where 60% and 95% are equally far from 80%.
-export function suitability(model: Model, item: { itemId: string, skill: string, level: Level }, now: Date): number {
-  const p = Math.min(1 - 1e-6, Math.max(1e-6, predict(model, item, now)))
+// chance: the predicted chance of a right answer, if a better predictor (the
+// neural network) has one; else the skill model's.
+export function suitability(model: Model, item: { itemId: string, skill: string, level: Level }, now: Date, chance?: number): number {
+  const p = Math.min(1 - 1e-6, Math.max(1e-6, chance ?? predict(model, item, now)))
   const distance = Math.log(p / (1 - p)) - Math.log(TARGET_SUCCESS / (1 - TARGET_SUCCESS))
   const fit = Math.exp(-(distance ** 2) / 2)
   const weakness = 1 - sigmoid(offsetAt(model, model.skills.get(item.skill), now.getTime()))

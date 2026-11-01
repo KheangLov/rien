@@ -21,7 +21,7 @@ self.onmessage = async ({ data }: MessageEvent<Request>) => {
       ])
       db.close()
     }
-    self.postMessage({ ok: true, result: buildLearner({ ...data, attempts, reviews, cards }) })
+    self.postMessage({ ok: true, result: await buildLearner({ ...data, attempts, reviews, cards, allowTraining: true }) })
   }
   catch (error) {
     self.postMessage({ ok: false, error: String(error) })

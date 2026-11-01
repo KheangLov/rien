@@ -655,6 +655,24 @@ async function run() {
     }
   })
 
+  await step('Neural network: trained with TensorFlow.js in the background thread', async () => {
+    // A few weeks of practice answers, so there is enough to train on.
+    const skills = ['past-simple', 'articles', 'present-perfect', 'sound:th'] as const
+    const kinds = ['fix-it', 'fix-it', 'fix-it', 'sound'] as const
+    const now = Date.now()
+    await db.saveAttempts(Array.from({ length: 320 }, (_, i) => ({
+      itemId: `sim:${i % 60}`, kind: kinds[i % 4]!, skill: skills[i % 4]!, level: 'B1' as const,
+      score: (i * 7) % 10 < 7 ? 1 : 0, ms: 2000, at: new Date(now - (320 - i) * 3_600_000),
+    })))
+    resetLearner()
+    const learner = await useLearner()
+    const report = learner.ml?.report
+    if (!report?.trained) throw new Error(`network not trained: ${JSON.stringify(report ?? null)}`)
+    if (!(await db.getSettings()).mlModel) throw new Error('trained network not saved')
+    const pct = (x?: number) => (x === undefined ? '?' : `${Math.round(x * 100)}%`)
+    return `backend ${report.backend}, trained on ${report.trainRows}, tested on ${report.testRows}, accuracy ${pct(report.test?.accuracy)} vs skill model ${pct(report.baseline?.accuracy)}, ${report.active ? 'in use' : 'skill model kept'}`
+  })
+
   await step('Backup round trip through the storage layer', async () => {
     const before = await db.exportAll()
     await db.importAll(JSON.parse(JSON.stringify(before)))

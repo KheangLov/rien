@@ -33,7 +33,7 @@ onMounted(async () => {
   try {
     const practice = await loadPractice()
     states.value = practice.states
-    round.value = topUpRound(pickRound(practice.builderCards, practice.states, practice.counts, practice.now, ROUND_SIZE, Math.random, practice.rank), practice.builderCards, practice.states, ROUND_SIZE)
+    round.value = topUpRound(pickRound(practice.builderCards, practice.states, practice.counts, practice.now, ROUND_SIZE, Math.random, practice.rankFor('builder')), practice.builderCards, practice.states, ROUND_SIZE)
     startCard()
   }
   catch (error) {

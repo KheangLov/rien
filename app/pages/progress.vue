@@ -52,8 +52,23 @@ const selfCheck = computed(() => {
     sharper: Math.max(0, percent(1 - check.logLoss / check.baselineLogLoss)),
     rows: check.bins.filter(b => b.n >= 5).map(b => ({ said: percent(b.said), was: percent(b.was), n: b.n })),
     tuned: l.tuned,
+    network: networkLine(l),
   }
 })
+
+// The neural network (TensorFlow.js) trained on her answers, in a sentence.
+function networkLine(l: Learner): string {
+  const ml = l.ml
+  if (!ml) return `A neural network starts training on your answers once you have ${200} (you have ${l.answers}).`
+  const r = ml.report
+  const when = new Date(ml.trainedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+  const on = r.backend === 'webgl' ? 'on your phone\'s graphics chip' : 'on your phone'
+  if (!r.trained || !r.test || !r.baseline) return `The neural network is waiting for more answers (${r.reason ?? ''}).`
+  const pct = (x: number) => Math.round(x * 100)
+  return r.active
+    ? `A neural network trained ${on} (${when}) on ${r.trainRows} of your answers called your newest ${r.testRows} right ${pct(r.test.accuracy)}% of the time (the skill model: ${pct(r.baseline.accuracy)}%), so Rien now uses it to choose your practice.`
+    : `A neural network trained ${on} (${when}) on ${r.trainRows} of your answers did not beat the skill model on your newest ${r.testRows} (${pct(r.test.accuracy)}% against ${pct(r.baseline.accuracy)}%), so Rien keeps the skill model for now and tries again later.`
+}
 
 const working = computed(() => {
   void counts.value
@@ -125,6 +140,7 @@ const formatDate = (date: Date) => date.toLocaleDateString('en-GB', { day: 'nume
         <p class="rien-muted">
           {{ selfCheck.tuned ? 'Its learning speed is fitted to your answers.' : 'It uses its starting settings until you have 300 answers, then fits them to you.' }}
         </p>
+        <p class="rien-muted">{{ selfCheck.network }}</p>
       </SqCardText>
     </SqCard>
 
