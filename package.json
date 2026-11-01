@@ -1,5 +1,6 @@
 {
   "name": "rien",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@11.28.10",
@@ -19,6 +20,7 @@
     "open:ios": "cap open ios",
     "build:android": "RIEN_NATIVE=1 nuxt generate && cap sync android",
     "apk": "scripts/build-apk.sh",
+    "apk:dev": "scripts/build-apk.sh --debug",
     "build:e2e": "RIEN_E2E=1 nuxt generate",
     "build:ios:e2e": "RIEN_NATIVE=1 RIEN_E2E=1 nuxt generate && cap sync ios",
     "install:iphone": "scripts/install-iphone.sh",

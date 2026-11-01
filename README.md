@@ -61,14 +61,24 @@ brew install openjdk@21 && brew install --cask android-commandlinetools   # once
 export JAVA_HOME=$(brew --prefix openjdk@21)/libexec/openjdk.jdk/Contents/Home
 sdkmanager --sdk_root=$HOME/Library/Android/sdk --licenses                  # once
 sdkmanager --sdk_root=$HOME/Library/Android/sdk "platform-tools" "platforms;android-36" "build-tools;36.0.0"
-pnpm apk           # builds ~/Desktop/Rien.apk; installs it too if a phone is connected with debugging on
+pnpm apk           # release ~/Desktop/Rien.apk; installs it too if a phone is connected with debugging on
 ```
 
+- `pnpm apk` builds the **release** app (`io.github.kheanglov.rien`, signed, not debuggable) as
+  `~/Desktop/Rien.apk`. `pnpm apk:dev` builds the debug app (`io.github.kheanglov.rien.dev`) as
+  `~/Desktop/Rien-dev.apk`; the two install side by side with separate data.
 - Install without a cable or developer options: send `Rien.apk` to the phone (Telegram,
   Google Drive, email), tap it, and allow installing apps from that app once. To update,
   install a newer `Rien.apk` the same way; words and progress are kept. It never expires.
-- The APK is a debug build, app ID `io.github.kheanglov.rien.dev`, signed with this Mac's
-  `~/.android/debug.keystore`. Updates must come from the same Mac (or that keystore).
+  Developer options and wireless debugging can stay off; they are only needed for
+  `pnpm apk` to install straight onto the phone.
+- Release signing key: `~/.config/rien/rien-release.jks` with its settings in
+  `~/.config/rien/android-release.properties` (password also in the macOS Keychain as
+  "Rien Android release key"). Never commit them. **Back both files up** (password manager or
+  an encrypted drive): updates only install over the app if they are signed with this key.
+  Lost key = uninstall, reinstall, and restore her words from a backup.
+- Version: `versionName` comes from `package.json`, `versionCode` from the number of commits,
+  so every build installs over the last one.
 - Say It and reading aloud use Android's own speech services
   (`android/app/src/main/java/io/github/kheanglov/rien/RienSpeechPlugin.java`): Android's
   web view has no speechSynthesis. Android gives whole-sentence readings only (no per-word
