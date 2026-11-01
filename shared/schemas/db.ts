@@ -174,6 +174,7 @@ export const settingsSchema = z.object({
   // Study days per week.
   weeklyGoal: z.number().int().min(1).max(7).default(5),
   // Look and feel. Motion also stays off when the phone asks for reduced motion.
+  appearance: z.enum(['system', 'light', 'dark']).default('system'),
   liquidGlass: z.boolean().default(true),
   motion: z.boolean().default(true),
   // Say It: let iOS use Apple's online recognition (usually more accurate;

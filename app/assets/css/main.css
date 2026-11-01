@@ -902,12 +902,11 @@ html.rien-motion .page-leave-active {
   box-shadow: inset 0 0 0 3px rgb(255 255 255 / 25%);
 }
 
-@media (prefers-color-scheme: dark) {
-  .rien-tank {
-    background:
-      radial-gradient(120% 60% at 30% 0%, rgb(255 255 255 / 12%), transparent 60%),
-      linear-gradient(180deg, #0c4a6e 0%, #075985 40%, #083344 100%);
-  }
+/* Dark follows Me → Appearance (system, light or dark), via html.rien-dark. */
+html.rien-dark .rien-tank {
+  background:
+    radial-gradient(120% 60% at 30% 0%, rgb(255 255 255 / 12%), transparent 60%),
+    linear-gradient(180deg, #0c4a6e 0%, #075985 40%, #083344 100%);
 }
 
 .rien-tank-floor {
@@ -1239,13 +1238,11 @@ html.rien-glass {
   --rien-glass-shadow: 0 8px 32px rgb(15 23 42 / 10%);
 }
 
-@media (prefers-color-scheme: dark) {
-  html.rien-glass {
-    --rien-glass-bg: rgb(30 41 59 / 52%);
-    --rien-glass-strong: rgb(30 41 59 / 70%);
-    --rien-glass-edge: rgb(255 255 255 / 14%);
-    --rien-glass-shadow: 0 8px 32px rgb(0 0 0 / 35%);
-  }
+html.rien-glass.rien-dark {
+  --rien-glass-bg: rgb(30 41 59 / 52%);
+  --rien-glass-strong: rgb(30 41 59 / 70%);
+  --rien-glass-edge: rgb(255 255 255 / 14%);
+  --rien-glass-shadow: 0 8px 32px rgb(0 0 0 / 35%);
 }
 
 /* A soft colour field behind everything, so the glass has something to show. */
@@ -1544,8 +1541,9 @@ html.rien-motion .rien-timeline-point.is-on i {
 
 .rien-picture-picker {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
+  gap: 8px 12px;
 }
 
 .rien-picture-thumb {
@@ -1599,4 +1597,63 @@ html.rien-motion .rien-timeline-point.is-on i {
 .rien-shell,
 .rien-page {
   overflow-x: clip;
+}
+
+/* Rows and tiles fill their card including their padding. Without this they
+   were wider than the card: on iPhone Squirkle's SVG fallback clipped the
+   overflow, but browsers that draw squircles natively (Chrome) showed the
+   chevrons and dividers sticking out. */
+.rien-list-row,
+.rien-segment,
+.rien-award,
+.rien-token,
+.rien-toast {
+  box-sizing: border-box;
+}
+
+.rien-list {
+  overflow: hidden;
+}
+
+/* In glass mode, keep tappable word tiles visible against a light card. */
+html.rien-glass .rien-token {
+  border-color: color-mix(in srgb, var(--sq-on-surface, #18181b) 16%, transparent);
+  box-shadow: 0 1px 2px rgb(15 23 42 / 6%);
+}
+
+/* Fish: the tail sways and the side fin flutters (with motion on). */
+.rien-fish-tail,
+.rien-fish-pectoral {
+  transform-box: view-box;
+}
+
+.rien-fish-tail {
+  transform-origin: 34px 35px;
+}
+
+.rien-fish-pectoral {
+  transform-origin: 88px 41px;
+}
+
+html.rien-motion .rien-fish-svg:not(.is-dead) .rien-fish-tail {
+  animation: rien-tail var(--tail, 0.6s) ease-in-out infinite alternate;
+}
+
+html.rien-motion .rien-fish-svg:not(.is-dead) .rien-fish-pectoral {
+  animation: rien-pectoral calc(var(--tail, 0.6s) * 0.8) ease-in-out infinite alternate;
+}
+
+@keyframes rien-tail {
+  from { transform: skewY(-9deg) scaleX(0.92); }
+  to { transform: skewY(9deg) scaleX(1); }
+}
+
+@keyframes rien-pectoral {
+  from { transform: rotate(-14deg); }
+  to { transform: rotate(10deg); }
+}
+
+.rien-credits {
+  font-size: 12px;
+  text-align: center;
 }

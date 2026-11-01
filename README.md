@@ -72,3 +72,9 @@ pnpm open:ios      # open in Xcode; pick a team under Signing & Capabilities
 6. Settings → Speech test, once in Safari and once from the Home Screen.
    Copy both reports.
 7. Settings → Save backup, and check the file lands in Files.
+
+## Credits
+
+- Icons: [Solar](https://www.figma.com/community/file/1166831539721848736) by 480 Design, licensed
+  [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), bundled through `@iconify-json/solar`
+  (`pnpm icons` rebuilds `app/assets/icons/solar.json`). The fish icon is drawn for Rien in Solar's style.

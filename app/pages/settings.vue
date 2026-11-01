@@ -134,6 +134,25 @@ async function importBackup(event: Event) {
 
     <SqCard v-if="settings" title="Look & feel">
       <SqCardText class="rien-stack">
+        <div class="rien-stack rien-gap-sm">
+          <p class="rien-muted">Appearance</p>
+          <Squircle class="rien-segments" :radius="14" role="radiogroup" aria-label="Appearance">
+            <Squircle
+              v-for="option in (['system', 'light', 'dark'] as const)"
+              :key="option"
+              tag="button"
+              :radius="11"
+              type="button"
+              role="radio"
+              class="rien-segment"
+              :class="{ 'is-active': settings.appearance === option }"
+              :aria-checked="settings.appearance === option"
+              @click="update({ appearance: option })"
+            >
+              {{ option === 'system' ? 'Automatic' : option === 'light' ? 'Light' : 'Dark' }}
+            </Squircle>
+          </Squircle>
+        </div>
         <SqSwitch
           :model-value="settings.liquidGlass"
           label="Liquid Glass"
@@ -225,5 +244,8 @@ async function importBackup(event: Event) {
         <SqBtn to="/speech-test" variant="tonal">Speech test</SqBtn>
       </SqCardActions>
     </SqCard>
+    <p class="rien-muted rien-credits">
+      Icons: Solar by 480 Design, CC BY 4.0. Fish drawn for Rien.
+    </p>
   </div>
 </template>

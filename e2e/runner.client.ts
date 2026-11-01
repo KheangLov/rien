@@ -45,6 +45,16 @@ async function screen(name: string) {
   if (document.documentElement.scrollWidth > window.innerWidth + 1) {
     throw new Error(`${name} is wider than the screen (${document.documentElement.scrollWidth} > ${window.innerWidth})`)
   }
+  // Nothing may stick out of a list or card (Squirkle's own shape layers excepted).
+  const spill = [...document.querySelectorAll('.rien-list, .sq-card')].flatMap((box) => {
+    const b = box.getBoundingClientRect()
+    return [...box.querySelectorAll<HTMLElement>('*')].filter((el) => {
+      if (el.closest('.sq-shape-layers, .sq-shape')) return false
+      const r = el.getBoundingClientRect()
+      return r.width > 0 && r.height > 0 && (r.right > b.right + 1 || r.left < b.left - 1)
+    })
+  })
+  if (spill.length) throw new Error(`${spill.length} element(s) stick out of a card on ${name}, e.g. ${spill[0]!.className || spill[0]!.tagName}`)
   log(`SCREEN ${name}`)
   await sleep(1500)
 }
@@ -452,6 +462,13 @@ async function run() {
     await screen('settings-plain')
     await db.saveSettings({ liquidGlass: true, motion: true })
     await waitFor(() => root.classList.contains('rien-glass'), 'glass back on')
+    // Appearance overrides the phone's own setting either way.
+    await db.saveSettings({ appearance: 'dark' })
+    await waitFor(() => root.classList.contains('rien-dark'), 'dark on')
+    await screen('settings-dark')
+    await db.saveSettings({ appearance: 'light' })
+    await waitFor(() => !root.classList.contains('rien-dark'), 'light on')
+    await db.saveSettings({ appearance: 'system' })
     await screen('settings')
   })
 

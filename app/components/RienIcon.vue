@@ -1,58 +1,51 @@
 <script setup lang="ts">
-import {
-  PhBookOpenText, PhCamera, PhCards, PhCaretLeft, PhCaretRight, PhChartBar, PhChatsCircle, PhCheck,
-  PhFire, PhFish, PhHouse, PhImage, PhLightbulb, PhMagnifyingGlass, PhMicrophone, PhPencilSimpleLine,
-  PhPlay, PhPlus, PhPuzzlePiece, PhRadio, PhSparkle, PhSpeakerHigh, PhTrophy, PhUserCircle, PhWaveform, PhX,
-} from '@phosphor-icons/vue'
-import type { Component } from 'vue'
-
-// Phosphor icons: soft, rounded shapes that match the squircle UI, bundled so
-// they work offline. Weights follow iOS: fill for the selected tab, duotone
-// in coloured tiles, bold for small marks, regular elsewhere.
+// Solar icons (480 Design, CC BY 4.0) drawn by Squirkle's SqIcon from the
+// bundled subset registered in plugins/icons.client.ts. Weights follow iOS:
+// fill (Solar bold) for the selected tab, duotone (bold-duotone) in tiles,
+// regular and bold (linear) elsewhere.
 const ICONS = {
-  'today': PhHouse,
-  'words': PhBookOpenText,
-  'progress': PhChartBar,
-  'me': PhUserCircle,
-  'close': PhX,
-  'back': PhCaretLeft,
-  'next': PhCaretRight,
-  'plus': PhPlus,
-  'check': PhCheck,
-  'search': PhMagnifyingGlass,
-  'play': PhPlay,
-  'flame': PhFire,
-  'fish': PhFish,
-  'sparkles': PhSparkle,
-  'image': PhImage,
-  'camera': PhCamera,
-  'volume': PhSpeakerHigh,
-  'lightbulb': PhLightbulb,
-  'word-recall': PhCards,
-  'fix-it': PhPencilSimpleLine,
-  'sound-hunter': PhWaveform,
-  'sentence-builder': PhPuzzlePiece,
-  'gap-radio': PhRadio,
-  'say-it': PhMicrophone,
-  'file-boss': PhTrophy,
-  'couple-talk': PhChatsCircle,
-} as const satisfies Record<string, Component>
+  'today': 'home-2',
+  'words': 'notebook',
+  'progress': 'chart-2',
+  'me': 'user-circle',
+  'close': 'close-circle',
+  'back': 'alt-arrow-left',
+  'next': 'alt-arrow-right',
+  'plus': 'add-circle',
+  'check': 'check-read',
+  'search': 'magnifer',
+  'play': 'play',
+  'flame': 'fire',
+  'fish': 'rien-fish',
+  'sparkles': 'stars',
+  'image': 'gallery',
+  'camera': 'camera',
+  'volume': 'volume-loud',
+  'lightbulb': 'lightbulb',
+  'word-recall': 'layers',
+  'fix-it': 'pen-new-square',
+  'sound-hunter': 'soundwave',
+  'sentence-builder': 'widget-add',
+  'gap-radio': 'radio',
+  'say-it': 'microphone-2',
+  'file-boss': 'cup-star',
+  'couple-talk': 'chat-round-dots',
+} as const
 
 export type IconName = keyof typeof ICONS
 export type IconWeight = 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone'
 
-withDefaults(defineProps<{ name: IconName, size?: number, weight?: IconWeight }>(), {
+const VARIANT: Record<IconWeight, string> = {
+  thin: 'linear', light: 'linear', regular: 'linear', bold: 'linear', fill: 'bold', duotone: 'bold-duotone',
+}
+
+const props = withDefaults(defineProps<{ name: IconName, size?: number, weight?: IconWeight }>(), {
   size: 24,
   weight: 'regular',
 })
+const icon = computed(() => `solar:${ICONS[props.name]}-${VARIANT[props.weight]}`)
 </script>
 
 <template>
-  <component
-    :is="ICONS[name]"
-    :size="size"
-    :weight="weight"
-    class="rien-icon"
-    aria-hidden="true"
-  />
+  <SqIcon :icon="icon" :size="size" class="rien-icon" aria-hidden="true" />
 </template>

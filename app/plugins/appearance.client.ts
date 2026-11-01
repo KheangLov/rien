@@ -1,36 +1,35 @@
 import { Capacitor } from '@capacitor/core'
 import { useTheme } from '@squirkle-ui/ui'
 
-// Light or dark following the phone (brand colours are set in nuxt.config.ts),
-// and on iPhone a status bar and keyboard that behave like a native app.
+// Appearance (system, light or dark), Liquid Glass and motion from her
+// settings (brand colours are set in nuxt.config.ts). Applied as classes on
+// <html>, plus the Squirkle theme, the browser theme colour and, on iPhone,
+// the status bar. Motion also stays off when the phone asks for reduced motion.
 export default defineNuxtPlugin(() => {
   const theme = useTheme()
-
-  const dark = window.matchMedia('(prefers-color-scheme: dark)')
-  const apply = () => {
-    theme.name.value = dark.matches ? 'dark' : 'light'
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark.matches ? '#0b1220' : '#f7f7f5')
-    if (Capacitor.isNativePlatform()) {
-      void import('@capacitor/status-bar').then(({ StatusBar, Style }) =>
-        StatusBar.setStyle({ style: dark.matches ? Style.Dark : Style.Light })).catch(() => {})
-    }
-  }
-  apply()
-  dark.addEventListener('change', apply)
-
-  // Liquid Glass and motion follow her settings; motion also stays off when the
-  // phone asks for reduced motion. Applied as classes on <html>.
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)')
-  const root = document.documentElement
-  root.classList.add('rien-glass', 'rien-motion')
   const db = useDb()
+  const root = document.documentElement
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)')
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)')
+  root.classList.add('rien-glass', 'rien-motion')
+
   const sync = async () => {
     const settings = await db.getSettings()
+    const dark = settings.appearance === 'dark' || (settings.appearance === 'system' && systemDark.matches)
+    theme.name.value = dark ? 'dark' : 'light'
+    root.classList.toggle('rien-dark', dark)
+    root.style.colorScheme = dark ? 'dark' : 'light'
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#0b1220' : '#f7f7f5')
     root.classList.toggle('rien-glass', settings.liquidGlass)
     root.classList.toggle('rien-motion', settings.motion && !reduce.matches)
+    if (Capacitor.isNativePlatform()) {
+      void import('@capacitor/status-bar').then(({ StatusBar, Style }) =>
+        StatusBar.setStyle({ style: dark ? Style.Dark : Style.Light })).catch(() => {})
+    }
   }
   void sync()
   db.subscribe(() => void sync())
+  systemDark.addEventListener('change', () => void sync())
   reduce.addEventListener('change', () => void sync())
 
   if (Capacitor.isNativePlatform()) {

@@ -38,9 +38,6 @@ importers:
       '@capacitor/status-bar':
         specifier: ^8.0.4
         version: 8.0.4(@capacitor/core@8.5.3)
-      '@phosphor-icons/vue':
-        specifier: ^2.2.1
-        version: 2.2.1(vue@3.5.44(typescript@6.0.3))
       '@squirkle-ui/calendar':
         specifier: ^0.1.2
         version: 0.1.2(@squirkle-ui/ui@0.1.1(vue@3.5.44(typescript@6.0.3)))(vue@3.5.44(typescript@6.0.3))
@@ -75,6 +72,9 @@ importers:
       '@capacitor/cli':
         specifier: ^8.5.3
         version: 8.5.3(supports-color@10.2.2)
+      '@iconify-json/solar':
+        specifier: ^1.2.13
+        version: 1.2.13
       '@vite-pwa/nuxt':
         specifier: ^1.1.1
         version: 1.1.1(magicast@0.5.5)(supports-color@10.2.2)(vite@8.3.5(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2))(workbox-build@7.4.1(supports-color@10.2.2))(workbox-window@7.4.1)
@@ -868,6 +868,12 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@iconify-json/solar@1.2.13':
+    resolution: {integrity: sha512-/ZWb6xRib6pzxD/qTkKWYhuzSU2yu0bY+EN0spgtz1NM3d5f4eYueQZpL3PfCdsg5uVfm4Ldtt3cAyQL+YI8/Q==}
+
+  '@iconify/types@2.0.0':
+    resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
+
   '@ionic/cli-framework-output@2.2.8':
     resolution: {integrity: sha512-TshtaFQsovB4NWRBydbNFawql6yul7d5bMiW1WYYf17hd99V6xdDdk3vtF51bw6sLkxON3bDQpWsnUc9/hVo3g==}
     engines: {node: '>=16.0.0'}
@@ -1101,12 +1107,6 @@ packages:
     engines: {node: '>= 10.0.0'}
     bundledDependencies:
       - napi-wasm
-
-  '@phosphor-icons/vue@2.2.1':
-    resolution: {integrity: sha512-3RNg1utc2Z5RwPKWFkW3eXI/0BfQAwXgtFxPUPeSzi55jGYUq16b+UqcgbKLazWFlwg5R92OCLKjDiJjeiJcnA==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      vue: '>=3.2.39'
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -5448,6 +5448,12 @@ snapshots:
   '@esbuild/win32-x64@0.28.2':
     optional: true
 
+  '@iconify-json/solar@1.2.13':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify/types@2.0.0': {}
+
   '@ionic/cli-framework-output@2.2.8(supports-color@10.2.2)':
     dependencies:
       '@ionic/utils-terminal': 2.3.5(supports-color@10.2.2)
@@ -6001,10 +6007,6 @@ snapshots:
     dependencies:
       is-glob: 4.0.3
       picomatch: 4.0.7
-
-  '@phosphor-icons/vue@2.2.1(vue@3.5.44(typescript@6.0.3))':
-    dependencies:
-      vue: 3.5.44(typescript@6.0.3)
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
