@@ -1,4 +1,4 @@
-import type { Backup, Book, BossResult, CardRow, GrammarRow, MistakeRow, MistakeType, NewWordInput, SessionRow, Settings, TalkResult } from '#shared/schemas/db'
+import type { AttemptRow, Backup, Book, BossResult, CardRow, GrammarRow, MistakeRow, MistakeType, NewWordInput, ReviewRow, SessionRow, Settings, TalkResult } from '#shared/schemas/db'
 import type { GradedAnswer } from '#shared/utils/scheduler'
 
 // All storage goes through this interface: Dexie on the web now,
@@ -26,7 +26,13 @@ export interface StudyRepository {
   saveAnswer(graded: GradedAnswer): Promise<void>
 
   grammarStates(): Promise<GrammarRow[]>
-  saveGrammarAnswer(row: GrammarRow, mistake?: MistakeRow): Promise<void>
+  // The rescheduled item, any slip and the answer for the skill model, together.
+  saveGrammarAnswer(row: GrammarRow, mistake?: MistakeRow, attempt?: AttemptRow): Promise<void>
+  // Answers in games with no review schedule (quick games, File Boss, Say It).
+  saveAttempts(attempts: AttemptRow[]): Promise<void>
+  // The skill model and FSRS fitting learn from these.
+  attemptsSince(since: Date): Promise<AttemptRow[]>
+  reviewsSince(since: Date): Promise<ReviewRow[]>
   mistakeCounts(since: Date): Promise<Partial<Record<MistakeType, number>>>
   mistakesSince(since: Date): Promise<MistakeRow[]>
   // A slip with no review schedule of its own (Say It).
