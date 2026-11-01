@@ -202,21 +202,20 @@ a,
   color: var(--sq-muted, #6b7280);
 }
 
+/* Filled squircle tiles (no outline: squircle clipping on iPhone would cut a ring). */
 .rien-dot {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  border: 2px solid var(--sq-border, #d4d4d8);
-  box-sizing: border-box;
-}
-
-.rien-day.is-studied .rien-dot {
-  background: var(--sq-primary, #4f46e5);
-  border-color: var(--sq-primary, #4f46e5);
+  background: var(--ios-fill, rgb(118 118 128 / 12%));
 }
 
 .rien-day.is-today .rien-dot {
-  border-color: var(--sq-primary, #4f46e5);
+  background: color-mix(in srgb, var(--sq-primary, #0f766e) 22%, transparent);
+}
+
+.rien-day.is-studied .rien-dot {
+  background: var(--sq-primary, #0f766e);
 }
 
 .rien-day.is-today {
@@ -976,10 +975,15 @@ html.rien-dark .rien-tank {
   to { transform: rotate(176deg) translateY(2px); }
 }
 
-.rien-fish.is-selected,
-.rien-egg.is-selected {
+.rien-fish.is-selected {
   outline: 3px solid #fff;
   outline-offset: 2px;
+}
+
+/* Eggs are squircle-clipped, which would cut an outline off: glow and grow instead. */
+.rien-egg.is-selected {
+  scale: 1.18;
+  filter: brightness(1.15) saturate(1.2);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1339,7 +1343,7 @@ html.rien-motion .sq-btn,
 html.rien-motion .rien-token,
 html.rien-motion .rien-award,
 html.rien-motion .rien-hero-btn {
-  transition: transform 160ms ease;
+  transition: transform 160ms ease, scale 200ms ease;
 }
 
 html.rien-motion .sq-btn:active,
@@ -2171,14 +2175,15 @@ body {
   font-weight: 600;
 }
 
+/* Today: a tinted tile (solid once studied), like the iPhone Calendar's today. */
 .rien-cal-day.is-today {
-  box-shadow: inset 0 0 0 2px var(--sq-primary, #0f766e);
+  background: color-mix(in srgb, var(--sq-primary, #0f766e) 16%, transparent);
   color: var(--sq-primary, #0f766e);
   font-weight: 700;
 }
 
 .rien-cal-day.is-today.is-studied {
-  box-shadow: inset 0 0 0 2px var(--sq-primary, #0f766e), inset 0 0 0 4px var(--sq-surface, #fff);
+  background: var(--sq-primary, #0f766e);
   color: #fff;
 }
 
@@ -2187,13 +2192,13 @@ body {
   cursor: default;
 }
 
-.rien-cal-day.is-picked:not(.is-today) {
-  outline: 2px solid var(--sq-primary, #0f766e);
-  outline-offset: 2px;
+/* The picked day lifts a little (the line under the grid names it). */
+.rien-cal-day.is-picked {
+  scale: 1.1;
 }
 
 html.rien-motion .rien-cal-day {
-  transition: transform 160ms ease;
+  transition: transform 160ms ease, scale 200ms ease;
 }
 
 html.rien-motion .rien-cal-day:not(:disabled):active {
