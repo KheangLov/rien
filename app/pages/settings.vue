@@ -23,6 +23,11 @@ const fileInput = ref<HTMLInputElement | null>(null)
 
 const online = ref(true)
 const standalone = ref(false)
+// The offline copy is ready once a service worker controls the page.
+// $pwa.offlineReady is only set on the visit that first installs it.
+const offline = ref(false)
+// iPhone Safari has no install button for web apps: it is done from Share.
+const iosBrowser = ref(false)
 
 function refreshStatus() {
   online.value = navigator.onLine
@@ -34,6 +39,8 @@ function refreshStatus() {
 onMounted(async () => {
   settings.value = await db.getSettings()
   refreshStatus()
+  iosBrowser.value = /iPhone|iPad|iPod/.test(navigator.userAgent) && !standalone.value
+  void navigator.serviceWorker?.ready.then(() => { offline.value = true })
   window.addEventListener('online', refreshStatus)
   window.addEventListener('offline', refreshStatus)
 })
@@ -166,10 +173,14 @@ async function importBackup(event: Event) {
 
     <SqAlert v-if="message" :type="message.type" variant="tonal" :text="message.text" class="rien-pop" />
 
-    <IosGroup v-if="!native" header="This device">
+    <IosGroup
+      v-if="!native"
+      header="This device"
+      :footer="iosBrowser ? 'To install Rien, tap Share in Safari, then Add to Home Screen. It opens full screen and works offline.' : undefined"
+    >
       <IosRow label="Connection" icon="phone" :value="online ? 'Online' : 'Offline'" />
       <IosRow label="Opened from" icon="today" :value="standalone ? 'Home Screen' : 'Browser'" />
-      <IosRow label="Offline copy" icon="download" :value="$pwa?.offlineReady ? 'Ready' : 'Preparing'" />
+      <IosRow label="Offline copy" icon="download" :value="offline || $pwa?.offlineReady ? 'Ready' : 'Preparing'" />
       <IosRow v-if="$pwa?.showInstallPrompt" label="Install Rien" icon="plus" tint="primary" @click="$pwa.install()" />
       <IosRow label="Speech test" icon="say-it" to="/speech-test" />
     </IosGroup>

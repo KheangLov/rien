@@ -25,6 +25,15 @@ const config: CapacitorConfig = {
       insetsHandling: 'css',
       initialViewportFitValueHint: 'cover',
     },
+    // The logo stays up until the first screen has drawn (plugins/splash.client.ts
+    // hides it), so the app opens without a blank flash. The duration is only a
+    // fallback in case the page never gets that far.
+    SplashScreen: {
+      launchShowDuration: 3000,
+      launchAutoHide: true,
+      launchFadeOutDuration: 200,
+      showSpinner: false,
+    },
     CapacitorSQLite: {
       iosDatabaseLocation: 'Library/CapacitorDatabase',
       iosIsEncryption: false,

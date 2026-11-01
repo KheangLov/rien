@@ -1507,6 +1507,24 @@ html:not(.rien-motion) .rien-celebrate-icon {
   box-shadow: 0 0 0 6px color-mix(in srgb, var(--sq-primary, #0f766e) 20%, transparent);
 }
 
+/* Present perfect: the line itself is lit from the past up to now. */
+.rien-timeline.is-span::before {
+  content: '';
+  position: absolute;
+  left: 16%;
+  right: 50%;
+  top: 17px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--sq-primary, #0f766e);
+}
+
+/* Imagined (second conditional): a dashed ring, not a real moment. */
+.rien-timeline-point.is-on.is-imagined i {
+  background: var(--sq-surface, #fff);
+  border-style: dashed;
+}
+
 html.rien-motion .rien-timeline-point.is-on i {
   animation: rien-pulse 1.6s ease-in-out infinite;
 }
@@ -2228,6 +2246,17 @@ html {
   -webkit-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  /* No double-tap zoom: taps answer at once, as in native apps. */
+  touch-action: manipulation;
+}
+
+/* Installed from the browser: no pull-to-refresh or page bounce, like the
+   native app (the browser keeps its own when Rien is opened as a web page). */
+@media (display-mode: standalone) {
+  html,
+  body {
+    overscroll-behavior-y: none;
+  }
 }
 
 input,
