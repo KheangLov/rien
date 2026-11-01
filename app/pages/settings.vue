@@ -55,12 +55,19 @@ onBeforeUnmount(() => {
 
 const { $setAppearance } = useNuxtApp()
 
+// Android swaps launcher entries to change the icon, which on some phones
+// (Samsung's too) takes the icon off the home screen: say so before turning it on.
+function toggleIconColour(on: boolean) {
+  if (on && !window.confirm('Rien\'s icon will change to this colour when you leave the app. On some phones it then disappears from the home screen (it stays in the app list) and needs adding back. Turn it on?')) return
+  void update({ iconFollowsColour: on })
+}
+
 // The screen changes as soon as she taps, then the setting is saved: waiting
 // for the database (a round trip on the phone) made every switch feel slow.
 async function update(patch: Partial<Settings>) {
   if (!settings.value) return
   settings.value = { ...settings.value, ...patch }
-  if ('appearance' in patch || 'liquidGlass' in patch || 'motion' in patch || 'accent' in patch) $setAppearance(settings.value)
+  if ('appearance' in patch || 'liquidGlass' in patch || 'motion' in patch || 'accent' in patch || 'iconFollowsColour' in patch) $setAppearance(settings.value)
   settings.value = await db.saveSettings(patch)
 }
 
@@ -188,6 +195,11 @@ async function importBackup(event: Event) {
             </button>
           </div>
         </li>
+        <IosRow v-if="android" label="Home screen icon in this colour" icon="install" @click="toggleIconColour(!settings.iconFollowsColour)">
+          <template #end>
+            <IosSwitch :model-value="settings.iconFollowsColour" label="Home screen icon in this colour" @update:model-value="toggleIconColour($event)" />
+          </template>
+        </IosRow>
         <IosRow label="Liquid Glass" icon="sparkles" @click="update({ liquidGlass: !settings.liquidGlass })">
           <template #end>
             <IosSwitch :model-value="settings.liquidGlass" label="Liquid Glass" @update:model-value="update({ liquidGlass: $event })" />

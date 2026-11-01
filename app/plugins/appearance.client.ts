@@ -10,9 +10,13 @@ import type { Settings } from '#shared/schemas/db'
 // light ↔ dark); saved settings reach here too, through sync.
 // Android only (android/…/RienLookPlugin.java): her Appearance for the
 // system's own splash screen at launch.
-const RienLook = registerPlugin<{ setAppearance: (options: { appearance: Settings['appearance'] }) => Promise<void> }>('RienLook')
+const RienLook = registerPlugin<{
+  setAppearance: (options: { appearance: Settings['appearance'] }) => Promise<void>
+  // The home-screen icon's colour, switched when she next leaves the app.
+  setLauncherIcon: (options: { accent: Settings['accent'] }) => Promise<void>
+}>('RienLook')
 
-type Look = Pick<Settings, 'appearance' | 'liquidGlass' | 'motion' | 'accent'>
+type Look = Pick<Settings, 'appearance' | 'liquidGlass' | 'motion' | 'accent' | 'iconFollowsColour'>
 
 export default defineNuxtPlugin(() => {
   const theme = useTheme()
@@ -23,7 +27,7 @@ export default defineNuxtPlugin(() => {
   root.classList.add('rien-glass', 'rien-motion')
 
   const isDark = (look: Look) => look.appearance === 'dark' || (look.appearance === 'system' && systemDark.matches)
-  const keyOf = (look: Look) => `${look.appearance}${isDark(look)}${look.liquidGlass}${look.motion && !reduce.matches}${look.accent}`
+  const keyOf = (look: Look) => `${look.appearance}${isDark(look)}${look.liquidGlass}${look.motion && !reduce.matches}${look.accent}${look.iconFollowsColour}`
   let painted = ''
 
   // Applies a look in one pass, and only when something changed (every save
@@ -60,7 +64,10 @@ export default defineNuxtPlugin(() => {
     saveSplashColours(look.accent, look.appearance)
     if (!Capacitor.isNativePlatform()) setTabIcon(look.accent)
     root.classList.toggle('rien-motion', motion)
-    if (Capacitor.getPlatform() === 'android') void RienLook.setAppearance({ appearance: look.appearance }).catch(() => {})
+    if (Capacitor.getPlatform() === 'android') {
+      void RienLook.setAppearance({ appearance: look.appearance }).catch(() => {})
+      void RienLook.setLauncherIcon({ accent: look.iconFollowsColour ? look.accent : 'teal' }).catch(() => {})
+    }
     if (Capacitor.isNativePlatform()) {
       void import('@capacitor/status-bar').then(({ StatusBar, Style }) =>
         StatusBar.setStyle({ style: dark ? Style.Dark : Style.Light })).catch(() => {})

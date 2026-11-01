@@ -1,6 +1,6 @@
 import { contrastRatio, createBrandTheme } from '@squirkle-ui/core'
 import type { Settings } from '#shared/schemas/db'
-import { TEAL_LOGO, logoSvg, type LogoColours } from '#shared/utils/logo'
+import { ACCENT_LOGOS, logoSvg, type LogoColours } from '#shared/utils/logo'
 
 export type Accent = Settings['accent']
 
@@ -11,14 +11,14 @@ export type Accent = Settings['accent']
 // close to the main colour and two that go with it.
 // logo: the logo tile's gradient and the bar under the word, in this colour.
 export const ACCENTS: { id: Accent, name: string, color: string, tints: [string, string, string], logo: LogoColours }[] = [
-  { id: 'teal', name: 'Teal', color: '#0f766e', tints: ['#2dd4bf', '#38bdf8', '#f472b6'], logo: TEAL_LOGO },
-  { id: 'blue', name: 'Blue', color: '#1d4ed8', tints: ['#60a5fa', '#22d3ee', '#a78bfa'], logo: { top: '#2563eb', bottom: '#1d4ed8', bar: '#93c5fd' } },
-  { id: 'indigo', name: 'Indigo', color: '#4f46e5', tints: ['#818cf8', '#60a5fa', '#f0abfc'], logo: { top: '#6366f1', bottom: '#4f46e5', bar: '#a5b4fc' } },
-  { id: 'violet', name: 'Violet', color: '#7c3aed', tints: ['#a78bfa', '#f472b6', '#60a5fa'], logo: { top: '#8b5cf6', bottom: '#7c3aed', bar: '#c4b5fd' } },
-  { id: 'pink', name: 'Pink', color: '#db2777', tints: ['#f472b6', '#c084fc', '#fdba74'], logo: { top: '#ec4899', bottom: '#db2777', bar: '#f9a8d4' } },
-  { id: 'red', name: 'Red', color: '#dc2626', tints: ['#f87171', '#fb923c', '#f472b6'], logo: { top: '#ef4444', bottom: '#dc2626', bar: '#fca5a5' } },
-  { id: 'orange', name: 'Orange', color: '#ea580c', tints: ['#fb923c', '#facc15', '#f87171'], logo: { top: '#f97316', bottom: '#ea580c', bar: '#fed7aa' } },
-  { id: 'green', name: 'Green', color: '#16a34a', tints: ['#4ade80', '#2dd4bf', '#facc15'], logo: { top: '#22c55e', bottom: '#16a34a', bar: '#bbf7d0' } },
+  { id: 'teal', name: 'Teal', color: '#0f766e', tints: ['#2dd4bf', '#38bdf8', '#f472b6'], logo: ACCENT_LOGOS.teal },
+  { id: 'blue', name: 'Blue', color: '#1d4ed8', tints: ['#60a5fa', '#22d3ee', '#a78bfa'], logo: ACCENT_LOGOS.blue },
+  { id: 'indigo', name: 'Indigo', color: '#4f46e5', tints: ['#818cf8', '#60a5fa', '#f0abfc'], logo: ACCENT_LOGOS.indigo },
+  { id: 'violet', name: 'Violet', color: '#7c3aed', tints: ['#a78bfa', '#f472b6', '#60a5fa'], logo: ACCENT_LOGOS.violet },
+  { id: 'pink', name: 'Pink', color: '#db2777', tints: ['#f472b6', '#c084fc', '#fdba74'], logo: ACCENT_LOGOS.pink },
+  { id: 'red', name: 'Red', color: '#dc2626', tints: ['#f87171', '#fb923c', '#f472b6'], logo: ACCENT_LOGOS.red },
+  { id: 'orange', name: 'Orange', color: '#ea580c', tints: ['#fb923c', '#facc15', '#f87171'], logo: ACCENT_LOGOS.orange },
+  { id: 'green', name: 'Green', color: '#16a34a', tints: ['#4ade80', '#2dd4bf', '#facc15'], logo: ACCENT_LOGOS.green },
 ]
 
 export const accentOf = (accent: Accent) => ACCENTS.find(a => a.id === accent) ?? ACCENTS[0]!
