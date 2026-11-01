@@ -109,7 +109,7 @@ const feedback = computed(() => {
           </template>
         </SqAlert>
         <p class="rien-answer rien-pop">{{ card.answer }}</p>
-        <p class="rien-next-review"><RienIcon name="sparkles" :size="16" />{{ comesBack }}</p>
+        <p class="rien-next-review"><RienIcon name="sparkles" :size="16" weight="fill" />{{ comesBack }}</p>
         <p v-if="card.example" class="rien-example">{{ card.example }}</p>
         <p v-if="card.khmer && !showKhmer" class="rien-muted rien-khmer">{{ card.khmer }}</p>
 
@@ -128,7 +128,7 @@ const feedback = computed(() => {
             {{ needsRetype && !retypeOk ? 'Type the word to continue' : 'Next' }}
           </SqBtn>
           <SqBtn v-if="canSpeak" variant="tonal" size="large" aria-label="Hear it" @click="speak(card.answer)">
-            <RienIcon name="sound-hunter" />
+            <RienIcon name="volume" weight="fill" />
           </SqBtn>
         </ActionBar>
       </template>

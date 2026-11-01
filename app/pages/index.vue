@@ -67,7 +67,7 @@ const talkedThisWeek = computed(() => {
     <PageHeader title="Today" :subtitle="today">
       <template #action>
         <div class="rien-streak-row" :aria-label="`${streak.current} day streak`">
-          <RienIcon name="flame" :size="26" class="rien-streak-flame" />
+          <RienIcon name="flame" :size="28" weight="fill" class="rien-streak-flame" />
           <strong class="rien-stat">{{ streak.current }}</strong>
         </div>
       </template>
@@ -91,7 +91,7 @@ const talkedThisWeek = computed(() => {
           class="rien-hero-step"
           :class="{ 'is-done': doneToday.includes(id) }"
         >
-          <RienIcon :name="doneToday.includes(id) ? 'check' : ACTIVITIES[id].icon" :size="16" />
+          <RienIcon :name="doneToday.includes(id) ? 'check' : ACTIVITIES[id].icon" :size="16" :weight="doneToday.includes(id) ? 'bold' : 'duotone'" />
           {{ ACTIVITIES[id].title }}
         </span>
       </div>
@@ -131,14 +131,14 @@ const talkedThisWeek = computed(() => {
     <Squircle class="rien-list" :radius="22"><ul class="rien-list-items">
       <li v-for="item in practice" :key="item.id">
         <NuxtLink :to="item.to" class="rien-list-row">
-          <span class="rien-list-icon"><RienIcon :name="item.icon" /></span>
+          <span class="rien-list-icon"><RienIcon :name="item.icon" weight="duotone" :size="26" /></span>
           <span class="rien-list-text">
             <span class="rien-list-title">{{ item.title }}</span>
             <span class="rien-list-sub">{{ item.sub }}</span>
           </span>
           <span class="rien-list-end">
-            <span v-if="item.done" class="rien-done-dot" aria-label="Done today"><RienIcon name="check" :size="14" /></span>
-            <RienIcon name="next" :size="18" />
+            <span v-if="item.done" class="rien-done-dot" aria-label="Done today"><RienIcon name="check" :size="14" weight="bold" /></span>
+            <RienIcon name="next" :size="16" weight="bold" />
           </span>
         </NuxtLink>
       </li>
@@ -148,34 +148,34 @@ const talkedThisWeek = computed(() => {
     <Squircle class="rien-list" :radius="22"><ul class="rien-list-items">
       <li>
         <NuxtLink to="/tank" class="rien-list-row">
-          <span class="rien-list-icon"><RienIcon name="fish" /></span>
+          <span class="rien-list-icon"><RienIcon name="fish" weight="duotone" :size="26" /></span>
           <span class="rien-list-text">
             <span class="rien-list-title">Your fish tank</span>
             <span class="rien-list-sub">{{ tankLine }}</span>
           </span>
-          <span class="rien-list-end"><RienIcon name="next" :size="18" /></span>
+          <span class="rien-list-end"><RienIcon name="next" :size="16" weight="bold" /></span>
         </NuxtLink>
       </li>
       <li>
         <NuxtLink to="/games/file-boss" class="rien-list-row">
-          <span class="rien-list-icon"><RienIcon name="file-boss" /></span>
+          <span class="rien-list-icon"><RienIcon name="file-boss" weight="duotone" :size="26" /></span>
           <span class="rien-list-text">
             <span class="rien-list-title">File {{ settings?.file ?? '' }} Boss</span>
             <span class="rien-list-sub">{{ lastBoss ? `Best so far ${lastBoss.score} / ${lastBoss.total}` : 'When you finish the File' }}</span>
           </span>
-          <span class="rien-list-end"><RienIcon name="next" :size="18" /></span>
+          <span class="rien-list-end"><RienIcon name="next" :size="16" weight="bold" /></span>
         </NuxtLink>
       </li>
       <li>
         <NuxtLink to="/games/couple-talk" class="rien-list-row">
-          <span class="rien-list-icon"><RienIcon name="couple-talk" /></span>
+          <span class="rien-list-icon"><RienIcon name="couple-talk" weight="duotone" :size="26" /></span>
           <span class="rien-list-text">
             <span class="rien-list-title">Couple Talk</span>
             <span class="rien-list-sub">{{ talkedThisWeek ? 'Done this week' : ACTIVITIES['couple-talk'].blurb }}</span>
           </span>
           <span class="rien-list-end">
-            <span v-if="talkedThisWeek" class="rien-done-dot" aria-label="Done this week"><RienIcon name="check" :size="14" /></span>
-            <RienIcon name="next" :size="18" />
+            <span v-if="talkedThisWeek" class="rien-done-dot" aria-label="Done this week"><RienIcon name="check" :size="14" weight="bold" /></span>
+            <RienIcon name="next" :size="16" weight="bold" />
           </span>
         </NuxtLink>
       </li>

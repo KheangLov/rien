@@ -114,7 +114,7 @@ async function save() {
               <img :src="form.image" alt="Picture for this word" class="rien-picture-thumb">
             </Squircle>
             <SqBtn variant="tonal" @click="pictureInput?.click()">
-              <RienIcon name="camera" :size="18" />&nbsp;{{ form.image ? 'Change picture' : 'Add a picture' }}
+              <RienIcon name="camera" :size="20" weight="duotone" />&nbsp;{{ form.image ? 'Change picture' : 'Add a picture' }}
             </SqBtn>
             <SqBtn v-if="form.image" variant="text" @click="form.image = undefined">Remove</SqBtn>
             <input ref="pictureInput" type="file" accept="image/*" hidden @change="pickPicture">

@@ -21,7 +21,7 @@ const recorder = useActivityRecorder()
   <div v-if="game" class="rien-page rien-game">
     <div class="rien-game-bar">
       <NuxtLink to="/" class="rien-icon-btn" aria-label="Close">
-        <RienIcon name="close" />
+        <RienIcon name="close" weight="bold" />
       </NuxtLink>
       <h1 class="rien-subbar-title">{{ game.title }}</h1>
       <span />

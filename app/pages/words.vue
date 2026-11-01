@@ -64,7 +64,7 @@ async function remove(card: CardRow) {
     <PageHeader title="Words" :subtitle="`${counts.all} saved`">
       <template #action>
         <NuxtLink to="/add-words" class="rien-add-btn" aria-label="Add a word">
-          <RienIcon name="plus" />
+          <RienIcon name="plus" weight="bold" />
         </NuxtLink>
       </template>
     </PageHeader>

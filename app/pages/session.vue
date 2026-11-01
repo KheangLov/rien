@@ -68,7 +68,7 @@ function continueSession() {
   <div class="rien-page rien-game">
     <div class="rien-game-bar">
       <NuxtLink to="/" class="rien-icon-btn" aria-label="Close session">
-        <RienIcon name="close" />
+        <RienIcon name="close" weight="bold" />
       </NuxtLink>
       <div class="rien-session-steps" aria-label="Session progress">
         <span
@@ -93,7 +93,7 @@ function continueSession() {
 
     <template v-else-if="phase === 'between' && nextUp">
       <div class="rien-celebrate">
-        <span class="rien-celebrate-icon"><RienIcon name="check" :size="40" /></span>
+        <span class="rien-celebrate-icon"><RienIcon name="check" :size="44" weight="bold" /></span>
         <h2>Nice work!</h2>
         <p class="rien-muted">Next up: {{ ACTIVITIES[nextUp].title }}. {{ ACTIVITIES[nextUp].blurb }}.</p>
       </div>
@@ -105,7 +105,7 @@ function continueSession() {
     <template v-else-if="phase === 'finished'">
       <Confetti />
       <div class="rien-celebrate">
-        <span class="rien-celebrate-icon is-big"><RienIcon name="flame" :size="48" /></span>
+        <span class="rien-celebrate-icon is-big"><RienIcon name="flame" :size="52" weight="fill" /></span>
         <h2>Session complete</h2>
         <p class="rien-muted">
           {{ streakToday ? 'Today counts towards your streak.' : 'You have already finished today’s session.' }}

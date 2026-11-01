@@ -30,7 +30,7 @@ function openTank() {
     <TabBar v-if="hasTabs" />
     <Transition name="rien-toast">
       <Squircle v-if="current" :key="current" tag="button" :surface="false" :radius="22" type="button" class="rien-toast" role="status" @click="openTank">
-        <RienIcon name="fish" :size="26" />
+        <RienIcon name="fish" :size="26" weight="duotone" />
         <span>{{ current }}</span>
       </Squircle>
     </Transition>

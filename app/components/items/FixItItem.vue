@@ -101,7 +101,7 @@ async function choose(choice: string) {
         <RuleVisual :type="card.type" :sentence="fixed" />
         <ActionBar>
           <SqBtn color="primary" size="large" @click="emit('next')">Next</SqBtn>
-          <SqBtn v-if="canSpeak" variant="tonal" size="large" aria-label="Hear it" @click="speak(fixed)"><RienIcon name="sound-hunter" /></SqBtn>
+          <SqBtn v-if="canSpeak" variant="tonal" size="large" aria-label="Hear it" @click="speak(fixed)"><RienIcon name="volume" weight="fill" /></SqBtn>
         </ActionBar>
       </template>
     </SqCardText>

@@ -169,7 +169,7 @@ function next() {
         <ActionBar>
           <SqBtn v-if="phase !== 'result'" color="primary" size="large" :disabled="pool.length > 0" @click="check">Check</SqBtn>
           <SqBtn v-else color="primary" size="large" @click="next">Next</SqBtn>
-          <SqBtn v-if="phase === 'result' && canSpeak" variant="tonal" size="large" aria-label="Hear it" @click="speak(card.text)"><RienIcon name="sound-hunter" /></SqBtn>
+          <SqBtn v-if="phase === 'result' && canSpeak" variant="tonal" size="large" aria-label="Hear it" @click="speak(card.text)"><RienIcon name="volume" weight="fill" /></SqBtn>
         </ActionBar>
       </SqCardText>
     </SqCard>

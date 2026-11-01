@@ -6,7 +6,7 @@ defineProps<{ title: string, subtitle?: string, back?: string }>()
 <template>
   <header v-if="back" class="rien-subbar">
     <NuxtLink :to="back" class="rien-subbar-back" aria-label="Back">
-      <RienIcon name="back" />
+      <RienIcon name="back" weight="bold" />
     </NuxtLink>
     <h1 class="rien-subbar-title">{{ title }}</h1>
     <div class="rien-subbar-end"><slot name="action" /></div>

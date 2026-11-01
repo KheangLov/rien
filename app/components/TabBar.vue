@@ -28,7 +28,7 @@ const index = computed(() => Math.max(0, tabs.findIndex(t => active(t.to))))
         :aria-current="active(tab.to) ? 'page' : undefined"
         @click="haptic('tap')"
       >
-        <RienIcon :name="tab.icon" :size="24" />
+        <RienIcon :name="tab.icon" :size="25" :weight="active(tab.to) ? 'fill' : 'regular'" />
         <span>{{ tab.label }}</span>
       </NuxtLink>
     </Squircle>

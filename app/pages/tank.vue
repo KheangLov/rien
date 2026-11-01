@@ -95,7 +95,7 @@ function select(id: string) {
               :color="fish.health === 'fine' ? undefined : fish.health === 'hungry' ? 'warning' : 'error'"
               :text="HEALTH_NAMES[fish.health]"
             />
-            <RienIcon name="next" :size="18" />
+            <RienIcon name="next" :size="16" weight="bold" />
           </span>
         </NuxtLink>
       </li>
