@@ -1,6 +1,6 @@
 {
   "id": "ef-pre-int-file-02",
-  "title": "English File Pre-Intermediate, File 2 (check against the book)",
+  "title": "English File Pre-Intermediate, File 2: past simple, past continuous, time sequencers",
   "book": "english-file-pre-intermediate-4e",
   "file": 2,
   "fixIt": [
@@ -67,6 +67,116 @@
       ],
       "type": "preposition",
       "explain": "Years take in."
+    },
+    {
+      "id": "bought-souvenirs",
+      "text": "We buyed some souvenirs at the market.",
+      "wrong": "buyed",
+      "fix": "bought",
+      "distractors": [
+        "buy",
+        "buys"
+      ],
+      "type": "tense",
+      "explain": "buy is irregular: bought.",
+      "skill": "past-simple",
+      "when": "past"
+    },
+    {
+      "id": "did-go",
+      "text": "Did you went to the party?",
+      "wrong": "went",
+      "fix": "go",
+      "distractors": [
+        "gone",
+        "going"
+      ],
+      "type": "tense",
+      "explain": "After did: base form.",
+      "skill": "past-simple",
+      "when": "past"
+    },
+    {
+      "id": "didnt-see",
+      "text": "I didn't saw him yesterday.",
+      "wrong": "saw",
+      "fix": "see",
+      "distractors": [
+        "seen",
+        "seeing"
+      ],
+      "type": "tense",
+      "explain": "After didn't: base form.",
+      "skill": "past-simple",
+      "when": "past"
+    },
+    {
+      "id": "left-hotel",
+      "text": "It was raining when we leaved the hotel.",
+      "wrong": "leaved",
+      "fix": "left",
+      "distractors": [
+        "leave",
+        "leaving"
+      ],
+      "type": "tense",
+      "explain": "leave is irregular: left.",
+      "skill": "past-simple",
+      "when": "past"
+    },
+    {
+      "id": "were-doing",
+      "text": "What were you do at eight o'clock last night?",
+      "wrong": "do",
+      "fix": "doing",
+      "distractors": [
+        "did",
+        "done"
+      ],
+      "type": "tense",
+      "explain": "Past continuous: were + -ing.",
+      "skill": "past-continuous",
+      "when": "past-continuous"
+    },
+    {
+      "id": "was-cooking",
+      "text": "While I cooked dinner, the lights went out.",
+      "wrong": "cooked",
+      "fix": "was cooking",
+      "distractors": [
+        "cook",
+        "have cooked"
+      ],
+      "type": "tense",
+      "explain": "The longer action in progress: past continuous.",
+      "skill": "past-continuous",
+      "when": "past-continuous"
+    },
+    {
+      "id": "then",
+      "text": "We had breakfast. Than we went to the beach.",
+      "wrong": "Than",
+      "fix": "Then",
+      "distractors": [
+        "That",
+        "So that"
+      ],
+      "type": "other",
+      "explain": "then = after that; than is for comparing.",
+      "skill": "linkers"
+    },
+    {
+      "id": "because-tired",
+      "text": "I went to bed early although I was tired.",
+      "wrong": "although",
+      "fix": "because",
+      "distractors": [
+        "but",
+        "so"
+      ],
+      "type": "other",
+      "explain": "because gives the reason.",
+      "skill": "linkers"
     }
   ],
   "builder": [
@@ -77,6 +187,19 @@
         "I made dinner when I got home."
       ],
       "tip": "When + past simple, then what happened next."
+    },
+    {
+      "id": "was-reading-when",
+      "text": "I was reading when you called.",
+      "tip": "was + -ing, when + past simple.",
+      "skill": "past-continuous",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "after-that-we-left",
+      "text": "After that, we went home.",
+      "tip": "After that: what happened next.",
+      "skill": "linkers"
     }
   ]
 }

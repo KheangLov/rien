@@ -1,6 +1,6 @@
 {
   "id": "ef-pre-int-file-07",
-  "title": "English File Pre-Intermediate, File 7 (check against the book)",
+  "title": "English File Pre-Intermediate, File 7: verb + to, verb + -ing, have to and must",
   "book": "english-file-pre-intermediate-4e",
   "file": 7,
   "fixIt": [
@@ -75,6 +75,97 @@
       ],
       "type": "third-person-s",
       "explain": "After do, use have: Do I have to?"
+    },
+    {
+      "id": "important-to-drink",
+      "text": "It's important drink water every day.",
+      "wrong": "drink",
+      "fix": "to drink",
+      "distractors": [
+        "drinking",
+        "drank"
+      ],
+      "type": "other",
+      "explain": "It's important + to + verb.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "went-to-buy",
+      "text": "I went to the market for buy fish.",
+      "wrong": "for",
+      "fix": "to",
+      "distractors": [
+        "so",
+        "by"
+      ],
+      "type": "other",
+      "explain": "Purpose: to + verb.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "swimming-is",
+      "text": "Swim is good exercise.",
+      "wrong": "Swim",
+      "fix": "Swimming",
+      "distractors": [
+        "To swimming",
+        "Swims"
+      ],
+      "type": "other",
+      "explain": "An activity as the subject: -ing.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "mind-waiting",
+      "text": "I don't mind wait.",
+      "wrong": "wait",
+      "fix": "waiting",
+      "distractors": [
+        "to waiting",
+        "waited"
+      ],
+      "type": "other",
+      "explain": "mind + -ing.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "dont-have-to-pay",
+      "text": "You mustn't pay; it's free.",
+      "wrong": "mustn't",
+      "fix": "don't have to",
+      "distractors": [
+        "shouldn't to",
+        "can't to"
+      ],
+      "type": "other",
+      "explain": "Not necessary: don't have to. mustn't = it is not allowed.",
+      "skill": "modals"
+    },
+    {
+      "id": "have-to-wait",
+      "text": "Did you have to waited long?",
+      "wrong": "waited",
+      "fix": "wait",
+      "distractors": [
+        "waiting",
+        "waits"
+      ],
+      "type": "other",
+      "explain": "have to + base form.",
+      "skill": "modals"
+    },
+    {
+      "id": "thinking-of-learning",
+      "text": "I'm thinking of learn Chinese.",
+      "wrong": "learn",
+      "fix": "learning",
+      "distractors": [
+        "to learn",
+        "learned"
+      ],
+      "type": "other",
+      "explain": "After a preposition (of): -ing.",
+      "skill": "verb-patterns"
     }
   ],
   "builder": [
@@ -83,6 +174,19 @@
       "text": "You don't have to wear a tie.",
       "alternatives": [],
       "tip": "Don't have to: it is not necessary."
+    },
+    {
+      "id": "hope-to-visit",
+      "text": "I hope to visit Japan.",
+      "tip": "hope + to + verb.",
+      "skill": "verb-patterns",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "must-wear-helmet",
+      "text": "You must wear a helmet.",
+      "tip": "must + verb: a rule.",
+      "skill": "modals"
     }
   ]
 }

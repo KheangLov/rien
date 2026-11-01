@@ -1,6 +1,6 @@
 {
   "id": "ef-pre-int-file-06",
-  "title": "English File Pre-Intermediate, File 6 (check against the book)",
+  "title": "English File Pre-Intermediate, File 6: will for predictions, offers and promises; review of tenses",
   "book": "english-file-pre-intermediate-4e",
   "file": 6,
   "fixIt": [
@@ -42,6 +42,103 @@
       "type": "tense",
       "explain": "Yesterday: past simple, met.",
       "when": "past"
+    },
+    {
+      "id": "promise-wont",
+      "text": "I promise I don't tell anyone.",
+      "wrong": "don't",
+      "fix": "won't",
+      "distractors": [
+        "not",
+        "doesn't"
+      ],
+      "type": "tense",
+      "explain": "Promises: will / won't.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "will-carry",
+      "text": "That bag looks heavy. I carry it for you.",
+      "wrong": "carry",
+      "fix": "will carry",
+      "distractors": [
+        "carried",
+        "am carry"
+      ],
+      "type": "tense",
+      "explain": "Offers made now: I'll + verb.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "will-pass",
+      "text": "Don't worry, you will passing the exam.",
+      "wrong": "passing",
+      "fix": "pass",
+      "distractors": [
+        "passed",
+        "passes"
+      ],
+      "type": "tense",
+      "explain": "will + base form.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "shall-open",
+      "text": "Shall I opening the window?",
+      "wrong": "opening",
+      "fix": "open",
+      "distractors": [
+        "opened",
+        "opens"
+      ],
+      "type": "other",
+      "explain": "Shall I + base form? (an offer).",
+      "skill": "future-forms"
+    },
+    {
+      "id": "will-rain-think",
+      "text": "I don't think it rains tomorrow.",
+      "wrong": "rains",
+      "fix": "will rain",
+      "distractors": [
+        "rained",
+        "raining"
+      ],
+      "type": "tense",
+      "explain": "Predictions: will.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "has-been-working-bank",
+      "text": "She is working in a bank since 2020.",
+      "wrong": "is",
+      "fix": "has been",
+      "distractors": [
+        "was",
+        "will be"
+      ],
+      "type": "tense",
+      "explain": "since 2020 = until now: has been working.",
+      "skill": "present-perfect-continuous",
+      "when": "past-to-now"
+    },
+    {
+      "id": "didnt-know",
+      "text": "I didn't knew the answer.",
+      "wrong": "knew",
+      "fix": "know",
+      "distractors": [
+        "known",
+        "knows"
+      ],
+      "type": "tense",
+      "explain": "After didn't: base form.",
+      "skill": "past-simple",
+      "when": "past"
     }
   ],
   "builder": [
@@ -50,6 +147,20 @@
       "text": "I think it will be sunny tomorrow.",
       "alternatives": [],
       "tip": "I think + will for predictions.",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "ill-help-you",
+      "text": "I'll help you with that.",
+      "tip": "Offers: I'll.",
+      "skill": "future-forms",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "i-wont-forget",
+      "text": "I won't forget, I promise.",
+      "tip": "Promises: won't.",
+      "skill": "future-forms",
       "keepFirstCapital": true
     }
   ]

@@ -1,6 +1,6 @@
 {
   "id": "ef-pre-int-file-03",
-  "title": "English File Pre-Intermediate, File 3 (check against the book)",
+  "title": "English File Pre-Intermediate, File 3: be going to, present continuous for the future, relative clauses",
   "book": "english-file-pre-intermediate-4e",
   "file": 3,
   "fixIt": [
@@ -65,6 +65,114 @@
       ],
       "type": "other",
       "explain": "Use that or which for things and places."
+    },
+    {
+      "id": "are-going-to",
+      "text": "We going to visit Kampot next month.",
+      "wrong": "going",
+      "fix": "are going",
+      "distractors": [
+        "will going",
+        "go"
+      ],
+      "type": "tense",
+      "explain": "Plans: am/is/are going to + verb.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "going-to-study",
+      "text": "I'm go to study medicine at university.",
+      "wrong": "go",
+      "fix": "going",
+      "distractors": [
+        "went",
+        "goes"
+      ],
+      "type": "tense",
+      "explain": "I'm going to + verb.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "seeing-doctor",
+      "text": "Are you see the doctor tomorrow?",
+      "wrong": "see",
+      "fix": "seeing",
+      "distractors": [
+        "seen",
+        "saw"
+      ],
+      "type": "tense",
+      "explain": "Arrangements: present continuous.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "am-meeting",
+      "text": "I meeting my friends tonight.",
+      "wrong": "meeting",
+      "fix": "am meeting",
+      "distractors": [
+        "meet",
+        "will meeting"
+      ],
+      "type": "tense",
+      "explain": "Arrangements: am + -ing.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "nurse-who",
+      "text": "A nurse is someone which looks after sick people.",
+      "wrong": "which",
+      "fix": "who",
+      "distractors": [
+        "what",
+        "where"
+      ],
+      "type": "other",
+      "explain": "People: who.",
+      "skill": "relative-clauses"
+    },
+    {
+      "id": "shop-that",
+      "text": "That's the shop where sells good noodles.",
+      "wrong": "where",
+      "fix": "that",
+      "distractors": [
+        "who",
+        "what"
+      ],
+      "type": "other",
+      "explain": "The shop does the action (sells): that or which.",
+      "skill": "relative-clauses"
+    },
+    {
+      "id": "book-that",
+      "text": "The book who I'm reading is very good.",
+      "wrong": "who",
+      "fix": "that",
+      "distractors": [
+        "what",
+        "where"
+      ],
+      "type": "other",
+      "explain": "Things: that or which.",
+      "skill": "relative-clauses"
+    },
+    {
+      "id": "word-means",
+      "text": "Is there a word that mean very tired?",
+      "wrong": "mean",
+      "fix": "means",
+      "distractors": [
+        "meaning",
+        "meant"
+      ],
+      "type": "third-person-s",
+      "explain": "a word (it) + -s.",
+      "skill": "relative-clauses"
     }
   ],
   "builder": [
@@ -73,6 +181,18 @@
       "text": "What are you doing this weekend?",
       "alternatives": [],
       "tip": "Present continuous for plans: are you doing?"
+    },
+    {
+      "id": "going-to-travel",
+      "text": "We're going to travel in April.",
+      "tip": "Plans: going to.",
+      "skill": "future-forms"
+    },
+    {
+      "id": "someone-who-cooks",
+      "text": "A chef is someone who cooks.",
+      "tip": "who for people.",
+      "skill": "relative-clauses"
     }
   ]
 }

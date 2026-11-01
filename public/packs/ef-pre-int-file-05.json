@@ -1,6 +1,6 @@
 {
   "id": "ef-pre-int-file-05",
-  "title": "English File Pre-Intermediate, File 5 (check against the book)",
+  "title": "English File Pre-Intermediate, File 5: comparatives, superlatives, too much and not enough",
   "book": "english-file-pre-intermediate-4e",
   "file": 5,
   "fixIt": [
@@ -75,6 +75,111 @@
       ],
       "type": "preposition",
       "explain": "too + adjective + to + verb."
+    },
+    {
+      "id": "bigger",
+      "text": "Phnom Penh is biger than Kampot.",
+      "wrong": "biger",
+      "fix": "bigger",
+      "distractors": [
+        "more big",
+        "bigest"
+      ],
+      "type": "other",
+      "explain": "big → bigger (double the g).",
+      "skill": "comparatives"
+    },
+    {
+      "id": "more-carefully",
+      "text": "My sister drives more careful than me.",
+      "wrong": "careful",
+      "fix": "carefully",
+      "distractors": [
+        "carefuller",
+        "care"
+      ],
+      "type": "other",
+      "explain": "How she drives: adverb (more carefully).",
+      "skill": "comparatives"
+    },
+    {
+      "id": "cheapest",
+      "text": "This is the cheapiest hotel in town.",
+      "wrong": "cheapiest",
+      "fix": "cheapest",
+      "distractors": [
+        "cheaper",
+        "most cheap"
+      ],
+      "type": "other",
+      "explain": "cheap → the cheapest.",
+      "skill": "comparatives"
+    },
+    {
+      "id": "ever-seen",
+      "text": "It's the best film I've ever saw.",
+      "wrong": "saw",
+      "fix": "seen",
+      "distractors": [
+        "see",
+        "seeing"
+      ],
+      "type": "tense",
+      "explain": "the best … I've ever + past participle.",
+      "skill": "comparatives",
+      "when": "past-to-now"
+    },
+    {
+      "id": "too-many-cups",
+      "text": "I drink too much cups of coffee.",
+      "wrong": "much",
+      "fix": "many",
+      "distractors": [
+        "lot",
+        "few"
+      ],
+      "type": "other",
+      "explain": "cups are countable: too many.",
+      "skill": "quantifiers"
+    },
+    {
+      "id": "too-heavy-to",
+      "text": "The bag is too heavy for carry.",
+      "wrong": "for",
+      "fix": "to",
+      "distractors": [
+        "so",
+        "of"
+      ],
+      "type": "other",
+      "explain": "too + adjective + to + verb.",
+      "skill": "quantifiers"
+    },
+    {
+      "id": "too-much-sugar",
+      "text": "There's too many sugar in this tea.",
+      "wrong": "many",
+      "fix": "much",
+      "distractors": [
+        "lot",
+        "few"
+      ],
+      "type": "other",
+      "explain": "sugar is uncountable: too much.",
+      "skill": "quantifiers"
+    },
+    {
+      "id": "old-enough",
+      "text": "He isn't old enough to driving.",
+      "wrong": "driving",
+      "fix": "drive",
+      "distractors": [
+        "drove",
+        "drives"
+      ],
+      "type": "other",
+      "explain": "enough + to + verb.",
+      "skill": "quantifiers"
     }
   ],
   "builder": [
@@ -83,6 +188,19 @@
       "text": "This is the best restaurant in town.",
       "alternatives": [],
       "tip": "The + superlative + noun + in."
+    },
+    {
+      "id": "not-as-hot-as",
+      "text": "Today isn't as hot as yesterday.",
+      "tip": "not as … as.",
+      "skill": "comparatives"
+    },
+    {
+      "id": "too-tired-to-go",
+      "text": "I'm too tired to go out.",
+      "tip": "too + adjective + to.",
+      "skill": "quantifiers",
+      "keepFirstCapital": true
     }
   ]
 }
