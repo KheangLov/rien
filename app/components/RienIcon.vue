@@ -38,6 +38,7 @@ const ICONS = {
   'translate': 'translation',
   'calendar': 'calendar',
   'goal': 'cup-first',
+  'ielts': 'square-academic-cap',
   'install': 'home-add',
   'share': 'square-arrow-up',
   'menu': 'menu-dots-vertical',
