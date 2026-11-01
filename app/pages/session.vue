@@ -33,7 +33,13 @@ onMounted(async () => {
 async function onDone(score?: { clean: number, total: number }) {
   const finished = current.value
   if (!finished) return
-  await recorder.record(finished, score)
+  // A failed save must not leave her stuck on a finished activity.
+  try {
+    await recorder.record(finished, score)
+  }
+  catch (error) {
+    console.error('[rien] could not record the activity', error)
+  }
   haptic('success')
   const done = [...await db.gamesOn(dateKey(new Date())), ...loadSkipped()]
   const following = plan.value.findIndex((id, i) => i > index.value && !done.includes(id))

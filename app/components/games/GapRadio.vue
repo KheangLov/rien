@@ -23,13 +23,22 @@ const states = ref(new Map<string, GrammarRow>())
 const typed = ref<string[]>([])
 const verdicts = ref<Verdict[] | null>(null)
 const right = ref(0)
+// After Done: the end screen (inside today's session, the next activity
+// takes over instead).
+const finished = ref(false)
 
 const tokens = computed(() => (card.value ? radioTokens(card.value.text) : []))
 const answers = computed(() => radioAnswers(tokens.value))
 const filled = computed(() => typed.value.filter(t => t.trim()).length)
 const allTyped = computed(() => filled.value === answers.value.length)
 
-onMounted(async () => {
+// Picks the next due text (also for "Another text" after a round).
+async function start() {
+  loading.value = true
+  loadError.value = false
+  finished.value = false
+  verdicts.value = null
+  right.value = 0
   try {
     const practice = await loadPractice()
     states.value = practice.states
@@ -43,7 +52,9 @@ onMounted(async () => {
   finally {
     loading.value = false
   }
-})
+}
+
+onMounted(start)
 
 // Character offset where each token starts in the spoken text.
 const offsets = computed(() => {
@@ -97,6 +108,8 @@ async function check() {
 }
 
 function finish() {
+  if (finished.value) return
+  finished.value = true
   emit('done', { clean: right.value, total: answers.value.length })
 }
 </script>
@@ -112,6 +125,20 @@ function finish() {
       title="Could not load the texts"
       text="Open Rien once while online so it can save them for offline use."
     />
+
+    <SqCard v-else-if="finished && card" title="Round done" variant="tonal" class="rien-pop">
+      <Confetti v-if="right === answers.length" />
+      <SqCardText>
+        <p class="rien-big">{{ right }} / {{ answers.length }}</p>
+        <p class="rien-muted">
+          {{ right === answers.length ? 'Every word caught.' : 'words caught. The missed ones come back in your reviews.' }}
+        </p>
+      </SqCardText>
+      <SqCardActions>
+        <SqBtn variant="tonal" @click="start">Another text</SqBtn>
+        <SqBtn to="/" color="primary">Back to today</SqBtn>
+      </SqCardActions>
+    </SqCard>
 
     <SqEmptyState
       v-else-if="!card"
@@ -193,11 +220,6 @@ function finish() {
         </ActionBar>
       </SqCard>
 
-      <SqCard v-if="verdicts && right === answers.length" title="Every word caught" variant="tonal">
-        <SqCardActions>
-          <SqBtn to="/" color="primary">Back to today</SqBtn>
-        </SqCardActions>
-      </SqCard>
     </template>
   </section>
 </template>
