@@ -1,4 +1,4 @@
-import { Capacitor } from '@capacitor/core'
+import { Capacitor, registerPlugin } from '@capacitor/core'
 import { useTheme } from '@squirkle-ui/ui'
 import type { Settings } from '#shared/schemas/db'
 
@@ -8,6 +8,10 @@ import type { Settings } from '#shared/schemas/db'
 // the status bar. Motion also stays off when the phone asks for reduced motion.
 // Settings applies a change at once through $setAppearance (animated for
 // light ↔ dark); saved settings reach here too, through sync.
+// Android only (android/…/RienLookPlugin.java): her Appearance for the
+// system's own splash screen at launch.
+const RienLook = registerPlugin<{ setAppearance: (options: { appearance: Settings['appearance'] }) => Promise<void> }>('RienLook')
+
 type Look = Pick<Settings, 'appearance' | 'liquidGlass' | 'motion' | 'accent'>
 
 export default defineNuxtPlugin(() => {
@@ -19,7 +23,7 @@ export default defineNuxtPlugin(() => {
   root.classList.add('rien-glass', 'rien-motion')
 
   const isDark = (look: Look) => look.appearance === 'dark' || (look.appearance === 'system' && systemDark.matches)
-  const keyOf = (look: Look) => `${isDark(look)}${look.liquidGlass}${look.motion && !reduce.matches}${look.accent}`
+  const keyOf = (look: Look) => `${look.appearance}${isDark(look)}${look.liquidGlass}${look.motion && !reduce.matches}${look.accent}`
   let painted = ''
 
   // Applies a look in one pass, and only when something changed (every save
@@ -37,9 +41,11 @@ export default defineNuxtPlugin(() => {
     root.classList.add(`sq-theme--${dark ? 'dark' : 'light'}`)
     root.classList.toggle('rien-dark', dark)
     root.style.colorScheme = dark ? 'dark' : 'light'
-    // Her setting wins over the light/dark pair in nuxt.config.ts.
+    // Her setting wins over the light/dark pair in nuxt.config.ts: the bar
+    // takes the page's own background, tinted by her colour.
+    const background = backgroundOf(look.accent)
     for (const meta of document.querySelectorAll('meta[name="theme-color"]')) {
-      meta.setAttribute('content', dark ? '#0b1220' : '#f7f7f5')
+      meta.setAttribute('content', dark ? background.dark : background.light)
       meta.removeAttribute('media')
     }
     root.classList.toggle('rien-glass', look.liquidGlass)
@@ -51,8 +57,10 @@ export default defineNuxtPlugin(() => {
       document.head.append(accent)
     }
     accent.textContent = accentCss(look.accent)
-    saveSplashColours(look.accent)
+    saveSplashColours(look.accent, look.appearance)
+    if (!Capacitor.isNativePlatform()) setTabIcon(look.accent)
     root.classList.toggle('rien-motion', motion)
+    if (Capacitor.getPlatform() === 'android') void RienLook.setAppearance({ appearance: look.appearance }).catch(() => {})
     if (Capacitor.isNativePlatform()) {
       void import('@capacitor/status-bar').then(({ StatusBar, Style }) =>
         StatusBar.setStyle({ style: dark ? Style.Dark : Style.Light })).catch(() => {})

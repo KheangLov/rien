@@ -6,7 +6,7 @@ const { showCard, install, dismiss, ios, promptReady } = useInstall()
 <template>
   <SqCard v-if="showCard" variant="outlined" class="rien-install-card">
     <SqCardText class="rien-install">
-      <img src="/pwa-192.png" alt="" width="52" height="52" class="rien-install-logo">
+      <RienLogo :size="52" class="rien-install-logo" />
       <div>
         <strong>Install Rien</strong>
         <p class="rien-muted">
