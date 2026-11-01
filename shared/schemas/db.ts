@@ -235,6 +235,25 @@ export const settingsSchema = z.object({
   lastBackupAt: z.coerce.date().optional(),
   // FSRS parameters fitted to her own reviews (shared/utils/fsrsFit.ts), and when.
   fsrsParams: z.array(z.number()).length(21).optional(),
+  // Rien's neural network, trained on her answers (shared/ml/train.ts): its
+  // weights (when it beat the skill model), its test results, and when.
+  mlModel: z.object({
+    weights: z.object({ layers: z.array(z.object({ kernel: z.array(z.array(z.number())), bias: z.array(z.number()) })) }).optional(),
+    report: z.object({
+      trained: z.boolean(),
+      active: z.boolean(),
+      reason: z.string().optional(),
+      backend: z.string().optional(),
+      trainRows: z.number().optional(),
+      testRows: z.number().optional(),
+      epochs: z.number().optional(),
+      test: z.object({ logLoss: z.number(), accuracy: z.number(), auc: z.number() }).optional(),
+      baseline: z.object({ logLoss: z.number(), accuracy: z.number(), auc: z.number() }).optional(),
+    }),
+    trainedAnswers: z.number().int().min(0),
+    trainedAt: z.coerce.date(),
+    featureCount: z.number().int(),
+  }).optional(),
   // "Not yet" on a move-up suggestion: hidden for this File until then.
   levelSnooze: z.object({ book: bookSchema, file: fileNumberSchema, until: z.coerce.date() }).optional(),
   fsrsFittedAt: z.coerce.date().optional(),

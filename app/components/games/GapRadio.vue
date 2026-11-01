@@ -42,7 +42,7 @@ async function start() {
   try {
     const practice = await loadPractice()
     states.value = practice.states
-    const picked = topUpRound(pickRound(practice.radioCards, practice.states, practice.counts, practice.now, 1, Math.random, practice.rank), practice.radioCards, practice.states, 1)[0]
+    const picked = topUpRound(pickRound(practice.radioCards, practice.states, practice.counts, practice.now, 1, Math.random, practice.rankFor('radio')), practice.radioCards, practice.states, 1)[0]
     // Different gaps each time the same text comes round.
     card.value = picked ? { ...picked, start: Math.floor(Math.random() * GAP_EVERY) } : null
     typed.value = answers.value.map(() => '')

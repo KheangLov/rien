@@ -33,7 +33,7 @@ onMounted(async () => {
     states.value = practice.states
     round.value = props.slips
       ? slipRound(practice.fixCards, await db.mistakesSince(practice.since), ROUND_SIZE)
-      : topUpRound(pickRound(practice.fixCards, practice.states, practice.counts, practice.now, ROUND_SIZE, Math.random, practice.rank), practice.fixCards, practice.states, ROUND_SIZE)
+      : topUpRound(pickRound(practice.fixCards, practice.states, practice.counts, practice.now, ROUND_SIZE, Math.random, practice.rankFor('fix-it')), practice.fixCards, practice.states, ROUND_SIZE)
   }
   catch (error) {
     console.error('[rien] could not start Fix It', error)

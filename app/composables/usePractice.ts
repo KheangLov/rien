@@ -1,3 +1,4 @@
+import type { Kind } from '#shared/ml/features'
 import type { GrammarRow } from '#shared/schemas/db'
 import { builderCards } from '#shared/utils/builder'
 import { fixItCards, packsFor } from '#shared/utils/fixit'
@@ -34,6 +35,7 @@ export async function loadPractice(now = new Date()) {
     states: new Map<string, GrammarRow>(rows.map(row => [row.itemId, row])),
     counts,
     learner,
-    rank: rankWith(learner, now),
+    // How well each new item suits her, per game (the guessing chance differs).
+    rankFor: (kind: Kind) => rankWith(learner, now, kind),
   }
 }
