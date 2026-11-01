@@ -203,6 +203,8 @@ export const settingsSchema = z.object({
   // The app's main colour (app/utils/accents.ts); teal is Rien's own.
   accent: z.enum(['teal', 'blue', 'indigo', 'violet', 'pink', 'red', 'orange', 'green']).default('teal'),
   liquidGlass: z.boolean().default(true),
+  // Android app: the home-screen icon in her main colour (off: Rien's teal).
+  iconFollowsColour: z.boolean().default(false),
   motion: z.boolean().default(true),
   // Say It: let iOS use Apple's online recognition (usually more accurate;
   // recordings are processed by Apple). Off keeps recognition on the phone.

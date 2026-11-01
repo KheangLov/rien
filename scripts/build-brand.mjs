@@ -8,25 +8,26 @@ import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { crc32, deflateSync } from 'node:zlib'
 import { Resvg } from '@resvg/resvg-js'
 import { IOS_SCREENS, SPLASH_DARK, SPLASH_LIGHT, splashFile } from './brand.ts'
-import { LOGO_WORD, TEAL_LOGO, logoGradient, logoMark, logoSquircle } from '../shared/utils/logo.ts'
+import { ACCENT_LOGOS, LOGO_WORD, TEAL_LOGO, logoGradient, logoMark, logoSquircle } from '../shared/utils/logo.ts'
 
 const { top: TEAL_LIGHT, bottom: TEAL, bar: MINT } = TEAL_LOGO
 const WORD = LOGO_WORD
 const squircle = logoSquircle
-const MARK = logoMark(MINT)
-const GRADIENT = `<defs>${logoGradient(TEAL_LOGO)}</defs>`
-
 const scaled = (scale, body) => `<g transform="translate(256 256) scale(${scale}) translate(-256 -256)">${body}</g>`
-const svg = body => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">${GRADIENT}${body}</svg>`
+// Every drawing takes the logo's colours: teal unless a main colour is given.
+const svg = (body, colours = TEAL_LOGO) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs>${logoGradient(colours)}</defs>${body}</svg>`
 
 // Full-bleed square: the system cuts the shape (iPhone icons, maskable PWA icon).
-const bleed = (markScale = 1) => svg(`<rect width="512" height="512" fill="url(#tile)"/>${scaled(markScale, MARK)}`)
+const bleed = (markScale = 1, c = TEAL_LOGO) => svg(`<rect width="512" height="512" fill="url(#tile)"/>${scaled(markScale, logoMark(c.bar))}`, c)
 // The squircle tile on transparent, at a share of the canvas.
-const tile = (tileScale = 1) => svg(scaled(tileScale, `<path fill="url(#tile)" d="${squircle()}"/>${MARK}`))
+const tile = (tileScale = 1, c = TEAL_LOGO) => svg(scaled(tileScale, `<path fill="url(#tile)" d="${squircle()}"/>${logoMark(c.bar)}`), c)
 // Android's round launcher icon.
-const round = () => svg(`<circle cx="256" cy="256" r="256" fill="url(#tile)"/>${scaled(0.72, MARK)}`)
+const round = (c = TEAL_LOGO) => svg(`<circle cx="256" cy="256" r="256" fill="url(#tile)"/>${scaled(0.72, logoMark(c.bar))}`, c)
 // Android's adaptive foreground: the mark alone, inside the 66 of 108 dp safe circle.
-const foreground = () => svg(scaled(0.7, MARK))
+const foreground = (c = TEAL_LOGO) => svg(scaled(0.7, logoMark(c.bar)), c)
+// Android's themed icon (Android 13+, Samsung One UI): the mark in one colour;
+// the phone tints it to match the wallpaper.
+const monochrome = () => svg(scaled(0.7, logoMark('#ffffff')))
 
 // PNG out, RGB when nothing is see-through (App Store icons must have no alpha).
 function png(pixels, width, height) {
@@ -141,6 +142,39 @@ for (const [name, scale] of Object.entries(DENSITIES)) {
   for (const old of [`drawable-port-${name}`, `drawable-land-${name}`]) rmSync(new URL(`${RES}${old}/`, ROOT), { recursive: true, force: true })
 }
 rmSync(new URL(`${RES}drawable/splash.png`, ROOT), { force: true })
+
+// Adaptive icons: a gradient tile behind the mark, and the themed (one-colour)
+// layer. One set in Rien's teal (the default), and one per main colour for
+// "Home screen icon follows my colour" (AndroidManifest.xml has a launcher
+// entry for each; RienLookPlugin.java switches between them).
+const adaptive = (suffix) => `<?xml version="1.0" encoding="utf-8"?>
+<!-- Written by scripts/build-brand.mjs. -->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/ic_launcher_background${suffix}"/>
+    <foreground android:drawable="@mipmap/ic_launcher_foreground${suffix}"/>
+    <monochrome android:drawable="@mipmap/ic_launcher_monochrome"/>
+</adaptive-icon>
+`
+const gradientShape = c => `<?xml version="1.0" encoding="utf-8"?>
+<!-- Written by scripts/build-brand.mjs. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient android:angle="270" android:startColor="${c.top}" android:endColor="${c.bottom}"/>
+</shape>
+`
+for (const [name, scale] of Object.entries(DENSITIES)) write(`${RES}mipmap-${name}/ic_launcher_monochrome.png`, render(monochrome(), 108 * scale))
+for (const [id, colours] of Object.entries(ACCENT_LOGOS)) {
+  const suffix = id === 'teal' ? '' : `_${id}`
+  write(`${RES}drawable/ic_launcher_background${suffix}.xml`, gradientShape(colours))
+  write(`${RES}mipmap-anydpi-v26/ic_launcher${suffix}.xml`, adaptive(suffix))
+  write(`${RES}mipmap-anydpi-v26/ic_launcher_round${suffix}.xml`, adaptive(suffix))
+  if (id === 'teal') continue
+  for (const [name, scale] of Object.entries(DENSITIES)) {
+    write(`${RES}mipmap-${name}/ic_launcher${suffix}.png`, render(tile(1, colours), 48 * scale))
+    write(`${RES}mipmap-${name}/ic_launcher_round${suffix}.png`, render(round(colours), 48 * scale))
+    write(`${RES}mipmap-${name}/ic_launcher_foreground${suffix}.png`, render(foreground(colours), 108 * scale))
+  }
+}
+rmSync(new URL(`${RES}values/ic_launcher_background.xml`, ROOT), { force: true })
 const colours = hex => `<?xml version="1.0" encoding="utf-8"?>
 <!-- Written by scripts/build-brand.mjs. -->
 <resources>

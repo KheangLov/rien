@@ -7,7 +7,15 @@ import androidx.activity.OnBackPressedCallback;
 
 import com.getcapacitor.BridgeActivity;
 
-public class MainActivity extends BridgeActivity {
+public class RienActivity extends BridgeActivity {
+    // Her home-screen icon colour changes when she leaves the app (see
+    // RienLookPlugin.applyLauncherIcon), never while she is using it.
+    @Override
+    public void onStop() {
+        super.onStop();
+        RienLookPlugin.applyLauncherIcon(getApplicationContext());
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // The app's own plugins, which live in this module: speech in and out,
