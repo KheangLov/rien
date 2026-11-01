@@ -1,0 +1,119 @@
+{
+  "id": "rfi-unit-07",
+  "title": "Ready for IELTS, Unit 7: first conditional; work (check against the book)",
+  "book": "ready-for-ielts",
+  "file": 7,
+  "fixIt": [
+    {
+      "id": "will-move",
+      "text": "If I get the job, I would move to Phnom Penh.",
+      "wrong": "would",
+      "fix": "will",
+      "distractors": [
+        "shall",
+        "am"
+      ],
+      "type": "tense",
+      "explain": "A real possibility: if + present, will.",
+      "skill": "conditionals",
+      "when": "future"
+    },
+    {
+      "id": "will-miss",
+      "text": "Unless you apply now, you miss the deadline.",
+      "wrong": "miss",
+      "fix": "will miss",
+      "distractors": [
+        "missed",
+        "would miss"
+      ],
+      "type": "tense",
+      "explain": "unless + present, will + verb.",
+      "skill": "conditionals",
+      "when": "future"
+    },
+    {
+      "id": "be-promoted",
+      "text": "Provided you work hard, you will be promote.",
+      "wrong": "promote",
+      "fix": "promoted",
+      "distractors": [
+        "promoting",
+        "promotes"
+      ],
+      "type": "tense",
+      "explain": "will be + past participle (passive).",
+      "skill": "conditionals",
+      "when": "future"
+    },
+    {
+      "id": "will-boil",
+      "text": "If you heat water to 100°C, it will boils.",
+      "wrong": "boils",
+      "fix": "boil",
+      "distractors": [
+        "boiled",
+        "boiling"
+      ],
+      "type": "tense",
+      "explain": "will + base form.",
+      "skill": "conditionals",
+      "when": "future"
+    },
+    {
+      "id": "when-finish",
+      "text": "I'll call you when I finished.",
+      "wrong": "finished",
+      "fix": "finish",
+      "distractors": [
+        "will finish",
+        "finishing"
+      ],
+      "type": "tense",
+      "explain": "when + present for the future.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "doesnt-come",
+      "text": "If she won't come, we'll start without her.",
+      "wrong": "won't",
+      "fix": "doesn't",
+      "distractors": [
+        "isn't",
+        "didn't"
+      ],
+      "type": "tense",
+      "explain": "No will after if: If she doesn't come.",
+      "skill": "conditionals",
+      "when": "future"
+    }
+  ],
+  "builder": [
+    {
+      "id": "if-i-get-the-job",
+      "text": "If I get the job, I'll move.",
+      "tip": "if + present, will.",
+      "skill": "conditionals",
+      "alternatives": [
+        "I'll move if I get the job."
+      ]
+    },
+    {
+      "id": "unless-you-hurry",
+      "text": "Unless you hurry, you'll be late.",
+      "tip": "unless = if not.",
+      "skill": "conditionals",
+      "alternatives": [
+        "You'll be late unless you hurry."
+      ]
+    }
+  ],
+  "radio": [
+    {
+      "id": "job-interviews",
+      "title": "Preparing for an interview",
+      "text": "Career advisers say that if you prepare well, you will feel much more confident in a job interview. Find out about the company before you go, and think of examples from your own experience. If you are asked about a weakness, give an honest answer and explain what you are doing to improve. Unless the interviewer has already explained everything, prepare one or two questions of your own."
+    }
+  ]
+}

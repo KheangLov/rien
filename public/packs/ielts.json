@@ -181,6 +181,62 @@
         "Why do some people prefer to travel alone?",
         "How can cities reduce traffic?"
       ]
+    },
+    {
+      "id": "p1-music",
+      "part": 1,
+      "topic": "Music",
+      "questions": [
+        "Do you like music?",
+        "What kind of music do you listen to most?",
+        "Did you learn to play an instrument as a child?",
+        "Is music important in your culture?"
+      ]
+    },
+    {
+      "id": "p1-shopping",
+      "part": 1,
+      "topic": "Shopping",
+      "questions": [
+        "Do you enjoy shopping?",
+        "Do you prefer shopping online or in shops?",
+        "What was the last thing you bought?",
+        "Are there any markets near your home?"
+      ]
+    },
+    {
+      "id": "p2-story",
+      "part": 2,
+      "topic": "A book or film",
+      "cue": "Describe a book or film that you enjoyed.",
+      "points": [
+        "what it was",
+        "when you read or saw it",
+        "what it was about",
+        "and explain why you enjoyed it"
+      ],
+      "questions": [
+        "Do young people read less than before?",
+        "Should films be shown in schools?",
+        "Why are stories important in every culture?"
+      ]
+    },
+    {
+      "id": "p2-town-change",
+      "part": 2,
+      "topic": "A change for your town",
+      "cue": "Describe a change that would improve your town.",
+      "points": [
+        "what the change is",
+        "why it is needed",
+        "how it could be done",
+        "and explain how it would help people"
+      ],
+      "questions": [
+        "Who should pay for improvements to towns?",
+        "How have towns in your country changed?",
+        "Is it better to live in a big city or a small town?"
+      ]
     }
   ],
   "ieltsWriting": [
@@ -329,6 +385,57 @@
       "id": "t2-phones",
       "task": 2,
       "prompt": "Young people today spend too much time on their phones. To what extent do you agree or disagree? Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words."
+    },
+    {
+      "id": "t1-rainfall",
+      "task": 1,
+      "prompt": "The chart shows the average monthly rainfall in two cities from May to October (invented figures for practice). Summarise the information by selecting and reporting the main features, and make comparisons where relevant. Write at least 150 words.",
+      "chart": {
+        "title": "Average monthly rainfall",
+        "unit": "millimetres",
+        "labels": [
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct"
+        ],
+        "series": [
+          {
+            "name": "City A",
+            "data": [
+              150,
+              170,
+              180,
+              200,
+              260,
+              250
+            ]
+          },
+          {
+            "name": "City B",
+            "data": [
+              80,
+              60,
+              70,
+              90,
+              150,
+              200
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "t2-online-learning",
+      "task": 2,
+      "prompt": "Some people think that online courses will replace traditional classrooms in the future. To what extent do you agree or disagree? Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words."
+    },
+    {
+      "id": "t2-moving-to-cities",
+      "task": 2,
+      "prompt": "In many countries, young people are moving from the countryside to cities. What problems does this cause, and what can be done to solve them? Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words."
     }
   ],
   "ieltsReading": [
@@ -458,6 +565,135 @@
           "text": "The market will soon open on weekdays too.",
           "answer": "false",
           "why": "They \"have no plans to open on weekdays\"."
+        }
+      ]
+    },
+    {
+      "id": "bamboo-bikes",
+      "title": "Bicycles made of bamboo",
+      "text": "In a small workshop outside a city, a group of young people builds bicycle frames from bamboo. The project began four years ago, when an engineering student noticed how much bamboo grew around her village and wondered whether it could replace steel. Bamboo is light and strong, and it absorbs the shock of bumpy roads, which makes riding more comfortable. Each frame takes about two weeks to make by hand, and the team now sells around thirty bicycles a month, mostly to customers abroad. The bicycles cost more than ordinary ones, but buyers say they last well if they are kept dry. The founder hopes to open a training centre so that other villages can start similar workshops. However, she admits that finding reliable glue, which has to be imported, has been a constant problem.",
+      "statements": [
+        {
+          "id": "student",
+          "text": "The project was started by an engineering student.",
+          "answer": "true",
+          "why": "\"An engineering student noticed how much bamboo grew around her village.\""
+        },
+        {
+          "id": "bumpy",
+          "text": "Bamboo makes riding on bumpy roads less comfortable.",
+          "answer": "false",
+          "why": "It absorbs the shock, \"which makes riding more comfortable\"."
+        },
+        {
+          "id": "abroad",
+          "text": "Most of the bicycles are sold to customers in other countries.",
+          "answer": "true",
+          "why": "They are sold \"mostly to customers abroad\"."
+        },
+        {
+          "id": "per-week",
+          "text": "The team makes about thirty frames a week.",
+          "answer": "false",
+          "why": "About thirty bicycles a month; each frame takes about two weeks."
+        },
+        {
+          "id": "cheaper",
+          "text": "The bamboo bicycles are cheaper than ordinary ones.",
+          "answer": "false",
+          "why": "\"The bicycles cost more than ordinary ones.\""
+        },
+        {
+          "id": "glue-japan",
+          "text": "The glue the team uses comes from Japan.",
+          "answer": "not-given",
+          "why": "The glue is imported, but the text does not say from where."
+        }
+      ]
+    },
+    {
+      "id": "sleep-learning",
+      "title": "Sleep and learning",
+      "text": "Many students stay up late before exams, but research suggests that this may be a mistake. During sleep, the brain appears to replay and strengthen what was learned during the day. In one well-known type of experiment, people learn a list of words or a simple task, and then either sleep or stay awake for several hours before they are tested. Those who sleep usually remember more. Short naps can also help, although they seem to be most useful when they last less than an hour. Scientists are less certain about how much sleep different people need: most adults need between seven and nine hours, but the right amount varies. Caffeine late in the day can reduce the quality of sleep, even for people who say they sleep well after coffee.",
+      "statements": [
+        {
+          "id": "always-good",
+          "text": "Staying up late before an exam is always a good idea.",
+          "answer": "false",
+          "why": "Research suggests \"this may be a mistake\"."
+        },
+        {
+          "id": "remember-more",
+          "text": "In these experiments, people who slept usually remembered more.",
+          "answer": "true",
+          "why": "\"Those who sleep usually remember more.\""
+        },
+        {
+          "id": "long-naps",
+          "text": "Naps longer than two hours help memory most.",
+          "answer": "false",
+          "why": "Naps seem most useful when they last less than an hour."
+        },
+        {
+          "id": "exactly",
+          "text": "Scientists know exactly how much sleep each person needs.",
+          "answer": "false",
+          "why": "Scientists are \"less certain\"; the right amount varies."
+        },
+        {
+          "id": "seven-nine",
+          "text": "Most adults need between seven and nine hours of sleep.",
+          "answer": "true",
+          "why": "\"Most adults need between seven and nine hours.\""
+        },
+        {
+          "id": "children-coffee",
+          "text": "Coffee affects children's sleep more than adults' sleep.",
+          "answer": "not-given",
+          "why": "Children are not mentioned."
+        }
+      ]
+    },
+    {
+      "id": "floating-school",
+      "title": "Schools on the water",
+      "text": "In some parts of the world, floods make it impossible for children to reach school for weeks every year. One solution has been the floating school: a boat that collects children from riverside villages and holds lessons on board. The idea was first tried by a local charity in a river delta, and it has since been copied in several other countries. A typical floating school has one classroom, a small library and solar panels that power lights and a few laptops. Teachers say that attendance has improved, especially among girls, whose families had worried about long journeys on foot. However, the boats are expensive to maintain, and most depend on donations. Some governments have started to pay part of the costs.",
+      "statements": [
+        {
+          "id": "floods",
+          "text": "Floods can stop children from getting to school.",
+          "answer": "true",
+          "why": "Floods \"make it impossible for children to reach school\"."
+        },
+        {
+          "id": "government-first",
+          "text": "A government built the first floating school.",
+          "answer": "false",
+          "why": "It was \"first tried by a local charity\"."
+        },
+        {
+          "id": "solar",
+          "text": "Floating schools use solar power.",
+          "answer": "true",
+          "why": "They have \"solar panels that power lights and a few laptops\"."
+        },
+        {
+          "id": "classrooms",
+          "text": "Each floating school has several classrooms.",
+          "answer": "false",
+          "why": "A typical one \"has one classroom\"."
+        },
+        {
+          "id": "boys-fallen",
+          "text": "Fewer boys go to school since the floating schools began.",
+          "answer": "not-given",
+          "why": "The text says girls' attendance improved; it says nothing about boys falling."
+        },
+        {
+          "id": "all-government",
+          "text": "All floating schools are now paid for by governments.",
+          "answer": "false",
+          "why": "Most depend on donations; some governments pay part."
         }
       ]
     }
@@ -747,6 +983,332 @@
           "label": "Contact number",
           "answer": "097221604",
           "accept": []
+        }
+      ]
+    },
+    {
+      "id": "restaurant",
+      "title": "Booking a table",
+      "intro": "A woman phones a restaurant to book a table. Complete the form.",
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "Good evening, Mekong Kitchen."
+        },
+        {
+          "speaker": "B",
+          "text": "Hi, I'd like to book a table for Saturday, please."
+        },
+        {
+          "speaker": "A",
+          "text": "For how many people?"
+        },
+        {
+          "speaker": "B",
+          "text": "Six. It's my mother's birthday."
+        },
+        {
+          "speaker": "A",
+          "text": "What time would you like?"
+        },
+        {
+          "speaker": "B",
+          "text": "Half past seven, if possible."
+        },
+        {
+          "speaker": "A",
+          "text": "Yes, that's fine. What name is it under?"
+        },
+        {
+          "speaker": "B",
+          "text": "Rattana. R, A, T, T, A, N, A."
+        },
+        {
+          "speaker": "A",
+          "text": "And a contact number?"
+        },
+        {
+          "speaker": "B",
+          "text": "Oh one six, three three two, five nine one."
+        },
+        {
+          "speaker": "A",
+          "text": "Would you like us to prepare a birthday cake? It's fifteen dollars."
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, please. A chocolate one."
+        }
+      ],
+      "form": [
+        {
+          "id": "day",
+          "label": "Day",
+          "answer": "Saturday",
+          "accept": []
+        },
+        {
+          "id": "people",
+          "label": "Number of people",
+          "answer": "6",
+          "accept": []
+        },
+        {
+          "id": "time",
+          "label": "Time",
+          "answer": "7.30",
+          "accept": [
+            "half past seven",
+            "7:30 pm"
+          ]
+        },
+        {
+          "id": "name",
+          "label": "Name",
+          "answer": "Rattana",
+          "accept": []
+        },
+        {
+          "id": "phone",
+          "label": "Phone number",
+          "answer": "016332591",
+          "accept": []
+        },
+        {
+          "id": "cake",
+          "label": "Cake",
+          "answer": "chocolate",
+          "accept": [
+            "chocolate cake"
+          ]
+        },
+        {
+          "id": "cake-price",
+          "label": "Cake price ($)",
+          "answer": "15",
+          "accept": []
+        }
+      ]
+    },
+    {
+      "id": "flat",
+      "title": "Renting a flat",
+      "intro": "A man phones about a flat to rent. Complete the form.",
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "Hello, City Homes. How can I help?"
+        },
+        {
+          "speaker": "B",
+          "text": "I'm calling about the flat on Street sixty-three."
+        },
+        {
+          "speaker": "A",
+          "text": "Ah yes, the two-bedroom flat. It's on the fourth floor."
+        },
+        {
+          "speaker": "B",
+          "text": "Is there a lift?"
+        },
+        {
+          "speaker": "A",
+          "text": "Yes, there is. The rent is three hundred and fifty dollars a month."
+        },
+        {
+          "speaker": "B",
+          "text": "Does that include water?"
+        },
+        {
+          "speaker": "A",
+          "text": "Water, yes, but not electricity."
+        },
+        {
+          "speaker": "B",
+          "text": "When can I see it?"
+        },
+        {
+          "speaker": "A",
+          "text": "How about Thursday at ten in the morning?"
+        },
+        {
+          "speaker": "B",
+          "text": "Perfect. My family name is Kim. That's K, I, M."
+        },
+        {
+          "speaker": "A",
+          "text": "Thank you, Mr Kim. Please bring your passport."
+        }
+      ],
+      "form": [
+        {
+          "id": "street",
+          "label": "Street",
+          "answer": "63",
+          "accept": []
+        },
+        {
+          "id": "bedrooms",
+          "label": "Bedrooms",
+          "answer": "2",
+          "accept": []
+        },
+        {
+          "id": "floor",
+          "label": "Floor",
+          "answer": "4",
+          "accept": [
+            "fourth",
+            "4th"
+          ]
+        },
+        {
+          "id": "rent",
+          "label": "Rent per month ($)",
+          "answer": "350",
+          "accept": []
+        },
+        {
+          "id": "included",
+          "label": "Included in the rent",
+          "answer": "water",
+          "accept": []
+        },
+        {
+          "id": "view-day",
+          "label": "Viewing day",
+          "answer": "Thursday",
+          "accept": []
+        },
+        {
+          "id": "view-time",
+          "label": "Viewing time",
+          "answer": "10 am",
+          "accept": [
+            "10",
+            "10:00",
+            "10.00",
+            "10 o'clock"
+          ]
+        },
+        {
+          "id": "family",
+          "label": "Family name",
+          "answer": "Kim",
+          "accept": []
+        }
+      ]
+    },
+    {
+      "id": "gym",
+      "title": "Joining a gym",
+      "intro": "A woman joins a gym. Complete the form.",
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "Welcome to FitLife. Are you interested in joining?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes. What kinds of membership do you have?"
+        },
+        {
+          "speaker": "A",
+          "text": "Monthly is forty dollars, or you can pay four hundred for a whole year."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll take the yearly one."
+        },
+        {
+          "speaker": "A",
+          "text": "Great. Can I have your full name?"
+        },
+        {
+          "speaker": "B",
+          "text": "Sophea Long. Long is L, O, N, G."
+        },
+        {
+          "speaker": "A",
+          "text": "And your date of birth?"
+        },
+        {
+          "speaker": "B",
+          "text": "The second of September, nineteen ninety-eight."
+        },
+        {
+          "speaker": "A",
+          "text": "Do you have any health problems we should know about?"
+        },
+        {
+          "speaker": "B",
+          "text": "Only a bad back, from an old injury."
+        },
+        {
+          "speaker": "A",
+          "text": "OK, we'll tell your trainer. Your first session is on Monday at six thirty in the evening."
+        }
+      ],
+      "form": [
+        {
+          "id": "type",
+          "label": "Membership",
+          "answer": "yearly",
+          "accept": [
+            "year",
+            "annual",
+            "a year"
+          ]
+        },
+        {
+          "id": "price",
+          "label": "Price ($)",
+          "answer": "400",
+          "accept": []
+        },
+        {
+          "id": "family",
+          "label": "Family name",
+          "answer": "Long",
+          "accept": []
+        },
+        {
+          "id": "born",
+          "label": "Date of birth",
+          "answer": "2 September 1998",
+          "accept": [
+            "2/9/1998",
+            "02/09/1998",
+            "September 2 1998"
+          ]
+        },
+        {
+          "id": "health",
+          "label": "Health problem",
+          "answer": "bad back",
+          "accept": [
+            "back",
+            "back injury",
+            "a bad back"
+          ]
+        },
+        {
+          "id": "session-day",
+          "label": "First session: day",
+          "answer": "Monday",
+          "accept": []
+        },
+        {
+          "id": "session-time",
+          "label": "First session: time",
+          "answer": "6.30 pm",
+          "accept": [
+            "6:30",
+            "6.30",
+            "6:30 pm",
+            "six thirty",
+            "18:30"
+          ]
         }
       ]
     }

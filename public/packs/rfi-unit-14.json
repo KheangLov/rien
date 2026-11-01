@@ -1,0 +1,109 @@
+{
+  "id": "rfi-unit-14",
+  "title": "Ready for IELTS, Unit 14: substitution and ellipsis (check against the book)",
+  "book": "ready-for-ielts",
+  "file": 14,
+  "fixIt": [
+    {
+      "id": "think-so",
+      "text": "A: Is money important for happiness? B: I think it.",
+      "wrong": "it",
+      "fix": "so",
+      "distractors": [
+        "yes",
+        "this"
+      ],
+      "type": "other",
+      "explain": "I think so = I think that it is.",
+      "skill": "substitution"
+    },
+    {
+      "id": "hope-not",
+      "text": "A: Will prices rise again? B: I hope no.",
+      "wrong": "no",
+      "fix": "not",
+      "distractors": [
+        "none",
+        "nothing"
+      ],
+      "type": "other",
+      "explain": "I hope not = I hope that they won't.",
+      "skill": "substitution"
+    },
+    {
+      "id": "cheap-ones",
+      "text": "These shoes are cheap, but I prefer the expensive one.",
+      "wrong": "one",
+      "fix": "ones",
+      "distractors": [
+        "it",
+        "them"
+      ],
+      "type": "other",
+      "explain": "shoes is plural: ones.",
+      "skill": "substitution"
+    },
+    {
+      "id": "than-i-do",
+      "text": "My brother earns more than I'm.",
+      "wrong": "I'm",
+      "fix": "I do",
+      "distractors": [
+        "I am",
+        "me does"
+      ],
+      "type": "other",
+      "explain": "Repeat the helper verb of earns: than I do.",
+      "skill": "substitution"
+    },
+    {
+      "id": "yes-i-have",
+      "text": "A: Have you paid the bill? B: Yes, I did.",
+      "wrong": "did",
+      "fix": "have",
+      "distractors": [
+        "do",
+        "had"
+      ],
+      "type": "other",
+      "explain": "Answer with the question's helper verb: Have you …? Yes, I have.",
+      "skill": "substitution"
+    },
+    {
+      "id": "afford-to",
+      "text": "She wanted to buy a new phone, but she couldn't afford.",
+      "wrong": "afford",
+      "fix": "afford to",
+      "distractors": [
+        "afford it to",
+        "afforded"
+      ],
+      "type": "other",
+      "explain": "Ellipsis: couldn't afford to (buy one).",
+      "skill": "substitution"
+    }
+  ],
+  "builder": [
+    {
+      "id": "i-think-so",
+      "text": "A: Is it true? B: I think so.",
+      "tip": "I think so = yes, probably.",
+      "skill": "substitution",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "i-hope-not",
+      "text": "A: Will it rain? B: I hope not.",
+      "tip": "I hope not = I hope it won't.",
+      "skill": "substitution",
+      "keepFirstCapital": true
+    }
+  ],
+  "radio": [
+    {
+      "id": "money-happiness",
+      "title": "Can money buy happiness?",
+      "text": "Studies suggest that more money does make people happier, but only up to a point. People who cannot pay for food or rent are usually less happy than those who can. Once basic needs are met, extra income seems to matter less. Researchers have found that spending money on experiences, such as a trip with friends, makes people happier than spending it on things. Giving some of it away may do so too."
+    }
+  ]
+}

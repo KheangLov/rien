@@ -1,0 +1,144 @@
+{
+  "id": "ef-upper-file-06",
+  "title": "English File Upper-Intermediate, File 6: used to, be used to, get used to; gerunds and infinitives (check against the book)",
+  "book": "english-file-upper-intermediate-4e",
+  "file": 6,
+  "fixIt": [
+    {
+      "id": "used-to-driving",
+      "text": "I'm not used to drive on the left.",
+      "wrong": "drive",
+      "fix": "driving",
+      "distractors": [
+        "drove",
+        "driven"
+      ],
+      "type": "tense",
+      "explain": "be used to + -ing = it is normal for me.",
+      "skill": "used-to",
+      "when": "now"
+    },
+    {
+      "id": "get-used-to-living",
+      "text": "It took me months to get used to live alone.",
+      "wrong": "live",
+      "fix": "living",
+      "distractors": [
+        "lived",
+        "lives"
+      ],
+      "type": "tense",
+      "explain": "get used to + -ing = become normal.",
+      "skill": "used-to",
+      "when": "past"
+    },
+    {
+      "id": "used-to-live-btb",
+      "text": "She used to living in Battambang, but now she lives in Phnom Penh.",
+      "wrong": "living",
+      "fix": "live",
+      "distractors": [
+        "lives",
+        "lived"
+      ],
+      "type": "tense",
+      "explain": "used to + verb: a past state.",
+      "skill": "used-to",
+      "when": "past-habit"
+    },
+    {
+      "id": "remember-visiting",
+      "text": "I remember visit Angkor Wat when I was six.",
+      "wrong": "visit",
+      "fix": "visiting",
+      "distractors": [
+        "to visit",
+        "visited"
+      ],
+      "type": "other",
+      "explain": "remember + -ing = remember something in the past.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "forget-to-lock",
+      "text": "Don't forget locking the door when you leave.",
+      "wrong": "locking",
+      "fix": "to lock",
+      "distractors": [
+        "lock",
+        "locked"
+      ],
+      "type": "other",
+      "explain": "forget + to + verb = something you must do.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "stopped-smoking",
+      "text": "He stopped smoke five years ago.",
+      "wrong": "smoke",
+      "fix": "smoking",
+      "distractors": [
+        "to smoke",
+        "smoked"
+      ],
+      "type": "other",
+      "explain": "stop + -ing = not do it any more.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "afford-to-buy",
+      "text": "We can't afford buying a car this year.",
+      "wrong": "buying",
+      "fix": "to buy",
+      "distractors": [
+        "buy",
+        "bought"
+      ],
+      "type": "other",
+      "explain": "afford + to + verb.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "forward-to-seeing",
+      "text": "I'm looking forward to see you.",
+      "wrong": "see",
+      "fix": "seeing",
+      "distractors": [
+        "saw",
+        "seen"
+      ],
+      "type": "other",
+      "explain": "look forward to + -ing (to is a preposition here).",
+      "skill": "verb-patterns"
+    }
+  ],
+  "builder": [
+    {
+      "id": "used-to-noise",
+      "text": "I'm used to the noise now.",
+      "tip": "be used to + noun: normal for me.",
+      "skill": "used-to",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "remember-to-call",
+      "text": "Remember to call your mother.",
+      "tip": "remember + to: something to do.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "look-forward-meeting",
+      "text": "I look forward to meeting you.",
+      "tip": "look forward to + -ing.",
+      "skill": "verb-patterns",
+      "keepFirstCapital": true
+    }
+  ],
+  "radio": [
+    {
+      "id": "new-city",
+      "title": "Getting used to a new city",
+      "text": "When I first moved to Phnom Penh, I wasn't used to the traffic, and I was afraid of crossing the road. I used to live in a quiet village where everybody walked or cycled. It took me a year to get used to living with so much noise. Now I remember to carry an umbrella in the rainy season, and I have stopped worrying about the traffic. I still miss waking up to the sound of birds."
+    }
+  ]
+}

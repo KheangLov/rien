@@ -74,6 +74,7 @@ export const GRAMMAR_SKILLS = {
   'auxiliary-verbs': 'Helper verbs (do, have, can)',
   'adjective-order': 'Adjectives (the rich, the elderly)',
   'wish': 'wish and if only',
+  'so-such': 'so and such',
   'past-modals': 'must have, should have',
   'verbs-of-senses': 'looks, sounds, feels',
   'countable-nouns': 'Countable and uncountable nouns',

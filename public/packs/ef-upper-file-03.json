@@ -1,0 +1,131 @@
+{
+  "id": "ef-upper-file-03",
+  "title": "English File Upper-Intermediate, File 3: narrative tenses; so and such; adverbs (check against the book)",
+  "book": "english-file-upper-intermediate-4e",
+  "file": 3,
+  "fixIt": [
+    {
+      "id": "had-been-walking",
+      "text": "We had been walked for hours when we found the village.",
+      "wrong": "walked",
+      "fix": "walking",
+      "distractors": [
+        "walk",
+        "walks"
+      ],
+      "type": "tense",
+      "explain": "Past perfect continuous: had been + -ing, for a longer action before a past moment.",
+      "skill": "past-perfect",
+      "when": "earlier-past"
+    },
+    {
+      "id": "had-already-left",
+      "text": "When I arrived at the airport, my flight already left.",
+      "wrong": "already",
+      "fix": "had already",
+      "distractors": [
+        "has already",
+        "was already"
+      ],
+      "type": "tense",
+      "explain": "It left before I arrived: had already left.",
+      "skill": "past-perfect",
+      "when": "earlier-past"
+    },
+    {
+      "id": "such-a-long",
+      "text": "It was so a long flight that we watched four films.",
+      "wrong": "so",
+      "fix": "such",
+      "distractors": [
+        "very",
+        "too"
+      ],
+      "type": "other",
+      "explain": "such + a + adjective + noun; so + adjective.",
+      "skill": "so-such"
+    },
+    {
+      "id": "so-comfortable",
+      "text": "The hotel was such comfortable that we stayed an extra night.",
+      "wrong": "such",
+      "fix": "so",
+      "distractors": [
+        "very",
+        "too"
+      ],
+      "type": "other",
+      "explain": "so + adjective (so comfortable).",
+      "skill": "so-such"
+    },
+    {
+      "id": "drove-carefully",
+      "text": "He drove careful because the road was wet.",
+      "wrong": "careful",
+      "fix": "carefully",
+      "distractors": [
+        "care",
+        "carefuller"
+      ],
+      "type": "other",
+      "explain": "How he drove: an adverb (carefully).",
+      "skill": "adjectives-adverbs"
+    },
+    {
+      "id": "was-having-shower",
+      "text": "The phone rang while I had a shower.",
+      "wrong": "had",
+      "fix": "was having",
+      "distractors": [
+        "have",
+        "has had"
+      ],
+      "type": "tense",
+      "explain": "The longer action in progress: past continuous.",
+      "skill": "past-continuous",
+      "when": "past-continuous"
+    },
+    {
+      "id": "had-escaped",
+      "text": "By the time the police arrived, the thieves had escape.",
+      "wrong": "escape",
+      "fix": "escaped",
+      "distractors": [
+        "escaping",
+        "escapes"
+      ],
+      "type": "tense",
+      "explain": "had + past participle.",
+      "skill": "past-perfect",
+      "when": "earlier-past"
+    }
+  ],
+  "builder": [
+    {
+      "id": "such-a-good-time",
+      "text": "We had such a good time.",
+      "tip": "such + a + adjective + noun.",
+      "skill": "so-such"
+    },
+    {
+      "id": "had-been-waiting",
+      "text": "She had been waiting for an hour.",
+      "tip": "had been + -ing.",
+      "skill": "past-perfect"
+    },
+    {
+      "id": "so-tired-slept",
+      "text": "I was so tired that I slept.",
+      "tip": "so + adjective + that.",
+      "skill": "so-such",
+      "keepFirstCapital": true
+    }
+  ],
+  "radio": [
+    {
+      "id": "missed-boat",
+      "title": "The missed boat",
+      "text": "We had been travelling for two days when we reached the coast. The boat to the island had already left, and the next one was not until the morning. It was such a beautiful evening that we did not mind. We found a small guesthouse, and the owner cooked fresh crab for us. We were so tired that we fell asleep before nine. The next morning the sea was calm, and we caught the first boat."
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "id": "rfi-unit-01",
+  "title": "Ready for IELTS, Unit 1: present tenses and past simple; likes and dislikes (check against the book)",
+  "book": "ready-for-ielts",
+  "file": 1,
+  "fixIt": [
+    {
+      "id": "meet-friends",
+      "text": "I usually meeting my friends on Fridays.",
+      "wrong": "meeting",
+      "fix": "meet",
+      "distractors": [
+        "met",
+        "meets"
+      ],
+      "type": "tense",
+      "explain": "Habits: present simple (I usually meet).",
+      "skill": "present-simple",
+      "when": "always"
+    },
+    {
+      "id": "stand-waiting",
+      "text": "I can't stand wait in long queues.",
+      "wrong": "wait",
+      "fix": "waiting",
+      "distractors": [
+        "to waiting",
+        "waited"
+      ],
+      "type": "other",
+      "explain": "can't stand + -ing.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "keen-on",
+      "text": "I'm keen of trying new food.",
+      "wrong": "of",
+      "fix": "on",
+      "distractors": [
+        "in",
+        "at"
+      ],
+      "type": "preposition",
+      "explain": "keen on + -ing.",
+      "skill": "prepositions"
+    },
+    {
+      "id": "is-working",
+      "text": "Right now he works on a project with three colleagues.",
+      "wrong": "works",
+      "fix": "is working",
+      "distractors": [
+        "worked",
+        "has work"
+      ],
+      "type": "tense",
+      "explain": "Right now: present continuous.",
+      "skill": "present-continuous",
+      "when": "now"
+    },
+    {
+      "id": "have-got-on",
+      "text": "We met last year and we got on well since then.",
+      "wrong": "got",
+      "fix": "have got",
+      "distractors": [
+        "had got",
+        "get"
+      ],
+      "type": "tense",
+      "explain": "since then = until now: present perfect.",
+      "skill": "present-perfect",
+      "when": "past-to-now"
+    },
+    {
+      "id": "into-watching",
+      "text": "I'm not really into watch sport on TV.",
+      "wrong": "watch",
+      "fix": "watching",
+      "distractors": [
+        "watched",
+        "to watch"
+      ],
+      "type": "other",
+      "explain": "be into + -ing (informal: like).",
+      "skill": "verb-patterns"
+    }
+  ],
+  "builder": [
+    {
+      "id": "cant-stand-queues",
+      "text": "I can't stand waiting in queues.",
+      "tip": "can't stand + -ing.",
+      "skill": "verb-patterns",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "is-working-now",
+      "text": "She is working on a new project.",
+      "tip": "Present continuous: now.",
+      "skill": "present-continuous"
+    }
+  ],
+  "radio": [
+    {
+      "id": "friendship-research",
+      "title": "What makes a friend?",
+      "text": "Researchers who study friendship say that it takes many hours together to turn a stranger into a close friend. Most people make friends at school, at work or through shared hobbies. Online friendships are becoming more common, but many people still prefer meeting face to face. Interestingly, the number of close friends most adults have is small, usually between three and five."
+    }
+  ]
+}

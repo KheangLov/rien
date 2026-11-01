@@ -68,3 +68,17 @@ describe('listening form answers', () => {
     expect(formAnswerRight('', 'x')).toBe(false)
   })
 })
+
+describe('the IELTS pack', () => {
+  it('accepts every listening form answer and its other spellings', async () => {
+    const { readFileSync } = await import('node:fs')
+    const pack = JSON.parse(readFileSync(new URL('../public/packs/ielts.json', import.meta.url), 'utf8'))
+    for (const call of pack.ieltsListening) {
+      for (const field of call.form) {
+        for (const answer of [field.answer, ...field.accept]) {
+          expect(formAnswerRight(answer, field.answer, field.accept), `${call.id}:${field.id}:${answer}`).toBe(true)
+        }
+      }
+    }
+  })
+})

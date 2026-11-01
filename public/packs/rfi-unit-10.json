@@ -1,0 +1,107 @@
+{
+  "id": "rfi-unit-10",
+  "title": "Ready for IELTS, Unit 10: relative clauses (check against the book)",
+  "book": "ready-for-ielts",
+  "file": 10,
+  "fixIt": [
+    {
+      "id": "artist-who",
+      "text": "My aunt, that paints portraits, lived in Paris.",
+      "wrong": "that",
+      "fix": "who",
+      "distractors": [
+        "which",
+        "whose"
+      ],
+      "type": "other",
+      "explain": "With commas (extra information): who or which, not that.",
+      "skill": "relative-clauses"
+    },
+    {
+      "id": "whose-paintings",
+      "text": "Picasso, who paintings are famous, was Spanish.",
+      "wrong": "who",
+      "fix": "whose",
+      "distractors": [
+        "which",
+        "who's"
+      ],
+      "type": "other",
+      "explain": "whose = his, her or their.",
+      "skill": "relative-clauses"
+    },
+    {
+      "id": "gallery-was",
+      "text": "The gallery where we saw the sculptures were closed.",
+      "wrong": "were",
+      "fix": "was",
+      "distractors": [
+        "are",
+        "be"
+      ],
+      "type": "other",
+      "explain": "The subject is the gallery (one): was.",
+      "skill": "relative-clauses"
+    },
+    {
+      "id": "painting-that",
+      "text": "This is the painting what I told you about.",
+      "wrong": "what",
+      "fix": "that",
+      "distractors": [
+        "who",
+        "whose"
+      ],
+      "type": "other",
+      "explain": "Things: that or which.",
+      "skill": "relative-clauses"
+    },
+    {
+      "id": "angkor-attracts",
+      "text": "Angkor, which is in Siem Reap province, attract millions of visitors.",
+      "wrong": "attract",
+      "fix": "attracts",
+      "distractors": [
+        "attracting",
+        "attractive"
+      ],
+      "type": "third-person-s",
+      "explain": "Angkor (it) + -s.",
+      "skill": "relative-clauses"
+    },
+    {
+      "id": "reason-why",
+      "text": "The reason which I like art is simple.",
+      "wrong": "which",
+      "fix": "why",
+      "distractors": [
+        "what",
+        "where"
+      ],
+      "type": "other",
+      "explain": "the reason why.",
+      "skill": "relative-clauses"
+    }
+  ],
+  "builder": [
+    {
+      "id": "artist-who-painted",
+      "text": "The artist who painted it is Khmer.",
+      "tip": "who for people.",
+      "skill": "relative-clauses"
+    },
+    {
+      "id": "museum-which-opened",
+      "text": "The museum, which opened in May, is free.",
+      "tip": "Extra information: which, with commas.",
+      "skill": "relative-clauses"
+    }
+  ],
+  "radio": [
+    {
+      "id": "street-art",
+      "title": "Art on the street",
+      "text": "Street art, which was once seen as damage to buildings, is now welcomed in many cities. Artists who used to work at night now receive invitations to paint walls in public places. In some neighbourhoods, murals have attracted tourists, which has helped local cafés and shops. However, not everyone agrees that it is art, and some owners whose walls are painted without permission are still unhappy."
+    }
+  ]
+}

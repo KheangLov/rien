@@ -1,0 +1,107 @@
+{
+  "id": "rfi-unit-08",
+  "title": "Ready for IELTS, Unit 8: referring words in a text (check against the book)",
+  "book": "ready-for-ielts",
+  "file": 8,
+  "fixIt": [
+    {
+      "id": "they-were-wrong",
+      "text": "Maps were drawn by hand. It were often wrong.",
+      "wrong": "It",
+      "fix": "They",
+      "distractors": [
+        "This",
+        "That"
+      ],
+      "type": "other",
+      "explain": "Maps (plural) → they.",
+      "skill": "reference-words"
+    },
+    {
+      "id": "these-maps",
+      "text": "Early explorers drew maps of the coast. This maps helped sailors.",
+      "wrong": "This",
+      "fix": "These",
+      "distractors": [
+        "That",
+        "Its"
+      ],
+      "type": "other",
+      "explain": "maps is plural: these.",
+      "skill": "reference-words"
+    },
+    {
+      "id": "its-population",
+      "text": "The city grew quickly, and their population doubled.",
+      "wrong": "their",
+      "fix": "its",
+      "distractors": [
+        "it's",
+        "his"
+      ],
+      "type": "other",
+      "explain": "The city (one thing) → its.",
+      "skill": "reference-words"
+    },
+    {
+      "id": "his-work",
+      "text": "Ptolemy's maps were famous. He's work influenced later geographers.",
+      "wrong": "He's",
+      "fix": "His",
+      "distractors": [
+        "Him",
+        "Its"
+      ],
+      "type": "other",
+      "explain": "His = belonging to him; he's = he is.",
+      "skill": "reference-words"
+    },
+    {
+      "id": "these-changes",
+      "text": "Many countries changed their borders. Them changes made old maps useless.",
+      "wrong": "Them",
+      "fix": "These",
+      "distractors": [
+        "This",
+        "That"
+      ],
+      "type": "other",
+      "explain": "These + plural noun.",
+      "skill": "reference-words"
+    },
+    {
+      "id": "bigger-of-the-two",
+      "text": "Both islands are small, but the one in the north is the bigger of the three.",
+      "wrong": "three",
+      "fix": "two",
+      "distractors": [
+        "both",
+        "them"
+      ],
+      "type": "other",
+      "explain": "Two islands: the bigger of the two.",
+      "skill": "reference-words"
+    }
+  ],
+  "builder": [
+    {
+      "id": "this-shows",
+      "text": "This shows how maps changed.",
+      "tip": "This refers back to an idea.",
+      "skill": "reference-words"
+    },
+    {
+      "id": "the-former-the-latter",
+      "text": "The former is old; the latter is new.",
+      "tip": "the former = the first; the latter = the second.",
+      "skill": "reference-words"
+    }
+  ],
+  "radio": [
+    {
+      "id": "changing-maps",
+      "title": "Why maps change",
+      "text": "Maps are never finished. Rivers move, coastlines change and cities grow, so a map that was accurate fifty years ago may be wrong today. In the past, these changes were recorded by surveyors who walked the land. Today, most of this work is done with satellites. They can show changes within days, which makes them useful after floods and storms."
+    }
+  ]
+}

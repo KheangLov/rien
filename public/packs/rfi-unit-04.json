@@ -1,0 +1,107 @@
+{
+  "id": "rfi-unit-04",
+  "title": "Ready for IELTS, Unit 4: countable and uncountable nouns; making suggestions (check against the book)",
+  "book": "ready-for-ielts",
+  "file": 4,
+  "fixIt": [
+    {
+      "id": "evidence",
+      "text": "There is a lot of evidences that the climate is changing.",
+      "wrong": "evidences",
+      "fix": "evidence",
+      "distractors": [
+        "evident",
+        "an evidence"
+      ],
+      "type": "plural-s",
+      "explain": "evidence is uncountable: no -s.",
+      "skill": "countable-nouns"
+    },
+    {
+      "id": "more-money",
+      "text": "Governments should invest more moneys in clean energy.",
+      "wrong": "moneys",
+      "fix": "money",
+      "distractors": [
+        "monies",
+        "a money"
+      ],
+      "type": "plural-s",
+      "explain": "money is uncountable.",
+      "skill": "countable-nouns"
+    },
+    {
+      "id": "how-about-building",
+      "text": "How about build more cycle lanes?",
+      "wrong": "build",
+      "fix": "building",
+      "distractors": [
+        "to build",
+        "built"
+      ],
+      "type": "other",
+      "explain": "How about + -ing?",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "more-trees",
+      "text": "I suggest that the city plants more tree.",
+      "wrong": "tree",
+      "fix": "trees",
+      "distractors": [
+        "tree's",
+        "treeing"
+      ],
+      "type": "plural-s",
+      "explain": "more + plural countable noun.",
+      "skill": "countable-nouns"
+    },
+    {
+      "id": "much-research",
+      "text": "Many research has shown that the problem is growing.",
+      "wrong": "Many",
+      "fix": "Much",
+      "distractors": [
+        "A few",
+        "Several"
+      ],
+      "type": "other",
+      "explain": "research is uncountable: much research.",
+      "skill": "countable-nouns"
+    },
+    {
+      "id": "few-people-have",
+      "text": "Few people has access to clean water in some areas.",
+      "wrong": "has",
+      "fix": "have",
+      "distractors": [
+        "is",
+        "had been"
+      ],
+      "type": "other",
+      "explain": "people is plural: have.",
+      "skill": "countable-nouns"
+    }
+  ],
+  "builder": [
+    {
+      "id": "how-about-cycling",
+      "text": "How about cycling to work?",
+      "tip": "How about + -ing.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "much-evidence",
+      "text": "There is not much evidence.",
+      "tip": "much + uncountable noun.",
+      "skill": "countable-nouns"
+    }
+  ],
+  "radio": [
+    {
+      "id": "plastic-problem",
+      "title": "The plastic problem",
+      "text": "Every year, millions of tonnes of plastic end up in rivers and the sea. Much of it comes from bags, bottles and packaging that are used only once. There is growing evidence that tiny pieces of plastic are now found in fish and even in drinking water. Some cities have banned plastic bags, and others encourage shops to sell refills. Experts suggest that small changes by many people can make a real difference."
+    }
+  ]
+}

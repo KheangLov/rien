@@ -1,0 +1,142 @@
+{
+  "id": "ef-upper-file-09",
+  "title": "English File Upper-Intermediate, File 9: contrast and purpose; countable and uncountable nouns (check against the book)",
+  "book": "english-file-upper-intermediate-4e",
+  "file": 9,
+  "fixIt": [
+    {
+      "id": "in-spite-of",
+      "text": "In spite the rain, we went out.",
+      "wrong": "spite",
+      "fix": "spite of",
+      "distractors": [
+        "despite",
+        "spite that"
+      ],
+      "type": "preposition",
+      "explain": "in spite of + noun; despite + noun (no of).",
+      "skill": "linkers"
+    },
+    {
+      "id": "although-raining",
+      "text": "Despite it was raining, we went out.",
+      "wrong": "Despite",
+      "fix": "Although",
+      "distractors": [
+        "In spite",
+        "However"
+      ],
+      "type": "other",
+      "explain": "Although + subject + verb; despite + noun or -ing.",
+      "skill": "linkers"
+    },
+    {
+      "id": "to-buy",
+      "text": "I'm saving money for buy a new laptop.",
+      "wrong": "for",
+      "fix": "to",
+      "distractors": [
+        "so",
+        "by"
+      ],
+      "type": "other",
+      "explain": "Purpose with a verb: to + verb (or in order to).",
+      "skill": "linkers"
+    },
+    {
+      "id": "so-that-could",
+      "text": "She left early so that she can catch the last bus.",
+      "wrong": "can",
+      "fix": "could",
+      "distractors": [
+        "will",
+        "is"
+      ],
+      "type": "other",
+      "explain": "In the past: so that + could.",
+      "skill": "linkers"
+    },
+    {
+      "id": "advice",
+      "text": "Can you give me some advices?",
+      "wrong": "advices",
+      "fix": "advice",
+      "distractors": [
+        "advise",
+        "an advice"
+      ],
+      "type": "plural-s",
+      "explain": "advice is uncountable: some advice, a piece of advice.",
+      "skill": "countable-nouns"
+    },
+    {
+      "id": "news-is",
+      "text": "The news are very good today.",
+      "wrong": "are",
+      "fix": "is",
+      "distractors": [
+        "were",
+        "be"
+      ],
+      "type": "other",
+      "explain": "news is uncountable and singular: the news is.",
+      "skill": "countable-nouns"
+    },
+    {
+      "id": "trousers-are",
+      "text": "Your trousers is on the chair.",
+      "wrong": "is",
+      "fix": "are",
+      "distractors": [
+        "was",
+        "be"
+      ],
+      "type": "other",
+      "explain": "trousers is plural: are.",
+      "skill": "countable-nouns"
+    },
+    {
+      "id": "information",
+      "text": "We need some informations about the course.",
+      "wrong": "informations",
+      "fix": "information",
+      "distractors": [
+        "informing",
+        "an information"
+      ],
+      "type": "plural-s",
+      "explain": "information is uncountable: no -s.",
+      "skill": "countable-nouns"
+    }
+  ],
+  "builder": [
+    {
+      "id": "despite-the-rain",
+      "text": "We went out despite the rain.",
+      "tip": "despite + noun.",
+      "skill": "linkers",
+      "alternatives": [
+        "Despite the rain we went out."
+      ]
+    },
+    {
+      "id": "piece-of-advice",
+      "text": "Let me give you some advice.",
+      "tip": "advice is uncountable.",
+      "skill": "countable-nouns"
+    },
+    {
+      "id": "in-order-to-pass",
+      "text": "She studied hard to pass.",
+      "tip": "Purpose: to + verb.",
+      "skill": "linkers"
+    }
+  ],
+  "radio": [
+    {
+      "id": "saving-for-study",
+      "title": "Saving to study abroad",
+      "text": "Although she earns very little, my cousin is saving money to study in Australia. Despite the cost, she believes it is worth it. She has asked her teachers for advice, and she has found a lot of useful information online. She works at a hotel at the weekends so that she can study during the week. The news from the university came yesterday: she has been accepted."
+    }
+  ]
+}

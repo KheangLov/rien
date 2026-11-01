@@ -1,0 +1,111 @@
+{
+  "id": "rfi-unit-13",
+  "title": "Ready for IELTS, Unit 13: concession (check against the book)",
+  "book": "ready-for-ielts",
+  "file": 13,
+  "fixIt": [
+    {
+      "id": "although-road",
+      "text": "Despite the road was new, it flooded.",
+      "wrong": "Despite",
+      "fix": "Although",
+      "distractors": [
+        "In spite",
+        "However"
+      ],
+      "type": "other",
+      "explain": "Although + subject + verb; despite + noun.",
+      "skill": "linkers"
+    },
+    {
+      "id": "despite-cost",
+      "text": "Although the high cost, the bridge was built.",
+      "wrong": "Although",
+      "fix": "Despite",
+      "distractors": [
+        "Even",
+        "However"
+      ],
+      "type": "other",
+      "explain": "despite + noun phrase (the high cost).",
+      "skill": "linkers"
+    },
+    {
+      "id": "even-though",
+      "text": "Even the roads are poor, trade is growing.",
+      "wrong": "Even",
+      "fix": "Even though",
+      "distractors": [
+        "Even so",
+        "Even if"
+      ],
+      "type": "other",
+      "explain": "Even though + clause.",
+      "skill": "linkers"
+    },
+    {
+      "id": "whereas-has",
+      "text": "Whereas the north have good roads, the south does not.",
+      "wrong": "have",
+      "fix": "has",
+      "distractors": [
+        "having",
+        "are"
+      ],
+      "type": "other",
+      "explain": "the north (one area): has.",
+      "skill": "linkers"
+    },
+    {
+      "id": "despite-this-finished",
+      "text": "The project was expensive. Despite this, they finish it on time.",
+      "wrong": "finish",
+      "fix": "finished",
+      "distractors": [
+        "finishing",
+        "finishes"
+      ],
+      "type": "tense",
+      "explain": "The story is past: finished.",
+      "skill": "past-simple",
+      "when": "past"
+    },
+    {
+      "id": "nevertheless",
+      "text": "The airport is small. Nevertheless, it handle millions of passengers.",
+      "wrong": "handle",
+      "fix": "handles",
+      "distractors": [
+        "handling",
+        "handled"
+      ],
+      "type": "third-person-s",
+      "explain": "it + -s in the present simple.",
+      "skill": "linkers"
+    }
+  ],
+  "builder": [
+    {
+      "id": "despite-the-delays",
+      "text": "Despite the delays, it opened.",
+      "tip": "despite + noun.",
+      "skill": "linkers",
+      "alternatives": [
+        "It opened despite the delays."
+      ]
+    },
+    {
+      "id": "although-it-was-costly",
+      "text": "Although it was costly, it was worth it.",
+      "tip": "Although + clause.",
+      "skill": "linkers"
+    }
+  ],
+  "radio": [
+    {
+      "id": "new-road",
+      "title": "The new highway",
+      "text": "The new highway between the capital and the coast has cut the journey time in half. Although many drivers welcome it, some villagers along the old road say that fewer customers now stop at their shops and restaurants. Despite these concerns, the government plans to build two more highways. Supporters argue that better roads bring investment, whereas critics believe that money should go to rural schools and clinics first."
+    }
+  ]
+}

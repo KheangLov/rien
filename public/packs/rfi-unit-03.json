@@ -1,0 +1,107 @@
+{
+  "id": "rfi-unit-03",
+  "title": "Ready for IELTS, Unit 3: comparison; adjectives with prepositions; -ing and -ed (check against the book)",
+  "book": "ready-for-ielts",
+  "file": 3,
+  "fixIt": [
+    {
+      "id": "than-running",
+      "text": "Skydiving is far more dangerous that running.",
+      "wrong": "that",
+      "fix": "than",
+      "distractors": [
+        "then",
+        "as"
+      ],
+      "type": "other",
+      "explain": "more … than.",
+      "skill": "comparatives"
+    },
+    {
+      "id": "frightening",
+      "text": "It was the most frightened experience of my life.",
+      "wrong": "frightened",
+      "fix": "frightening",
+      "distractors": [
+        "fright",
+        "frighten"
+      ],
+      "type": "other",
+      "explain": "The experience is frightening; the person is frightened.",
+      "skill": "ed-ing-adjectives"
+    },
+    {
+      "id": "keen-on-risks",
+      "text": "Climbers are often very keen in taking risks.",
+      "wrong": "in",
+      "fix": "on",
+      "distractors": [
+        "at",
+        "of"
+      ],
+      "type": "preposition",
+      "explain": "keen on + -ing.",
+      "skill": "prepositions"
+    },
+    {
+      "id": "as-risky-as",
+      "text": "Bungee jumping is not as risky than people think.",
+      "wrong": "than",
+      "fix": "as",
+      "distractors": [
+        "so",
+        "like"
+      ],
+      "type": "other",
+      "explain": "not as … as.",
+      "skill": "comparatives"
+    },
+    {
+      "id": "capable-of",
+      "text": "She is capable of climb the mountain alone.",
+      "wrong": "climb",
+      "fix": "climbing",
+      "distractors": [
+        "to climb",
+        "climbed"
+      ],
+      "type": "other",
+      "explain": "capable of + -ing.",
+      "skill": "prepositions"
+    },
+    {
+      "id": "excited-before",
+      "text": "I was really exciting before the race.",
+      "wrong": "exciting",
+      "fix": "excited",
+      "distractors": [
+        "excite",
+        "excitement"
+      ],
+      "type": "other",
+      "explain": "How you feel: -ed (excited).",
+      "skill": "ed-ing-adjectives"
+    }
+  ],
+  "builder": [
+    {
+      "id": "far-more-dangerous",
+      "text": "It is far more dangerous.",
+      "tip": "far + comparative for a big difference.",
+      "skill": "comparatives"
+    },
+    {
+      "id": "not-as-hard-as",
+      "text": "It was not as hard as I thought.",
+      "tip": "not as … as.",
+      "skill": "comparatives"
+    }
+  ],
+  "radio": [
+    {
+      "id": "thrill-seekers",
+      "title": "Why we seek thrills",
+      "text": "Some people are attracted to dangerous sports such as rock climbing and skydiving, while others find them frightening. Psychologists suggest that thrill seekers may need more excitement than other people to feel satisfied. Interestingly, many of them are more careful than you might expect: they train for years and check their equipment again and again. For them, the risk is part of the pleasure, but so is the skill."
+    }
+  ]
+}

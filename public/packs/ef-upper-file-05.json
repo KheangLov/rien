@@ -1,0 +1,139 @@
+{
+  "id": "ef-upper-file-05",
+  "title": "English File Upper-Intermediate, File 5: second, third and mixed conditionals; wish (check against the book)",
+  "book": "english-file-upper-intermediate-4e",
+  "file": 5,
+  "fixIt": [
+    {
+      "id": "would-learn",
+      "text": "If I had more time, I learn the guitar.",
+      "wrong": "learn",
+      "fix": "would learn",
+      "distractors": [
+        "will learn",
+        "learned"
+      ],
+      "type": "tense",
+      "explain": "Imagined: if + past, would + verb.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "would-have-helped",
+      "text": "If she had told me, I would have help her.",
+      "wrong": "help",
+      "fix": "helped",
+      "distractors": [
+        "helping",
+        "helps"
+      ],
+      "type": "tense",
+      "explain": "Third conditional: would have + past participle.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "wish-had",
+      "text": "I wish I have a bigger flat.",
+      "wrong": "have",
+      "fix": "had",
+      "distractors": [
+        "has",
+        "having"
+      ],
+      "type": "tense",
+      "explain": "wish + past simple for a present wish.",
+      "skill": "wish",
+      "when": "imagined"
+    },
+    {
+      "id": "stop-interrupting",
+      "text": "I wish you would stop interrupt me.",
+      "wrong": "interrupt",
+      "fix": "interrupting",
+      "distractors": [
+        "to interrupt",
+        "interrupted"
+      ],
+      "type": "other",
+      "explain": "stop + -ing = not do it any more.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "hadnt-eaten",
+      "text": "She wishes she hadn't eat so much last night.",
+      "wrong": "eat",
+      "fix": "eaten",
+      "distractors": [
+        "ate",
+        "eating"
+      ],
+      "type": "tense",
+      "explain": "wish + past perfect for a past regret.",
+      "skill": "wish",
+      "when": "earlier-past"
+    },
+    {
+      "id": "if-only-known",
+      "text": "If only I knew the answer yesterday!",
+      "wrong": "knew",
+      "fix": "had known",
+      "distractors": [
+        "know",
+        "have known"
+      ],
+      "type": "tense",
+      "explain": "A past regret: If only + past perfect.",
+      "skill": "wish",
+      "when": "earlier-past"
+    },
+    {
+      "id": "id-apologise",
+      "text": "If I were you, I'll apologise.",
+      "wrong": "I'll",
+      "fix": "I'd",
+      "distractors": [
+        "I'm",
+        "I've"
+      ],
+      "type": "tense",
+      "explain": "Advice with If I were you: I'd (would).",
+      "skill": "conditionals",
+      "when": "imagined"
+    }
+  ],
+  "builder": [
+    {
+      "id": "wish-i-could-sing",
+      "text": "I wish I could sing.",
+      "tip": "wish + could for an ability.",
+      "skill": "wish",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "if-i-had-known",
+      "text": "If I had known, I would have helped.",
+      "tip": "Third conditional.",
+      "skill": "conditionals",
+      "alternatives": [
+        "I would have helped if I had known."
+      ]
+    },
+    {
+      "id": "if-i-were-you",
+      "text": "If I were you, I'd go.",
+      "tip": "Advice: If I were you.",
+      "skill": "conditionals",
+      "alternatives": [
+        "I'd go if I were you."
+      ]
+    }
+  ],
+  "radio": [
+    {
+      "id": "different-choice",
+      "title": "A different choice",
+      "text": "If my father had not moved to Phnom Penh when he was young, I would probably be a farmer now, like my grandparents. Sometimes I wish I lived in the countryside, where life is slower. But if I had grown up there, I would not have gone to university, and I would not have met my husband. If only I could have both: a quiet village and a good job. My grandmother says I wish for too much."
+    }
+  ]
+}

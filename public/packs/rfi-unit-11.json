@@ -1,0 +1,116 @@
+{
+  "id": "rfi-unit-11",
+  "title": "Ready for IELTS, Unit 11: second, third and mixed conditionals (check against the book)",
+  "book": "ready-for-ielts",
+  "file": 11,
+  "fixIt": [
+    {
+      "id": "had-grown-up",
+      "text": "If I grew up in a big family, I would be more patient now.",
+      "wrong": "grew",
+      "fix": "had grown",
+      "distractors": [
+        "have grown",
+        "would grow"
+      ],
+      "type": "tense",
+      "explain": "Mixed conditional: a past condition (had grown up), a present result.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "wouldnt-have-met",
+      "text": "If my parents hadn't moved to the city, I wouldn't had met my husband.",
+      "wrong": "had",
+      "fix": "have",
+      "distractors": [
+        "has",
+        "be"
+      ],
+      "type": "tense",
+      "explain": "would have + past participle.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "would-be-happier",
+      "text": "If children had more free time, they will be happier.",
+      "wrong": "will",
+      "fix": "would",
+      "distractors": [
+        "shall",
+        "can"
+      ],
+      "type": "tense",
+      "explain": "Imagined: if + past, would.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "supposing-lost",
+      "text": "Supposing you lose your job, what would you do?",
+      "wrong": "lose",
+      "fix": "lost",
+      "distractors": [
+        "will lose",
+        "losing"
+      ],
+      "type": "tense",
+      "explain": "Supposing (= imagine) + past, would.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "would-have-failed",
+      "text": "But for my sister's help, I would have fail.",
+      "wrong": "fail",
+      "fix": "failed",
+      "distractors": [
+        "failing",
+        "fails"
+      ],
+      "type": "tense",
+      "explain": "would have + past participle.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "hadnt-encouraged",
+      "text": "I wouldn't have studied psychology if my teacher hadn't encourage me.",
+      "wrong": "encourage",
+      "fix": "encouraged",
+      "distractors": [
+        "encouraging",
+        "encourages"
+      ],
+      "type": "tense",
+      "explain": "hadn't + past participle.",
+      "skill": "conditionals",
+      "when": "imagined"
+    }
+  ],
+  "builder": [
+    {
+      "id": "would-have-been-easier",
+      "text": "It would have been easier.",
+      "tip": "would have + past participle.",
+      "skill": "conditionals"
+    },
+    {
+      "id": "if-i-were-rich",
+      "text": "If I were rich, I would travel.",
+      "tip": "Second conditional.",
+      "skill": "conditionals",
+      "alternatives": [
+        "I would travel if I were rich."
+      ]
+    }
+  ],
+  "radio": [
+    {
+      "id": "birth-order",
+      "title": "Does birth order matter?",
+      "text": "For many years, people believed that the first child in a family would be more responsible and the youngest more creative. If that were true, we could predict a lot about people from their position in the family. However, recent large studies have found only very small differences. Researchers say that if earlier studies had included more families, they might have reached the same conclusion."
+    }
+  ]
+}

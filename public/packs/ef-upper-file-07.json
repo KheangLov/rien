@@ -1,0 +1,143 @@
+{
+  "id": "ef-upper-file-07",
+  "title": "English File Upper-Intermediate, File 7: must have, should have; looks, sounds, feels (check against the book)",
+  "book": "english-file-upper-intermediate-4e",
+  "file": 7,
+  "fixIt": [
+    {
+      "id": "must-have-seen",
+      "text": "You must have saw the sign.",
+      "wrong": "saw",
+      "fix": "seen",
+      "distractors": [
+        "see",
+        "seeing"
+      ],
+      "type": "tense",
+      "explain": "must have + past participle: almost sure about the past.",
+      "skill": "past-modals",
+      "when": "past"
+    },
+    {
+      "id": "should-have-called",
+      "text": "She should has called you.",
+      "wrong": "has",
+      "fix": "have",
+      "distractors": [
+        "had",
+        "be"
+      ],
+      "type": "other",
+      "explain": "should have + past participle (never has after a modal).",
+      "skill": "past-modals"
+    },
+    {
+      "id": "cant-have-gone",
+      "text": "They can't have went home already.",
+      "wrong": "went",
+      "fix": "gone",
+      "distractors": [
+        "go",
+        "going"
+      ],
+      "type": "tense",
+      "explain": "can't have + past participle: sure it did not happen.",
+      "skill": "past-modals",
+      "when": "past"
+    },
+    {
+      "id": "might-have-left",
+      "text": "I might have leave my phone in the taxi.",
+      "wrong": "leave",
+      "fix": "left",
+      "distractors": [
+        "leaving",
+        "leaves"
+      ],
+      "type": "tense",
+      "explain": "might have + past participle: maybe in the past.",
+      "skill": "past-modals",
+      "when": "past"
+    },
+    {
+      "id": "should-have-brought",
+      "text": "You didn't need to cook, but you should have bring a drink.",
+      "wrong": "bring",
+      "fix": "brought",
+      "distractors": [
+        "bringing",
+        "brings"
+      ],
+      "type": "tense",
+      "explain": "should have + past participle.",
+      "skill": "past-modals",
+      "when": "past"
+    },
+    {
+      "id": "tastes-delicious",
+      "text": "This soup tastes deliciously.",
+      "wrong": "deliciously",
+      "fix": "delicious",
+      "distractors": [
+        "delicacy",
+        "deliciousness"
+      ],
+      "type": "other",
+      "explain": "After look, taste, sound, feel, smell: an adjective.",
+      "skill": "verbs-of-senses"
+    },
+    {
+      "id": "sounds-like",
+      "text": "It sounds as a great idea.",
+      "wrong": "as",
+      "fix": "like",
+      "distractors": [
+        "to",
+        "so"
+      ],
+      "type": "other",
+      "explain": "sound like + noun; sound as if + clause.",
+      "skill": "verbs-of-senses"
+    },
+    {
+      "id": "feels-soft",
+      "text": "This fabric feels softly.",
+      "wrong": "softly",
+      "fix": "soft",
+      "distractors": [
+        "softness",
+        "soften"
+      ],
+      "type": "other",
+      "explain": "feel + adjective (soft).",
+      "skill": "verbs-of-senses"
+    }
+  ],
+  "builder": [
+    {
+      "id": "must-have-forgotten",
+      "text": "She must have forgotten.",
+      "tip": "must have + past participle.",
+      "skill": "past-modals"
+    },
+    {
+      "id": "should-have-told",
+      "text": "You should have told me.",
+      "tip": "should have: a past mistake.",
+      "skill": "past-modals"
+    },
+    {
+      "id": "looks-like-rain",
+      "text": "It looks like rain.",
+      "tip": "look like + noun.",
+      "skill": "verbs-of-senses"
+    }
+  ],
+  "radio": [
+    {
+      "id": "lost-keys",
+      "title": "The lost keys",
+      "text": "Last night my husband could not find his motorbike keys. He said he must have left them at the office, but I thought he might have dropped them in the market. We looked everywhere. In the end, they were in the fridge: he must have put them there with the milk. It sounds funny now, but at the time he looked really worried. He should have used the key hook by the door."
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "id": "rfi-unit-05",
+  "title": "Ready for IELTS, Unit 5: talking about the future; verbs of prediction (check against the book)",
+  "book": "ready-for-ielts",
+  "file": 5,
+  "fixIt": [
+    {
+      "id": "will-have-developed",
+      "text": "By 2050, scientists will have develop new energy sources.",
+      "wrong": "develop",
+      "fix": "developed",
+      "distractors": [
+        "developing",
+        "develops"
+      ],
+      "type": "tense",
+      "explain": "will have + past participle.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "will-do",
+      "text": "It is likely that robots will doing many jobs.",
+      "wrong": "doing",
+      "fix": "do",
+      "distractors": [
+        "done",
+        "to do"
+      ],
+      "type": "tense",
+      "explain": "will + base form.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "likely-to-rise",
+      "text": "Prices are likely rise next year.",
+      "wrong": "rise",
+      "fix": "to rise",
+      "distractors": [
+        "rising",
+        "rose"
+      ],
+      "type": "other",
+      "explain": "be likely to + verb.",
+      "skill": "future-forms"
+    },
+    {
+      "id": "will-be-working",
+      "text": "In twenty years, most people will be work from home.",
+      "wrong": "work",
+      "fix": "working",
+      "distractors": [
+        "worked",
+        "works"
+      ],
+      "type": "tense",
+      "explain": "will be + -ing.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "bound-to-be",
+      "text": "There is bound be more traffic.",
+      "wrong": "be",
+      "fix": "to be",
+      "distractors": [
+        "being",
+        "been"
+      ],
+      "type": "other",
+      "explain": "be bound to + verb = certain to.",
+      "skill": "future-forms"
+    },
+    {
+      "id": "will-be-flying",
+      "text": "I doubt that cars will be fly by 2040.",
+      "wrong": "fly",
+      "fix": "flying",
+      "distractors": [
+        "flew",
+        "flown"
+      ],
+      "type": "tense",
+      "explain": "will be + -ing.",
+      "skill": "future-forms",
+      "when": "future"
+    }
+  ],
+  "builder": [
+    {
+      "id": "bound-to-change",
+      "text": "Things are bound to change.",
+      "tip": "bound to = certain to.",
+      "skill": "future-forms"
+    },
+    {
+      "id": "likely-to-grow",
+      "text": "Cities are likely to grow.",
+      "tip": "likely to + verb.",
+      "skill": "future-forms"
+    }
+  ],
+  "radio": [
+    {
+      "id": "future-cities",
+      "title": "Cities of the future",
+      "text": "By 2050, about two thirds of the world's people are likely to live in cities. Planners predict that many cities will be greener, with more parks and fewer private cars. Buildings will probably produce some of their own energy, and public transport is bound to become more important. However, experts warn that cities will need much better planning if they are to cope with rising temperatures and heavy rain."
+    }
+  ]
+}

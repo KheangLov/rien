@@ -1,0 +1,143 @@
+{
+  "id": "ef-upper-file-02",
+  "title": "English File Upper-Intermediate, File 2: present perfect simple and continuous; adjectives (check against the book)",
+  "book": "english-file-upper-intermediate-4e",
+  "file": 2,
+  "fixIt": [
+    {
+      "id": "have-known",
+      "text": "I've knowing her since primary school.",
+      "wrong": "knowing",
+      "fix": "known",
+      "distractors": [
+        "know",
+        "knew"
+      ],
+      "type": "tense",
+      "explain": "know is a state verb: present perfect simple, I've known.",
+      "skill": "present-perfect",
+      "when": "past-to-now"
+    },
+    {
+      "id": "been-reading",
+      "text": "I've been read this book for weeks and I still haven't finished it.",
+      "wrong": "read",
+      "fix": "reading",
+      "distractors": [
+        "reads",
+        "readed"
+      ],
+      "type": "tense",
+      "explain": "have been + -ing: an activity still going on.",
+      "skill": "present-perfect-continuous",
+      "when": "past-to-now"
+    },
+    {
+      "id": "for-three-hours",
+      "text": "It's been raining since three hours.",
+      "wrong": "since",
+      "fix": "for",
+      "distractors": [
+        "from",
+        "during"
+      ],
+      "type": "preposition",
+      "explain": "for + a length of time.",
+      "skill": "present-perfect-continuous"
+    },
+    {
+      "id": "been-painting",
+      "text": "We've painted the kitchen all morning.",
+      "wrong": "painted",
+      "fix": "been painting",
+      "distractors": [
+        "painting",
+        "paint"
+      ],
+      "type": "tense",
+      "explain": "all morning = an activity over time: have been painting.",
+      "skill": "present-perfect-continuous",
+      "when": "past-to-now"
+    },
+    {
+      "id": "since-born",
+      "text": "My grandmother has lived in this house for she was born.",
+      "wrong": "for",
+      "fix": "since",
+      "distractors": [
+        "from",
+        "when"
+      ],
+      "type": "preposition",
+      "explain": "since + a moment in the past.",
+      "skill": "present-perfect"
+    },
+    {
+      "id": "for-ten-years",
+      "text": "He's been working as a guide since ten years.",
+      "wrong": "since",
+      "fix": "for",
+      "distractors": [
+        "from",
+        "ago"
+      ],
+      "type": "preposition",
+      "explain": "for + a length of time.",
+      "skill": "present-perfect-continuous"
+    },
+    {
+      "id": "the-poor",
+      "text": "The government should do more for the poors.",
+      "wrong": "poors",
+      "fix": "poor",
+      "distractors": [
+        "poorer",
+        "poorly"
+      ],
+      "type": "other",
+      "explain": "the + adjective for a group of people has no -s: the poor, the rich.",
+      "skill": "adjective-order"
+    },
+    {
+      "id": "the-elderly",
+      "text": "The elderlies in our village need better healthcare.",
+      "wrong": "elderlies",
+      "fix": "elderly",
+      "distractors": [
+        "olds",
+        "elder"
+      ],
+      "type": "other",
+      "explain": "the elderly = old people; no -s.",
+      "skill": "adjective-order"
+    }
+  ],
+  "builder": [
+    {
+      "id": "been-waiting-ages",
+      "text": "I've been waiting for ages.",
+      "tip": "have been + -ing: until now.",
+      "skill": "present-perfect-continuous",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "known-for-years",
+      "text": "We have known each other for years.",
+      "tip": "State verbs: present perfect simple.",
+      "skill": "present-perfect"
+    },
+    {
+      "id": "help-the-poor",
+      "text": "We should help the poor.",
+      "tip": "the + adjective for a group.",
+      "skill": "adjective-order"
+    }
+  ],
+  "radio": [
+    {
+      "id": "market-stall",
+      "title": "Twenty years at the market",
+      "text": "Mrs Chanthy has been selling vegetables at the same market for twenty years. She has known most of her customers since they were children, and some of them now bring their own children. Prices have changed a lot, and she has been thinking about retiring, but she says the market keeps her young. The elderly in her street often sit at her stall and talk for hours. She has never taken a holiday."
+    }
+  ]
+}

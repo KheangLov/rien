@@ -1,0 +1,154 @@
+{
+  "id": "ef-upper-file-01",
+  "title": "English File Upper-Intermediate, File 1: questions, helper verbs, the more ... the better (check against the book)",
+  "book": "english-file-upper-intermediate-4e",
+  "file": 1,
+  "fixIt": [
+    {
+      "id": "do-you-sit",
+      "text": "Who you usually sit next to in class?",
+      "wrong": "you",
+      "fix": "do you",
+      "distractors": [
+        "are you",
+        "does you"
+      ],
+      "type": "word-order",
+      "explain": "Present simple questions need do: Who do you usually sit next to?",
+      "skill": "question-forms"
+    },
+    {
+      "id": "pharmacy-is",
+      "text": "Can you tell me where the nearest pharmacy are?",
+      "wrong": "are",
+      "fix": "is",
+      "distractors": [
+        "be",
+        "were"
+      ],
+      "type": "other",
+      "explain": "One pharmacy: is. Indirect questions keep normal word order.",
+      "skill": "question-forms"
+    },
+    {
+      "id": "did-it-take",
+      "text": "How long did it took to get there?",
+      "wrong": "took",
+      "fix": "take",
+      "distractors": [
+        "taken",
+        "takes"
+      ],
+      "type": "tense",
+      "explain": "After did, use the base form: did it take?",
+      "skill": "question-forms",
+      "when": "past"
+    },
+    {
+      "id": "but-her-brother-has",
+      "text": "She hasn't been to Japan, but her brother does.",
+      "wrong": "does",
+      "fix": "has",
+      "distractors": [
+        "is",
+        "did"
+      ],
+      "type": "other",
+      "explain": "Repeat the helper verb of the first part: hasn't … has.",
+      "skill": "auxiliary-verbs"
+    },
+    {
+      "id": "but-my-sister-can",
+      "text": "I can't swim, but my sister does.",
+      "wrong": "does",
+      "fix": "can",
+      "distractors": [
+        "is",
+        "has"
+      ],
+      "type": "other",
+      "explain": "can't … can: the same helper verb.",
+      "skill": "auxiliary-verbs"
+    },
+    {
+      "id": "the-more",
+      "text": "The more I read, the much I understand.",
+      "wrong": "much",
+      "fix": "more",
+      "distractors": [
+        "most",
+        "many"
+      ],
+      "type": "other",
+      "explain": "the more …, the more …: two comparatives.",
+      "skill": "comparatives"
+    },
+    {
+      "id": "the-better",
+      "text": "The sooner we leave, the best.",
+      "wrong": "best",
+      "fix": "better",
+      "distractors": [
+        "good",
+        "more"
+      ],
+      "type": "other",
+      "explain": "the sooner, the better.",
+      "skill": "comparatives"
+    },
+    {
+      "id": "the-happier",
+      "text": "The older I get, the happiest I am.",
+      "wrong": "happiest",
+      "fix": "happier",
+      "distractors": [
+        "happy",
+        "happily"
+      ],
+      "type": "other",
+      "explain": "the older …, the happier …",
+      "skill": "comparatives"
+    },
+    {
+      "id": "so-do-i-aux",
+      "text": "I've never been to Laos. Neither am I.",
+      "wrong": "am",
+      "fix": "have",
+      "distractors": [
+        "do",
+        "was"
+      ],
+      "type": "other",
+      "explain": "Same helper verb as the first sentence (have): Neither have I.",
+      "skill": "so-neither"
+    }
+  ],
+  "builder": [
+    {
+      "id": "where-the-station-is",
+      "text": "Do you know where the station is?",
+      "tip": "Indirect question: subject before verb.",
+      "skill": "question-forms"
+    },
+    {
+      "id": "the-sooner-better",
+      "text": "The sooner, the better.",
+      "tip": "Two comparatives with the.",
+      "skill": "comparatives"
+    },
+    {
+      "id": "neither-have-i",
+      "text": "I haven't seen it. Neither have I.",
+      "tip": "Neither + helper verb + I.",
+      "skill": "so-neither",
+      "keepFirstCapital": true
+    }
+  ],
+  "radio": [
+    {
+      "id": "first-week",
+      "title": "My first week at work",
+      "text": "Starting a new job is never easy. On my first day, everyone asked me questions: where I had studied, how long I had lived in the city, and whether I could speak Chinese. I can't, but my new manager can, so she offered to teach me a few words. The more people I met, the more relaxed I felt. By Friday I knew most of my colleagues' names, and they knew mine. The sooner you learn names, the better."
+    }
+  ]
+}

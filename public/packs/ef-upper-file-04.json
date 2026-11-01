@@ -1,0 +1,148 @@
+{
+  "id": "ef-upper-file-04",
+  "title": "English File Upper-Intermediate, File 4: future perfect and continuous; conditionals and time clauses (check against the book)",
+  "book": "english-file-upper-intermediate-4e",
+  "file": 4,
+  "fixIt": [
+    {
+      "id": "will-have-finished",
+      "text": "By 2030, I will have finish my degree.",
+      "wrong": "finish",
+      "fix": "finished",
+      "distractors": [
+        "finishing",
+        "finishes"
+      ],
+      "type": "tense",
+      "explain": "Future perfect: will have + past participle.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "will-be-lying",
+      "text": "This time tomorrow I'll be lie on the beach.",
+      "wrong": "lie",
+      "fix": "lying",
+      "distractors": [
+        "lay",
+        "lain"
+      ],
+      "type": "tense",
+      "explain": "Future continuous: will be + -ing.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "will-be-having",
+      "text": "Don't call at eight; we'll be have dinner.",
+      "wrong": "have",
+      "fix": "having",
+      "distractors": [
+        "had",
+        "has"
+      ],
+      "type": "tense",
+      "explain": "In progress at a future time: will be + -ing.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "ice-melts",
+      "text": "If you heat ice, it melted.",
+      "wrong": "melted",
+      "fix": "melts",
+      "distractors": [
+        "will melted",
+        "melting"
+      ],
+      "type": "tense",
+      "explain": "Zero conditional (always true): if + present, present.",
+      "skill": "conditionals",
+      "when": "always"
+    },
+    {
+      "id": "as-soon-as-hear",
+      "text": "I'll tell you as soon as I heard the results.",
+      "wrong": "heard",
+      "fix": "hear",
+      "distractors": [
+        "will hear",
+        "hearing"
+      ],
+      "type": "tense",
+      "explain": "After as soon as, use the present for the future.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "if-you-need",
+      "text": "If you'll need anything, just call me.",
+      "wrong": "you'll",
+      "fix": "you",
+      "distractors": [
+        "your",
+        "you've"
+      ],
+      "type": "tense",
+      "explain": "No will after if: If you need anything …",
+      "skill": "conditionals",
+      "when": "future"
+    },
+    {
+      "id": "will-have-been-living",
+      "text": "By the end of this year, we will have been live here for ten years.",
+      "wrong": "live",
+      "fix": "living",
+      "distractors": [
+        "lived",
+        "lives"
+      ],
+      "type": "tense",
+      "explain": "will have been + -ing: how long, up to a future time.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "provided-finish",
+      "text": "Provided that you finishes your homework, you can go out.",
+      "wrong": "finishes",
+      "fix": "finish",
+      "distractors": [
+        "finished",
+        "finishing"
+      ],
+      "type": "third-person-s",
+      "explain": "you + verb with no -s.",
+      "skill": "conditionals",
+      "when": "future"
+    }
+  ],
+  "builder": [
+    {
+      "id": "will-have-left",
+      "text": "The train will have left by then.",
+      "tip": "Future perfect: done before a future time.",
+      "skill": "future-forms"
+    },
+    {
+      "id": "will-be-working",
+      "text": "I'll be working late tonight.",
+      "tip": "Future continuous: in progress.",
+      "skill": "future-forms",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "as-soon-as-arrive",
+      "text": "Call me as soon as you arrive.",
+      "tip": "as soon as + present.",
+      "skill": "future-forms"
+    }
+  ],
+  "radio": [
+    {
+      "id": "ten-years",
+      "title": "In ten years",
+      "text": "In ten years, I will have finished my studies, and I will probably be working in tourism. If everything goes well, I will have saved enough money to open a small guesthouse in Kampot. My husband says that by then he will have been teaching for fifteen years. As soon as our children are old enough, we will take them travelling. Unless something changes, we will be living by the river."
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "id": "rfi-unit-06",
+  "title": "Ready for IELTS, Unit 6: transitive and intransitive verbs (check against the book)",
+  "book": "ready-for-ielts",
+  "file": 6,
+  "fixIt": [
+    {
+      "id": "rose-sharply",
+      "text": "The number of visitors raised sharply last year.",
+      "wrong": "raised",
+      "fix": "rose",
+      "distractors": [
+        "risen",
+        "arisen"
+      ],
+      "type": "tense",
+      "explain": "rise (no object): numbers rise; raise (with an object): you raise prices.",
+      "skill": "transitive-verbs",
+      "when": "past"
+    },
+    {
+      "id": "raise-prices",
+      "text": "Farmers rise prices when the harvest is poor.",
+      "wrong": "rise",
+      "fix": "raise",
+      "distractors": [
+        "arise",
+        "rose"
+      ],
+      "type": "other",
+      "explain": "raise + object (prices).",
+      "skill": "transitive-verbs"
+    },
+    {
+      "id": "lies-on-ground",
+      "text": "The tree lays on the ground after the storm.",
+      "wrong": "lays",
+      "fix": "lies",
+      "distractors": [
+        "laid",
+        "lain"
+      ],
+      "type": "other",
+      "explain": "lie (no object): it lies; lay + object: lay the table.",
+      "skill": "transitive-verbs"
+    },
+    {
+      "id": "over-the-decade",
+      "text": "Our population has increased the last decade.",
+      "wrong": "the",
+      "fix": "over the",
+      "distractors": [
+        "at the",
+        "on the"
+      ],
+      "type": "preposition",
+      "explain": "increased over the last decade.",
+      "skill": "transitive-verbs"
+    },
+    {
+      "id": "fell-by",
+      "text": "Rice prices fell to 2% last month.",
+      "wrong": "to",
+      "fix": "by",
+      "distractors": [
+        "at",
+        "for"
+      ],
+      "type": "preposition",
+      "explain": "fell by 2% = the change; fell to = the new level.",
+      "skill": "transitive-verbs"
+    },
+    {
+      "id": "seeds-are-spread",
+      "text": "The seeds are spreaded by birds and wind.",
+      "wrong": "spreaded",
+      "fix": "spread",
+      "distractors": [
+        "spreading",
+        "spreads"
+      ],
+      "type": "tense",
+      "explain": "spread is irregular: spread, spread, spread.",
+      "skill": "passive",
+      "when": "always"
+    }
+  ],
+  "builder": [
+    {
+      "id": "prices-rose",
+      "text": "Prices rose last year.",
+      "tip": "rise: no object.",
+      "skill": "transitive-verbs"
+    },
+    {
+      "id": "raised-the-price",
+      "text": "They raised the price.",
+      "tip": "raise + object.",
+      "skill": "transitive-verbs"
+    }
+  ],
+  "radio": [
+    {
+      "id": "seed-bank",
+      "title": "A bank for seeds",
+      "text": "In several countries, scientists keep millions of seeds in special cold rooms called seed banks. If a plant disappears from the wild because of disease or climate change, its seeds can be grown again. The temperature inside is kept very low, so the seeds can survive for many years. Rice, one of the most important crops in Asia, has thousands of varieties, and many of them are stored in this way."
+    }
+  ]
+}

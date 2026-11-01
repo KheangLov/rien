@@ -1,0 +1,107 @@
+{
+  "id": "rfi-unit-09",
+  "title": "Ready for IELTS, Unit 9: modal verbs for evaluating (check against the book)",
+  "book": "ready-for-ielts",
+  "file": 9,
+  "fixIt": [
+    {
+      "id": "could-be",
+      "text": "This could is a solution.",
+      "wrong": "is",
+      "fix": "be",
+      "distractors": [
+        "being",
+        "been"
+      ],
+      "type": "other",
+      "explain": "could + base form: could be.",
+      "skill": "modals"
+    },
+    {
+      "id": "may-seem",
+      "text": "The design may seems simple, but it works.",
+      "wrong": "seems",
+      "fix": "seem",
+      "distractors": [
+        "seeming",
+        "seemed"
+      ],
+      "type": "other",
+      "explain": "may + base form (no -s).",
+      "skill": "modals"
+    },
+    {
+      "id": "cant-be-measured",
+      "text": "Beauty can't measured easily.",
+      "wrong": "measured",
+      "fix": "be measured",
+      "distractors": [
+        "measure",
+        "measuring"
+      ],
+      "type": "other",
+      "explain": "Passive with a modal: can't be + past participle.",
+      "skill": "modals"
+    },
+    {
+      "id": "might-be-argued",
+      "text": "It might be argue that beauty is cultural.",
+      "wrong": "argue",
+      "fix": "argued",
+      "distractors": [
+        "arguing",
+        "argues"
+      ],
+      "type": "other",
+      "explain": "might be + past participle.",
+      "skill": "modals"
+    },
+    {
+      "id": "shouldnt-be-allowed",
+      "text": "Advertisers shouldn't allowed to edit photos so much.",
+      "wrong": "allowed",
+      "fix": "be allowed",
+      "distractors": [
+        "allow",
+        "allowing"
+      ],
+      "type": "other",
+      "explain": "shouldn't be allowed to + verb.",
+      "skill": "modals"
+    },
+    {
+      "id": "must-be",
+      "text": "This must is the most beautiful building in the city.",
+      "wrong": "is",
+      "fix": "be",
+      "distractors": [
+        "been",
+        "being"
+      ],
+      "type": "other",
+      "explain": "must + be.",
+      "skill": "modals-deduction"
+    }
+  ],
+  "builder": [
+    {
+      "id": "could-be-argued",
+      "text": "It could be argued that it helps.",
+      "tip": "Academic: it could be argued that …",
+      "skill": "modals"
+    },
+    {
+      "id": "may-not-work",
+      "text": "This may not work everywhere.",
+      "tip": "may not = perhaps not.",
+      "skill": "modals"
+    }
+  ],
+  "radio": [
+    {
+      "id": "idea-of-beauty",
+      "title": "Ideas of beauty",
+      "text": "What people find beautiful may differ from one culture to another and from one century to the next. It could be argued that some things, such as symmetrical faces or a view of water, are attractive almost everywhere. However, fashion and advertising can also shape our ideas. Some researchers believe that images edited by computer should be labelled, because they might make young people unhappy with how they look."
+    }
+  ]
+}

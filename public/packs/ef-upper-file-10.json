@@ -1,0 +1,140 @@
+{
+  "id": "ef-upper-file-10",
+  "title": "English File Upper-Intermediate, File 10: quantifiers; articles (check against the book)",
+  "book": "english-file-upper-intermediate-4e",
+  "file": 10,
+  "fixIt": [
+    {
+      "id": "both-are",
+      "text": "Both of my parents is teachers.",
+      "wrong": "is",
+      "fix": "are",
+      "distractors": [
+        "was",
+        "be"
+      ],
+      "type": "other",
+      "explain": "Both = two people: are.",
+      "skill": "quantifiers"
+    },
+    {
+      "id": "every-student",
+      "text": "Every students must bring a dictionary.",
+      "wrong": "students",
+      "fix": "student",
+      "distractors": [
+        "student's",
+        "studentes"
+      ],
+      "type": "plural-s",
+      "explain": "every + singular noun.",
+      "skill": "quantifiers"
+    },
+    {
+      "id": "hardly-any",
+      "text": "There's hardly no milk left.",
+      "wrong": "no",
+      "fix": "any",
+      "distractors": [
+        "some",
+        "none"
+      ],
+      "type": "other",
+      "explain": "hardly any = almost none (no double negative).",
+      "skill": "quantifiers"
+    },
+    {
+      "id": "none-of-friends",
+      "text": "None of my friend came to the party.",
+      "wrong": "friend",
+      "fix": "friends",
+      "distractors": [
+        "friend's",
+        "friendly"
+      ],
+      "type": "plural-s",
+      "explain": "none of my + plural noun.",
+      "skill": "quantifiers"
+    },
+    {
+      "id": "the-longest",
+      "text": "The Mekong is longest river in Southeast Asia.",
+      "wrong": "longest",
+      "fix": "the longest",
+      "distractors": [
+        "a longest",
+        "longer"
+      ],
+      "type": "article",
+      "explain": "Superlatives take the: the longest.",
+      "skill": "articles"
+    },
+    {
+      "id": "the-best-friend",
+      "text": "He is an honest man and a best friend I have.",
+      "wrong": "a",
+      "fix": "the",
+      "distractors": [
+        "an",
+        "one"
+      ],
+      "type": "article",
+      "explain": "the best … I have: only one.",
+      "skill": "articles"
+    },
+    {
+      "id": "the-restaurant",
+      "text": "We tried that new place near the river. A restaurant was very busy.",
+      "wrong": "A",
+      "fix": "The",
+      "distractors": [
+        "An",
+        "Any"
+      ],
+      "type": "article",
+      "explain": "The second time you mention something: the.",
+      "skill": "articles"
+    },
+    {
+      "id": "the-rich",
+      "text": "Life is easier for an rich.",
+      "wrong": "an",
+      "fix": "the",
+      "distractors": [
+        "a",
+        "one"
+      ],
+      "type": "article",
+      "explain": "the + adjective for a group: the rich.",
+      "skill": "articles"
+    }
+  ],
+  "builder": [
+    {
+      "id": "neither-of-them",
+      "text": "Neither of them came.",
+      "tip": "neither of + them: not one or the other.",
+      "skill": "quantifiers"
+    },
+    {
+      "id": "the-best-day",
+      "text": "It was the best day ever.",
+      "tip": "Superlatives take the.",
+      "skill": "articles"
+    },
+    {
+      "id": "hardly-any-time",
+      "text": "I have hardly any time.",
+      "tip": "hardly any = almost none.",
+      "skill": "quantifiers",
+      "keepFirstCapital": true
+    }
+  ],
+  "radio": [
+    {
+      "id": "island-weekend",
+      "title": "A weekend on the island",
+      "text": "Last month both of my sisters and I spent a weekend on an island near Kep. There was hardly any electricity, and none of us could use our phones, but nobody minded. We stayed in a small bungalow by the sea. The bungalow had no walls on one side, so we could see the sunset from our beds. Every evening the owner cooked the best crab I have ever eaten."
+    }
+  ]
+}

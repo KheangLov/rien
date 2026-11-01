@@ -1,0 +1,113 @@
+{
+  "id": "rfi-unit-02",
+  "title": "Ready for IELTS, Unit 2: past simple and present perfect; past habits; frequency (check against the book)",
+  "book": "ready-for-ielts",
+  "file": 2,
+  "fixIt": [
+    {
+      "id": "have-changed",
+      "text": "Smartphones changed the way we communicate since 2010.",
+      "wrong": "changed",
+      "fix": "have changed",
+      "distractors": [
+        "had changed",
+        "change"
+      ],
+      "type": "tense",
+      "explain": "since 2010 = until now: present perfect.",
+      "skill": "present-perfect",
+      "when": "past-to-now"
+    },
+    {
+      "id": "would-write",
+      "text": "In the 1990s, people would wrote letters by hand.",
+      "wrong": "wrote",
+      "fix": "write",
+      "distractors": [
+        "writing",
+        "written"
+      ],
+      "type": "tense",
+      "explain": "would + verb for past habits.",
+      "skill": "used-to",
+      "when": "past-habit"
+    },
+    {
+      "id": "used-to-listen",
+      "text": "My grandparents used to listening to the radio every evening.",
+      "wrong": "listening",
+      "fix": "listen",
+      "distractors": [
+        "listened",
+        "listens"
+      ],
+      "type": "tense",
+      "explain": "used to + verb.",
+      "skill": "used-to",
+      "when": "past-habit"
+    },
+    {
+      "id": "hardly-ever",
+      "text": "I hardly never check my email at weekends.",
+      "wrong": "never",
+      "fix": "ever",
+      "distractors": [
+        "always",
+        "sometimes"
+      ],
+      "type": "other",
+      "explain": "hardly ever = almost never (not hardly never).",
+      "skill": "adjectives-adverbs"
+    },
+    {
+      "id": "ever-used",
+      "text": "Have you ever use a typewriter?",
+      "wrong": "use",
+      "fix": "used",
+      "distractors": [
+        "using",
+        "uses"
+      ],
+      "type": "tense",
+      "explain": "Have you ever + past participle.",
+      "skill": "present-perfect",
+      "when": "past-to-now"
+    },
+    {
+      "id": "was-sent",
+      "text": "The first text message was send in 1992.",
+      "wrong": "send",
+      "fix": "sent",
+      "distractors": [
+        "sending",
+        "sends"
+      ],
+      "type": "tense",
+      "explain": "Passive: was + past participle.",
+      "skill": "passive",
+      "when": "past"
+    }
+  ],
+  "builder": [
+    {
+      "id": "hardly-ever-call",
+      "text": "I hardly ever call home.",
+      "tip": "hardly ever = almost never.",
+      "skill": "adjectives-adverbs",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "used-to-write",
+      "text": "People used to write letters.",
+      "tip": "used to: a past habit.",
+      "skill": "used-to"
+    }
+  ],
+  "radio": [
+    {
+      "id": "letters-to-messages",
+      "title": "From letters to messages",
+      "text": "Before mobile phones became common, families who lived far apart would write letters, and an answer could take weeks to arrive. Today a message reaches the other side of the world in a second. This has changed the way people keep in touch, but some researchers argue that we now write more often but say less. Many older people still keep the letters they received when they were young."
+    }
+  ]
+}

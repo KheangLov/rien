@@ -1,0 +1,107 @@
+{
+  "id": "rfi-unit-12",
+  "title": "Ready for IELTS, Unit 12: articles (check against the book)",
+  "book": "ready-for-ielts",
+  "file": 12,
+  "fixIt": [
+    {
+      "id": "around-the-world",
+      "text": "I'd like to travel around a world one day.",
+      "wrong": "a",
+      "fix": "the",
+      "distractors": [
+        "an",
+        "one"
+      ],
+      "type": "article",
+      "explain": "There is only one world: the world.",
+      "skill": "articles"
+    },
+    {
+      "id": "a-hotel",
+      "text": "We stayed in hotel near the river.",
+      "wrong": "hotel",
+      "fix": "a hotel",
+      "distractors": [
+        "a hotels",
+        "hotel a"
+      ],
+      "type": "article",
+      "explain": "One of many hotels, first mention: a hotel.",
+      "skill": "articles"
+    },
+    {
+      "id": "the-mekong",
+      "text": "Mekong is one of the longest rivers in Asia.",
+      "wrong": "Mekong",
+      "fix": "The Mekong",
+      "distractors": [
+        "A Mekong",
+        "Mekongs"
+      ],
+      "type": "article",
+      "explain": "Rivers take the: the Mekong.",
+      "skill": "articles"
+    },
+    {
+      "id": "an-engineer",
+      "text": "He is a engineer.",
+      "wrong": "a",
+      "fix": "an",
+      "distractors": [
+        "any",
+        "every"
+      ],
+      "type": "article",
+      "explain": "an before a vowel sound: an engineer.",
+      "skill": "articles"
+    },
+    {
+      "id": "a-good-guidebook",
+      "text": "Can you recommend the good guidebook?",
+      "wrong": "the",
+      "fix": "a",
+      "distractors": [
+        "an",
+        "one of"
+      ],
+      "type": "article",
+      "explain": "Any good guidebook, not a known one: a.",
+      "skill": "articles"
+    },
+    {
+      "id": "most-tourists",
+      "text": "Most tourist come in the dry season.",
+      "wrong": "tourist",
+      "fix": "tourists",
+      "distractors": [
+        "tourism",
+        "tourist's"
+      ],
+      "type": "plural-s",
+      "explain": "Most + plural noun.",
+      "skill": "plural-s"
+    }
+  ],
+  "builder": [
+    {
+      "id": "the-best-way",
+      "text": "Walking is the best way to see it.",
+      "tip": "Superlatives take the.",
+      "skill": "articles"
+    },
+    {
+      "id": "an-amazing-trip",
+      "text": "It was an amazing trip.",
+      "tip": "an before a vowel sound.",
+      "skill": "articles"
+    }
+  ],
+  "radio": [
+    {
+      "id": "slow-travel",
+      "title": "Slow travel",
+      "text": "Slow travel is the idea of staying longer in one place instead of visiting many places quickly. Slow travellers often rent a room in a village, learn a few words of the language and buy food at the local market. Supporters say that this is better for the environment and for local people, because money stays in the community. It is also usually cheaper than a fast tour."
+    }
+  ]
+}

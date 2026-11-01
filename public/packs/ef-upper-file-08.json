@@ -1,0 +1,144 @@
+{
+  "id": "ef-upper-file-08",
+  "title": "English File Upper-Intermediate, File 8: the passive, have something done; reporting verbs (check against the book)",
+  "book": "english-file-upper-intermediate-4e",
+  "file": 8,
+  "fixIt": [
+    {
+      "id": "being-built",
+      "text": "The bridge is being build at the moment.",
+      "wrong": "build",
+      "fix": "built",
+      "distractors": [
+        "building",
+        "builds"
+      ],
+      "type": "tense",
+      "explain": "Passive in progress: is being + past participle.",
+      "skill": "passive",
+      "when": "now"
+    },
+    {
+      "id": "hair-cut",
+      "text": "I had my hair cutting yesterday.",
+      "wrong": "cutting",
+      "fix": "cut",
+      "distractors": [
+        "cuts",
+        "to cut"
+      ],
+      "type": "tense",
+      "explain": "have something done: have + object + past participle.",
+      "skill": "passive",
+      "when": "past"
+    },
+    {
+      "id": "kitchen-painted",
+      "text": "We're having our kitchen paint next week.",
+      "wrong": "paint",
+      "fix": "painted",
+      "distractors": [
+        "painting",
+        "paints"
+      ],
+      "type": "tense",
+      "explain": "have something done: having our kitchen painted.",
+      "skill": "passive",
+      "when": "future"
+    },
+    {
+      "id": "believed-built",
+      "text": "The temple is believed to built in the twelfth century.",
+      "wrong": "built",
+      "fix": "have been built",
+      "distractors": [
+        "be build",
+        "building"
+      ],
+      "type": "tense",
+      "explain": "is believed to have been + past participle: an earlier passive.",
+      "skill": "passive",
+      "when": "past"
+    },
+    {
+      "id": "suggested-going",
+      "text": "She suggested go to the cinema.",
+      "wrong": "go",
+      "fix": "going",
+      "distractors": [
+        "to go",
+        "went"
+      ],
+      "type": "other",
+      "explain": "suggest + -ing.",
+      "skill": "reported-speech"
+    },
+    {
+      "id": "offered-to-help",
+      "text": "He offered helping me with my bags.",
+      "wrong": "helping",
+      "fix": "to help",
+      "distractors": [
+        "help",
+        "helped"
+      ],
+      "type": "other",
+      "explain": "offer + to + verb.",
+      "skill": "reported-speech"
+    },
+    {
+      "id": "warned-not-to-be",
+      "text": "My boss warned me not being late.",
+      "wrong": "being",
+      "fix": "to be",
+      "distractors": [
+        "be",
+        "been"
+      ],
+      "type": "other",
+      "explain": "warn someone (not) to + verb.",
+      "skill": "reported-speech"
+    },
+    {
+      "id": "accused-of-stealing",
+      "text": "They accused him of steal the money.",
+      "wrong": "steal",
+      "fix": "stealing",
+      "distractors": [
+        "stole",
+        "to steal"
+      ],
+      "type": "other",
+      "explain": "accuse someone of + -ing.",
+      "skill": "reported-speech"
+    }
+  ],
+  "builder": [
+    {
+      "id": "had-car-repaired",
+      "text": "I had my car repaired.",
+      "tip": "have + object + past participle.",
+      "skill": "passive",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "is-said-to-be",
+      "text": "It is said to be haunted.",
+      "tip": "is said to be: what people say.",
+      "skill": "passive"
+    },
+    {
+      "id": "refused-to-pay",
+      "text": "He refused to pay the bill.",
+      "tip": "refuse + to + verb.",
+      "skill": "reported-speech"
+    }
+  ],
+  "radio": [
+    {
+      "id": "old-house",
+      "title": "The old house",
+      "text": "The old house on our street is being repaired at last. It is said to have been built about a hundred years ago by a rich merchant. For years people believed it was haunted, and children refused to go near it. Last month the new owners had the roof replaced and the walls painted. They have promised to open a small café on the ground floor, and they have invited the neighbours to the opening."
+    }
+  ]
+}
