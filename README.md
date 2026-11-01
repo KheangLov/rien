@@ -42,9 +42,13 @@ pnpm open:ios      # open in Xcode; pick a team under Signing & Capabilities
   project). Apple does not allow changing it once the App Store Connect record exists.
 - Moving her data: Settings → Save backup in the web app, then Settings → Restore in the
   native app.
-- Free Apple ID install (no paid program): Debug builds are signed with the Personal Team
-  under `io.github.kheanglov.rien.dev`. `pnpm install:iphone` builds, installs and opens it
-  on the paired iPhone, over Wi-Fi once paired. Free installs stop opening after 7 days;
+- Free Apple ID install (no paid program): `pnpm install:iphone` builds the **Release** app
+  (optimised, no Web Inspector), signs it with the Personal Team under
+  `io.github.kheanglov.rien.dev`, and installs and opens it on the paired iPhone, over Wi-Fi
+  once paired. `scripts/install-iphone.sh --debug` installs the Debug build instead; both share
+  the app ID, so either replaces the other with her data kept. The Release configuration's ID
+  is `io.github.kheanglov.rien$(RIEN_ID_SUFFIX)`: the script sets the suffix to `.dev`, and an
+  App Store/TestFlight build (paid program) leaves it empty. Free installs stop opening after 7 days;
   run it again to renew. Developer Mode must be on (Settings → Privacy & Security).
 - `pnpm renew:iphone` reinstalls only when the install is over 6 days old. To run that
   automatically every 3 hours (optional, your choice):
