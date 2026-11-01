@@ -31,7 +31,7 @@ const config: CapacitorConfig = {
     SplashScreen: {
       launchShowDuration: 3000,
       launchAutoHide: true,
-      launchFadeOutDuration: 200,
+      launchFadeOutDuration: 300,
       showSpinner: false,
     },
     CapacitorSQLite: {
