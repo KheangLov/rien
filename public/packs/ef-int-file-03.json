@@ -1,0 +1,223 @@
+{
+  "id": "ef-int-file-03",
+  "title": "English File Intermediate, File 3: comparatives and superlatives, articles",
+  "book": "english-file-intermediate-4e",
+  "file": 3,
+  "fixIt": [
+    {
+      "id": "cheaper-than",
+      "text": "A tuk-tuk is cheaper that a taxi.",
+      "wrong": "that",
+      "fix": "than",
+      "distractors": [
+        "then",
+        "as"
+      ],
+      "type": "other",
+      "explain": "Comparing two things: cheaper than.",
+      "skill": "comparatives"
+    },
+    {
+      "id": "most-expensive",
+      "text": "This is the more expensive hotel in Siem Reap.",
+      "wrong": "more",
+      "fix": "most",
+      "distractors": [
+        "much",
+        "very"
+      ],
+      "type": "other",
+      "explain": "One out of many: the most expensive.",
+      "skill": "comparatives"
+    },
+    {
+      "id": "as-slow-as",
+      "text": "The train is slow as the bus.",
+      "wrong": "slow",
+      "fix": "as slow",
+      "distractors": [
+        "slower",
+        "so slow"
+      ],
+      "type": "other",
+      "explain": "The same: as slow as.",
+      "skill": "comparatives"
+    },
+    {
+      "id": "worse-than",
+      "text": "Traffic today is worst than yesterday.",
+      "wrong": "worst",
+      "fix": "worse",
+      "distractors": [
+        "bad",
+        "baddest"
+      ],
+      "type": "other",
+      "explain": "bad, worse, the worst. Two things: worse than.",
+      "skill": "comparatives"
+    },
+    {
+      "id": "longest-in-world",
+      "text": "Which is the longest river of the world?",
+      "wrong": "of",
+      "fix": "in",
+      "distractors": [
+        "from",
+        "on"
+      ],
+      "type": "preposition",
+      "explain": "the longest … in the world.",
+      "skill": "comparatives"
+    },
+    {
+      "id": "the-better",
+      "text": "The more you practise, the best you get.",
+      "wrong": "best",
+      "fix": "better",
+      "distractors": [
+        "more",
+        "good"
+      ],
+      "type": "other",
+      "explain": "the more …, the better …: two comparatives.",
+      "skill": "comparatives"
+    },
+    {
+      "id": "a-nurse",
+      "text": "My sister is nurse.",
+      "wrong": "nurse",
+      "fix": "a nurse",
+      "distractors": [
+        "the nurse",
+        "nurses"
+      ],
+      "type": "article",
+      "explain": "Jobs need a or an: She's a nurse.",
+      "skill": "articles"
+    },
+    {
+      "id": "the-salt",
+      "text": "Can you pass me salt, please?",
+      "wrong": "salt",
+      "fix": "the salt",
+      "distractors": [
+        "a salt",
+        "salts"
+      ],
+      "type": "article",
+      "explain": "the: we both know which salt (the one on the table).",
+      "skill": "articles"
+    },
+    {
+      "id": "the-piano",
+      "text": "She plays a piano very well.",
+      "wrong": "a",
+      "fix": "the",
+      "distractors": [
+        "an",
+        "one"
+      ],
+      "type": "article",
+      "explain": "Playing instruments: the piano, the guitar.",
+      "skill": "articles"
+    },
+    {
+      "id": "a-university",
+      "text": "He's an university student.",
+      "wrong": "an",
+      "fix": "a",
+      "distractors": [
+        "any",
+        "every"
+      ],
+      "type": "article",
+      "explain": "university starts with a 'you' sound: a university.",
+      "skill": "articles"
+    },
+    {
+      "id": "good-at",
+      "text": "She is very good in maths.",
+      "wrong": "in",
+      "fix": "at",
+      "distractors": [
+        "on",
+        "for"
+      ],
+      "type": "preposition",
+      "explain": "good at something.",
+      "skill": "prepositions"
+    },
+    {
+      "id": "interested-in",
+      "text": "I'm interested on learning Chinese.",
+      "wrong": "on",
+      "fix": "in",
+      "distractors": [
+        "at",
+        "about"
+      ],
+      "type": "preposition",
+      "explain": "interested in something.",
+      "skill": "prepositions"
+    },
+    {
+      "id": "depends-on",
+      "text": "It depends of the weather.",
+      "wrong": "of",
+      "fix": "on",
+      "distractors": [
+        "from",
+        "with"
+      ],
+      "type": "preposition",
+      "explain": "depend on something.",
+      "skill": "prepositions"
+    },
+    {
+      "id": "afraid-of",
+      "text": "Are you afraid from snakes?",
+      "wrong": "from",
+      "fix": "of",
+      "distractors": [
+        "with",
+        "at"
+      ],
+      "type": "preposition",
+      "explain": "afraid of something.",
+      "skill": "prepositions"
+    }
+  ],
+  "builder": [
+    {
+      "id": "faster-than-bus",
+      "text": "The train is faster than the bus.",
+      "tip": "short adjective + -er + than.",
+      "skill": "comparatives"
+    },
+    {
+      "id": "best-in-town",
+      "text": "It's the best restaurant in town.",
+      "tip": "the best … in.",
+      "skill": "comparatives"
+    },
+    {
+      "id": "good-at-cooking",
+      "text": "She's good at cooking.",
+      "tip": "good at + -ing.",
+      "skill": "prepositions"
+    },
+    {
+      "id": "brother-teacher",
+      "text": "My brother is a teacher.",
+      "tip": "Jobs: a or an.",
+      "skill": "articles"
+    }
+  ],
+  "radio": [
+    {
+      "id": "getting-around",
+      "title": "Getting around Phnom Penh",
+      "text": "Phnom Penh is a busy city, and there are many ways to get around. A tuk-tuk is cheaper than a taxi, but it is slower and hotter in the dry season. Most people prefer motorbikes because they are the fastest way through the traffic. The new city buses are the most comfortable, and they are not as expensive as you might think. Walking is the healthiest way to travel, but it is not always the safest."
+    }
+  ]
+}

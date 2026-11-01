@@ -1,0 +1,202 @@
+{
+  "id": "ef-int-file-08",
+  "title": "English File Intermediate, File 8: gerunds and infinitives, reported speech",
+  "book": "english-file-intermediate-4e",
+  "file": 8,
+  "fixIt": [
+    {
+      "id": "enjoy-working",
+      "text": "I enjoy work with children.",
+      "wrong": "work",
+      "fix": "working",
+      "distractors": [
+        "to work",
+        "works"
+      ],
+      "type": "other",
+      "explain": "enjoy + -ing.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "decided-to-apply",
+      "text": "She decided applying for the job.",
+      "wrong": "applying",
+      "fix": "to apply",
+      "distractors": [
+        "apply",
+        "applied"
+      ],
+      "type": "other",
+      "explain": "decide + to + verb.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "mind-opening",
+      "text": "Would you mind open the window?",
+      "wrong": "open",
+      "fix": "opening",
+      "distractors": [
+        "to open",
+        "opened"
+      ],
+      "type": "other",
+      "explain": "mind + -ing.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "about-changing",
+      "text": "I'm thinking about change jobs.",
+      "wrong": "change",
+      "fix": "changing",
+      "distractors": [
+        "to change",
+        "changed"
+      ],
+      "type": "other",
+      "explain": "After a preposition (about): -ing.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "hope-to-see",
+      "text": "We hope seeing you again soon.",
+      "wrong": "seeing",
+      "fix": "to see",
+      "distractors": [
+        "see",
+        "saw"
+      ],
+      "type": "other",
+      "explain": "hope + to + verb.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "like-to-work",
+      "text": "I'd like working in a bank one day.",
+      "wrong": "working",
+      "fix": "to work",
+      "distractors": [
+        "work",
+        "worked"
+      ],
+      "type": "other",
+      "explain": "would like + to + verb.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "avoids-driving",
+      "text": "She avoids drive in the rain.",
+      "wrong": "drive",
+      "fix": "driving",
+      "distractors": [
+        "to drive",
+        "drove"
+      ],
+      "type": "other",
+      "explain": "avoid + -ing.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "said-was-going",
+      "text": "She said she is going to buy a new dress.",
+      "wrong": "is",
+      "fix": "was",
+      "distractors": [
+        "be",
+        "been"
+      ],
+      "type": "tense",
+      "explain": "Reported speech moves back a tense: is going to becomes was going to.",
+      "skill": "reported-speech",
+      "when": "past"
+    },
+    {
+      "id": "asked-what-wanted",
+      "text": "He asked me what I want.",
+      "wrong": "want",
+      "fix": "wanted",
+      "distractors": [
+        "wants",
+        "wanting"
+      ],
+      "type": "tense",
+      "explain": "Reported questions move back a tense: what I wanted.",
+      "skill": "reported-speech",
+      "when": "past"
+    },
+    {
+      "id": "said-on-sale",
+      "text": "The shop assistant told that the shoes were on sale.",
+      "wrong": "told",
+      "fix": "said",
+      "distractors": [
+        "talked",
+        "spoke"
+      ],
+      "type": "other",
+      "explain": "say (that) …; tell + a person (told me that …).",
+      "skill": "reported-speech"
+    },
+    {
+      "id": "asked-if-could",
+      "text": "She asked if I can help her carry the bags.",
+      "wrong": "can",
+      "fix": "could",
+      "distractors": [
+        "am",
+        "do"
+      ],
+      "type": "tense",
+      "explain": "In reported speech, can becomes could.",
+      "skill": "reported-speech",
+      "when": "past"
+    },
+    {
+      "id": "would-bring",
+      "text": "He told me he will bring the receipt.",
+      "wrong": "will",
+      "fix": "would",
+      "distractors": [
+        "is",
+        "do"
+      ],
+      "type": "tense",
+      "explain": "In reported speech, will becomes would.",
+      "skill": "reported-speech",
+      "when": "past"
+    }
+  ],
+  "builder": [
+    {
+      "id": "enjoy-people",
+      "text": "I enjoy working with people.",
+      "tip": "enjoy + -ing.",
+      "skill": "verb-patterns",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "decided-leave",
+      "text": "She decided to leave early.",
+      "tip": "decide + to + verb.",
+      "skill": "verb-patterns"
+    },
+    {
+      "id": "asked-what-wanted-tiles",
+      "text": "He asked me what I wanted.",
+      "tip": "Reported question: no question order.",
+      "skill": "reported-speech"
+    },
+    {
+      "id": "said-tired",
+      "text": "She said she was tired.",
+      "tip": "Reported speech: the tense moves back.",
+      "skill": "reported-speech"
+    }
+  ],
+  "radio": [
+    {
+      "id": "new-job",
+      "title": "A new job",
+      "text": "Last month my friend Chenda decided to leave her job at the bank. She was tired of working late every evening, and she wanted to do something creative. She enjoys cooking, so she applied to work in a famous restaurant. At the interview, the chef asked her why she wanted to change careers. She told him that she had always dreamed of cooking for other people. He said that he would call her the next day, and he did."
+    }
+  ]
+}

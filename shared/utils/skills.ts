@@ -60,6 +60,7 @@ export const GRAMMAR_SKILLS = {
   'so-neither': 'So do I / Neither do I',
   'question-tags': 'Question tags (…, isn\'t it?)',
   'ed-ing-adjectives': 'bored or boring',
+  'adjectives-adverbs': 'good or well (adjectives and adverbs)',
   'articles': 'a, an, the',
   'prepositions': 'Prepositions',
   'third-person-s': 'He, she, it + -s',

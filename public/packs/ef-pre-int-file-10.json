@@ -176,8 +176,8 @@
       "wrong": "under",
       "fix": "through",
       "distractors": [
-        "across",
-        "over"
+        "between",
+        "at"
       ],
       "type": "preposition",
       "explain": "through = in one side and out of the other.",
@@ -189,8 +189,8 @@
       "wrong": "out",
       "fix": "out of",
       "distractors": [
-        "off",
-        "from"
+        "for",
+        "by"
       ],
       "type": "preposition",
       "explain": "get out of a car, taxi or tuk-tuk; get off a bus, bike or moto.",
@@ -228,8 +228,8 @@
       "wrong": "after",
       "fix": "up",
       "distractors": [
-        "into",
-        "on"
+        "in",
+        "off"
       ],
       "type": "other",
       "explain": "look up a word = find it in a dictionary. look after = take care of.",

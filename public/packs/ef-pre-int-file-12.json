@@ -162,7 +162,7 @@
       "wrong": "can",
       "fix": "could",
       "distractors": [
-        "will",
+        "can to",
         "am"
       ],
       "type": "tense",
@@ -177,7 +177,7 @@
       "fix": "was",
       "distractors": [
         "be",
-        "were"
+        "been"
       ],
       "type": "tense",
       "explain": "Reported questions move back a tense too: if I was hungry.",
@@ -191,7 +191,7 @@
       "fix": "would",
       "distractors": [
         "are",
-        "shall"
+        "do"
       ],
       "type": "tense",
       "explain": "In reported speech, will becomes would.",

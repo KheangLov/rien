@@ -1,0 +1,201 @@
+{
+  "id": "ef-int-file-04",
+  "title": "English File Intermediate, File 4: have to, must, should; can, could, be able to",
+  "book": "english-file-intermediate-4e",
+  "file": 4,
+  "fixIt": [
+    {
+      "id": "dont-have-to",
+      "text": "You haven't to wear a uniform at our office.",
+      "wrong": "haven't",
+      "fix": "don't have",
+      "distractors": [
+        "mustn't",
+        "shouldn't"
+      ],
+      "type": "other",
+      "explain": "No need: don't have to + verb.",
+      "skill": "modals"
+    },
+    {
+      "id": "has-to-work",
+      "text": "She has to working on Saturdays.",
+      "wrong": "working",
+      "fix": "work",
+      "distractors": [
+        "works",
+        "worked"
+      ],
+      "type": "other",
+      "explain": "has to + verb.",
+      "skill": "modals"
+    },
+    {
+      "id": "should-call",
+      "text": "You should calling your mother more often.",
+      "wrong": "calling",
+      "fix": "call",
+      "distractors": [
+        "to call",
+        "called"
+      ],
+      "type": "other",
+      "explain": "should + verb, with no to.",
+      "skill": "modals"
+    },
+    {
+      "id": "do-we-have-to",
+      "text": "Do we must bring our passports?",
+      "wrong": "must",
+      "fix": "have to",
+      "distractors": [
+        "should",
+        "can"
+      ],
+      "type": "other",
+      "explain": "Questions about rules: Do we have to …?",
+      "skill": "modals"
+    },
+    {
+      "id": "mustnt-use",
+      "text": "Students mustn't using phones during the exam.",
+      "wrong": "using",
+      "fix": "use",
+      "distractors": [
+        "to use",
+        "used"
+      ],
+      "type": "other",
+      "explain": "mustn't + verb: it is not allowed.",
+      "skill": "modals"
+    },
+    {
+      "id": "be-able-to",
+      "text": "I will can drive next year.",
+      "wrong": "can",
+      "fix": "be able to",
+      "distractors": [
+        "could",
+        "am able"
+      ],
+      "type": "other",
+      "explain": "can has no future form: will be able to.",
+      "skill": "modals"
+    },
+    {
+      "id": "could-swim",
+      "text": "When I was a child, I can swim very well.",
+      "wrong": "can",
+      "fix": "could",
+      "distractors": [
+        "am able",
+        "will"
+      ],
+      "type": "other",
+      "explain": "Ability in the past: could.",
+      "skill": "modals"
+    },
+    {
+      "id": "been-able-to",
+      "text": "She hasn't could find a job yet.",
+      "wrong": "could",
+      "fix": "been able to",
+      "distractors": [
+        "can",
+        "be able"
+      ],
+      "type": "other",
+      "explain": "can has no perfect form: hasn't been able to.",
+      "skill": "modals"
+    },
+    {
+      "id": "able-to-finish",
+      "text": "Were you able finish the report?",
+      "wrong": "finish",
+      "fix": "to finish",
+      "distractors": [
+        "finishing",
+        "finished"
+      ],
+      "type": "other",
+      "explain": "be able to + verb.",
+      "skill": "modals"
+    },
+    {
+      "id": "boring-lesson",
+      "text": "The lesson was so bored that I fell asleep.",
+      "wrong": "bored",
+      "fix": "boring",
+      "distractors": [
+        "bore",
+        "bores"
+      ],
+      "type": "other",
+      "explain": "The lesson was boring; I was bored.",
+      "skill": "ed-ing-adjectives"
+    },
+    {
+      "id": "interested-history",
+      "text": "I'm very interesting in history.",
+      "wrong": "interesting",
+      "fix": "interested",
+      "distractors": [
+        "interest",
+        "interests"
+      ],
+      "type": "other",
+      "explain": "How you feel: -ed (interested).",
+      "skill": "ed-ing-adjectives"
+    },
+    {
+      "id": "excited-trip",
+      "text": "We were really exciting about the trip to Japan.",
+      "wrong": "exciting",
+      "fix": "excited",
+      "distractors": [
+        "excite",
+        "excites"
+      ],
+      "type": "other",
+      "explain": "How you feel: -ed (excited); the trip is exciting.",
+      "skill": "ed-ing-adjectives"
+    }
+  ],
+  "builder": [
+    {
+      "id": "dont-have-to-come",
+      "text": "You don't have to come.",
+      "tip": "don't have to = it's not necessary.",
+      "skill": "modals"
+    },
+    {
+      "id": "should-see-doctor",
+      "text": "You should see a doctor.",
+      "tip": "should + verb: advice.",
+      "skill": "modals"
+    },
+    {
+      "id": "couldnt-swim",
+      "text": "I couldn't swim when I was young.",
+      "tip": "could: ability in the past.",
+      "skill": "modals",
+      "alternatives": [
+        "When I was young I couldn't swim."
+      ],
+      "keepFirstCapital": true
+    },
+    {
+      "id": "bored-at-party",
+      "text": "She was bored at the party.",
+      "tip": "-ed: how she felt.",
+      "skill": "ed-ing-adjectives"
+    }
+  ],
+  "radio": [
+    {
+      "id": "phone-rules",
+      "title": "Phones at work",
+      "text": "At my office, there are a few rules about phones. We don't have to turn them off, but we must put them on silent during meetings. You shouldn't answer personal calls at your desk, because it disturbs other people. Last week a new colleague couldn't find the meeting room, so she called me. I was able to help her, but my manager was annoyed because my phone rang in the middle of his presentation. It was really embarrassing."
+    }
+  ]
+}

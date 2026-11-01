@@ -1,0 +1,199 @@
+{
+  "id": "ef-int-file-05",
+  "title": "English File Intermediate, File 5: past tenses; past and present habits",
+  "book": "english-file-intermediate-4e",
+  "file": 5,
+  "fixIt": [
+    {
+      "id": "was-playing",
+      "text": "While I was play football, I hurt my knee.",
+      "wrong": "play",
+      "fix": "playing",
+      "distractors": [
+        "played",
+        "plays"
+      ],
+      "type": "tense",
+      "explain": "was + -ing: what was happening when something else happened.",
+      "skill": "past-continuous",
+      "when": "past-continuous"
+    },
+    {
+      "id": "match-had-started",
+      "text": "The match had already start when we arrived.",
+      "wrong": "start",
+      "fix": "started",
+      "distractors": [
+        "starting",
+        "starts"
+      ],
+      "type": "tense",
+      "explain": "had + past participle: before we arrived.",
+      "skill": "past-perfect",
+      "when": "earlier-past"
+    },
+    {
+      "id": "when-she-fell",
+      "text": "She was running when she fall.",
+      "wrong": "fall",
+      "fix": "fell",
+      "distractors": [
+        "falls",
+        "has fallen"
+      ],
+      "type": "tense",
+      "explain": "The short action that interrupts: past simple.",
+      "skill": "past-simple",
+      "when": "past"
+    },
+    {
+      "id": "didnt-win",
+      "text": "They didn't won the game.",
+      "wrong": "won",
+      "fix": "win",
+      "distractors": [
+        "wins",
+        "winning"
+      ],
+      "type": "tense",
+      "explain": "After didn't, use the base form.",
+      "skill": "past-simple",
+      "when": "past"
+    },
+    {
+      "id": "were-watching",
+      "text": "We watched the final when the power went off.",
+      "wrong": "watched",
+      "fix": "were watching",
+      "distractors": [
+        "had watch",
+        "watch"
+      ],
+      "type": "tense",
+      "explain": "The longer action in progress: past continuous.",
+      "skill": "past-continuous",
+      "when": "past-continuous"
+    },
+    {
+      "id": "never-played",
+      "text": "He was nervous because he had never play in a final before.",
+      "wrong": "play",
+      "fix": "played",
+      "distractors": [
+        "playing",
+        "plays"
+      ],
+      "type": "tense",
+      "explain": "had never + past participle.",
+      "skill": "past-perfect",
+      "when": "earlier-past"
+    },
+    {
+      "id": "used-to-live-village",
+      "text": "I would live in a small village when I was young.",
+      "wrong": "would",
+      "fix": "used to",
+      "distractors": [
+        "was",
+        "will"
+      ],
+      "type": "tense",
+      "explain": "would is only for past actions, not states like live: used to live.",
+      "skill": "used-to",
+      "when": "past-habit"
+    },
+    {
+      "id": "would-play",
+      "text": "When we were children, we would playing by the river.",
+      "wrong": "playing",
+      "fix": "play",
+      "distractors": [
+        "played",
+        "to play"
+      ],
+      "type": "tense",
+      "explain": "would + verb for repeated past actions.",
+      "skill": "used-to",
+      "when": "past-habit"
+    },
+    {
+      "id": "usually-gets",
+      "text": "My husband usually get up before me.",
+      "wrong": "get",
+      "fix": "gets",
+      "distractors": [
+        "getting",
+        "got"
+      ],
+      "type": "third-person-s",
+      "explain": "Present habits: present simple, he gets.",
+      "skill": "present-simple",
+      "when": "always"
+    },
+    {
+      "id": "used-to-getting",
+      "text": "I'm used to get up early now.",
+      "wrong": "get",
+      "fix": "getting",
+      "distractors": [
+        "got",
+        "gets"
+      ],
+      "type": "tense",
+      "explain": "be used to + -ing = it's normal for me now.",
+      "skill": "used-to",
+      "when": "now"
+    },
+    {
+      "id": "used-to-meet",
+      "text": "My parents used to met at the market every Sunday.",
+      "wrong": "met",
+      "fix": "meet",
+      "distractors": [
+        "meeting",
+        "meets"
+      ],
+      "type": "tense",
+      "explain": "used to + verb.",
+      "skill": "used-to",
+      "when": "past-habit"
+    }
+  ],
+  "builder": [
+    {
+      "id": "watching-when",
+      "text": "We were watching TV when it happened.",
+      "tip": "past continuous + when + past simple.",
+      "skill": "past-continuous",
+      "alternatives": [
+        "When it happened we were watching TV."
+      ]
+    },
+    {
+      "id": "used-to-badminton",
+      "text": "I used to play badminton.",
+      "tip": "used to: a past habit.",
+      "skill": "used-to",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "game-had-started",
+      "text": "The game had already started.",
+      "tip": "had + past participle: earlier.",
+      "skill": "past-perfect"
+    },
+    {
+      "id": "goes-swimming",
+      "text": "She usually goes swimming on Sundays.",
+      "tip": "Habits: present simple.",
+      "skill": "present-simple"
+    }
+  ],
+  "radio": [
+    {
+      "id": "the-final",
+      "title": "The final",
+      "text": "Last Saturday my husband and I went to watch the football final at the national stadium. When we arrived, the game had already started, and the home team was losing one to nil. It was raining, and everybody was shouting. In the second half our best player scored twice, and we won two to one. When we were younger, we used to go to every match, but now we usually watch on TV. That night reminded us how much we had missed it."
+    }
+  ]
+}

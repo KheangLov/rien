@@ -1,0 +1,201 @@
+{
+  "id": "ef-int-file-07",
+  "title": "English File Intermediate, File 7: first and second conditionals, future time clauses",
+  "book": "english-file-intermediate-4e",
+  "file": 7,
+  "fixIt": [
+    {
+      "id": "will-pass",
+      "text": "If you study hard, you pass the exam.",
+      "wrong": "pass",
+      "fix": "will pass",
+      "distractors": [
+        "passed",
+        "would pass"
+      ],
+      "type": "tense",
+      "explain": "First conditional: if + present, will + verb.",
+      "skill": "conditionals",
+      "when": "future"
+    },
+    {
+      "id": "when-arrive",
+      "text": "I'll call you when I arrived.",
+      "wrong": "arrived",
+      "fix": "arrive",
+      "distractors": [
+        "will arrive",
+        "arriving"
+      ],
+      "type": "tense",
+      "explain": "After when, as soon as, until: present for the future.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "until-gets",
+      "text": "We won't start until everybody get here.",
+      "wrong": "get",
+      "fix": "gets",
+      "distractors": [
+        "getting",
+        "got"
+      ],
+      "type": "third-person-s",
+      "explain": "until + present simple (everybody gets).",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "as-soon-as",
+      "text": "As soon as she finish her exams, she'll go on holiday.",
+      "wrong": "finish",
+      "fix": "finishes",
+      "distractors": [
+        "finished",
+        "finishing"
+      ],
+      "type": "third-person-s",
+      "explain": "as soon as + present simple, with -s for she.",
+      "skill": "future-forms",
+      "when": "future"
+    },
+    {
+      "id": "unless-rains",
+      "text": "Unless it rain, we'll eat outside.",
+      "wrong": "rain",
+      "fix": "rains",
+      "distractors": [
+        "rained",
+        "raining"
+      ],
+      "type": "third-person-s",
+      "explain": "unless = if not; + present simple.",
+      "skill": "conditionals",
+      "when": "future"
+    },
+    {
+      "id": "would-invite",
+      "text": "If I had a bigger house, I will invite my whole family.",
+      "wrong": "will",
+      "fix": "would",
+      "distractors": [
+        "shall",
+        "can"
+      ],
+      "type": "tense",
+      "explain": "Imagined: if + past, would + verb.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "would-have-garden",
+      "text": "If we lived in the countryside, we would had a garden.",
+      "wrong": "had",
+      "fix": "have",
+      "distractors": [
+        "having",
+        "has"
+      ],
+      "type": "tense",
+      "explain": "would + base form: would have.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "if-lost-job",
+      "text": "What would you do if you lose your job?",
+      "wrong": "lose",
+      "fix": "lost",
+      "distractors": [
+        "will lose",
+        "losing"
+      ],
+      "type": "tense",
+      "explain": "With would, the if part is in the past: if you lost.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "if-visited",
+      "text": "My parents would be happy if we visit them more often.",
+      "wrong": "visit",
+      "fix": "visited",
+      "distractors": [
+        "will visit",
+        "visits"
+      ],
+      "type": "tense",
+      "explain": "With would, the if part is in the past.",
+      "skill": "conditionals",
+      "when": "imagined"
+    },
+    {
+      "id": "will-stay",
+      "text": "If it rains tomorrow, we would stay at home.",
+      "wrong": "would",
+      "fix": "will",
+      "distractors": [
+        "are",
+        "did"
+      ],
+      "type": "tense",
+      "explain": "A real possibility: if + present, will.",
+      "skill": "conditionals",
+      "when": "future"
+    },
+    {
+      "id": "if-dont-practise",
+      "text": "You won't pass your driving test when you don't practise.",
+      "wrong": "when",
+      "fix": "if",
+      "distractors": [
+        "until",
+        "as soon as"
+      ],
+      "type": "other",
+      "explain": "if = maybe it will happen; when = it will happen.",
+      "skill": "conditionals"
+    }
+  ],
+  "builder": [
+    {
+      "id": "if-rains-stay",
+      "text": "If it rains, we'll stay home.",
+      "tip": "if + present, will + verb.",
+      "skill": "conditionals",
+      "alternatives": [
+        "We'll stay home if it rains."
+      ]
+    },
+    {
+      "id": "call-when-arrive",
+      "text": "I'll call you when I arrive.",
+      "tip": "when + present for the future.",
+      "skill": "future-forms",
+      "keepFirstCapital": true
+    },
+    {
+      "id": "if-garden",
+      "text": "If I had a garden, I'd grow vegetables.",
+      "tip": "if + past, would + verb.",
+      "skill": "conditionals",
+      "alternatives": [
+        "I'd grow vegetables if I had a garden."
+      ]
+    },
+    {
+      "id": "where-would-live",
+      "text": "Where would you live if you could?",
+      "tip": "Imagined: would + verb.",
+      "skill": "conditionals"
+    }
+  ],
+  "radio": [
+    {
+      "id": "moving-out",
+      "title": "Moving out",
+      "text": "My younger brother wants to move out of our parents' house when he finishes university. If he finds a job in Phnom Penh, he will rent a small flat near his office. My mother says that if he lived alone, he would eat noodles every day. She is probably right. If I were him, I would stay at home for another year and save money. But he says he won't change his mind unless the rent is too high."
+    }
+  ]
+}
