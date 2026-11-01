@@ -45,37 +45,37 @@ function select(id: string) {
 
     <FishTank :skills="tank.skills" :awards="tank.awards" :selected="selected" @select="select" />
 
-    <SqCard v-if="chosen" variant="outlined">
-      <SqCardText class="rien-stack rien-card-body">
-        <div class="rien-fish-card">
+    <p class="rien-muted">
+      Each study fish grows when you play its game. Leave a game for three weeks and its fish dies; one round brings it back. Awards add new fish. Tap a fish to see it.
+    </p>
+
+    <IosSheet :open="Boolean(chosen)" :title="chosen?.title" @close="selected = null">
+      <template v-if="chosen">
+        <div class="rien-fish-stage">
           <FishSprite
             :species="chosen.species"
             :stage="chosen.kind === 'skill' ? chosen.stage : 'adult'"
             :health="chosen.kind === 'skill' ? chosen.health : 'happy'"
-            :width="96"
+            :width="180"
           />
-          <div>
-            <strong class="rien-cue">{{ chosen.title }}</strong>
-            <p class="rien-muted">
-              {{ chosen.species.name }}<template v-if="chosen.kind === 'skill'"> · {{ STAGE_NAMES[chosen.stage] }} · {{ HEALTH_NAMES[chosen.health] }}</template>
-            </p>
-          </div>
         </div>
+        <p class="rien-muted">
+          {{ chosen.species.name }}<template v-if="chosen.kind === 'skill'"> · {{ STAGE_NAMES[chosen.stage] }} · {{ HEALTH_NAMES[chosen.health] }}</template>
+        </p>
         <p v-if="chosen.kind === 'skill'">
           Grows with {{ gameTitle(chosen.game) }}: {{ chosen.rounds }} {{ chosen.rounds === 1 ? 'round' : 'rounds' }} so far. {{ care(chosen) }}
         </p>
         <p v-else>Award: {{ chosen.goal }}.</p>
-      </SqCardText>
-      <SqCardActions v-if="chosen.kind === 'skill'">
-        <SqBtn :to="`/games/${chosen.game}`" color="primary">
-          {{ chosen.stage === 'egg' ? 'Hatch it' : chosen.health === 'dead' ? 'Bring it back' : 'Feed it' }}: {{ gameTitle(chosen.game) }}
-        </SqBtn>
-      </SqCardActions>
-    </SqCard>
-
-    <p v-else class="rien-muted">
-      Each study fish grows when you play its game. Leave a game for three weeks and its fish dies; one round brings it back. Awards add new fish. Tap a fish to see it.
-    </p>
+        <IosGroup v-if="chosen.kind === 'skill'">
+          <IosRow
+            :label="`${chosen.stage === 'egg' ? 'Hatch it' : chosen.health === 'dead' ? 'Bring it back' : 'Feed it'}: ${gameTitle(chosen.game)}`"
+            :icon="ACTIVITIES[chosen.game as GameId].icon"
+            tint="primary"
+            :to="`/games/${chosen.game}`"
+          />
+        </IosGroup>
+      </template>
+    </IosSheet>
 
     <h2 class="rien-section-title">Study fish</h2>
     <Squircle class="rien-list" :radius="22"><ul class="rien-list-items">

@@ -47,8 +47,11 @@ async function pickPicture(event: Event) {
   }
 }
 
-function toggle(id: string) {
-  open.value = open.value === id ? null : id
+// The word shown in the sheet (kept fresh as reviews or pictures change).
+const openCard = computed(() => cards.value.find(c => c.id === open.value))
+
+function show(id: string) {
+  open.value = id
   haptic('tap')
 }
 
@@ -72,22 +75,15 @@ async function remove(card: CardRow) {
     <SqTextField v-model="search" label="Search words" clearable />
     <input ref="pictureInput" type="file" accept="image/*" hidden @change="pickPicture">
 
-    <Squircle class="rien-segments" :radius="14" role="tablist" aria-label="Filter words">
-      <Squircle
-        v-for="option in (['all', 'due', 'tricky'] as const)"
-        :key="option"
-        tag="button"
-        :radius="11"
-        type="button"
-        role="tab"
-        class="rien-segment"
-        :class="{ 'is-active': filter === option }"
-        :aria-selected="filter === option"
-        @click="filter = option"
-      >
-        {{ option === 'all' ? 'All' : option === 'due' ? 'Due' : 'Tricky' }} {{ counts[option] }}
-      </Squircle>
-    </Squircle>
+    <IosSegmented
+      v-model="filter"
+      label="Filter words"
+      :options="[
+        { value: 'all', label: `All ${counts.all}` },
+        { value: 'due', label: `Due ${counts.due}` },
+        { value: 'tricky', label: `Tricky ${counts.tricky}` },
+      ]"
+    />
 
     <SqEmptyState
       v-if="counts.all === 0"
@@ -103,12 +99,10 @@ async function remove(card: CardRow) {
 
     <Squircle v-else class="rien-list" :radius="22"><ul class="rien-list-items">
       <li v-for="card in shown" :key="card.id">
-        <button
-          type="button"
-          class="rien-list-row"
-          :aria-expanded="open === card.id"
-          @click="toggle(card.id)"
-        >
+        <button type="button" class="rien-list-row" @click="show(card.id)">
+          <Squircle v-if="card.image" :radius="10" :surface="false" class="rien-word-thumb">
+            <img :src="card.image" alt="">
+          </Squircle>
           <span class="rien-list-text">
             <span class="rien-list-title">{{ card.answer }}</span>
             <span class="rien-list-sub">{{ card.meaning || card.khmer || card.example }}</span>
@@ -116,29 +110,35 @@ async function remove(card: CardRow) {
           <span class="rien-list-end">
             <SqChip v-if="isTricky(card)" size="small" color="warning" text="Tricky" />
             <span class="rien-due-label">{{ nextReviewLabel(card.due, now) }}</span>
+            <RienIcon name="next" :size="16" weight="bold" class="ios-chevron" />
           </span>
         </button>
-        <div v-if="open === card.id" class="rien-list-static rien-word-detail rien-rise">
-          <Squircle v-if="card.image" :radius="18" :surface="false">
-            <img :src="card.image" alt="" class="rien-word-image">
-          </Squircle>
-          <p v-if="card.example" class="rien-example">{{ card.example }}</p>
-          <p v-if="card.khmer" class="rien-khmer">{{ card.khmer }}</p>
-          <p class="rien-muted">
-            File {{ card.file }} · reviewed {{ card.fsrs.reps }} {{ card.fsrs.reps === 1 ? 'time' : 'times' }}
-            · forgotten {{ card.fsrs.lapses }} {{ card.fsrs.lapses === 1 ? 'time' : 'times' }}
-          </p>
-          <p v-if="isTricky(card)" class="rien-muted">
-            Tip: say it aloud in your own sentence, or link it to a picture in your head.
-          </p>
-          <div class="rien-row">
-            <SqBtn v-if="canSpeak" variant="tonal" @click="speak(card.answer)">Hear it</SqBtn>
-            <SqBtn variant="tonal" @click="choosePicture(card.id)">{{ card.image ? 'Change picture' : 'Add picture' }}</SqBtn>
-            <SqBtn v-if="card.image" variant="text" @click="db.setCardImage(card.id, undefined)">Remove picture</SqBtn>
-            <SqBtn variant="text" color="error" @click="remove(card)">Delete</SqBtn>
-          </div>
-        </div>
       </li>
     </ul></Squircle>
+
+    <IosSheet :open="Boolean(openCard)" :title="openCard?.answer" @close="open = null">
+      <template v-if="openCard">
+        <Squircle v-if="openCard.image" :radius="20" :surface="false">
+          <img :src="openCard.image" alt="" class="rien-word-image">
+        </Squircle>
+        <p v-if="openCard.meaning" class="rien-cue">{{ openCard.meaning }}</p>
+        <p v-if="openCard.example" class="rien-example">{{ openCard.example }}</p>
+        <p v-if="openCard.khmer" class="rien-khmer rien-cue">{{ openCard.khmer }}</p>
+        <p class="rien-muted">
+          File {{ openCard.file }} · {{ nextReviewLabel(openCard.due, now) }} · reviewed {{ openCard.fsrs.reps }}
+          {{ openCard.fsrs.reps === 1 ? 'time' : 'times' }} · forgotten {{ openCard.fsrs.lapses }}
+          {{ openCard.fsrs.lapses === 1 ? 'time' : 'times' }}
+        </p>
+        <p v-if="isTricky(openCard)" class="rien-muted">
+          Tip: say it aloud in your own sentence, or link it to a picture in your head.
+        </p>
+        <IosGroup>
+          <IosRow v-if="canSpeak" label="Hear it" icon="volume" tint="primary" @click="speak(openCard.answer)" />
+          <IosRow :label="openCard.image ? 'Change picture' : 'Add a picture'" icon="camera" tint="primary" @click="choosePicture(openCard.id)" />
+          <IosRow v-if="openCard.image" label="Remove picture" icon="image" tint="primary" @click="db.setCardImage(openCard.id, undefined)" />
+          <IosRow label="Delete word" icon="close" tint="danger" @click="remove(openCard)" />
+        </IosGroup>
+      </template>
+    </IosSheet>
   </div>
 </template>

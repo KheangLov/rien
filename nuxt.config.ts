@@ -16,7 +16,8 @@ export default defineNuxtConfig({
   plugins: e2e ? ['~~/e2e/runner.client.ts'] : [],
 
   app: {
-    pageTransition: { name: 'page', mode: 'out-in' },
+    // Overridden per navigation by middleware/transition.global.ts.
+    pageTransition: { name: 'fade', mode: 'out-in' },
     head: {
       htmlAttrs: { lang: 'en' },
       title: 'Rien',
@@ -52,6 +53,8 @@ export default defineNuxtConfig({
       },
     },
     squircle: { mode: 'auto' },
+    // The system font (SF Pro on Apple devices), as native apps use.
+    appearance: { font: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, 'Segoe UI', Roboto, 'Khmer Sangam MN', 'Noto Sans Khmer', sans-serif" },
     // The app must work offline, so no Iconify API and no web fonts.
     icons: { api: false },
     locale: { code: 'en' },

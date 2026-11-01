@@ -32,6 +32,9 @@ export default defineNuxtPlugin(() => {
   systemDark.addEventListener('change', () => void sync())
   reduce.addEventListener('change', () => void sync())
 
+  // iPhone: tapping the status bar scrolls back to the top, as in native apps.
+  window.addEventListener('statusTap', () => window.scrollTo({ top: 0, behavior: 'smooth' }))
+
   if (Capacitor.isNativePlatform()) {
     void import('@capacitor/keyboard').then(({ Keyboard }) =>
       Keyboard.setAccessoryBarVisible({ isVisible: false })).catch(() => {})

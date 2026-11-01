@@ -32,9 +32,11 @@ async function waitFor<T>(find: () => T | undefined | null | false, what: string
   throw new Error(`timed out waiting for ${what}`)
 }
 
-// Case-insensitive: some headings are styled in capitals, which innerText reports.
+// Case-insensitive (some headings are styled in capitals, which innerText
+// reports), and over the whole page: sheets and pinned bars live outside <main>.
+const pageText = () => document.body.innerText.replace(/\s+/g, ' ')
 const waitText = (needle: string, timeout?: number) =>
-  waitFor(() => text().toLowerCase().includes(needle.toLowerCase()), `"${needle}"`, timeout)
+  waitFor(() => pageText().toLowerCase().includes(needle.toLowerCase()), `"${needle}"`, timeout)
 
 // Fails if any text field is under 16px (iOS zooms the page when one gets focus)
 // or the page is wider than the screen, then asks for a screenshot.
@@ -337,7 +339,15 @@ async function run() {
     await click('All 3')
     await click('borrow')
     await waitText('reviewed 0 times')
+    // The sheet must actually be on screen, not just in the page.
+    // (after its slide-up has finished).
+    await waitFor(() => {
+      const r = document.querySelector('.ios-sheet')!.getBoundingClientRect()
+      return r.top < window.innerHeight && r.bottom <= window.innerHeight + 1
+    }, 'sheet fully on screen', 3000)
     await screen('words-detail')
+    await click('Close')
+    await waitFor(() => !document.querySelector('.ios-sheet'), 'sheet closed')
   })
 
   await step('Today’s session: plays every planned activity in order', async () => {
@@ -379,8 +389,10 @@ async function run() {
     // Teammate needs four activities in a day; the simulator session skips Say It, so only check Sprout.
     if (!text().includes('Sprout')) throw new Error('Sprout should be unlocked')
     ;(document.querySelector('.rien-fish') as HTMLElement).click()
-    await waitFor(() => button('Feed it') || button('Bring it back') || text().includes('Award:'), 'fish card')
+    await waitFor(() => button('Feed it') || button('Bring it back') || pageText().includes('Award:'), 'fish sheet')
     await screen('tank')
+    await click('Close')
+    await waitFor(() => !document.querySelector('.ios-sheet'), 'sheet closed')
     return `${swimming} swimming, ${eggs} eggs`
   })
 

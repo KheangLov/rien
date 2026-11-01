@@ -2,7 +2,7 @@
    safe-area insets need viewport-fit=cover, use 100dvh not 100vh,
    keep touch targets at least 44px. */
 :root {
-  --rien-font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Khmer Sangam MN', 'Noto Sans Khmer', sans-serif;
+  --rien-font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, 'Segoe UI', Roboto, 'Khmer Sangam MN', 'Noto Sans Khmer', sans-serif;
   --rien-tap: 44px;
 }
 
@@ -453,7 +453,6 @@ body {
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
-  overscroll-behavior-y: none;
 }
 
 input,
@@ -572,13 +571,10 @@ input {
   cursor: pointer;
 }
 
-.rien-list li + li .rien-list-row,
-.rien-list li + li > .rien-list-static {
-  border-top: 1px solid var(--sq-border, #e4e4e7);
-}
+/* Dividers start after the icon, as in iOS (see .rien-list-items > li + li::before). */
 
 .rien-list-row:active {
-  background: color-mix(in srgb, var(--sq-on-surface, #18181b) 6%, transparent);
+  background: rgb(120 120 128 / 16%);
 }
 
 .rien-list-icon {
@@ -842,31 +838,6 @@ html.rien-motion .page-leave-active {
   border-radius: 50%;
   color: var(--sq-on-primary, #fff);
   background: var(--sq-primary, #0f766e);
-}
-
-.rien-segments {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2px;
-  padding: 3px;
-  --sq-bg: color-mix(in srgb, var(--sq-on-surface, #18181b) 8%, transparent);
-}
-
-.rien-segment {
-  min-height: 36px;
-  border: 0;
-  border-radius: 10px;
-  font: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--sq-on-surface, #18181b);
-  background: transparent;
-  cursor: pointer;
-}
-
-.rien-segment.is-active {
-  --sq-bg: var(--sq-surface, #fff);
-  --sq-shadow: 0 1px 3px rgb(0 0 0 / 12%);
 }
 
 .rien-due-label {
@@ -1332,7 +1303,6 @@ html.rien-motion .rien-shake {
 
 html.rien-motion .sq-btn,
 html.rien-motion .rien-token,
-html.rien-motion .rien-list-row,
 html.rien-motion .rien-award,
 html.rien-motion .rien-hero-btn {
   transition: transform 160ms ease;
@@ -1340,7 +1310,6 @@ html.rien-motion .rien-hero-btn {
 
 html.rien-motion .sq-btn:active,
 html.rien-motion .rien-token:active,
-html.rien-motion .rien-list-row:active,
 html.rien-motion .rien-award:active,
 html.rien-motion .rien-hero-btn:active {
   transform: scale(0.96);
@@ -1656,4 +1625,433 @@ html.rien-motion .rien-fish-svg:not(.is-dead) .rien-fish-pectoral {
 .rien-credits {
   font-size: 12px;
   text-align: center;
+}
+
+/* ---------------------------------------------------------------------------
+   Native iOS look
+   ------------------------------------------------------------------------ */
+:root {
+  --ios-separator: rgb(60 60 67 / 18%);
+  --ios-tertiary: rgb(60 60 67 / 30%);
+  --ios-secondary: rgb(60 60 67 / 60%);
+  --ios-fill: rgb(118 118 128 / 12%);
+}
+
+html.rien-dark {
+  --ios-separator: rgb(84 84 88 / 55%);
+  --ios-tertiary: rgb(235 235 245 / 30%);
+  --ios-secondary: rgb(235 235 245 / 60%);
+  --ios-fill: rgb(118 118 128 / 24%);
+}
+
+body,
+.sq-app,
+.sq-root {
+  font-family: var(--rien-font);
+  letter-spacing: -0.01em;
+}
+
+/* iOS text scale: body 17, subhead 15, footnote 13. */
+.rien-list-title {
+  font-size: 17px;
+  font-weight: 400;
+}
+
+.rien-list-sub {
+  font-size: 15px;
+  color: var(--ios-secondary);
+}
+
+.rien-section-title {
+  margin: 10px 16px -10px;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--ios-secondary);
+}
+
+.ios-group {
+  display: grid;
+  gap: 16px;
+}
+
+.ios-group-footer {
+  margin: -8px 16px 0;
+  font-size: 13px;
+  color: var(--ios-secondary);
+}
+
+.rien-list-row {
+  min-height: 52px;
+  padding: 11px 16px;
+}
+
+.rien-list-items > li {
+  position: relative;
+}
+
+.rien-list-items > li + li::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 0;
+  height: 1px;
+  transform: scaleY(0.5);
+  transform-origin: top;
+  background: var(--ios-separator);
+  z-index: 1;
+}
+
+.rien-list-items > li:has(.rien-list-icon) + li:has(.rien-list-icon)::before {
+  left: 66px;
+}
+
+.rien-list-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+}
+
+.ios-chevron,
+.rien-list-end > .rien-icon:last-child {
+  color: var(--ios-tertiary);
+}
+
+.ios-chevron-updown {
+  transform: rotate(90deg);
+}
+
+.ios-row-value {
+  font-size: 17px;
+  color: var(--ios-secondary);
+  white-space: nowrap;
+  max-width: 55vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rien-list-row.is-primary .rien-list-title {
+  color: var(--sq-primary, #0f766e);
+}
+
+.rien-list-row.is-danger .rien-list-title {
+  color: #ff3b30;
+}
+
+/* Picker rows: the native <select> covers the row and opens the iOS wheel. */
+.ios-picker .rien-list-row {
+  position: relative;
+}
+
+.ios-picker-select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  font-size: 16px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Switch */
+.ios-switch {
+  position: relative;
+  flex: none;
+  width: 51px;
+  height: 31px;
+  min-height: 31px;
+  margin: 0;
+  border-radius: 31px;
+  background: var(--ios-fill);
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: background 220ms ease;
+}
+
+.ios-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 3px 8px rgb(0 0 0 / 15%), 0 1px 1px rgb(0 0 0 / 16%);
+  transition: transform 260ms cubic-bezier(0.34, 1.4, 0.5, 1);
+}
+
+.ios-switch:checked {
+  background: #34c759;
+}
+
+.ios-switch:checked::after {
+  transform: translateX(20px);
+}
+
+/* Segmented control */
+.ios-segmented {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  padding: 2px;
+  --sq-bg: var(--ios-fill);
+  --sq-bw: 0px;
+  --sq-bd: transparent;
+}
+
+.ios-segmented .ios-segmented-thumb {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: calc(2px + var(--i) * (100% - 4px) / var(--n));
+  width: calc((100% - 4px) / var(--n));
+  --sq-bg: #ffffff;
+  --sq-bw: 0px;
+  --sq-shadow: 0 3px 8px rgb(0 0 0 / 12%), 0 3px 1px rgb(0 0 0 / 4%);
+  --sq-shadow-filter: drop-shadow(0 2px 4px rgb(0 0 0 / 12%));
+}
+
+html.rien-dark .ios-segmented .ios-segmented-thumb {
+  --sq-bg: #636366;
+}
+
+html.rien-motion .ios-segmented .ios-segmented-thumb {
+  transition: left 340ms cubic-bezier(0.34, 1.3, 0.5, 1);
+}
+
+.ios-segment {
+  position: relative;
+  z-index: 1;
+  min-height: 32px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sq-on-surface, #18181b);
+  cursor: pointer;
+}
+
+.ios-segment.is-active {
+  font-weight: 600;
+}
+
+/* Glass must not paint borders on the segmented control. */
+html.rien-glass .ios-segmented {
+  --sq-bg: var(--ios-fill);
+  --sq-bd: transparent;
+  --sq-bw: 0px;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
+/* Bottom sheet */
+.ios-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgb(0 0 0 / 35%);
+}
+
+/* Two classes: Squirkle's .sq-surface (loaded later) would otherwise make it relative. */
+.ios-sheet.sq-surface {
+  position: fixed;
+  z-index: 81;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  max-height: 86dvh;
+  max-width: 600px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  padding: 0 0 calc(env(safe-area-inset-bottom) + 8px);
+  overflow: hidden;
+  --sq-bg: var(--sq-surface, #fff);
+  transition: transform 380ms cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+
+.ios-sheet-grab {
+  display: grid;
+  place-items: center;
+  height: 22px;
+  touch-action: none;
+  cursor: grab;
+}
+
+.ios-sheet-handle {
+  width: 38px;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--ios-tertiary);
+}
+
+.ios-sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 16px 8px 20px;
+}
+
+.ios-sheet-head h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.ios-sheet-close {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ios-tertiary);
+  cursor: pointer;
+}
+
+.ios-sheet-body {
+  display: grid;
+  gap: 14px;
+  padding: 4px 20px 12px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ios-sheet-body p {
+  margin: 0;
+}
+
+.ios-backdrop-enter-active,
+.ios-backdrop-leave-active {
+  transition: opacity 260ms ease;
+}
+
+.ios-backdrop-enter-from,
+.ios-backdrop-leave-to {
+  opacity: 0;
+}
+
+.ios-sheet-enter-from,
+.ios-sheet-leave-to {
+  transform: translateY(110%);
+}
+
+.ios-sheet-leave-active {
+  transition: transform 260ms cubic-bezier(0.4, 0, 1, 1);
+}
+
+html:not(.rien-motion) .ios-sheet,
+html:not(.rien-motion) .ios-sheet-leave-active {
+  transition: none;
+}
+
+/* Collapsing title: a compact bar fades in once the large title scrolls away. */
+.ios-navbar {
+  position: fixed;
+  z-index: 45;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  padding: env(safe-area-inset-top) 16px 0;
+  height: calc(env(safe-area-inset-top) + 44px);
+  box-sizing: border-box;
+  background: color-mix(in srgb, var(--sq-background, #f7f7f5) 78%, transparent);
+  -webkit-backdrop-filter: saturate(1.8) blur(20px);
+  backdrop-filter: saturate(1.8) blur(20px);
+  border-bottom: 0.5px solid var(--ios-separator);
+}
+
+.ios-navbar h2 {
+  grid-column: 2;
+  margin: 0 0 11px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.ios-navbar-enter-active,
+.ios-navbar-leave-active {
+  transition: opacity 180ms ease;
+}
+
+.ios-navbar-enter-from,
+.ios-navbar-leave-to {
+  opacity: 0;
+}
+
+/* Screen transitions, chosen per navigation (middleware/transition.global.ts). */
+.push-enter-active,
+.pop-enter-active,
+.modal-enter-active {
+  transition: transform 340ms cubic-bezier(0.2, 0.9, 0.2, 1), opacity 240ms ease;
+}
+
+.push-leave-active,
+.pop-leave-active,
+.modal-leave-active,
+.dismiss-leave-active,
+.fade-leave-active {
+  transition: transform 200ms ease, opacity 160ms ease;
+}
+
+.dismiss-enter-active,
+.fade-enter-active {
+  transition: opacity 200ms ease;
+}
+
+.push-enter-from { transform: translateX(30%); opacity: 0; }
+.push-leave-to { transform: translateX(-12%); opacity: 0; }
+.pop-enter-from { transform: translateX(-12%); opacity: 0; }
+.pop-leave-to { transform: translateX(30%); opacity: 0; }
+.modal-enter-from { transform: translateY(14%); opacity: 0; }
+.modal-leave-to { opacity: 0; }
+.dismiss-leave-to { transform: translateY(14%); opacity: 0; }
+.dismiss-enter-from,
+.fade-enter-from,
+.fade-leave-to { opacity: 0; }
+
+.ios-control-row {
+  padding: 10px 16px;
+}
+
+.rien-word-thumb {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+}
+
+.rien-word-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.rien-due-label {
+  color: var(--ios-secondary);
+  font-size: 15px;
+}
+
+.rien-fish-stage {
+  display: grid;
+  place-items: center;
+  min-height: 150px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #7dd3fc, #0e7490);
+}
+
+/* Sheets and bars teleported to <body> sit outside .rien-shell; their SVG
+   squircle fallback (iPhone) reaches past the edge too, so clip at the root. */
+html,
+body {
+  overflow-x: clip;
 }

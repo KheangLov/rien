@@ -5,11 +5,11 @@ const db = useDb()
 const { $pwa } = useNuxtApp()
 const native = isNativeApp()
 
-const bookItems = BOOKS.map(value => ({ title: BOOK_LABELS[value], value }))
+const bookItems = BOOKS.map(value => ({ title: BOOK_LABELS[value].replace('English File ', ''), value }))
 const fileItems = FILE_NUMBERS.map(value => ({ title: `File ${value}`, value }))
 const weeklyGoalItems = [3, 4, 5, 6, 7].map(value => ({ title: `${value} days a week`, value }))
 const roundSizeItems = [10, 15, 20, 30].map(value => ({ title: `${value} words`, value }))
-const newPerDayItems = [5, 10, 15, 20].map(value => ({ title: `${value} new words a day`, value }))
+const newPerDayItems = [5, 10, 15, 20].map(value => ({ title: `${value}`, value }))
 const reminderTimes = Array.from({ length: 34 }, (_, i) => {
   const hour = 6 + Math.floor(i / 2)
   const minute = (i % 2) * 30
@@ -89,161 +89,90 @@ async function importBackup(event: Event) {
   <div class="rien-page">
     <PageHeader title="Settings" />
 
-    <SqCard v-if="settings" title="Class">
-      <SqCardText class="rien-stack">
-        <SqSelect
-          :model-value="settings.book"
-          :items="bookItems"
-          label="Current book"
-          @update:model-value="update({ book: $event })"
-        />
-        <SqSelect
-          :model-value="settings.file"
-          :items="fileItems"
-          label="Current File"
-          @update:model-value="update({ file: $event })"
-        />
-        <SqSelect
-          :model-value="settings.weeklyGoal"
-          :items="weeklyGoalItems"
-          label="Weekly goal"
-          @update:model-value="update({ weeklyGoal: $event })"
-        />
-        <SqSelect
-          :model-value="settings.dailyGoal"
-          :items="roundSizeItems"
-          label="Words per Word Recall round"
-          @update:model-value="update({ dailyGoal: $event })"
-        />
-        <SqSelect
-          :model-value="settings.newPerDay"
-          :items="newPerDayItems"
-          label="New words"
-          hint="Reviews are never limited. Fewer new words keeps daily reviews short."
-          persistent-hint
-          @update:model-value="update({ newPerDay: $event })"
-        />
-        <SqSwitch
-          :model-value="settings.khmerHints"
-          label="Show Khmer hints in Word Recall"
-          color="primary"
-          @update:model-value="update({ khmerHints: $event })"
-        />
-      </SqCardText>
-    </SqCard>
+    <template v-if="settings">
+      <IosGroup header="Class" footer="ACE Level 6 is most likely Files 9 to 12. Ask the teacher which File the class is on.">
+        <IosPicker label="Book" icon="words" :model-value="settings.book" :options="bookItems" @update:model-value="update({ book: $event })" />
+        <IosPicker label="File" icon="word-recall" :model-value="settings.file" :options="fileItems" @update:model-value="update({ file: $event })" />
+      </IosGroup>
 
-    <SqCard v-if="settings" title="Look & feel">
-      <SqCardText class="rien-stack">
-        <div class="rien-stack rien-gap-sm">
-          <p class="rien-muted">Appearance</p>
-          <Squircle class="rien-segments" :radius="14" role="radiogroup" aria-label="Appearance">
-            <Squircle
-              v-for="option in (['system', 'light', 'dark'] as const)"
-              :key="option"
-              tag="button"
-              :radius="11"
-              type="button"
-              role="radio"
-              class="rien-segment"
-              :class="{ 'is-active': settings.appearance === option }"
-              :aria-checked="settings.appearance === option"
-              @click="update({ appearance: option })"
-            >
-              {{ option === 'system' ? 'Automatic' : option === 'light' ? 'Light' : 'Dark' }}
-            </Squircle>
-          </Squircle>
-        </div>
-        <SqSwitch
-          :model-value="settings.liquidGlass"
-          label="Liquid Glass"
-          color="primary"
-          @update:model-value="update({ liquidGlass: $event })"
-        />
-        <SqSwitch
-          :model-value="settings.motion"
-          label="Animation and motion"
-          color="primary"
-          @update:model-value="update({ motion: $event })"
-        />
-        <p class="rien-muted">Motion also stays off when Reduce Motion is on in the iPhone's settings.</p>
-      </SqCardText>
-    </SqCard>
+      <IosGroup header="Daily practice" footer="Reviews are never limited. Fewer new words a day keeps reviews short.">
+        <IosPicker label="Weekly goal" icon="goal" :model-value="settings.weeklyGoal" :options="weeklyGoalItems" @update:model-value="update({ weeklyGoal: $event })" />
+        <IosPicker label="Words per round" icon="calendar" :model-value="settings.dailyGoal" :options="roundSizeItems" @update:model-value="update({ dailyGoal: $event })" />
+        <IosPicker label="New words a day" icon="plus" :model-value="settings.newPerDay" :options="newPerDayItems" @update:model-value="update({ newPerDay: $event })" />
+        <IosRow label="Khmer hints" icon="translate" @click="update({ khmerHints: !settings.khmerHints })">
+          <template #end>
+            <IosSwitch :model-value="settings.khmerHints" label="Khmer hints" @update:model-value="update({ khmerHints: $event })" />
+          </template>
+        </IosRow>
+      </IosGroup>
 
-    <SqCard v-if="native && settings" title="Say It">
-      <SqCardText class="rien-stack">
-        <SqSwitch
-          :model-value="settings.speechOnline"
-          label="Use Apple’s online speech recognition"
-          color="primary"
-          @update:model-value="update({ speechOnline: $event })"
-        />
-        <p class="rien-muted">
-          Usually hears endings more accurately when you are online. Your recordings are then
-          processed by Apple. Off keeps everything on this phone and works offline.
-        </p>
-      </SqCardText>
-    </SqCard>
+      <IosGroup header="Look & feel" footer="Motion also stays off when Reduce Motion is on in the iPhone's settings.">
+        <li class="ios-control-row">
+          <IosSegmented
+            :model-value="settings.appearance"
+            :options="[{ value: 'system', label: 'Automatic' }, { value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }]"
+            label="Appearance"
+            @update:model-value="update({ appearance: $event })"
+          />
+        </li>
+        <IosRow label="Liquid Glass" icon="sparkles" @click="update({ liquidGlass: !settings.liquidGlass })">
+          <template #end>
+            <IosSwitch :model-value="settings.liquidGlass" label="Liquid Glass" @update:model-value="update({ liquidGlass: $event })" />
+          </template>
+        </IosRow>
+        <IosRow label="Animation and motion" icon="play" @click="update({ motion: !settings.motion })">
+          <template #end>
+            <IosSwitch :model-value="settings.motion" label="Animation and motion" @update:model-value="update({ motion: $event })" />
+          </template>
+        </IosRow>
+      </IosGroup>
 
-    <SqCard v-if="native && settings" title="Daily reminder">
-      <SqCardText class="rien-stack">
-        <SqSwitch
-          :model-value="settings.reminder.enabled"
-          label="Remind me to study every day"
-          color="primary"
-          @update:model-value="updateReminder({ enabled: $event })"
-        />
-        <SqSelect
+      <IosGroup v-if="native" header="Say It" footer="Online recognition usually hears endings better; your recordings are then processed by Apple. Off keeps everything on this phone.">
+        <IosRow label="Online speech recognition" icon="say-it" @click="update({ speechOnline: !settings.speechOnline })">
+          <template #end>
+            <IosSwitch :model-value="settings.speechOnline" label="Online speech recognition" @update:model-value="update({ speechOnline: $event })" />
+          </template>
+        </IosRow>
+      </IosGroup>
+
+      <IosGroup v-if="native" header="Daily reminder">
+        <IosRow label="Remind me every day" icon="bell" @click="updateReminder({ enabled: !settings.reminder.enabled })">
+          <template #end>
+            <IosSwitch :model-value="settings.reminder.enabled" label="Daily reminder" @update:model-value="updateReminder({ enabled: $event })" />
+          </template>
+        </IosRow>
+        <IosPicker
           v-if="settings.reminder.enabled"
-          :model-value="settings.reminder.hour * 60 + settings.reminder.minute"
-          :items="reminderTimes"
           label="Time"
+          icon="calendar"
+          :model-value="settings.reminder.hour * 60 + settings.reminder.minute"
+          :options="reminderTimes"
           @update:model-value="updateReminder({ hour: Math.floor($event / 60), minute: $event % 60 })"
         />
-      </SqCardText>
-    </SqCard>
+      </IosGroup>
+    </template>
 
-    <SqCard title="Backup" subtitle="Your words live only on this phone">
-      <SqCardText v-if="native">
-        Save a backup to Files every week or two. Moving from the Home Screen web app?
-        Save a backup there first, then tap Restore here and choose that file.
-      </SqCardText>
-      <SqCardText v-else>
-        Clearing Safari's website data deletes them. Save a backup to Files every week or two.
-      </SqCardText>
-      <SqCardActions>
-        <SqBtn color="primary" @click="exportBackup">Save backup</SqBtn>
-        <SqBtn variant="tonal" @click="fileInput?.click()">Restore</SqBtn>
-        <input
-          ref="fileInput"
-          type="file"
-          accept="application/json,.json"
-          hidden
-          @change="importBackup"
-        >
-      </SqCardActions>
-    </SqCard>
+    <IosGroup
+      header="Backup"
+      :footer="native
+        ? 'Your words live only on this phone. Save a backup to Files every week or two. Moving from the web app? Save a backup there, then Restore here.'
+        : 'Your words live only on this device; clearing Safari website data deletes them. Save a backup every week or two.'"
+    >
+      <IosRow label="Save backup" icon="download" tint="primary" @click="exportBackup" />
+      <IosRow label="Restore from a backup" icon="upload" tint="primary" @click="fileInput?.click()" />
+    </IosGroup>
+    <input ref="fileInput" type="file" accept="application/json,.json" hidden @change="importBackup">
 
-    <SqAlert v-if="message" :type="message.type" variant="tonal" :text="message.text" />
+    <SqAlert v-if="message" :type="message.type" variant="tonal" :text="message.text" class="rien-pop" />
 
-    <SqCard v-if="!native" title="This phone" variant="outlined">
-      <SqCardText>
-        <div class="rien-row">
-          <SqChip :color="online ? 'success' : 'warning'" :text="online ? 'Online' : 'Offline'" />
-          <SqChip
-            :color="standalone ? 'success' : 'info'"
-            :text="standalone ? 'Opened from Home Screen' : 'Opened in browser'"
-          />
-          <SqChip
-            :color="$pwa?.offlineReady ? 'success' : 'info'"
-            :text="$pwa?.offlineReady ? 'Ready offline' : 'Preparing offline copy'"
-          />
-        </div>
-      </SqCardText>
-      <SqCardActions>
-        <SqBtn v-if="$pwa?.showInstallPrompt" color="primary" @click="$pwa.install()">Install</SqBtn>
-        <SqBtn to="/speech-test" variant="tonal">Speech test</SqBtn>
-      </SqCardActions>
-    </SqCard>
+    <IosGroup v-if="!native" header="This device">
+      <IosRow label="Connection" icon="phone" :value="online ? 'Online' : 'Offline'" />
+      <IosRow label="Opened from" icon="today" :value="standalone ? 'Home Screen' : 'Browser'" />
+      <IosRow label="Offline copy" icon="download" :value="$pwa?.offlineReady ? 'Ready' : 'Preparing'" />
+      <IosRow v-if="$pwa?.showInstallPrompt" label="Install Rien" icon="plus" tint="primary" @click="$pwa.install()" />
+      <IosRow label="Speech test" icon="say-it" to="/speech-test" />
+    </IosGroup>
+
     <p class="rien-muted rien-credits">
       Icons: Solar by 480 Design, CC BY 4.0. Fish drawn for Rien.
     </p>

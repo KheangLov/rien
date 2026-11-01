@@ -30,6 +30,14 @@ const ICONS = {
   'say-it': 'microphone-2',
   'file-boss': 'cup-star',
   'couple-talk': 'chat-round-dots',
+  'bell': 'bell-bing',
+  'moon': 'moon',
+  'download': 'download-minimalistic',
+  'upload': 'upload-minimalistic',
+  'phone': 'smartphone',
+  'translate': 'translation',
+  'calendar': 'calendar',
+  'goal': 'cup-first',
 } as const
 
 export type IconName = keyof typeof ICONS

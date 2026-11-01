@@ -66,3 +66,12 @@ An all-day event with `start: '2026-10-31'` and no `end` also renders on 1 Novem
 
 Not a Squirkle bug, but worth a docs note: `SqApp` is a named-area grid, so page content must be
 inside `SqMain`, or it lands in the narrow `start` column and shrinks to its content.
+
+## 9. `.sq-surface { position: relative }` overrides app positioning
+
+Squirkle's stylesheet loads after the app's, so `.sq-surface { position: relative }` beats an app rule
+of equal specificity such as `.my-sheet { position: fixed }`. Any squircle surface that needs `fixed`
+or `absolute` (a bottom sheet, a sliding tab lens) silently falls back into the page flow.
+
+- Rien: two-class selectors (`.ios-sheet.sq-surface`, `.rien-tabbar .rien-tab-lens`).
+- Suggested fix: `:where(.sq-surface) { position: relative }` (zero specificity), or document it.
