@@ -46,10 +46,14 @@ a,
 
 /* iOS zooms the page in when a text field under 16px gets focus, and stays
    zoomed. Squirkle's fields use --sq-text-md (14px), so lift them to 16px. */
-/* Two classes so this wins over Squirkle's .sq-field__input input, whatever the load order. */
+/* Two classes so this wins over Squirkle's .sq-field__input input, whatever the load order.
+   Sheets are teleported to <body>, outside the shell, so they are listed too. */
 .rien-shell.rien-shell input,
 .rien-shell.rien-shell textarea,
-.rien-shell.rien-shell select {
+.rien-shell.rien-shell select,
+.ios-sheet.ios-sheet input,
+.ios-sheet.ios-sheet textarea,
+.ios-sheet.ios-sheet select {
   font-size: max(16px, 1em);
 }
 
