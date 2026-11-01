@@ -26,32 +26,47 @@ onMounted(async () => {
   academicWords.value = ielts.academicWords.map(w => w.word)
 })
 
-// Drafts stay on this phone, one per question, so she can come back to one.
-const draftKey = (id: string) => `rien-ielts-writing-${id}`
-function choose(prompt: IeltsWriting) {
+// Drafts are saved in the database (one per question, and in backups) a
+// moment after she stops typing. Drafts from before were kept in the
+// browser's storage; they move over the first time she opens the question.
+const db = useDb()
+const legacyKey = (id: string) => `rien-ielts-writing-${id}`
+let saveTimer: ReturnType<typeof setTimeout> | undefined
+async function choose(prompt: IeltsWriting) {
   chosen.value = prompt
   feedback.value = null
   shared.value = ''
-  try {
-    text.value = localStorage.getItem(draftKey(prompt.id)) ?? ''
+  let draft = (await db.writing(prompt.id))?.text
+  if (draft === undefined) {
+    try {
+      draft = localStorage.getItem(legacyKey(prompt.id)) ?? undefined
+      if (draft) {
+        await db.saveWriting({ promptId: prompt.id, text: draft, updatedAt: new Date() })
+        localStorage.removeItem(legacyKey(prompt.id))
+      }
+    }
+    catch {}
   }
-  catch {
-    text.value = ''
-  }
+  text.value = draft ?? ''
   timer20.reset()
   timer40.reset()
   timer.value.start()
 }
-watch(text, (value) => {
+function saveNow() {
+  clearTimeout(saveTimer)
+  const prompt = chosen.value
+  if (prompt) void db.saveWriting({ promptId: prompt.id, text: text.value, updatedAt: new Date() }).catch(() => {})
+}
+watch(text, () => {
   if (!chosen.value) return
-  try {
-    localStorage.setItem(draftKey(chosen.value.id), value)
-  }
-  catch {}
+  clearTimeout(saveTimer)
+  saveTimer = setTimeout(saveNow, 900)
 })
+onBeforeUnmount(saveNow)
 
 function check() {
   if (!chosen.value) return
+  saveNow()
   timer.value.pause()
   feedback.value = writingFeedback(text.value, chosen.value.task, academicWords.value)
   void recorder.record('ielts-writing')
@@ -113,7 +128,7 @@ const series = computed(() => chosen.value?.chart?.series.map(s => ({ name: s.na
         <span :class="{ 'is-ok': words >= minimum }">{{ words }} / {{ minimum }} words</span>
       </div>
       <SqTextarea v-model="text" label="Your answer" :rows="14" auto-grow hide-details class="rien-ielts-essay" />
-      <p class="rien-muted">Leave an empty line between paragraphs. Your draft is kept on this phone.</p>
+      <p class="rien-muted">Leave an empty line between paragraphs. Your draft is saved as you write, and in your backups.</p>
 
       <SqCard v-if="feedback" title="Checklist" variant="tonal">
         <SqCardText>
@@ -138,7 +153,7 @@ const series = computed(() => chosen.value?.chart?.series.map(s => ({ name: s.na
       </SqCard>
 
       <ActionBar>
-        <SqBtn variant="tonal" size="large" @click="chosen = null">Other questions</SqBtn>
+        <SqBtn variant="tonal" size="large" @click="saveNow(); chosen = null">Other questions</SqBtn>
         <SqBtn color="primary" size="large" :disabled="words < 20" @click="check">Check</SqBtn>
       </ActionBar>
     </template>

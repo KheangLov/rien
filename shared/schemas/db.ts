@@ -175,6 +175,13 @@ export const attemptSchema = z.object({
   at: z.coerce.date(),
 })
 
+// An IELTS Writing draft, one per question, kept as she writes.
+export const writingSchema = z.object({
+  promptId: z.string().min(1),
+  text: z.string().max(20_000),
+  updatedAt: z.coerce.date(),
+})
+
 // One finished File Boss quiz.
 export const bossResultSchema = z.object({
   id: z.number().int().optional(),
@@ -250,6 +257,8 @@ export const backupSchema = z.object({
   talks: z.array(talkResultSchema).default([]),
   // Added with the skill model.
   attempts: z.array(attemptSchema).default([]),
+  // Added with IELTS Writing.
+  writings: z.array(writingSchema).default([]),
   settings: settingsSchema,
 })
 
@@ -266,5 +275,6 @@ export type GrammarRow = z.output<typeof grammarSchema>
 export type BossResult = z.output<typeof bossResultSchema>
 export type TalkResult = z.output<typeof talkResultSchema>
 export type AttemptRow = z.output<typeof attemptSchema>
+export type WritingRow = z.output<typeof writingSchema>
 export type Settings = z.output<typeof settingsSchema>
 export type Backup = z.output<typeof backupSchema>

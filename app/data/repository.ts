@@ -1,4 +1,4 @@
-import type { AttemptRow, Backup, Book, BossResult, CardRow, GrammarRow, MistakeRow, MistakeType, NewWordInput, ReviewRow, SessionRow, Settings, TalkResult } from '#shared/schemas/db'
+import type { AttemptRow, Backup, WritingRow, Book, BossResult, CardRow, GrammarRow, MistakeRow, MistakeType, NewWordInput, ReviewRow, SessionRow, Settings, TalkResult } from '#shared/schemas/db'
 import type { GradedAnswer } from '#shared/utils/scheduler'
 
 // All storage goes through this interface: Dexie on the web now,
@@ -33,6 +33,10 @@ export interface StudyRepository {
   // The skill model and FSRS fitting learn from these.
   attemptsSince(since: Date): Promise<AttemptRow[]>
   reviewsSince(since: Date): Promise<ReviewRow[]>
+
+  // IELTS Writing drafts, one per question.
+  saveWriting(row: WritingRow): Promise<void>
+  writing(promptId: string): Promise<WritingRow | undefined>
   mistakeCounts(since: Date): Promise<Partial<Record<MistakeType, number>>>
   mistakesSince(since: Date): Promise<MistakeRow[]>
   // A slip with no review schedule of its own (Say It).

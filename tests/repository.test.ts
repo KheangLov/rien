@@ -89,6 +89,19 @@ describe.each(Object.entries(stores))('%s repository', (_, open) => {
     await other.close()
   })
 
+  it('keeps IELTS Writing drafts, one per question, in backups', async () => {
+    await repo.saveWriting({ promptId: 't2-traffic', text: 'First try', updatedAt: now })
+    await repo.saveWriting({ promptId: 't2-traffic', text: 'Second try', updatedAt: now })
+    expect((await repo.writing('t2-traffic'))?.text).toBe('Second try')
+    expect(await repo.writing('t1-water')).toBeUndefined()
+    const json = JSON.parse(JSON.stringify(await repo.exportAll(now)))
+    expect(json.writings).toHaveLength(1)
+    const other = await open()
+    await other.repo.importAll(json)
+    expect((await other.repo.writing('t2-traffic'))?.text).toBe('Second try')
+    await other.close()
+  })
+
   it('restores a large backup (more rows than one SQL statement holds)', async () => {
     const card = await repo.addWord(word, now)
     const backup = JSON.parse(JSON.stringify(await repo.exportAll(now)))
