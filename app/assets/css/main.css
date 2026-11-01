@@ -323,6 +323,16 @@ a,
   gap: 8px;
 }
 
+.rien-level-up-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  color: var(--sq-primary, #0f766e);
+  background: color-mix(in srgb, var(--sq-primary, #0f766e) 14%, transparent);
+}
+
 .rien-skill-note {
   margin: 12px 0 0;
   font-size: 13px;

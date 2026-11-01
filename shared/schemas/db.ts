@@ -220,6 +220,8 @@ export const settingsSchema = z.object({
   lastBackupAt: z.coerce.date().optional(),
   // FSRS parameters fitted to her own reviews (shared/utils/fsrsFit.ts), and when.
   fsrsParams: z.array(z.number()).length(21).optional(),
+  // "Not yet" on a move-up suggestion: hidden for this File until then.
+  levelSnooze: z.object({ book: bookSchema, file: fileNumberSchema, until: z.coerce.date() }).optional(),
   fsrsFittedAt: z.coerce.date().optional(),
   lastAutoBackupAt: z.coerce.date().optional(),
 })

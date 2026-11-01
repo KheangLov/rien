@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ActivityId } from '#shared/utils/learning'
 import { dateKey, summarizeStreak, weekStart } from '#shared/utils/streak'
+import LevelUpCard from '~/components/learn/LevelUpCard.vue'
 
 const db = useDb()
 const now = useClock()
@@ -106,6 +107,7 @@ const talkedThisWeek = computed(() => {
       </button>
     </Squircle>
 
+    <LevelUpCard />
     <InstallCard />
     <BackupCard />
     <NewContent :kinds="['fixIt', 'builder']" />
