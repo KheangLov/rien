@@ -4,7 +4,11 @@ import { checkAnswer, normalizeAnswer, type Verdict } from './answer'
 import { gradePractice, type PracticeItem } from './rounds'
 import { Rating } from './scheduler'
 
-export interface RadioCard extends RadioText, PracticeItem {}
+export interface RadioCard extends RadioText, PracticeItem {
+  // Where the gaps start (0 to GAP_EVERY - 1), so the same text has different
+  // gaps each time it is played.
+  start?: number
+}
 
 export interface RadioToken {
   // Text before the gap's word, the word itself, and text after it, e.g. "(" "walked" "),".
@@ -20,10 +24,11 @@ export function radioCards(packs: Pack[]): RadioCard[] {
   return packs.flatMap(pack => pack.radio.map(item => ({ ...item, itemId: `${pack.id}:${item.id}`, type: 'listening' as const })))
 }
 
-// Splits the text into words and blanks every seventh one. A word with no
-// letters (a number) is skipped and the gap moves to the next word.
-export function radioTokens(text: string, every = GAP_EVERY): RadioToken[] {
-  let count = 0
+// Splits the text into words and blanks every seventh one, counting from
+// `start`. A word with no letters (a number) is skipped and the gap moves to
+// the next word.
+export function radioTokens(text: string, every = GAP_EVERY, start = 0): RadioToken[] {
+  let count = start
   let gaps = 0
   return text.trim().split(/\s+/).map((raw) => {
     const [, before = '', word = raw, after = ''] = raw.match(/^([^\p{L}\p{N}']*)(.*?)([^\p{L}\p{N}']*)$/u) ?? []
@@ -63,7 +68,7 @@ export function gradeRadio(
   const share = verdicts.length ? right / verdicts.length : 1
   const grade = share >= 0.9 ? Rating.Good : share >= 0.6 ? Rating.Hard : Rating.Again
   const { row } = gradePractice(card, previous, grade, undefined, now)
-  const answers = radioAnswers(radioTokens(card.text))
+  const answers = radioAnswers(radioTokens(card.text, GAP_EVERY, card.start))
   const mistakes = verdicts.flatMap((v, i) => v.result === 'wrong'
     ? [{ type: v.mistake ?? 'listening', itemId: card.itemId, at: now, detail: answers[i] ?? '' } satisfies MistakeRow]
     : [])

@@ -30,7 +30,11 @@ onMounted(async () => {
   loading.value = false
 })
 
+const { combo, best, cheer, hit, miss } = useCombo()
+
 function onAnswered({ card: graded, result }: { card: CardRow, result: Verdict['result'] }) {
+  if (result === 'wrong') miss()
+  else hit()
   // Keep the updated schedule for a retry later in this round.
   queue.value[position.value] = graded
   if (result === 'wrong') {
@@ -54,7 +58,10 @@ function next() {
 
 <template>
   <section class="rien-stack">
-    <SqProgressLinear :model-value="progress" color="primary" />
+    <div class="rien-round-top">
+      <SqProgressLinear :model-value="progress" color="primary" />
+      <ComboChip :combo="combo" :cheer="cheer" />
+    </div>
 
     <SqSkeleton v-if="loading" height="200" />
 
@@ -70,6 +77,7 @@ function next() {
       <Confetti />
       <SqCardText>
         <p class="rien-big">{{ right }} / {{ right + missed.size }}</p>
+        <p v-if="best >= 3" class="rien-best-combo"><RienIcon name="flame" :size="18" weight="fill" /> Best streak: {{ best }} in a row</p>
         <p class="rien-muted">
           right first time.
           <template v-if="missed.size">

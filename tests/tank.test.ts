@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { achievementFish, daysAgo, healthFor, longestStreak, skillFish, stageFor, tankChanges, type TankStats } from '#shared/utils/tank'
+import { ACHIEVEMENTS, achievementFish, daysAgo, healthFor, longestStreak, silhouetteOf, SKILLS, skillFish, stageFor, tankChanges, type TankStats } from '#shared/utils/tank'
 
 const today = new Date(2026, 10, 20, 9, 0)
 const day = (offset: number, games: string[], rounds: { game: string, clean: number, total: number }[] = []) =>
@@ -32,6 +32,20 @@ describe('growth and health', () => {
     expect(before.find(f => f.game === 'fix-it')).toMatchObject({ stage: 'young', health: 'dead' })
     const after = skillFish([day(30, ['fix-it', 'fix-it', 'fix-it', 'fix-it', 'fix-it']), day(0, ['fix-it'])], today, false)
     expect(after.find(f => f.game === 'fix-it')).toMatchObject({ stage: 'young', health: 'happy' })
+  })
+})
+
+describe('every fish is its own', () => {
+  const all = [...SKILLS, ...ACHIEVEMENTS].map(f => f.species)
+
+  it('has a different species for each activity and award', () => {
+    expect(new Set(all.map(s => s.name)).size).toBe(all.length)
+  })
+
+  it('has a different outline, so even locked awards are told apart', () => {
+    const outlines = all.map(silhouetteOf)
+    const repeats = outlines.filter((o, i) => outlines.indexOf(o) !== i)
+    expect(repeats).toEqual([])
   })
 })
 

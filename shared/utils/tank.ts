@@ -3,8 +3,10 @@ import { addDays, dateKey } from './streak'
 
 // --- What a fish looks like -----------------------------------------------------
 
-export type BodyForm = 'torpedo' | 'deep' | 'disc' | 'tall' | 'long'
-export type TailForm = 'forked' | 'round' | 'fan' | 'flowing' | 'lyre'
+export type BodyForm = 'torpedo' | 'deep' | 'disc' | 'tall' | 'long' | 'puffer' | 'heavy' | 'humped' | 'arrow'
+export type TailForm = 'forked' | 'round' | 'fan' | 'flowing' | 'lyre' | 'lunate' | 'sword'
+// Extra parts that make a species recognisable even as a grey silhouette.
+export type Feature = 'sail' | 'barbels' | 'lips' | 'feelers' | 'snout'
 
 export interface Species {
   name: string
@@ -18,7 +20,12 @@ export interface Species {
   pattern?: { kind: 'bands' | 'lateral' | 'bars' | 'spots' | 'patches', color: string, edge?: string, accent?: string }
   // Lionfish: long spines instead of a soft dorsal fin.
   spines?: boolean
+  features?: readonly Feature[]
 }
+
+// Every fish in the tank has its own outline: body, tail, spines and features
+// (tests/tank.test.ts checks), so no two look alike, not even locked.
+export const silhouetteOf = (s: Species) => [s.form, s.tail, s.spines ? 'spines' : '', ...(s.features ?? [])].join(' ')
 
 // --- Study fish: one per activity, grown by practice -----------------------------
 
@@ -49,13 +56,13 @@ export interface SkillFish {
 
 export const SKILLS: { game: string, title: string, species: Species, nativeOnly?: boolean }[] = [
   { game: 'word-recall', title: 'Goldie', species: { name: 'Goldfish', back: '#ea580c', belly: '#fde68a', fin: '#fb923c', form: 'deep', tail: 'fan' } },
-  { game: 'fix-it', title: 'Fixer', species: { name: 'Blue tang', back: '#1e3a8a', belly: '#60a5fa', fin: '#1d4ed8', form: 'deep', tail: 'forked', tailColor: '#facc15', pattern: { kind: 'lateral', color: '#0f172a' } } },
+  { game: 'fix-it', title: 'Fixer', species: { name: 'Blue tang', back: '#1e3a8a', belly: '#60a5fa', fin: '#1d4ed8', form: 'disc', tail: 'lunate', tailColor: '#facc15', pattern: { kind: 'lateral', color: '#0f172a' } } },
   { game: 'sound-hunter', title: 'Echo', species: { name: 'Clownfish', back: '#ea580c', belly: '#fdba74', fin: '#f97316', form: 'deep', tail: 'round', pattern: { kind: 'bands', color: '#ffffff', edge: '#111827' } } },
   { game: 'sentence-builder', title: 'Builder', species: { name: 'Angelfish', back: '#d4d4d8', belly: '#fef9c3', fin: '#e5e7eb', form: 'tall', tail: 'lyre', pattern: { kind: 'bars', color: '#1f2937' } } },
   { game: 'gap-radio', title: 'Radio', species: { name: 'Neon tetra', back: '#334155', belly: '#e2e8f0', fin: '#cbd5e1', form: 'long', tail: 'forked', pattern: { kind: 'lateral', color: '#22d3ee', accent: '#ef4444' } } },
-  { game: 'say-it', title: 'Chatty', species: { name: 'Betta', back: '#5b21b6', belly: '#a78bfa', fin: '#8b5cf6', form: 'torpedo', tail: 'flowing' }, nativeOnly: true },
-  { game: 'file-boss', title: 'Boss', species: { name: 'Grouper', back: '#57534e', belly: '#d6d3d1', fin: '#78716c', form: 'deep', tail: 'round', pattern: { kind: 'spots', color: '#292524' } } },
-  { game: 'couple-talk', title: 'Lovebirds', species: { name: 'Kissing gourami', back: '#f472b6', belly: '#fce7f3', fin: '#fbcfe8', form: 'deep', tail: 'round' } },
+  { game: 'say-it', title: 'Chatty', species: { name: 'Betta', back: '#5b21b6', belly: '#a78bfa', fin: '#8b5cf6', form: 'torpedo', tail: 'flowing', features: ['sail'] }, nativeOnly: true },
+  { game: 'file-boss', title: 'Boss', species: { name: 'Grouper', back: '#57534e', belly: '#d6d3d1', fin: '#78716c', form: 'heavy', tail: 'round', pattern: { kind: 'spots', color: '#292524' } } },
+  { game: 'couple-talk', title: 'Lovebirds', species: { name: 'Kissing gourami', back: '#f472b6', belly: '#fce7f3', fin: '#fbcfe8', form: 'deep', tail: 'forked', features: ['lips'] } },
 ]
 
 export function stageFor(rounds: number): { stage: Stage, toNext: number | null } {
@@ -152,17 +159,17 @@ const allRounds = (stats: TankStats) => stats.sessions.flatMap(s => s.rounds ?? 
 
 export const ACHIEVEMENTS: Achievement[] = [
   { id: 'first-word', title: 'Sprout', goal: 'Save your first word', species: { name: 'Guppy', back: '#15803d', belly: '#bbf7d0', fin: '#f97316', form: 'torpedo', tail: 'fan', tailColor: '#f97316', pattern: { kind: 'spots', color: '#facc15' } }, progress: s => [s.words, 1] },
-  { id: 'words-25', title: 'Collector', goal: 'Save 25 words', species: { name: 'Molly', back: '#0f172a', belly: '#475569', fin: '#1e293b', form: 'torpedo', tail: 'round', tailColor: '#f59e0b' }, progress: s => [s.words, 25] },
-  { id: 'words-100', title: 'Word Master', goal: 'Save 100 words', species: { name: 'Koi', back: '#f5f5f4', belly: '#ffffff', fin: '#fed7aa', form: 'long', tail: 'flowing', pattern: { kind: 'patches', color: '#ea580c' } }, progress: s => [s.words, 100] },
+  { id: 'words-25', title: 'Collector', goal: 'Save 25 words', species: { name: 'Sailfin molly', back: '#0f172a', belly: '#475569', fin: '#1e293b', form: 'torpedo', tail: 'round', tailColor: '#f59e0b', features: ['sail'] }, progress: s => [s.words, 25] },
+  { id: 'words-100', title: 'Word Master', goal: 'Save 100 words', species: { name: 'Koi', back: '#f5f5f4', belly: '#ffffff', fin: '#fed7aa', form: 'long', tail: 'flowing', pattern: { kind: 'patches', color: '#ea580c' }, features: ['barbels'] }, progress: s => [s.words, 100] },
   { id: 'learned-10', title: 'Memory', goal: 'Learn 10 words (past their first reviews)', species: { name: 'Discus', back: '#0369a1', belly: '#38bdf8', fin: '#0ea5e9', form: 'disc', tail: 'round', pattern: { kind: 'bars', color: '#f97316' } }, progress: s => [s.learned, 10] },
-  { id: 'streak-3', title: 'Steady', goal: 'Study 3 days in a row', species: { name: 'Platy', back: '#b91c1c', belly: '#fca5a5', fin: '#ef4444', form: 'deep', tail: 'round' }, progress: s => [longestStreak(studyDays(s)), 3] },
-  { id: 'streak-7', title: 'Week Hero', goal: 'Study 7 days in a row', species: { name: 'Rainbowfish', back: '#4338ca', belly: '#fbcfe8', fin: '#f472b6', form: 'deep', tail: 'forked', pattern: { kind: 'lateral', color: '#fde047' } }, progress: s => [longestStreak(studyDays(s)), 7] },
-  { id: 'streak-30', title: 'Unstoppable', goal: 'Study 30 days in a row', species: { name: 'Arowana', back: '#a1a1aa', belly: '#fafafa', fin: '#facc15', form: 'long', tail: 'round' }, progress: s => [longestStreak(studyDays(s)), 30] },
-  { id: 'full-session', title: 'Teammate', goal: 'Finish four activities in one day', species: { name: 'Cardinal tetra', back: '#1e3a8a', belly: '#dc2626', fin: '#cbd5e1', form: 'long', tail: 'forked', pattern: { kind: 'lateral', color: '#22d3ee' } }, progress: s => [Math.max(0, ...s.sessions.map(d => new Set(d.games).size)), 4] },
-  { id: 'perfect-round', title: 'Perfect', goal: 'Get every answer right in a round', species: { name: 'Golden wrasse', back: '#a16207', belly: '#fde047', fin: '#eab308', form: 'long', tail: 'round' }, progress: s => [allRounds(s).some(r => r.total > 0 && r.clean === r.total) ? 1 : 0, 1] },
-  { id: 'boss-beaten', title: 'Boss Beater', goal: 'Score 80% or more in a File Boss', species: { name: 'Lionfish', back: '#991b1b', belly: '#fee2e2', fin: '#fecaca', form: 'deep', tail: 'round', pattern: { kind: 'bars', color: '#fff7ed' }, spines: true }, progress: s => [s.bosses.some(b => b.score >= Math.ceil(b.total * 0.8)) ? 1 : 0, 1] },
-  { id: 'talk-5', title: 'Chatterbox', goal: 'Have 5 Couple Talks', species: { name: 'Pearl gourami', back: '#78716c', belly: '#fdba74', fin: '#e7e5e4', form: 'deep', tail: 'round', pattern: { kind: 'spots', color: '#fafaf9' } }, progress: s => [s.talks, 5] },
-  { id: 'all-games', title: 'Explorer', goal: 'Try every activity', species: { name: 'Butterflyfish', back: '#facc15', belly: '#fef9c3', fin: '#fde047', form: 'disc', tail: 'round', pattern: { kind: 'bars', color: '#0f172a' } },
+  { id: 'streak-3', title: 'Steady', goal: 'Study 3 days in a row', species: { name: 'Swordtail', back: '#b91c1c', belly: '#fca5a5', fin: '#ef4444', form: 'torpedo', tail: 'sword', tailColor: '#facc15' }, progress: s => [longestStreak(studyDays(s)), 3] },
+  { id: 'streak-7', title: 'Week Hero', goal: 'Study 7 days in a row', species: { name: 'Rainbowfish', back: '#4338ca', belly: '#fbcfe8', fin: '#f472b6', form: 'tall', tail: 'forked', pattern: { kind: 'lateral', color: '#fde047' } }, progress: s => [longestStreak(studyDays(s)), 7] },
+  { id: 'streak-30', title: 'Unstoppable', goal: 'Study 30 days in a row', species: { name: 'Arowana', back: '#a1a1aa', belly: '#fafafa', fin: '#facc15', form: 'arrow', tail: 'round', features: ['barbels'] }, progress: s => [longestStreak(studyDays(s)), 30] },
+  { id: 'full-session', title: 'Teammate', goal: 'Finish four activities in one day', species: { name: 'Pufferfish', back: '#ca8a04', belly: '#fef9c3', fin: '#fde047', form: 'puffer', tail: 'round', pattern: { kind: 'spots', color: '#422006' } }, progress: s => [Math.max(0, ...s.sessions.map(d => new Set(d.games).size)), 4] },
+  { id: 'perfect-round', title: 'Perfect', goal: 'Get every answer right in a round', species: { name: 'Golden flowerhorn', back: '#b45309', belly: '#fde047', fin: '#f59e0b', form: 'humped', tail: 'round', pattern: { kind: 'lateral', color: '#1c1917' } }, progress: s => [allRounds(s).some(r => r.total > 0 && r.clean === r.total) ? 1 : 0, 1] },
+  { id: 'boss-beaten', title: 'Boss Beater', goal: 'Score 80% or more in a File Boss', species: { name: 'Lionfish', back: '#991b1b', belly: '#fee2e2', fin: '#fecaca', form: 'deep', tail: 'fan', pattern: { kind: 'bars', color: '#fff7ed' }, spines: true }, progress: s => [s.bosses.some(b => b.score >= Math.ceil(b.total * 0.8)) ? 1 : 0, 1] },
+  { id: 'talk-5', title: 'Chatterbox', goal: 'Have 5 Couple Talks', species: { name: 'Pearl gourami', back: '#78716c', belly: '#fdba74', fin: '#e7e5e4', form: 'deep', tail: 'lunate', pattern: { kind: 'spots', color: '#fafaf9' }, features: ['feelers'] }, progress: s => [s.talks, 5] },
+  { id: 'all-games', title: 'Explorer', goal: 'Try every activity', species: { name: 'Butterflyfish', back: '#facc15', belly: '#fef9c3', fin: '#fde047', form: 'disc', tail: 'round', pattern: { kind: 'bars', color: '#0f172a' }, features: ['snout'] },
     progress: (s) => {
       const games = SKILLS.filter(k => s.native || !k.nativeOnly).map(k => k.game)
       const played = new Set(s.sessions.flatMap(d => d.games))

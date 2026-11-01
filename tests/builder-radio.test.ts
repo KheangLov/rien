@@ -73,6 +73,12 @@ describe('Gap Radio', () => {
     expect(verdicts[0]!.mistake).toBe('final-sound')
   })
 
+  it('moves the gaps with the start, so a replay has new gaps', () => {
+    const text = 'one two three four five six seven eight nine ten eleven twelve thirteen fourteen'
+    expect(radioAnswers(radioTokens(text))).toEqual(['seven', 'fourteen'])
+    expect(radioAnswers(radioTokens(text, 7, 3))).toEqual(['four', 'eleven'])
+  })
+
   it('wants short words exact, where one letter makes another word', () => {
     const verdicts = checkGaps(['that', 'than', 'ago', 'market'], ['what', 'then', 'agoo', 'markte'])
     expect(verdicts.map(v => v.result)).toEqual(['wrong', 'wrong', 'wrong', 'almost'])

@@ -37,7 +37,11 @@ onMounted(async () => {
   }
 })
 
+const { combo, best, cheer, hit, miss } = useCombo()
+
 function onAnswered({ row, slipped }: { row: GrammarRow, slipped: boolean }) {
+  if (slipped) miss()
+  else hit()
   states.value.set(row.itemId, row)
   if (slipped) missedTypes.value.push(row.type)
   else clean.value++
@@ -51,7 +55,10 @@ function next() {
 
 <template>
   <section class="rien-stack">
-    <SqProgressLinear :model-value="progress" color="primary" />
+    <div class="rien-round-top">
+      <SqProgressLinear :model-value="progress" color="primary" />
+      <ComboChip :combo="combo" :cheer="cheer" />
+    </div>
 
     <SqSkeleton v-if="loading" height="200" />
 
@@ -73,6 +80,7 @@ function next() {
       <Confetti />
       <SqCardText>
         <p class="rien-big">{{ clean }} / {{ round.length }}</p>
+        <p v-if="best >= 3" class="rien-best-combo"><RienIcon name="flame" :size="18" weight="fill" /> Best streak: {{ best }} in a row</p>
         <p class="rien-muted">fixed without a slip.</p>
         <p v-if="practiceLabels.length" class="rien-muted">
           To practise: {{ practiceLabels.join(', ') }}. These come up more often from now on.
