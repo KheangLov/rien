@@ -9,6 +9,8 @@ const config: CapacitorConfig = {
   webDir: '.output/public',
   ios: {
     contentInset: 'never',
+    // No link preview card (with the URL) on long-press: buttons are buttons.
+    allowsLinkPreview: false,
   },
   plugins: {
     // Shrink the web view when the keyboard opens, so the pinned Check button

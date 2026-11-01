@@ -35,6 +35,13 @@ export default defineNuxtPlugin(() => {
   // iPhone: tapping the status bar scrolls back to the top, as in native apps.
   window.addEventListener('statusTap', () => window.scrollTo({ top: 0, behavior: 'smooth' }))
 
+  // Native apps: holding a link or button opens no menu (Android's web view
+  // offers "open link" and copy otherwise). Text fields keep theirs.
+  window.addEventListener('contextmenu', (e) => {
+    const target = e.target as HTMLElement | null
+    if (!target?.closest('input, textarea, [contenteditable="true"]')) e.preventDefault()
+  })
+
   if (Capacitor.isNativePlatform()) {
     void import('@capacitor/keyboard').then(({ Keyboard }) =>
       Keyboard.setAccessoryBarVisible({ isVisible: false })).catch(() => {})

@@ -174,7 +174,11 @@ public class RienSpeechPlugin extends Plugin {
 
         @Override public void onDone(String id) { ended(id); }
 
+        // Still abstract, so it must be implemented; Android 5+ calls the one below.
+        @SuppressWarnings("deprecation")
         @Override public void onError(String id) { ended(id); }
+
+        @Override public void onError(String id, int errorCode) { ended(id); }
 
         @Override public void onStop(String id, boolean interrupted) { ended(id); }
 

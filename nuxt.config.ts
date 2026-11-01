@@ -38,7 +38,7 @@ export default defineNuxtConfig({
   },
 
   squirkle: {
-    addons: ['charts', 'calendar'],
+    addons: ['charts'],
     prefix: 'Sq',
     css: true,
     // Brand colours go in here, not through useTheme().setBrand() at runtime: the
@@ -56,7 +56,34 @@ export default defineNuxtConfig({
     // The system font (SF Pro on Apple devices), as native apps use.
     appearance: { font: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, 'Segoe UI', Roboto, 'Khmer Sangam MN', 'Noto Sans Khmer', sans-serif" },
     // The app must work offline, so no Iconify API and no web fonts.
-    icons: { api: false },
+    icons: {
+      api: false,
+      // Squirkle's own controls (clear buttons, chevrons, alerts, checkboxes) draw
+      // Solar too, from the same bundled subset (scripts/build-icons.mjs). Built-in
+      // names need patches/@squirkle-ui__ui@0.1.1.patch (upstream issue 12).
+      aliases: {
+        close: 'solar:close-circle-bold',
+        check: 'solar:rien-check-linear',
+        plus: 'solar:rien-plus-linear',
+        minus: 'solar:rien-minus-linear',
+        chevronDown: 'solar:alt-arrow-down-linear',
+        chevronUp: 'solar:alt-arrow-up-linear',
+        chevronLeft: 'solar:alt-arrow-left-linear',
+        chevronRight: 'solar:alt-arrow-right-linear',
+        search: 'solar:magnifer-linear',
+        info: 'solar:info-circle-bold',
+        success: 'solar:check-circle-bold',
+        warning: 'solar:danger-triangle-bold',
+        error: 'solar:danger-circle-bold',
+        calendar: 'solar:calendar-linear',
+        clock: 'solar:clock-circle-linear',
+        attach: 'solar:paperclip-linear',
+        eye: 'solar:eye-linear',
+        eyeOff: 'solar:eye-closed-linear',
+        delete: 'solar:trash-bin-minimalistic-linear',
+        edit: 'solar:pen-linear',
+      },
+    },
     locale: { code: 'en' },
   },
 

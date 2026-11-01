@@ -6,25 +6,28 @@
 import { readFileSync, writeFileSync } from 'node:fs'
 
 const BASES = [
-  'home-2', 'notebook', 'chart-2', 'user-rounded', 'close-square', 'alt-arrow-left', 'alt-arrow-right',
-  'add-square', 'check-read', 'magnifer', 'play', 'fire', 'stars', 'gallery', 'camera', 'volume-loud',
+  'home-2', 'notebook', 'chart-2', 'user-rounded', 'alt-arrow-left', 'alt-arrow-right',
+  'magnifer', 'play', 'fire', 'stars', 'gallery', 'camera', 'volume-loud',
   'lightbulb', 'layers', 'pen-new-square', 'soundwave', 'widget-add', 'radio', 'microphone-2', 'cup-star',
   'chat-square-dots', 'bell-bing', 'moon', 'download-minimalistic', 'upload-minimalistic', 'smartphone',
   'translation', 'calendar', 'cup-first',
+]
+// Squirkle UI's own controls (aliases in nuxt.config.ts) use one weight each.
+const SQUIRKLE = [
+  'close-circle-bold', 'check-circle-bold', 'info-circle-bold', 'danger-triangle-bold', 'danger-circle-bold',
+  'alt-arrow-up-linear', 'alt-arrow-down-linear', 'clock-circle-linear', 'paperclip-linear', 'eye-linear',
+  'eye-closed-linear', 'trash-bin-minimalistic-linear', 'pen-linear',
 ]
 const VARIANTS = ['linear', 'bold', 'bold-duotone']
 
 const solar = JSON.parse(readFileSync(new URL('../node_modules/@iconify-json/solar/icons.json', import.meta.url), 'utf8'))
 const icons = {}
-for (const base of BASES) {
-  for (const variant of VARIANTS) {
-    const name = `${base}-${variant}`
-    // Some names are aliases of another icon.
-    let source = name
-    while (!solar.icons[source] && solar.aliases?.[source]) source = solar.aliases[source].parent
-    if (!solar.icons[source]) throw new Error(`Solar has no ${name}`)
-    icons[name] = solar.icons[source]
-  }
+for (const name of [...BASES.flatMap(base => VARIANTS.map(variant => `${base}-${variant}`)), ...SQUIRKLE]) {
+  // Some names are aliases of another icon.
+  let source = name
+  while (!solar.icons[source] && solar.aliases?.[source]) source = solar.aliases[source].parent
+  if (!solar.icons[source]) throw new Error(`Solar has no ${name}`)
+  icons[name] = solar.icons[source]
 }
 
 // A fish in Solar's style: 24 px grid, 1.5 px rounded strokes; duotone body at 50%.
@@ -35,6 +38,21 @@ const eye = 'M18.2 11.2a.9.9 0 1 1-1.8 0a.9.9 0 0 1 1.8 0Z'
 icons['rien-fish-linear'] = { body: `<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="${body}"/><path d="${tail}"/><path d="${gill}"/></g><path fill="currentColor" d="${eye}"/>` }
 icons['rien-fish-bold'] = { body: `<path fill="currentColor" fill-rule="evenodd" d="${body} ${eye}"/><path fill="currentColor" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5" d="${tail}"/>` }
 icons['rien-fish-bold-duotone'] = { body: `<path fill="currentColor" d="${body}" opacity=".5"/><path fill="currentColor" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5" d="${tail}"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="${gill}"/><path fill="currentColor" d="${eye}"/>` }
+
+// Plain marks in Solar's line style (Solar only has them inside a circle or square,
+// which doubles up inside Rien's squircle buttons): plus, minus, check and close.
+const MARKS = {
+  plus: 'M12 5v14M5 12h14',
+  minus: 'M5 12h14',
+  check: 'M4.5 12.5l4.6 4.5L19.5 7',
+  close: 'M6 6l12 12M18 6L6 18',
+}
+for (const [name, d] of Object.entries(MARKS)) {
+  const line = (width) => `<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="${width}" d="${d}"/>`
+  icons[`rien-${name}-linear`] = { body: line(1.5) }
+  icons[`rien-${name}-bold`] = { body: line(2.25) }
+  icons[`rien-${name}-bold-duotone`] = { body: line(2) }
+}
 
 const out = { prefix: 'solar', width: 24, height: 24, icons }
 writeFileSync(new URL('../app/assets/icons/solar.json', import.meta.url), `${JSON.stringify(out)}\n`)

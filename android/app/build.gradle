@@ -26,10 +26,10 @@ android {
         signingFile.withInputStream { signing.load(it) }
         signingConfigs {
             release {
-                storeFile file(signing['storeFile'])
-                storePassword signing['storePassword']
-                keyAlias signing['keyAlias']
-                keyPassword signing['keyPassword']
+                storeFile = file(signing['storeFile'])
+                storePassword = signing['storePassword']
+                keyAlias = signing['keyAlias']
+                keyPassword = signing['keyPassword']
             }
         }
     }
@@ -37,10 +37,10 @@ android {
         // Like the iPhone's Debug builds: a separate .dev app, so a later store
         // release can sit next to it.
         debug {
-            applicationIdSuffix ".dev"
+            applicationIdSuffix = ".dev"
         }
         release {
-            if (signingFile.exists()) signingConfig signingConfigs.release
+            if (signingFile.exists()) signingConfig = signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -75,3 +75,5 @@ try {
 } catch(Exception e) {
     logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
 }
+// Name deprecated APIs in the app's own Java instead of a one-line note.
+tasks.withType(JavaCompile).configureEach { options.compilerArgs << "-Xlint:deprecation" }

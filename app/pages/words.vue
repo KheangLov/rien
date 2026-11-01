@@ -2,6 +2,8 @@
 import type { CardRow } from '#shared/schemas/db'
 import { normalizeAnswer } from '#shared/utils/answer'
 import { isTricky, nextReviewLabel } from '#shared/utils/learning'
+import { vInputAttrs } from '~/directives/inputAttrs'
+import { vPlainInput } from '~/directives/plainInput'
 
 const db = useDb()
 const now = useClock()
@@ -72,7 +74,18 @@ async function remove(card: CardRow) {
       </template>
     </PageHeader>
 
-    <SqTextField v-model="search" label="Search words" clearable />
+    <!-- A native-style search bar: Squirkle's filled field with the Solar magnifier. -->
+    <SqTextField
+      v-model="search"
+      v-plain-input
+      v-input-attrs="{ 'aria-label': 'Search words', 'enterkeyhint': 'search', 'type': 'search' }"
+      class="rien-search"
+      variant="filled"
+      prepend-inner-icon="search"
+      placeholder="Search"
+      hide-details
+      clearable
+    />
     <input ref="pictureInput" type="file" accept="image/*" hidden @change="pickPicture">
 
     <IosSegmented
