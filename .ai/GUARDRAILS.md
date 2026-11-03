@@ -32,7 +32,7 @@ Format: `ID · class · enforcement`. Class: MUST (only the user changes it, in 
 - G4-6 · MUST · HUMAN · Any Figma write tool (Figma is read-only by default).
 - G4-7 · MUST · HUMAN · `git commit`, creating or switching branches, stash, amend, rebase. Network calls to URLs the user didn't give (official docs excepted).
 - G4-8 · MUST · HUMAN · Production is never touched by an agent: no connect, migrate, seed or query. Prepare the command.
-- G4-9 · MUST · TOOL (settings deny) · No agent runs `git push`, force push, `git reset --hard`, branch deletion, publish, version bumps or deploys.
+- G4-9 · MUST · TOOL (settings deny) · No agent runs `git push` unless the user asks for that push in chat in this session (a normal push of the current branch only). No agent force-pushes, runs `git reset --hard`, deletes branches, publishes, bumps versions or deploys.
 - G4-10 · MUST · HUMAN · Anything that sends a message (email, chat, PR or issue comment) or seeds, resets or deletes data that would lose work.
 
 ## G5 Scope
