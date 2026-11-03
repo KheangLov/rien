@@ -2,6 +2,7 @@
 import { partLabel } from '#shared/schemas/db'
 import type { ActivityId } from '#shared/utils/learning'
 import { dateKey, summarizeStreak, weekStart } from '#shared/utils/streak'
+import LearningArtwork from '~/components/learn/LearningArtwork.vue'
 import LevelUpCard from '~/components/learn/LevelUpCard.vue'
 
 const db = useDb()
@@ -92,6 +93,7 @@ const talkedThisWeek = computed(() => {
     </PageHeader>
 
     <Squircle tag="section" class="rien-hero" :surface="false" :radius="30" aria-labelledby="session-title">
+      <LearningArtwork scene="journey" class="rien-hero-art" />
       <div class="rien-hero-head">
         <div>
           <h2 id="session-title">
@@ -108,16 +110,18 @@ const talkedThisWeek = computed(() => {
           <RienIcon name="check" :size="26" weight="bold" />
         </span>
       </div>
-      <div
-        v-if="plan.length"
-        class="rien-hero-progress"
-        role="progressbar"
-        aria-valuemin="0"
-        :aria-valuemax="plan.length"
-        :aria-valuenow="planDone.length"
-        :aria-label="`${planDone.length} of ${plan.length} activities finished`"
-      >
-        <span :style="{ width: `${(planDone.length / plan.length) * 100}%` }" />
+      <div v-if="plan.length" class="rien-hero-progress-row">
+        <div
+          class="rien-hero-progress"
+          role="progressbar"
+          aria-valuemin="0"
+          :aria-valuemax="plan.length"
+          :aria-valuenow="planDone.length"
+          :aria-label="`${planDone.length} of ${plan.length} activities finished`"
+        >
+          <span :style="{ width: `${(planDone.length / plan.length) * 100}%` }" />
+        </div>
+        <span class="rien-hero-progress-count" aria-hidden="true">{{ planDone.length }}/{{ plan.length }}</span>
       </div>
       <div class="rien-hero-steps">
         <span
