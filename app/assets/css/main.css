@@ -1365,9 +1365,17 @@ html.rien-dark .rien-tank {
   animation: none;
 }
 
+/* Upside down; floats only with motion on (this selector outranks the
+   tank's motion-off and reduced-motion rules, so the float is gated here). */
 .rien-fish.is-dead .rien-fish-bob {
   transform: rotate(180deg);
-  animation: rien-float 4s ease-in-out infinite alternate;
+  animation: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html.rien-motion .rien-fish.is-dead .rien-fish-bob {
+    animation: rien-float 4s ease-in-out infinite alternate;
+  }
 }
 
 @keyframes rien-float {
@@ -1800,9 +1808,58 @@ html.rien-motion .rien-celebrate > :nth-child(3) { animation-delay: 200ms; }
 html.rien-motion .rien-celebrate > :nth-child(4),
 html.rien-motion .rien-next-up { animation-delay: 260ms; }
 
-/* Artwork: one short entrance per scene, nothing that loops. */
-html.rien-motion .rien-art-guide {
-  animation: rien-art-swim 640ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+/* Artwork (LearningArtwork.vue): a short entrance per scene, then slow,
+   small loops so the scene stays alive. Only transform, translate, scale,
+   rotate and opacity move, so the browser can keep it off the main thread.
+   Labels and icons inside the art hold still; only their shapes breathe.
+   Gated twice: her Motion setting (html.rien-motion) and the system's
+   reduced-motion preference. Still, every scene is drawn complete. */
+@media (prefers-reduced-motion: no-preference) {
+  /* The guide swims in, then bobs gently in place. */
+  html.rien-motion .rien-art-guide {
+    animation:
+      rien-art-swim 640ms cubic-bezier(0.2, 0.8, 0.2, 1) both,
+      rien-art-bob 4.8s ease-in-out 640ms infinite alternate backwards;
+  }
+
+  html.rien-motion .rien-art-stone,
+  html.rien-motion .rien-art-skill {
+    animation: rien-art-fade-up 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    animation-delay: calc(120ms + var(--i, 0) * 70ms);
+  }
+
+  /* Journey stones glint one after another; the words on them stay put. */
+  html.rien-motion .rien-art-stone rect {
+    animation: rien-art-glint 3.2s ease-in-out infinite alternate;
+    animation-delay: calc(var(--i, 0) * -0.8s);
+  }
+
+  /* IELTS skill halos breathe out of step with each other. */
+  html.rien-motion .rien-art-skill > circle:first-child {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: rien-art-halo 3.6s ease-in-out infinite alternate;
+    animation-delay: calc(var(--i, 0) * -0.9s);
+  }
+
+  /* The tick and the star pop in, then breathe (scale composes with the
+     pop's transform). */
+  html.rien-motion .rien-art-badge {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation:
+      rien-pop-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 240ms both,
+      rien-art-breathe 2.8s ease-in-out 660ms infinite alternate;
+  }
+
+  /* The light behind the books fades in, then sways round the star. */
+  html.rien-motion .rien-art-rays {
+    transform-box: view-box;
+    transform-origin: 160px 60px;
+    animation:
+      rien-art-fade 600ms ease 160ms both,
+      rien-art-sway 7s ease-in-out 760ms infinite alternate;
+  }
 }
 
 @keyframes rien-art-swim {
@@ -1810,10 +1867,9 @@ html.rien-motion .rien-art-guide {
   to { opacity: 1; translate: 0 0; }
 }
 
-html.rien-motion .rien-art-stone,
-html.rien-motion .rien-art-skill {
-  animation: rien-art-fade-up 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  animation-delay: calc(120ms + var(--i, 0) * 70ms);
+@keyframes rien-art-bob {
+  from { transform: translateY(-2px); }
+  to { transform: translateY(2px); }
 }
 
 @keyframes rien-art-fade-up {
@@ -1821,19 +1877,29 @@ html.rien-motion .rien-art-skill {
   to { opacity: 1; translate: 0 0; }
 }
 
-html.rien-motion .rien-art-badge {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: rien-pop-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 240ms both;
+@keyframes rien-art-glint {
+  from { opacity: 1; }
+  to { opacity: 0.6; }
 }
 
-html.rien-motion .rien-art-rays {
-  animation: rien-art-fade 600ms ease 160ms both;
+@keyframes rien-art-halo {
+  from { transform: scale(1); }
+  to { transform: scale(1.12); }
+}
+
+@keyframes rien-art-breathe {
+  from { scale: 1; }
+  to { scale: 1.06; }
 }
 
 @keyframes rien-art-fade {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@keyframes rien-art-sway {
+  from { rotate: -3deg; }
+  to { rotate: 3deg; }
 }
 
 html.rien-motion .rien-skill-tile {
@@ -1866,12 +1932,12 @@ html.rien-motion .rien-list-row:active .rien-list-icon {
 
   .rien-celebrate > *,
   .rien-next-up,
-  .rien-hero-badge,
-  .rien-art-guide,
-  .rien-art-stone,
-  .rien-art-skill,
-  .rien-art-badge,
-  .rien-art-rays {
+  .rien-hero-badge {
+    animation: none;
+  }
+
+  /* Rule pictures pop in with .rien-pop; still under reduced motion. */
+  html.rien-motion .rien-rule.rien-pop {
     animation: none;
   }
 
@@ -1915,6 +1981,9 @@ html:not(.rien-motion) .rien-bubble {
    Rule pictures
    ------------------------------------------------------------------------ */
 .rien-rule {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: grid;
   gap: 10px;
   margin: 0;
@@ -2024,8 +2093,27 @@ html:not(.rien-motion) .rien-bubble {
   border-style: dashed;
 }
 
-html.rien-motion .rien-timeline-point.is-on i {
-  animation: rien-pulse 1.6s ease-in-out infinite;
+@media (prefers-reduced-motion: no-preference) {
+  html.rien-motion .rien-timeline-point.is-on i {
+    animation: rien-pulse 1.6s ease-in-out infinite;
+  }
+
+  /* Every rule picture: a soft light drifts slowly behind the words, which
+     stay still. The glow only exists with motion on. */
+  html.rien-motion .rien-rule::before {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--rien-tint-2, #38bdf8) 14%, transparent), transparent);
+    animation: rien-rule-drift 12s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes rien-rule-drift {
+  from { opacity: 0.6; transform: translate(-18%, -8%); }
+  to { opacity: 1; transform: translate(18%, 8%); }
 }
 
 @keyframes rien-pulse {
@@ -2166,12 +2254,14 @@ html.rien-glass .rien-token {
   transform-origin: 88px 41px;
 }
 
-html.rien-motion .rien-fish-svg:not(.is-dead) .rien-fish-tail {
-  animation: rien-tail var(--tail, 0.6s) ease-in-out infinite alternate;
-}
+@media (prefers-reduced-motion: no-preference) {
+  html.rien-motion .rien-fish-svg:not(.is-dead) .rien-fish-tail {
+    animation: rien-tail var(--tail, 0.6s) ease-in-out infinite alternate;
+  }
 
-html.rien-motion .rien-fish-svg:not(.is-dead) .rien-fish-pectoral {
-  animation: rien-pectoral calc(var(--tail, 0.6s) * 0.8) ease-in-out infinite alternate;
+  html.rien-motion .rien-fish-svg:not(.is-dead) .rien-fish-pectoral {
+    animation: rien-pectoral calc(var(--tail, 0.6s) * 0.8) ease-in-out infinite alternate;
+  }
 }
 
 @keyframes rien-tail {
