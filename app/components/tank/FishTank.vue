@@ -68,18 +68,19 @@ const bubbles = Array.from({ length: 8 }, (_, i) => ({ left: `${8 + i * 11}%`, d
     <svg class="rien-plant is-slow" style="left: 78%" viewBox="0 0 40 120" aria-hidden="true"><path d="M20 120 C30 92 6 76 22 48 C30 30 14 18 20 4" stroke="#16a34a" stroke-width="6" fill="none" stroke-linecap="round" /></svg>
     <svg class="rien-plant is-short" style="left: 88%" viewBox="0 0 40 120" aria-hidden="true"><path d="M20 120 C10 100 30 88 20 70" stroke="#22c55e" stroke-width="7" fill="none" stroke-linecap="round" /></svg>
 
-    <button
-      v-for="egg in eggs"
-      :key="egg.id"
-      type="button"
-      class="rien-egg"
-      :class="{ 'is-selected': selected === egg.id }"
-      :style="{ left: `${10 + seed(egg.id) * 75}%` }"
-      :aria-label="`${egg.title}, an egg. Play its game to hatch it.`"
-      @click="emit('select', egg.id)"
-    >
-      <FishSprite :species="egg.species" stage="egg" :width="WIDTH.egg" />
-    </button>
+    <div v-if="eggs.length" class="rien-egg-row">
+      <button
+        v-for="egg in eggs"
+        :key="egg.id"
+        type="button"
+        class="rien-egg"
+        :class="{ 'is-selected': selected === egg.id }"
+        :aria-label="`${egg.title}, an egg. Play its game to hatch it.`"
+        @click="emit('select', egg.id)"
+      >
+        <FishSprite :species="egg.species" stage="egg" :width="WIDTH.egg" />
+      </button>
+    </div>
 
     <button
       v-for="s in swimmers"

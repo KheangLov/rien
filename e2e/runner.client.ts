@@ -22,6 +22,9 @@ const WORDS = [
   { answer: 'wants', meaning: 'he or she would like', example: 'She wants two apples.' },
 ]
 
+// The daily session's activities, as their step labels name them.
+const ACTIVITIES = ['Word Recall', 'Fix It', 'Final Sound Hunter', 'Sentence Builder', 'Gap Radio', 'Say It', 'Picture Match', 'Listen & Pick', 'Speed Round']
+
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 const log = (line: string) => console.log(`[e2e] ${line}`)
 const text = () => (document.querySelector('main') as HTMLElement | null)?.innerText.replace(/\s+/g, ' ') ?? ''
@@ -42,9 +45,49 @@ const pageText = () => document.body.innerText.replace(/\s+/g, ' ')
 const waitText = (needle: string, timeout?: number) =>
   waitFor(() => pageText().toLowerCase().includes(needle.toLowerCase()), `"${needle}"`, timeout)
 
-// Fails if any text field is under 16px (iOS zooms the page when one gets focus)
-// or the page is wider than the screen, then asks for a screenshot.
+const CONTROLS = 'button, a[href], input, textarea, select, [role=button]'
+const labelOf = (el: Element) => (el.getAttribute('aria-label') || el.textContent?.trim() || el.className || el.tagName).slice(0, 40)
+
+// The nearest fixed or sticky ancestor: the layer a control floats in.
+function layerOf(el: Element): Element | null {
+  for (let e: Element | null = el; e; e = e.parentElement) {
+    const position = getComputedStyle(e).position
+    if (position === 'fixed' || position === 'sticky') return e
+  }
+  return null
+}
+
+// Enabled controls fully on screen whose middle is taken by another control in
+// the same layer (a tap there would hit the wrong one).
+function coveredControls(): string[] {
+  const sheet = document.querySelector('.ios-sheet')
+  return [...document.querySelectorAll<HTMLElement>(CONTROLS)].flatMap((el) => {
+    // An open sheet and its backdrop cover the page behind them by design.
+    if (sheet && !sheet.contains(el)) return []
+    // Tank fish swim past each other and past the eggs; they are not laid out.
+    if (el.closest('.rien-fish')) return []
+    if ((el as HTMLButtonElement).disabled) return []
+    const r = el.getBoundingClientRect()
+    if (r.width < 1 || r.height < 1 || r.left < 0 || r.top < 0 || r.right > window.innerWidth || r.bottom > window.innerHeight) return []
+    const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)
+    if (!hit || el.contains(hit) || hit.contains(el)) return []
+    const other = hit.closest(CONTROLS)
+    if (!other || other.contains(el) || other.closest('.rien-fish')) return []
+    // The tab bar, pinned action bars, the page header and toasts float over
+    // scrolled content by design: only controls in the same layer may not overlap.
+    if (layerOf(other) !== layerOf(el)) return []
+    return [`"${labelOf(el)}" under "${labelOf(other)}"`]
+  })
+}
+
+const shown = new Set<string>()
+
+// Fails if any text field is under 16px (iOS zooms the page when one gets focus),
+// the page is wider than the screen, something sticks out of a card, the screen
+// has nothing visible on it, or a control is covered by another; then asks for
+// a screenshot. Each checkpoint name is used once, so every picture is a new state.
 async function screen(name: string) {
+  if (shown.has(name)) throw new Error(`checkpoint ${name} was already used; give this state its own name`)
   const small = [...document.querySelectorAll<HTMLElement>('input, textarea, select')]
     .filter(el => Number.parseFloat(getComputedStyle(el).fontSize) < 16)
   if (small.length) throw new Error(`${small.length} text field(s) under 16px on ${name}`)
@@ -56,14 +99,28 @@ async function screen(name: string) {
     const b = box.getBoundingClientRect()
     return [...box.querySelectorAll<HTMLElement>('*')].filter((el) => {
       if (el.closest('.sq-shape-layers, .sq-shape')) return false
+      // Confetti (aria-hidden, gone after 2.6 s) bursts past the end card on purpose.
+      if (el.closest('.rien-confetti')) return false
       const r = el.getBoundingClientRect()
       return r.width > 0 && r.height > 0 && (r.right > b.right + 1 || r.left < b.left - 1)
     })
   })
   if (spill.length) throw new Error(`${spill.length} element(s) stick out of a card on ${name}, e.g. ${spill[0]!.className || spill[0]!.tagName}`)
+  const main = document.querySelector('main')
+  if (!main) throw new Error(`${name}: no <main> on screen`)
+  const m = main.getBoundingClientRect()
+  if (m.width < 1 || m.height < 1 || m.bottom <= 0 || m.top >= window.innerHeight || m.right <= 0 || m.left >= window.innerWidth) {
+    throw new Error(`${name}: the page content is not on screen`)
+  }
+  if (!pageText().trim()) throw new Error(`${name}: nothing to read on screen`)
+  const covered = coveredControls()
+  if (covered.length) throw new Error(`${name}: ${covered.length} control(s) covered by another, e.g. ${covered[0]}`)
+  shown.add(name)
   log(`SCREEN ${name}`)
-  // Time for the host script to take the picture: only the phone scripts do.
+  // Time for the host script to take the picture: the phone scripts, and
+  // scripts/e2e-browser.mjs (which sets __rienShots before the app loads).
   if (Capacitor.isNativePlatform()) await sleep(1500)
+  else if ((window as { __rienShots?: boolean }).__rienShots) await sleep(400)
 }
 
 function button(label: string, root: ParentNode = document): HTMLElement | undefined {
@@ -123,6 +180,7 @@ async function playRecall(options: { hintFirst?: boolean, wrongFirst?: Record<st
   const wrongFirst = { ...options.wrongFirst }
   let hinted = !options.hintFirst
   const seen = new Set<string>()
+  let retyped = false
   for (let i = 0; i < 8 && !text().includes('Round done') && !text().includes('Nice work') && !text().includes('Session complete'); i++) {
     const cue = (await waitFor(() => document.querySelector('.rien-cue'), 'word cue')).textContent!.trim()
     const word = WORDS.find(w => w.meaning === cue)
@@ -149,7 +207,8 @@ async function playRecall(options: { hintFirst?: boolean, wrongFirst?: Record<st
     if (!/comes back|see you/i.test(back)) throw new Error(`no "comes back" line, got "${back}"`)
     if (text().includes('Type it once')) {
       if (button('Next')) throw new Error('Next is enabled before the word is retyped')
-      await screen('word-recall-retype')
+      if (!retyped) await screen('word-recall-retype')
+      retyped = true
       await fill('Type it once', word.answer)
     }
     await click('Next')
@@ -175,12 +234,12 @@ async function answerFixIt(packs: Pack[]) {
   await sleep(300)
 }
 
-async function playFixIt(packs: Pack[]) {
+async function playFixIt(packs: Pack[], shot = 'fix-it-rule') {
   for (let i = 0; i < 8; i++) {
     await answerFixIt(packs)
     if (i === 0) {
       await waitFor(() => document.querySelector('.rien-rule'), 'rule picture')
-      await screen('fix-it-rule')
+      await screen(shot)
     }
     await click('Next')
   }
@@ -238,7 +297,7 @@ async function playBuilder(packs: Pack[], wrongFirst: boolean) {
   }
 }
 
-async function playRadio(packs: Pack[], missOne: boolean) {
+async function playRadio(packs: Pack[], missOne: boolean, shot = 'gap-radio-checked') {
   const title = (await waitFor(() => document.querySelector('.rien-cue'), 'title')).textContent!.trim()
   const radio = packs.flatMap(p => p.radio).find(r => r.title === title)
   if (!radio) throw new Error(`no text "${title}"`)
@@ -259,7 +318,7 @@ async function playRadio(packs: Pack[], missOne: boolean) {
   await sleep(100)
   await click('Check')
   await waitText(`${missOne ? answers.length - 1 : answers.length} of ${answers.length} right`)
-  await screen('gap-radio-checked')
+  await screen(shot)
   await click('Done')
 }
 
@@ -396,6 +455,9 @@ async function run() {
     for (let i = 1; i <= 6; i++) pointer('pointermove', at(0) + ((at(3) - at(0)) * i) / 6)
     pointer('pointerup', at(3))
     await waitFor(() => location.pathname.startsWith('/progress'), 'drag to Progress')
+    await waitText('Days studied')
+    await sleep(300)
+    await screen('progress-fresh')
     await goTo('/', 'Today’s session')
     if (!document.documentElement.classList.contains('rien-glass')) throw new Error('Liquid Glass should be on by default')
     if (!document.documentElement.classList.contains('rien-motion') && !matchMedia('(prefers-reduced-motion: reduce)').matches) throw new Error('motion should be on by default')
@@ -408,6 +470,7 @@ async function run() {
     await screen('words-empty')
     await click('Add a word')
     await waitText('Right after class')
+    await screen('add-word-form')
     for (const [i, word] of WORDS.entries()) {
       await fill('English word', word.answer)
       await fill('Meaning in English', word.meaning)
@@ -430,6 +493,7 @@ async function run() {
     await fill('Meaning in English', 'again')
     await click('Save word')
     await waitText('is already in your words')
+    await screen('add-word-duplicate')
     await fill('English word', '')
     await fill('Meaning in English', '')
     const borrow = (await db.allCards()).find(c => c.answer === 'borrow')
@@ -441,13 +505,16 @@ async function run() {
     await click('Back')
     // The subtitle is styled in capitals, so match it case-insensitively.
     await waitFor(() => /3 saved/i.test(text()), '"3 saved"')
+    await screen('words-list')
     await fill('Search words', 'walk')
     await waitFor(() => document.querySelectorAll('.rien-list-row').length === 1, 'one search result')
+    await screen('words-search')
     await fill('Search words', '')
     await click('Due 3')
     await waitFor(() => document.querySelectorAll('.rien-list-row').length === 3, 'three due')
     await click('Tricky 0')
     await waitText('No tricky words')
+    await screen('words-tricky-empty')
     await click('All 3')
     await click('borrow')
     await waitText('reviewed 0 times')
@@ -473,7 +540,10 @@ async function run() {
       await waitFor(() => document.querySelector('.rien-session-label') || text().includes('Session complete'), 'session step')
       if (text().includes('Session complete')) break
       const label = document.querySelector('.rien-session-label')!.textContent!
-      if (i === 0) await screen('session-step')
+      const activity = ACTIVITIES.find(a => label.includes(a))
+      if (!activity) throw new Error(`unknown step ${label}`)
+      // The first step keeps its old name for the host scripts.
+      await screen(i === 0 ? 'session-step' : `session-${activity.toLowerCase().replace(/[^a-z]+/g, '-')}`)
       if (label.includes('Word Recall')) played.push(`recall (${await playRecall({ hintFirst: true, wrongFirst: { walked: 'walk' } })})`)
       else if (label.includes('Fix It')) { await playFixIt(packs); played.push('fix-it') }
       else if (label.includes('Final Sound Hunter')) { await playSounds(); played.push('sounds') }
@@ -503,6 +573,7 @@ async function run() {
     if (swimming < 4) throw new Error(`only ${swimming} fish swimming`)
     // Teammate needs four activities in a day; the simulator session skips Say It, so only check Sprout.
     if (!text().includes('Sprout')) throw new Error('Sprout should be unlocked')
+    await screen('tank-overview')
     ;(document.querySelector('.rien-fish') as HTMLElement).click()
     await waitFor(() => button('Feed it') || button('Bring it back') || pageText().includes('Award:'), 'fish sheet')
     await screen('tank')
@@ -522,30 +593,38 @@ async function run() {
     return `${streak}, ${done} done marks`
   })
 
-  const practise = async (id: string, play: () => Promise<void>, finished: string) => {
+  // One standalone game: a checkpoint once it is ready, and one at its end.
+  const practise = async (id: string, ready: () => unknown, play: () => Promise<void>, finished: string) => {
     await goTo(`/games/${id}`, '')
+    await waitFor(ready, `${id} ready`)
+    await screen(`game-${id}`)
     await play()
     await waitFor(() => text().includes(finished), finished)
+    await screen(`game-${id}-done`)
     return text().match(/\d+ (\/|of) \d+[^.]*/)?.[0]
   }
 
-  await step('Fix It on its own', () => practise('fix-it', () => playFixIt(packs), 'Round done'))
-  await step('Final Sound Hunter on its own', () => practise('sound-hunter', playSounds, 'Round done'))
-  await step('Sentence Builder on its own', () => practise('sentence-builder', () => playBuilder(packs, false), 'Round done'))
+  await step('Fix It on its own', () => practise('fix-it', () => document.querySelector('.rien-sentence'), () => playFixIt(packs, 'game-fix-it-rule'), 'Round done'))
+  await step('Final Sound Hunter on its own', () => practise('sound-hunter', () => document.querySelector('.rien-pair'), playSounds, 'Round done'))
+  await step('Sentence Builder on its own', () => practise('sentence-builder', () => document.querySelector('.rien-token'), () => playBuilder(packs, false), 'Round done'))
   await step('Gap Radio on its own, one gap missed', async () => {
     const before = (await db.mistakeCounts(new Date(0))).listening ?? 0
     await goTo('/games/gap-radio', 'Listen, then fill the gaps')
-    await playRadio(packs, true)
+    await waitFor(() => document.querySelector('.rien-radio'), 'radio text')
+    await screen('game-gap-radio')
+    await playRadio(packs, true, 'game-gap-radio-checked')
     const after = (await db.mistakeCounts(new Date(0))).listening ?? 0
     if (after <= before) throw new Error('no listening mistake saved')
   })
 
-  await step('Picture Match on its own', () => practise('picture-match', playPictures, 'Round done'))
-  await step('Listen & Pick on its own', () => practise('listen-pick', playListen, 'Round done'))
-  await step('Speed Round on its own', () => practise('speed-round', () => playSpeed(packs), 'Time!'))
+  await step('Picture Match on its own', () => practise('picture-match', () => document.querySelector('.rien-quick-choice'), playPictures, 'Round done'))
+  await step('Listen & Pick on its own', () => practise('listen-pick', () => button('Play the word') || button('Skip'), playListen, 'Round done'))
+  await step('Speed Round on its own', () => practise('speed-round', () => button('Start'), () => playSpeed(packs), 'Time!'))
 
   await step('File Boss: all 15 questions', async () => {
     await goTo('/games/file-boss', 'questions mixing')
+    await waitFor(() => document.querySelector('.rien-sentence, .rien-pair, main form input'), 'first question')
+    await screen('file-boss')
     for (let i = 0; i < 15; i++) {
       await waitFor(() => document.querySelector('.rien-sentence, .rien-pair, main form input'), 'question')
       if (document.querySelector('.rien-sentence')) await answerFixIt(packs)
@@ -558,6 +637,7 @@ async function run() {
       await click('Next')
     }
     await waitFor(() => text().includes('File beaten') || text().includes('Good try'), 'boss result')
+    await screen('file-boss-result')
     return text().match(/\d+ \/ 15/)?.[0]
   })
 
@@ -566,6 +646,7 @@ async function run() {
     const mistakesBefore = (await db.exportAll()).mistakes.length
     // The Start button sits in the pinned bar (teleported outside <main>).
     await goTo('/games/couple-talk', 'Take turns')
+    await screen('couple-talk-start')
     await click('Start talking')
     await waitFor(() => document.querySelector('.rien-talk-timer [role=timer]')?.textContent?.startsWith('9:5'), 'timer running')
     await click('Note a slip')
@@ -578,9 +659,14 @@ async function run() {
     await click('We\'re done')
     await waitText('Nice talk')
     await waitText('To go over together')
+    await screen('couple-talk-done')
     const after = await db.exportAll()
     if (after.talks.length !== talksBefore + 1) throw new Error('the talk was not saved')
     if (after.mistakes.length !== mistakesBefore + 1) throw new Error('the slip was not saved as a mistake')
+    // The noted slip is on My slips.
+    await goTo('/slips', 'My slips')
+    if (pageText().includes('No slips lately')) throw new Error('My slips is empty after a noted slip')
+    await screen('slips')
   })
 
   await step('Progress tab shows totals and the File Boss result', async () => {
@@ -618,6 +704,7 @@ async function run() {
     await screen('settings-dark')
     await db.saveSettings({ appearance: 'light' })
     await waitFor(() => !root.classList.contains('rien-dark'), 'light on')
+    await screen('settings-light')
     await db.saveSettings({ appearance: 'system' })
     await screen('settings')
   })
@@ -739,6 +826,7 @@ async function run() {
     await sleep(150)
     await click('Check')
     await waitText(`${call.form.length} / ${call.form.length}`)
+    await screen('ielts-listening')
     // Writing: a short essay gets the checklist.
     await goTo('/ielts/writing', 'Task 2')
     await click('Task 2')
@@ -753,6 +841,7 @@ async function run() {
     await goTo('/ielts/speaking', 'Parts 2 and 3')
     await click('Start Part 1')
     await waitText('question 1 of')
+    await screen('ielts-speaking-part1')
     await goTo('/ielts', 'Academic words')
     await goTo('/ielts/speaking', 'Parts 2 and 3')
     await click('Start Part 2')

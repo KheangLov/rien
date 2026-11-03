@@ -246,3 +246,92 @@ describe('guessing, self-check and tuning', () => {
     expect(report.at(-1)!.skill === 'present-perfect' || report.at(-1)!.skill === 'conditionals' || report.at(-2)!.skill === 'conditionals' || report.at(-2)!.skill === 'present-perfect').toBe(true)
   })
 })
+
+describe('self-check boundaries', () => {
+  // The model's warm-up: its first answers are learned from but not scored.
+  const WARM_UP = 10
+  const answer = (k: number, score: number, skill = 'past-simple'): Evidence =>
+    ({ itemId: `b${k % 4}`, skill, level: 'B1', score, at: new Date(start.getTime() + k * 3_600_000) })
+  const answers = (n: number) => Array.from({ length: n }, (_, k) => answer(k, k % 3 === 0 ? 0 : 1))
+  const loss = (p: number, y: number) => -(y * Math.log(p) + (1 - y) * Math.log(1 - p))
+  const empty = { n: 0, accuracy: 0, logLoss: 0, baselineLogLoss: 0, bins: [] }
+
+  it('scores nothing, with no bins, when there are no answers', () => {
+    const { model, check } = evaluate([], 'B1')
+    expect(check).toEqual(empty)
+    expect(model.n).toBe(0)
+    expect(model.ability).toBe(emptyModel('B1').ability)
+  })
+
+  it('learns from warm-up answers without scoring them, up to and at the warm-up count', () => {
+    for (const n of [1, WARM_UP - 1, WARM_UP]) {
+      const { model, check } = evaluate(answers(n), 'B1')
+      expect(check, `${n} answers`).toEqual(empty)
+      expect(model.n).toBe(n)
+    }
+  })
+
+  it('scores the first answer after the warm-up from its own prediction and the running average', () => {
+    const evidence = answers(WARM_UP + 1)
+    const last = evidence.at(-1)!
+    // The chance the model gave before learning the last answer.
+    const before = buildModel(evidence.slice(0, WARM_UP), 'B1')
+    const p = predict(before, last, last.at)
+    const right = evidence.slice(0, WARM_UP).reduce((s, e) => s + e.score, 0)
+    const base = (right + 1) / (WARM_UP + 2)
+    const { check } = evaluate(evidence, 'B1')
+    expect(check.n).toBe(1)
+    expect(check.accuracy).toBe((p >= 0.5) === (last.score >= 0.5) ? 1 : 0)
+    expect(check.logLoss).toBeCloseTo(loss(p, last.score), 12)
+    expect(check.baselineLogLoss).toBeCloseTo(loss(base, last.score), 12)
+    expect(check.bins).toHaveLength(1)
+    const [bin] = check.bins
+    expect(bin!.n).toBe(1)
+    expect(bin!.said).toBeCloseTo(p, 12)
+    expect(bin!.was).toBe(last.score)
+    expect(p).toBeGreaterThanOrEqual(bin!.from)
+    expect(p).toBeLessThan(bin!.to === 1 ? 1.000001 : bin!.to)
+  })
+
+  it('treats scores outside 0 to 1 as their nearest end', () => {
+    const wild = answers(30).map((e, k) => ({ ...e, score: e.score === 1 ? (k % 2 ? 1.7 : 1) : (k % 2 ? -0.4 : 0) }))
+    const clamped = wild.map(e => ({ ...e, score: Math.min(1, Math.max(0, e.score)) }))
+    const a = evaluate(wild, 'B1')
+    const b = evaluate(clamped, 'B1')
+    expect(a.check).toEqual(b.check)
+    expect(a.model.ability).toBe(b.model.ability)
+    expect(a.check.n).toBe(20)
+    expect(a.check.accuracy).toBeGreaterThanOrEqual(0)
+    expect(a.check.accuracy).toBeLessThanOrEqual(1)
+    for (const bin of a.check.bins) {
+      expect(bin.was).toBeGreaterThanOrEqual(0)
+      expect(bin.was).toBeLessThanOrEqual(1)
+      expect(bin.said).toBeGreaterThanOrEqual(bin.from)
+      expect(bin.said).toBeLessThanOrEqual(bin.to)
+    }
+    expect(a.check.bins.reduce((s, b) => s + b.n, 0)).toBe(a.check.n)
+  })
+
+  it('predicts each answer before learning from it, in time order', () => {
+    // One item answered wrong again and again: a model that learned first
+    // would score itself far better than one that predicted first.
+    const evidence = Array.from({ length: 25 }, (_, k) => answer(k * 4, 0, 'articles'))
+    const shuffled = [...evidence].reverse()
+    const model = emptyModel('B1')
+    let before = 0
+    let after = 0
+    evidence.forEach((e, k) => {
+      const pBefore = predict(model, e, e.at)
+      learn(model, e)
+      const pAfter = predict(model, e, e.at)
+      if (k >= WARM_UP) {
+        before += loss(pBefore, 0)
+        after += loss(pAfter, 0)
+      }
+    })
+    const { check } = evaluate(shuffled, 'B1')
+    expect(check.n).toBe(15)
+    expect(check.logLoss).toBeCloseTo(before / 15, 12)
+    expect(check.logLoss).toBeGreaterThan(after / 15)
+  })
+})
