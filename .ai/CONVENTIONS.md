@@ -41,7 +41,7 @@
 - Security: the SECURITY sections for the touched layers; G12 paths get the full pass.
 - Declarations (G9): reuse checked, no duplicates or unused code, narrowest types.
 - Tests: assert behavior, cover the edge and error cases, nothing skipped.
-- UI: tokens and existing components only, all listed states, i18n for every string.
+- UI: tokens and existing components only (DS-1, DS-2), all listed states, plain inline English strings (no i18n).
 - Git: no AI attribution; message format per Commits.
 - Project rules:
   - P-1: Never pure white (`#fff` / `#ffffff`); soft whites `#f8fafc` / `#fcfcfd` (`nuxt.config.ts`, `app/assets/css/main.css:3673`).

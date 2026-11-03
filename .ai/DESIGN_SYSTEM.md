@@ -54,12 +54,13 @@ Spacing, font sizes and easings are literal values (no spacing or type tokens).
 
 ## Rules
 - DS-1 · MUST · REVIEW · Never hardcode a color, size, radius, shadow or font when a token exists; no exact match → nearest token, flagged in the prompt.
+- DS-1a · MUST · REVIEW · Illustration SVG (`app/components/tank/`, `app/components/learn/`) may use a fixed literal palette; parts that follow the accent or theme use `--sq-primary` or `--rien-tint-*`; soft whites only (P-1).
 - DS-2 · MUST · REVIEW · Reuse or extend an existing component before creating one; a new one is justified in the plan.
 - DS-3 · MUST · REVIEW · New tokens only when the approved prompt lists them.
 
 ## Figma
 - Follow the connected Figma server's own instructions first; some servers require a session call or a design-to-code skill before any fetch.
 - Fetch only the node in the given URL: metadata for big frames, then design context per child node, variables once, one screenshot per frame.
-- Design-context output is a reference in another stack: translate it to this project's components, tokens and i18n; never paste it.
+- Design-context output is a reference in another stack: translate it to this project's components, tokens and inline strings; never paste it.
 - States and breakpoints the design doesn't show are questions or `ASSUMPTION:` lines in the prompt.
 - Confirmed mappings are added to the tables above after each Figma task.
