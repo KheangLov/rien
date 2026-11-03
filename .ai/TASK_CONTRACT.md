@@ -78,3 +78,4 @@ Chat-only writers: build a context pack in your own terminal (never secret files
 
 ## Prompt Lessons (40 max; add only after rework, drift, a wrong assumption or a failed check)
 `- <date> | <writer> | <task type> | what went wrong | rule going forward`
+- 2026-11-03 | Codex | content pack | asked for 300-600-word reading passages; ieltsReadingSchema caps text at 1600 chars | check every requested size against the Zod limits in shared/schemas/pack.ts before writing counts

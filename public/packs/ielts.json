@@ -237,6 +237,112 @@
         "How have towns in your country changed?",
         "Is it better to live in a big city or a small town?"
       ]
+    },
+    {
+      "id": "p1-studies",
+      "part": 1,
+      "topic": "Your studies",
+      "questions": [
+        "What are you studying at the moment?",
+        "Why did you choose to study that?",
+        "What do you find most difficult about it?",
+        "Do you prefer studying alone or with other people?"
+      ]
+    },
+    {
+      "id": "p1-friends",
+      "part": 1,
+      "topic": "Friends",
+      "questions": [
+        "Do you have a lot of friends, or a few close ones?",
+        "How often do you see your friends?",
+        "What do you usually do together?",
+        "Is it easy for you to make new friends?"
+      ]
+    },
+    {
+      "id": "p1-mornings",
+      "part": 1,
+      "topic": "Mornings",
+      "questions": [
+        "Are you a morning person?",
+        "What do you usually do in the first hour after you wake up?",
+        "Do you eat breakfast every day?",
+        "Is your morning different at the weekend?"
+      ]
+    },
+    {
+      "id": "p1-reading",
+      "part": 1,
+      "topic": "Reading",
+      "questions": [
+        "Do you enjoy reading?",
+        "What do you read most often?",
+        "Do you prefer reading on paper or on a screen?",
+        "Did you read a lot when you were a child?"
+      ]
+    },
+    {
+      "id": "p1-photos",
+      "part": 1,
+      "topic": "Photos",
+      "questions": [
+        "Do you like taking photos?",
+        "What do you usually take photos of?",
+        "Do you ever print your photos?",
+        "Do you like being in photos yourself?"
+      ]
+    },
+    {
+      "id": "p2-advice",
+      "part": 2,
+      "topic": "Good advice",
+      "cue": "Describe a piece of good advice that someone gave you.",
+      "points": [
+        "who gave you the advice",
+        "what the advice was",
+        "when you received it",
+        "and explain how it helped you"
+      ],
+      "questions": [
+        "Why do young people often ask friends for advice instead of their parents?",
+        "Is it better to get advice from experts or from people you know?",
+        "Do people today get too much advice from the internet?"
+      ]
+    },
+    {
+      "id": "p2-app",
+      "part": 2,
+      "topic": "A useful app",
+      "cue": "Describe an app or website that you use often.",
+      "points": [
+        "what it is called",
+        "what you use it for",
+        "how often you use it",
+        "and explain why it is useful to you"
+      ],
+      "questions": [
+        "How have apps changed the way people learn?",
+        "Do you think people spend too much time on their phones?",
+        "What kinds of apps might be popular in the future?"
+      ]
+    },
+    {
+      "id": "p2-goal",
+      "part": 2,
+      "topic": "A goal",
+      "cue": "Describe a goal you would like to achieve in the next few years.",
+      "points": [
+        "what the goal is",
+        "why you chose it",
+        "what you need to do to achieve it",
+        "and explain how you will feel when you achieve it"
+      ],
+      "questions": [
+        "Why is it important for people to set goals?",
+        "Should schools teach students how to plan for the future?",
+        "Are the goals of young people different from those of their parents?"
+      ]
     }
   ],
   "ieltsWriting": [
@@ -436,6 +542,148 @@
       "id": "t2-moving-to-cities",
       "task": 2,
       "prompt": "In many countries, young people are moving from the countryside to cities. What problems does this cause, and what can be done to solve them? Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words."
+    },
+    {
+      "id": "t1-cycling",
+      "task": 1,
+      "prompt": "The chart shows the percentage of workers who cycled to work in three cities in 2008, 2012, 2016 and 2020 (invented figures for practice). Summarise the information by selecting and reporting the main features, and make comparisons where relevant. Write at least 150 words.",
+      "chart": {
+        "title": "Workers who cycle to work",
+        "unit": "% of workers",
+        "labels": [
+          "2008",
+          "2012",
+          "2016",
+          "2020"
+        ],
+        "series": [
+          {
+            "name": "City A",
+            "data": [
+              4,
+              6,
+              9,
+              15
+            ]
+          },
+          {
+            "name": "City B",
+            "data": [
+              12,
+              11,
+              10,
+              8
+            ]
+          },
+          {
+            "name": "City C",
+            "data": [
+              7,
+              7,
+              12,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "t1-free-time",
+      "task": 1,
+      "prompt": "The chart shows how many hours a week teenagers in one country spent on four free-time activities in 2014 and 2024 (invented figures for practice). Summarise the information by selecting and reporting the main features, and make comparisons where relevant. Write at least 150 words.",
+      "chart": {
+        "title": "Teenagers' free time",
+        "unit": "hours per week",
+        "labels": [
+          "Watching videos",
+          "Sport",
+          "Reading",
+          "Meeting friends"
+        ],
+        "series": [
+          {
+            "name": "2014",
+            "data": [
+              8,
+              6,
+              4,
+              7
+            ]
+          },
+          {
+            "name": "2024",
+            "data": [
+              15,
+              4,
+              2,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "t1-electricity",
+      "task": 1,
+      "prompt": "The chart shows where one country's electricity came from in 2000, 2010 and 2020 (invented figures for practice). Summarise the information by selecting and reporting the main features, and make comparisons where relevant. Write at least 150 words.",
+      "chart": {
+        "title": "Sources of electricity",
+        "unit": "% of electricity",
+        "labels": [
+          "Coal",
+          "Oil",
+          "Hydro",
+          "Solar",
+          "Wind"
+        ],
+        "series": [
+          {
+            "name": "2000",
+            "data": [
+              45,
+              30,
+              20,
+              3,
+              2
+            ]
+          },
+          {
+            "name": "2010",
+            "data": [
+              40,
+              20,
+              28,
+              7,
+              5
+            ]
+          },
+          {
+            "name": "2020",
+            "data": [
+              30,
+              8,
+              35,
+              17,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "t2-exams",
+      "task": 2,
+      "prompt": "Some people think that final exams are the best way to measure what students have learned. Others believe that work done during the course is a better measure. Discuss both views and give your own opinion. Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words."
+    },
+    {
+      "id": "t2-plastic",
+      "task": 2,
+      "prompt": "Plastic waste is a serious problem in many countries. Some people think the only effective solution is for governments to ban single-use plastic. To what extent do you agree or disagree? Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words."
+    },
+    {
+      "id": "t2-part-time-jobs",
+      "task": 2,
+      "prompt": "More and more students have a part-time job while they are studying. Do the advantages of this outweigh the disadvantages? Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words."
     }
   ],
   "ieltsReading": [
@@ -694,6 +942,196 @@
           "text": "All floating schools are now paid for by governments.",
           "answer": "false",
           "why": "Most depend on donations; some governments pay part."
+        }
+      ]
+    },
+    {
+      "id": "mangrove-planting",
+      "title": "Planting a coastline",
+      "text": "Ten years ago, the beach in front of one small fishing village was losing about a metre of land every year. Storms pulled the sand away, and several families had to move their houses further inland. A local teacher suggested planting mangroves, trees that grow in salty water and hold the mud together with their roots. At first, many villagers were doubtful. Some worried that the trees would block their view of the sea. To make matters worse, the first two hundred young trees were washed away by a storm only a month after they were planted. The teacher did not give up. With help from a university team, the villagers learned to plant when the sea is calmer and to protect each young tree with a low bamboo fence. Today, a strip of mangroves about four hundred metres long stands between the village and the sea. The land has stopped disappearing, and fishermen say they now catch more crabs near the trees, because young sea animals hide among the roots. Visitors have also started to come, and some families now earn extra money by taking them on small boats through the forest. Every year, schoolchildren help to plant new trees, and each class looks after its own section. However, not everyone is happy. A few fishermen complain that the trees make it harder to reach their old fishing spots, and the village has not yet agreed on how many new trees to plant next year.",
+      "statements": [
+        {
+          "id": "teacher",
+          "text": "The idea of planting mangroves came from a teacher.",
+          "answer": "true",
+          "why": "\"A local teacher suggested planting mangroves.\""
+        },
+        {
+          "id": "first-trees",
+          "text": "All of the first young trees survived.",
+          "answer": "false",
+          "why": "The first two hundred trees \"were washed away by a storm only a month after they were planted\"."
+        },
+        {
+          "id": "calm-sea",
+          "text": "The villagers learned to plant when the sea is calmer.",
+          "answer": "true",
+          "why": "They \"learned to plant when the sea is calmer\"."
+        },
+        {
+          "id": "university-paid",
+          "text": "The university paid for the young trees.",
+          "answer": "not-given",
+          "why": "A university team helped, but the text does not say who paid for the trees."
+        },
+        {
+          "id": "crabs",
+          "text": "Fishermen catch fewer crabs since the mangroves grew.",
+          "answer": "false",
+          "why": "Fishermen \"now catch more crabs near the trees\"."
+        },
+        {
+          "id": "everyone-happy",
+          "text": "Everyone in the village is happy with the mangroves.",
+          "answer": "false",
+          "why": "\"Not everyone is happy.\" A few fishermen complain about reaching their fishing spots."
+        }
+      ]
+    },
+    {
+      "id": "library-bus",
+      "title": "A library on wheels",
+      "text": "Every Tuesday morning, an old yellow bus stops outside a primary school in a village forty kilometres from the nearest town. Inside, the seats have been replaced with shelves holding about two thousand books. The bus belongs to a small charity that started with one driver and one librarian. Before the bus came, the school had only a single cupboard of books, most of them old textbooks. Now each child can borrow two books a week, and the librarian reads a story aloud to the youngest classes while older pupils help younger ones to choose their books. Teachers say that children who borrow regularly have become more confident readers, although the charity admits it has not measured this properly. The books come from donations, and most of them are in Khmer, with a smaller number in English. Running the bus is not cheap. Fuel is the largest cost, and in the rainy season some roads become so muddy that the bus cannot reach three of the villages on its route. When this happens, the librarian carries a box of books on a motorbike instead. Recently, a group of former students who grew up visiting the bus raised enough money to buy a second one. They hope it will start a new route in the north of the province next year.",
+      "statements": [
+        {
+          "id": "shelves",
+          "text": "The bus has shelves where the seats used to be.",
+          "answer": "true",
+          "why": "\"The seats have been replaced with shelves.\""
+        },
+        {
+          "id": "big-library",
+          "text": "Before the bus came, the school had a large library.",
+          "answer": "false",
+          "why": "It \"had only a single cupboard of books\"."
+        },
+        {
+          "id": "three-books",
+          "text": "Each child can borrow three books a week.",
+          "answer": "false",
+          "why": "\"Each child can borrow two books a week.\""
+        },
+        {
+          "id": "measured",
+          "text": "The charity has carefully measured how children's reading has improved.",
+          "answer": "false",
+          "why": "The charity \"admits it has not measured this properly\"."
+        },
+        {
+          "id": "fuel",
+          "text": "Fuel is the charity's biggest cost for the bus.",
+          "answer": "true",
+          "why": "\"Fuel is the largest cost.\""
+        },
+        {
+          "id": "motorbike-gift",
+          "text": "The librarian's motorbike was a gift from a teacher.",
+          "answer": "not-given",
+          "why": "The librarian uses a motorbike, but the text does not say where it came from."
+        },
+        {
+          "id": "second-bus",
+          "text": "The government paid for a second bus.",
+          "answer": "false",
+          "why": "Former students \"raised enough money to buy a second one\"."
+        }
+      ]
+    },
+    {
+      "id": "ride-apps",
+      "title": "Calling a ride",
+      "text": "In many Asian cities, the way people take short trips has changed quickly. Not long ago, a passenger who wanted a ride usually stood at the side of the road and agreed on a price with a driver before getting in. Today, many people open an app on their phone instead. The app shows the price before the trip starts, and the passenger can follow the route on a map. Payment can also be made through the app, so there is no need to carry cash. Some passengers say they feel safer, too, because the app records the driver's name and the route of every trip. For visitors who do not speak the local language, this removes one of the most stressful parts of travelling. Drivers have mixed feelings. Some say the apps bring them more customers, especially at night. Others complain that the companies take a share of every fare, so a long day of work earns them less than it used to. Older drivers often find the apps difficult to use and still prefer to wait outside markets and hotels. City planners are interested in the information the apps collect, because it shows which streets are busiest at different times of day. One city has already used this information to change the timing of its traffic lights. Whether apps will reduce traffic, however, is still not clear, because cheap rides may also encourage people to travel more often.",
+      "statements": [
+        {
+          "id": "price-first",
+          "text": "Passengers used to agree on a price before the trip.",
+          "answer": "true",
+          "why": "A passenger \"agreed on a price with a driver before getting in\"."
+        },
+        {
+          "id": "visitors",
+          "text": "The apps make travelling easier for visitors who do not speak the local language.",
+          "answer": "true",
+          "why": "The apps remove \"one of the most stressful parts of travelling\" for these visitors."
+        },
+        {
+          "id": "all-drivers",
+          "text": "All drivers are happy with the apps.",
+          "answer": "false",
+          "why": "\"Drivers have mixed feelings\", and some complain."
+        },
+        {
+          "id": "share",
+          "text": "The app companies take part of every fare.",
+          "answer": "true",
+          "why": "\"The companies take a share of every fare.\""
+        },
+        {
+          "id": "older-easy",
+          "text": "Older drivers find the apps easy to use.",
+          "answer": "false",
+          "why": "\"Older drivers often find the apps difficult to use.\""
+        },
+        {
+          "id": "women",
+          "text": "The apps are more popular with women than with men.",
+          "answer": "not-given",
+          "why": "The text does not compare men and women."
+        },
+        {
+          "id": "traffic",
+          "text": "It is certain that the apps will reduce traffic.",
+          "answer": "false",
+          "why": "Whether apps will reduce traffic \"is still not clear\"."
+        }
+      ]
+    },
+    {
+      "id": "short-breaks",
+      "title": "Learning with short breaks",
+      "text": "A group of teachers at a language school decided to test a simple idea: would students remember new words better if they took short breaks during a lesson? Sixty adult students took part, and all the words were nouns connected with travel, such as luggage and departure. Half of them studied forty words for fifty minutes without stopping. The other half studied the same words, but stopped every twelve minutes for a two-minute break, during which they stood up, looked out of the window and did not talk. One week later, both groups took the same test without warning. The students who had taken breaks remembered about a fifth more words than the others. Another result surprised the teachers. When the students were asked how much they thought they had learned, the group without breaks felt more confident, even though they actually did worse. One teacher suggested that working without stopping feels productive, so students believe it must be effective. The teachers are careful not to claim too much. Their study was small, it took place in only one school, and all the students were adults. The breaks were also short and quiet, and the teachers do not know whether checking a phone during a break would have the same effect. Even so, the school has now added short breaks to all its evening classes, and several students say the lessons feel less tiring.",
+      "statements": [
+        {
+          "id": "same-words",
+          "text": "Both groups studied the same words.",
+          "answer": "true",
+          "why": "The second half \"studied the same words\"."
+        },
+        {
+          "id": "warned",
+          "text": "The students knew they would be tested after a week.",
+          "answer": "false",
+          "why": "They took the test \"without warning\"."
+        },
+        {
+          "id": "more-words",
+          "text": "The students who took breaks remembered more words.",
+          "answer": "true",
+          "why": "They \"remembered about a fifth more words than the others\"."
+        },
+        {
+          "id": "confident",
+          "text": "The students without breaks thought they had learned less.",
+          "answer": "false",
+          "why": "The group without breaks \"felt more confident\"."
+        },
+        {
+          "id": "schools",
+          "text": "The study took place in several schools.",
+          "answer": "false",
+          "why": "\"It took place in only one school.\""
+        },
+        {
+          "id": "teenagers",
+          "text": "The teachers plan to repeat the study with teenagers.",
+          "answer": "not-given",
+          "why": "The text mentions that all the students were adults, but says nothing about future studies."
+        },
+        {
+          "id": "evening",
+          "text": "The school has added short breaks to all its evening classes.",
+          "answer": "true",
+          "why": "\"The school has now added short breaks to all its evening classes.\""
         }
       ]
     }
@@ -1311,6 +1749,414 @@
           ]
         }
       ]
+    },
+    {
+      "id": "bus-ticket",
+      "title": "Buying a bus ticket",
+      "intro": "A man phones a bus company to buy a ticket. Complete the form.",
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "Good afternoon, River Line Buses. How can I help you?"
+        },
+        {
+          "speaker": "B",
+          "text": "Hi. I'd like a ticket from Phnom Penh to Siem Reap, please."
+        },
+        {
+          "speaker": "A",
+          "text": "Sure. Which day are you travelling?"
+        },
+        {
+          "speaker": "B",
+          "text": "On Friday, the twenty-second of March."
+        },
+        {
+          "speaker": "A",
+          "text": "We have buses at eight in the morning, eleven in the morning and two in the afternoon."
+        },
+        {
+          "speaker": "B",
+          "text": "The eleven o'clock one, please. Eight is too early for me."
+        },
+        {
+          "speaker": "A",
+          "text": "No problem. That's fifteen dollars. Can I have your family name?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, it's Kong. K, O, N, G."
+        },
+        {
+          "speaker": "A",
+          "text": "Thank you. Would you like a window seat or an aisle seat?"
+        },
+        {
+          "speaker": "B",
+          "text": "A window seat, please."
+        }
+      ],
+      "form": [
+        {
+          "id": "surname",
+          "label": "Family name",
+          "answer": "Kong",
+          "accept": []
+        },
+        {
+          "id": "to",
+          "label": "Travelling to",
+          "answer": "Siem Reap",
+          "accept": []
+        },
+        {
+          "id": "date",
+          "label": "Date of travel",
+          "answer": "22 March",
+          "accept": [
+            "March 22",
+            "22/3",
+            "22/03"
+          ]
+        },
+        {
+          "id": "time",
+          "label": "Bus leaves at",
+          "answer": "11 am",
+          "accept": [
+            "11:00",
+            "11.00",
+            "11 o'clock",
+            "eleven am"
+          ]
+        },
+        {
+          "id": "price",
+          "label": "Price ($)",
+          "answer": "15",
+          "accept": [
+            "fifteen"
+          ]
+        },
+        {
+          "id": "seat",
+          "label": "Seat",
+          "answer": "window",
+          "accept": [
+            "window seat"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "library-card",
+      "title": "Joining a library",
+      "intro": "A student asks about joining a city library. Complete the form.",
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "Hello, can I help you?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, I'd like to join the library, please."
+        },
+        {
+          "speaker": "A",
+          "text": "Of course. Can I have your first name?"
+        },
+        {
+          "speaker": "B",
+          "text": "It's Sophea. S, O, P, H, E, A."
+        },
+        {
+          "speaker": "A",
+          "text": "Thanks. And your date of birth?"
+        },
+        {
+          "speaker": "B",
+          "text": "The ninth of July, two thousand and four. How many books can I borrow?"
+        },
+        {
+          "speaker": "A",
+          "text": "Up to six at a time, and you can keep them for three weeks."
+        },
+        {
+          "speaker": "B",
+          "text": "Is there a cost for the card?"
+        },
+        {
+          "speaker": "A",
+          "text": "It's free for students. But if you lose it, a new card costs two dollars."
+        },
+        {
+          "speaker": "B",
+          "text": "OK. And what time do you close on Sundays?"
+        },
+        {
+          "speaker": "A",
+          "text": "On Sundays we open at nine and close at one in the afternoon."
+        }
+      ],
+      "form": [
+        {
+          "id": "first-name",
+          "label": "First name",
+          "answer": "Sophea",
+          "accept": []
+        },
+        {
+          "id": "birth",
+          "label": "Date of birth",
+          "answer": "9 July 2004",
+          "accept": [
+            "July 9 2004",
+            "9/7/2004",
+            "09/07/2004"
+          ]
+        },
+        {
+          "id": "books",
+          "label": "Books at a time",
+          "answer": "6",
+          "accept": [
+            "six"
+          ]
+        },
+        {
+          "id": "weeks",
+          "label": "Loan period (weeks)",
+          "answer": "3",
+          "accept": [
+            "three"
+          ]
+        },
+        {
+          "id": "new-card",
+          "label": "New card if lost ($)",
+          "answer": "2",
+          "accept": [
+            "two"
+          ]
+        },
+        {
+          "id": "sunday",
+          "label": "Closes on Sundays at",
+          "answer": "1 pm",
+          "accept": [
+            "1:00 pm",
+            "1.00 pm",
+            "13:00"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clinic",
+      "title": "Seeing a doctor",
+      "intro": "A woman phones a clinic to make an appointment. Complete the form.",
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "Good morning, Riverside Clinic."
+        },
+        {
+          "speaker": "B",
+          "text": "Hello. I'd like to see a doctor, please. I've had a sore throat for four days."
+        },
+        {
+          "speaker": "A",
+          "text": "I'm sorry to hear that. What's your family name?"
+        },
+        {
+          "speaker": "B",
+          "text": "It's Chan. C, H, A, N."
+        },
+        {
+          "speaker": "A",
+          "text": "The earliest appointment is tomorrow, Tuesday, at a quarter past ten."
+        },
+        {
+          "speaker": "B",
+          "text": "Tuesday is difficult for me. Do you have anything on Wednesday?"
+        },
+        {
+          "speaker": "A",
+          "text": "Yes, Wednesday at three forty-five in the afternoon."
+        },
+        {
+          "speaker": "B",
+          "text": "That's perfect. How much will it cost?"
+        },
+        {
+          "speaker": "A",
+          "text": "It's twelve dollars for a first visit. We only take cash at the moment, I'm afraid."
+        },
+        {
+          "speaker": "B",
+          "text": "That's fine. Thank you."
+        }
+      ],
+      "form": [
+        {
+          "id": "family-name",
+          "label": "Family name",
+          "answer": "Chan",
+          "accept": []
+        },
+        {
+          "id": "problem",
+          "label": "Problem",
+          "answer": "sore throat",
+          "accept": [
+            "a sore throat"
+          ]
+        },
+        {
+          "id": "days",
+          "label": "Days ill",
+          "answer": "4",
+          "accept": [
+            "four"
+          ]
+        },
+        {
+          "id": "day",
+          "label": "Appointment day",
+          "answer": "Wednesday",
+          "accept": [
+            "Wed"
+          ]
+        },
+        {
+          "id": "time",
+          "label": "Appointment time",
+          "answer": "3.45 pm",
+          "accept": [
+            "3:45 pm",
+            "3:45",
+            "3.45",
+            "15:45"
+          ]
+        },
+        {
+          "id": "fee",
+          "label": "Fee ($)",
+          "answer": "12",
+          "accept": []
+        },
+        {
+          "id": "payment",
+          "label": "Payment",
+          "answer": "cash",
+          "accept": [
+            "cash only"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cooking-class",
+      "title": "A cooking course",
+      "intro": "A man asks about a weekend cooking course. Complete the form.",
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "Hello, Spice Garden Cooking School."
+        },
+        {
+          "speaker": "B",
+          "text": "Hi. I'm calling about your course for beginners."
+        },
+        {
+          "speaker": "A",
+          "text": "Yes. It runs on Saturday mornings for five weeks."
+        },
+        {
+          "speaker": "B",
+          "text": "When does the next one start?"
+        },
+        {
+          "speaker": "A",
+          "text": "On the first of June. Classes begin at eight thirty."
+        },
+        {
+          "speaker": "B",
+          "text": "And how much is it?"
+        },
+        {
+          "speaker": "A",
+          "text": "Ninety dollars for the whole course, including all the ingredients. You just need to bring an apron."
+        },
+        {
+          "speaker": "B",
+          "text": "Great. I'd like to sign up. My name's Visal. V, I, S, A, L."
+        },
+        {
+          "speaker": "A",
+          "text": "Thanks, Visal. And your email address?"
+        },
+        {
+          "speaker": "B",
+          "text": "It's visal dot chef at example dot com."
+        }
+      ],
+      "form": [
+        {
+          "id": "name",
+          "label": "Name",
+          "answer": "Visal",
+          "accept": []
+        },
+        {
+          "id": "weeks",
+          "label": "Length of course (weeks)",
+          "answer": "5",
+          "accept": [
+            "five"
+          ]
+        },
+        {
+          "id": "start",
+          "label": "Start date",
+          "answer": "1 June",
+          "accept": [
+            "June 1",
+            "1/6",
+            "01/06"
+          ]
+        },
+        {
+          "id": "time",
+          "label": "Classes begin at",
+          "answer": "8.30",
+          "accept": [
+            "8:30",
+            "8.30 am",
+            "8:30 am"
+          ]
+        },
+        {
+          "id": "price",
+          "label": "Price ($)",
+          "answer": "90",
+          "accept": []
+        },
+        {
+          "id": "bring",
+          "label": "Bring",
+          "answer": "apron",
+          "accept": [
+            "an apron"
+          ]
+        },
+        {
+          "id": "email",
+          "label": "Email",
+          "answer": "visal.chef@example.com",
+          "accept": []
+        }
+      ]
     }
   ],
   "academicWords": [
@@ -1613,6 +2459,156 @@
       "word": "vary",
       "meaning": "to be different, or to change",
       "example": "Prices vary from shop to shop."
+    },
+    {
+      "word": "achieve",
+      "meaning": "to succeed in doing something after working hard",
+      "example": "She achieved band 6 after a year of practice."
+    },
+    {
+      "word": "affect",
+      "meaning": "to change or influence something",
+      "example": "Lack of sleep can affect your memory."
+    },
+    {
+      "word": "aspect",
+      "meaning": "one part or side of a situation or problem",
+      "example": "Grammar is only one aspect of learning a language."
+    },
+    {
+      "word": "assist",
+      "meaning": "to help someone do something",
+      "example": "A nurse assisted the doctor during the check-up."
+    },
+    {
+      "word": "category",
+      "meaning": "a group of things that are alike in some way",
+      "example": "The new words are sorted into three categories: food, travel and work."
+    },
+    {
+      "word": "community",
+      "meaning": "the people who live in one place, or who share an interest",
+      "example": "The whole community helped to clean the river."
+    },
+    {
+      "word": "complex",
+      "meaning": "having many parts, so it is hard to understand",
+      "example": "The rules of the game seem complex at first."
+    },
+    {
+      "word": "conclude",
+      "meaning": "to decide something after looking at the facts",
+      "example": "The report concludes that cycle lanes make roads safer."
+    },
+    {
+      "word": "conduct",
+      "meaning": "to organise and carry out an activity, such as a survey",
+      "example": "The students conducted a survey about free-time habits."
+    },
+    {
+      "word": "consume",
+      "meaning": "to use something up, such as energy, or to eat or drink it",
+      "example": "Old fridges consume more electricity than new ones."
+    },
+    {
+      "word": "culture",
+      "meaning": "the customs, art and beliefs of a group of people",
+      "example": "Food is an important part of Cambodian culture."
+    },
+    {
+      "word": "design",
+      "meaning": "to plan how something will look or work",
+      "example": "He designed a poster for the school festival."
+    },
+    {
+      "word": "distinct",
+      "meaning": "clearly different or separate",
+      "example": "The two provinces have distinct styles of cooking."
+    },
+    {
+      "word": "element",
+      "meaning": "one part of something larger",
+      "example": "A good essay has three elements: an introduction, a body and a conclusion."
+    },
+    {
+      "word": "evaluate",
+      "meaning": "to judge how good or useful something is",
+      "example": "Teachers evaluate each project at the end of the term."
+    },
+    {
+      "word": "feature",
+      "meaning": "an important or typical part of something",
+      "example": "The best feature of this phone is its long battery life."
+    },
+    {
+      "word": "focus",
+      "meaning": "to give most of your attention to one thing",
+      "example": "Try to focus on one skill at a time."
+    },
+    {
+      "word": "impact",
+      "meaning": "a strong effect on something",
+      "example": "The new bridge had a big impact on local businesses."
+    },
+    {
+      "word": "maintain",
+      "meaning": "to keep something in good condition or at the same level",
+      "example": "It is hard to maintain a study routine during the holidays."
+    },
+    {
+      "word": "obtain",
+      "meaning": "to get something, often with some effort",
+      "example": "You need to obtain a visa before you travel."
+    },
+    {
+      "word": "participate",
+      "meaning": "to take part in an activity",
+      "example": "Everyone in the class participated in the debate."
+    },
+    {
+      "word": "positive",
+      "meaning": "good or hopeful",
+      "example": "Most of the comments about the new timetable were positive."
+    },
+    {
+      "word": "potential",
+      "meaning": "possible in the future, but not yet real",
+      "example": "Solar power has great potential in sunny countries."
+    },
+    {
+      "word": "previous",
+      "meaning": "happening or existing before the one now",
+      "example": "Her previous job was at a hotel."
+    },
+    {
+      "word": "primary",
+      "meaning": "main or most important",
+      "example": "The primary reason for the delay was the heavy rain."
+    },
+    {
+      "word": "purchase",
+      "meaning": "to buy something",
+      "example": "Tickets can be purchased online or at the station."
+    },
+    {
+      "word": "range",
+      "meaning": "a group of different things of the same general type",
+      "example": "The shop sells a wide range of bicycles."
+    },
+    {
+      "word": "region",
+      "meaning": "a large area of a country or of the world",
+      "example": "Rice is grown in many regions of the country."
+    },
+    {
+      "word": "relevant",
+      "meaning": "connected with what is being discussed",
+      "example": "Only include examples that are relevant to the question."
+    },
+    {
+      "word": "resource",
+      "meaning": "something useful that people have, such as water, money or skills",
+      "example": "Water is a valuable resource in the dry season."
     }
   ]
 }
