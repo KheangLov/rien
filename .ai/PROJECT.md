@@ -63,7 +63,7 @@ No lint, format or codegen scripts exist.
 - Build flags: `RIEN_NATIVE` (no PWA), `RIEN_E2E` (e2e runner), `RIEN_PROFILE` (profiling) in `nuxt.config.ts:4-9`.
 
 ## Data flow
-- UI: pages and game components (`app/pages/index.vue:11`).
+- UI: pages and game components (`app/pages/index.vue:12-13`).
 - State: composables with refs and `useLiveQuery` (`app/composables/useLiveQuery.ts`).
 - Storage: `useDb()` → `StudyRepository` → Dexie (`app/data/dexie.ts`) or SQLite (`app/data/sql.ts`); every row Zod-parsed on read in SQLite.
 - Learning: answers logged as attempts → learner worker → skill model / ML weights in settings.
