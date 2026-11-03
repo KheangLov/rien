@@ -28,7 +28,11 @@ const tankLine = computed(() => {
 })
 
 const plan = ref<ActivityId[]>([])
-watch(todayKey, async () => { plan.value = await loadSessionPlan(now.value) }, { immediate: true })
+const planReady = ref(false)
+watch(todayKey, async () => {
+  plan.value = await loadSessionPlan(now.value)
+  planReady.value = true
+}, { immediate: true })
 
 const streak = computed(() => summarizeStreak(studyDays.value, now.value))
 const weeklyGoal = computed(() => settings.value?.weeklyGoal ?? 5)
@@ -37,6 +41,17 @@ const skipped = computed(() => (doneToday.value, loadSkipped(now.value)))
 const planDone = computed(() => plan.value.filter(id => doneToday.value.includes(id) || skipped.value.includes(id)))
 const sessionComplete = computed(() => plan.value.length > 0 && planDone.value.length === plan.value.length)
 const sessionStarted = computed(() => planDone.value.length > 0)
+// The step the session opens on next (the first one not done or skipped).
+const nextStep = computed(() => plan.value.find(id => !planDone.value.includes(id)))
+
+// "Practise more" once the session is done: scroll to the Practice list and
+// put focus there, so a screen reader lands in the same place.
+function showPractice() {
+  const heading = document.getElementById('practice')
+  if (!heading) return
+  heading.scrollIntoView({ behavior: document.documentElement.classList.contains('rien-motion') ? 'smooth' : 'auto', block: 'start' })
+  heading.focus({ preventScroll: true })
+}
 
 const today = computed(() =>
   now.value.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }))
@@ -77,34 +92,60 @@ const talkedThisWeek = computed(() => {
     </PageHeader>
 
     <Squircle tag="section" class="rien-hero" :surface="false" :radius="30" aria-labelledby="session-title">
-      <div>
-        <h2 id="session-title">
-          {{ sessionComplete ? 'Session done. Well done!' : sessionStarted ? 'Keep going' : 'Today’s session' }}
-        </h2>
-        <p>
-          {{ sessionComplete
-            ? 'Come back tomorrow, or practise more below.'
-            : `${plan.length} short activities, about 12 minutes, picked for you.` }}
-        </p>
+      <div class="rien-hero-head">
+        <div>
+          <h2 id="session-title">
+            {{ sessionComplete ? 'Session done. Well done!' : sessionStarted ? 'Keep going' : 'Today’s session' }}
+          </h2>
+          <p>
+            <template v-if="!planReady">Picking today’s activities…</template>
+            <template v-else-if="sessionComplete">Come back tomorrow, or practise more below.</template>
+            <template v-else-if="sessionStarted && nextStep">{{ planDone.length }} of {{ plan.length }} finished. Next: {{ ACTIVITIES[nextStep].title }}.</template>
+            <template v-else>{{ plan.length }} short activities, about 12 minutes, picked for you.</template>
+          </p>
+        </div>
+        <span v-if="sessionComplete" class="rien-hero-badge rien-pop" aria-hidden="true">
+          <RienIcon name="check" :size="26" weight="bold" />
+        </span>
+      </div>
+      <div
+        v-if="plan.length"
+        class="rien-hero-progress"
+        role="progressbar"
+        aria-valuemin="0"
+        :aria-valuemax="plan.length"
+        :aria-valuenow="planDone.length"
+        :aria-label="`${planDone.length} of ${plan.length} activities finished`"
+      >
+        <span :style="{ width: `${(planDone.length / plan.length) * 100}%` }" />
       </div>
       <div class="rien-hero-steps">
         <span
           v-for="id in plan"
           :key="id"
           class="rien-hero-step"
-          :class="{ 'is-done': doneToday.includes(id) }"
+          :class="{ 'is-done': doneToday.includes(id), 'is-next': !sessionComplete && id === nextStep }"
         >
           <RienIcon :name="doneToday.includes(id) ? 'check' : ACTIVITIES[id].icon" :size="16" :weight="doneToday.includes(id) ? 'bold' : 'duotone'" />
           {{ ACTIVITIES[id].title }}
         </span>
       </div>
       <button
-        v-if="!sessionComplete"
+        v-if="planReady && !sessionComplete"
         type="button"
         class="rien-hero-btn"
         @click="navigateTo('/session')"
       >
-        {{ sessionStarted ? 'Continue session' : 'Start session' }}
+        <RienIcon :name="sessionStarted ? 'next' : 'play'" :size="20" weight="bold" />
+        <span>{{ sessionStarted ? 'Continue session' : 'Start session' }}</span>
+      </button>
+      <button
+        v-else-if="sessionComplete"
+        type="button"
+        class="rien-hero-btn is-quiet"
+        @click="showPractice"
+      >
+        Practise more
       </button>
     </Squircle>
 
@@ -135,7 +176,7 @@ const talkedThisWeek = computed(() => {
       </SqCardText>
     </SqCard>
 
-    <h2 class="rien-section-title">Practice</h2>
+    <h2 id="practice" class="rien-section-title" tabindex="-1">Practice</h2>
     <Squircle class="rien-list" :radius="22"><ul class="rien-list-items">
       <li v-for="item in practice" :key="item.id">
         <NuxtLink :to="item.to" class="rien-list-row">

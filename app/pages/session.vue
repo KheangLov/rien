@@ -15,6 +15,9 @@ const streakToday = ref(false)
 
 const current = computed(() => plan.value[index.value])
 const nextUp = computed(() => plan.value[index.value + 1])
+// Steps shown as done in the progress bar (same rule as its is-done class).
+const doneCount = computed(() =>
+  phase.value === 'finished' ? plan.value.length : phase.value === 'between' ? index.value + 1 : index.value)
 
 onMounted(async () => {
   plan.value = await loadSessionPlan()
@@ -76,7 +79,15 @@ function continueSession() {
       <NuxtLink to="/" class="rien-icon-btn" aria-label="Close session">
         <RienIcon name="close" weight="bold" />
       </NuxtLink>
-      <div class="rien-session-steps" aria-label="Session progress">
+      <div
+        class="rien-session-steps"
+        role="progressbar"
+        aria-label="Session progress"
+        aria-valuemin="0"
+        :aria-valuemax="plan.length"
+        :aria-valuenow="doneCount"
+        :aria-valuetext="`${doneCount} of ${plan.length} finished`"
+      >
         <span
           v-for="(id, i) in plan"
           :key="id"
@@ -101,8 +112,16 @@ function continueSession() {
       <div class="rien-celebrate">
         <span class="rien-celebrate-icon"><RienIcon name="check" :size="44" weight="bold" /></span>
         <h2>Nice work!</h2>
-        <p class="rien-muted">Next up: {{ ACTIVITIES[nextUp].title }}. {{ ACTIVITIES[nextUp].blurb }}.</p>
+        <p class="rien-celebrate-count">{{ doneCount }} of {{ plan.length }} finished</p>
       </div>
+      <Squircle class="rien-next-up rien-glass-surface" :radius="22">
+        <span class="rien-list-icon"><RienIcon :name="ACTIVITIES[nextUp].icon" weight="duotone" :size="26" /></span>
+        <span class="rien-list-text">
+          <span class="rien-next-up-label">Next up</span>
+          <span class="rien-list-title">{{ ACTIVITIES[nextUp].title }}</span>
+          <span class="rien-next-up-blurb">{{ ACTIVITIES[nextUp].blurb }}.</span>
+        </span>
+      </Squircle>
       <ActionBar>
         <SqBtn color="primary" size="large" @click="continueSession">Continue</SqBtn>
       </ActionBar>
@@ -113,6 +132,7 @@ function continueSession() {
       <div class="rien-celebrate">
         <span class="rien-celebrate-icon is-big"><RienIcon name="flame" :size="52" weight="fill" /></span>
         <h2>Session complete</h2>
+        <p class="rien-celebrate-count">All {{ plan.length }} steps finished</p>
         <p class="rien-muted">
           {{ streakToday ? 'Today counts towards your streak.' : 'You have already finished today’s session.' }}
           Words you missed will come back just before you forget them.
