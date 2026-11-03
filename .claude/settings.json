@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./**/.env)",
+      "Read(./**/*.pem)",
+      "Read(./**/*.key)",
+      "Read(~/.config/rien/**)",
+      "Edit(./pnpm-lock.yaml)",
+      "Edit(./.output/**)",
+      "Edit(./dist/**)",
+      "Edit(./android/app/build/**)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(npm publish:*)",
+      "Bash(pnpm publish:*)",
+      "Bash(rm -rf:*)"
+    ]
+  },
+  "attribution": { "commit": "", "pr": "" }
+}
