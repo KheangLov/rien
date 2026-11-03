@@ -28,7 +28,7 @@
 none (every change is approved with `go`)
 
 ## Existing kit and records
-- No earlier agent kit. Decision log: none yet; create .ai/DECISIONS.md on the first real decision (`.ai/WORKFLOW.md`).
+- No earlier agent kit. Decision log: `.ai/DECISIONS.md` (created 2026-11-03).
 - Handoff and progress notes: `README.md` (Checks, iPhone, Android sections); Squirkle upstream drafts: `docs/squirkle-upstream.md`.
 
 ## Merged or renamed files
