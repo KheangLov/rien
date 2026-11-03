@@ -18,7 +18,7 @@ Direct work that grows past Direct → stop, say why in one line, switch to Ligh
 2. **Prompt** — write it per TASK_CONTRACT into `.ai/tasks/<YYYY-MM-DD>-<slug>.md`; never invent files, APIs, tokens or behavior; run the Quality Check.
 3. **Plan** — steps, `files_to_read` with line ranges, `implement_tier`.
 4. **Confidence** — a number with evidence (paths read, commands run) and every open question; a blocking question caps it below 75%.
-5. **STOP** — no code until the approval word (GUARDRAILS G2).
+5. **STOP** — no code until the approval word (GUARDRAILS G2; `/implement` one-step per G2-1).
 6. **Execute** — `status: in-progress`; record `approved_hash` (TASK_CONTRACT seal); implement exactly the approved scope; tests, typecheck, lint, build; log files read and commands run.
 7. **Review** — CONVENTIONS checklist on your own diff; fix what it finds. G12 paths: security pass. Complexity medium or complex → `/check-all <slug>` after your own review; its rows go under `## Checks`; not run → a `NOT RUN` row with the reason.
 8. **Document** — update `.ai/` only when structure, boundaries, data flow, security, integrations, tokens or workflow changed; decisions go to the repo's decision log (none → create `DECISIONS.md` in `.ai/`); add a Prompt Lesson when a prompt caused rework.
