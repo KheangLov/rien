@@ -52,7 +52,7 @@ No lint, format or codegen scripts exist.
 | `e2e/runner.client.ts` | in-app e2e runner, loaded only when `RIEN_E2E=1` | |
 | `tests/` | Vitest unit and storage tests | |
 | `android/`, `ios/` | Capacitor native projects; Java/Swift plugins | signing outside the repo |
-| `scripts/` | APK build, iPhone install/renew, icons, brand assets | |
+| `scripts/` | APK build, iPhone install/renew, icons, brand assets, browser e2e (`e2e-browser.mjs`) | |
 
 ## Architecture and boundaries
 - Client-only SPA: no backend, no auth, no network calls except same-origin pack fetches (`app/composables/usePacks.ts:8`).
@@ -95,7 +95,7 @@ No lint, format or codegen scripts exist.
 ## Testing
 - Vitest, node environment, `tests/**/*.test.ts` (`vitest.config.ts`), fake-indexeddb; storage tests run against both IndexedDB and SQLite (`README.md:21`).
 - Scoped: `pnpm vitest run tests/scheduler.test.ts`; by name: `-t "<name>"`.
-- E2E: `pnpm build:e2e`, serve `.output/public` on port 4199 and open in Chrome with a fresh profile; the runner logs `[e2e] PASS/FAIL` lines and ends with `[e2e] DONE pass=.. fail=..`. iOS: `pnpm build:ios:e2e`, launch in the simulator with `--console-pty`.
+- E2E: `pnpm build:e2e`, then `node scripts/e2e-browser.mjs [--width 390 --height 844 --out <dir> --dark]`: it serves `.output/public` itself, runs the runner in headless Chrome with a fresh profile, prints the `[e2e] PASS/FAIL` lines, saves a screenshot per `[e2e] SCREEN`, and exits 0 only on `[e2e] DONE … fail=0`. (`pnpm preview` can't serve this static build.) iOS: `pnpm build:ios:e2e`, launch in the simulator with `--console-pty`.
 - The runner fails on anything sticking out of a card; check web and iPhone layouts separately (Chrome draws squircles natively).
 - CI (`.github/workflows/ci.yml`): install (frozen), audit, test, typecheck, generate. No native builds in CI.
 
