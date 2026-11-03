@@ -15,7 +15,7 @@
 | `--sq-surface`, `--sq-surface-raised`, `--sq-background`, `--sq-border` | `#fcfcfd` / `#fdfdfe` light | both | `nuxt.config.ts` | — |
 | `--sq-r`, `--sq-bg`, `--sq-bd`, `--sq-bw`, `--sq-shadow` | per element; `--sq-r` set by `app/components/Squircle.vue` | both | `app/assets/css/main.css` | — |
 | `--rien-font`, `--rien-tap` (44px) | system font stack with Khmer fallbacks | both | `app/assets/css/main.css` | — |
-| `--rien-tabbar-h` | 56px / 66px | both | `app/assets/css/main.css` | — |
+| `--rien-tabbar-h` | 66px phone and tablet; 58px on short landscape phones and at 1024px+ | both | `app/assets/css/main.css` | — |
 | `--rien-glass-*` (bg, strong, edge, shadow) | Liquid Glass | light + dark override | `app/assets/css/main.css` | — |
 | `--ios-separator`, `--ios-fill`, `--ios-secondary`, `--ios-tertiary` | iOS system greys | light + dark | `app/assets/css/main.css` | — |
 | `--rien-brand`, `--rien-tint-1..3`, `--rien-logo-*` | 8 accent palettes | light + dark | `app/utils/accents.ts` | — |
@@ -32,6 +32,12 @@ Spacing, font sizes and easings are literal values (no spacing or type tokens).
   - Tablet, 768–1023px: overview pages (`.rien-page.rien-overview`: Today, IELTS) widen to 720px; tab bar stays at the bottom.
   - Desktop, 1024px and up: overviews widen to 1080px in two columns (Today: `.rien-today-main` with the session and week, `.rien-today-side` with Practice and This week; IELTS: intro card left, skills and academic words right); the tab bar becomes a compact capsule at the top, and the collapsed title bar is hidden on tab pages.
   - Focus pages (games, session, forms, reading, settings) keep the 560px measure at every width; `.rien-actionbar` aligns to it.
+  - Which class: focus pages use plain `.rien-page`; list and data pages add `.rien-wide`; hubs add `.rien-overview`.
+  - `.rien-page.rien-wide`: one column, 720px from 768px, 880px from 1024px.
+  - `.rien-cards`: tile grid, one column on phones, `auto-fill` tiles of 300px or more from 768px.
+  - `.rien-col-main` / `.rien-col-side`: generic left/right columns of a `.rien-overview` page at 1024px and up.
+  - Short landscape phones (landscape, 500px tall or less, under 1024px wide): bottom tab bar 58px with the label beside the icon; 6px padding kept for `TabBar.vue` drag maths, so tabs stay 44px (58 − 12 padding − 2 border); the 1024px+ top bar is 58px for the same reason.
+  - Keyboard focus: `.rien-tab`, `.rien-subbar-back`, `.rien-icon-btn` show a 2px `--sq-primary` ring on `:focus-visible` only.
 
 ## Components (reusable only)
 | Component | Path | Key props / variants | Figma component |

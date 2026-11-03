@@ -1319,8 +1319,23 @@ html.rien-dark .rien-tank {
   cursor: pointer;
 }
 
-.rien-egg {
+/* Eggs rest in one row on the sand, evenly spaced; a second row starts above
+   when they don't fit, so no egg ever covers another one's tap area. */
+.rien-egg-row {
+  position: absolute;
+  left: 6%;
+  right: 6%;
   bottom: 22px;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: space-evenly;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.rien-egg-row .rien-egg {
+  position: relative;
+  pointer-events: auto;
 }
 
 .rien-fish {
@@ -3973,9 +3988,20 @@ html.rien-motion .rien-talk-card-enter-active {
    tab bar moves to the top. Focus pages (games, session, forms, reading,
    settings) keep the 560px measure at every width, which .rien-actionbar
    also aligns to.
+   Shared pieces for every page:
+   - .rien-page.rien-wide: list and data pages, 720px on tablet, 880px on
+     desktop, one column.
+   - .rien-cards: a tile grid, one column on phones, auto-fill 300px+ tiles
+     from tablet up.
+   - .rien-col-main / .rien-col-side: the left and right columns of any
+     .rien-overview page on desktop.
+   - Short landscape phones (500px tall or less): a compact bottom tab bar with
+     the label beside the icon.
    ------------------------------------------------------------------------ */
 .rien-today-main,
 .rien-today-side,
+.rien-col-main,
+.rien-col-side,
 .rien-ielts-skills {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -3984,11 +4010,52 @@ html.rien-motion .rien-talk-card-enter-active {
   min-width: 0;
 }
 
+.rien-cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  min-width: 0;
+}
+
+/* Keyboard focus on the shell's navigation; :focus-visible keeps it off taps. */
+.rien-subbar-back:focus-visible,
+.rien-icon-btn:focus-visible {
+  outline: 2px solid var(--sq-primary, #0f766e);
+  outline-offset: 2px;
+}
+
+/* Inset so the tab bar's rounded capsule doesn't clip the ring. */
+.rien-tab:focus-visible {
+  outline: 2px solid var(--sq-primary, #0f766e);
+  outline-offset: -2px;
+}
+
 @media (min-width: 768px) {
-  .rien-page.rien-overview {
+  .rien-page.rien-overview,
+  .rien-page.rien-wide {
     max-width: 720px;
     padding-left: 24px;
     padding-right: 24px;
+  }
+
+  .rien-cards {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  }
+}
+
+/* Phones turned sideways: a shorter bar with the label beside the icon. The
+   6px padding stays (TabBar.vue drags with PAD = 6), so a 58px bar leaves 44px tabs (12px padding, 2px squircle border). */
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 1023px) {
+  :root {
+    --rien-tabbar-h: 58px;
+  }
+
+  .rien-tab {
+    grid-auto-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
   }
 }
 
@@ -4012,6 +4079,16 @@ html.rien-motion .rien-talk-card-enter-active {
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   }
 
+  .rien-page.rien-wide {
+    max-width: 880px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  /* Generic overview columns, for hubs beyond Today and IELTS. */
+  .rien-page.rien-overview > .rien-col-main { grid-column: 1; }
+  .rien-page.rien-overview > .rien-col-side { grid-column: 2; }
+
   .rien-page.rien-today > .rien-today-main { grid-column: 1; }
   .rien-page.rien-today > .rien-today-side { grid-column: 2; }
 
@@ -4034,7 +4111,7 @@ html.rien-motion .rien-talk-card-enter-active {
 
   /* Tab bar: a compact capsule at the top instead of the bottom. */
   :root {
-    --rien-tabbar-h: 56px;
+    --rien-tabbar-h: 58px;
   }
 
   .rien-tabbar-wrap {

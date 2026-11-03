@@ -147,11 +147,14 @@ export async function trainNetwork(x: number[][], y: number[], eloP: number[], s
     finally {
       ax.dispose()
       ay.dispose()
+      // compile() was given the optimizer, so the model does not dispose its state.
+      final.optimizer.dispose()
       final.dispose()
     }
   }
   finally {
     for (const t of [xs, ys, vx, vy, ...best.weights]) t.dispose()
+    model.optimizer.dispose()
     model.dispose()
   }
 }

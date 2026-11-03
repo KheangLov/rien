@@ -3,7 +3,7 @@
 **Purpose:** which files and sections to read for which task; read this first, every task. **Read when:** always.
 
 - **Prompt version:** CONTEXT-ENGINEER-PROMPT v2
-- **Last synced:** `7b73e213fbf06e6575a505c31e33ae20dad4a0bc` (2026-11-03)
+- **Last synced:** `77b4be5454c5c520738d16de01bc06efab9a2a3b` (2026-11-03)
 
 ## Routing
 | Task type | Read first | Read if needed |
@@ -28,7 +28,7 @@
 none (every change is approved with `go`)
 
 ## Existing kit and records
-- No earlier agent kit. Decision log: `.ai/DECISIONS.md` (created 2026-11-03).
+- No earlier agent kit. Decision log: `.ai/DECISIONS.md` (created 2026-11-03); it outranks every `.ai/` file but GUARDRAILS and SECURITY.
 - Handoff and progress notes: `README.md` (Checks, iPhone, Android sections); Squirkle upstream drafts: `docs/squirkle-upstream.md`.
 
 ## Merged or renamed files

@@ -65,9 +65,9 @@ Steps · Files To Read (each with the question it answers) · Files To Modify ·
 Then show the table, Claude's own confidence and the planned files; STOP for the approval word (or continue on a one-step approval, GUARDRAILS G2-1). Never re-print the prompt.
 
 ## Tamper seal
-At approval record `approved_hash:` under `## Import Check`; recompute before each later phase and at the report. Mismatch → STOP, show the diff, ask for a new approval. The hash covers the file up to `## Import Check`, without the `status:` and `approved_hash:` lines:
+At approval record `approved_hash:` under `## Import Check`; recompute before each later phase and at the report. Mismatch → STOP, show the diff, ask for a new approval. The hash covers the file up to `## Import Check`, without the `status:` and `approved_hash:` lines (`.ai/hash.mjs`; allow `Bash(node .ai/hash.mjs:*)` in `.claude/settings.json` so it never prompts):
 ```
-node -e "const f=require('fs').readFileSync(process.argv[1],'utf8').split('\n## Import Check')[0].split('\n').filter(l=>!/^(status|approved_hash):/.test(l)).join('\n');console.log(require('crypto').createHash('sha256').update(f).digest('hex'))" .ai/tasks/<slug>.md
+node .ai/hash.mjs .ai/tasks/<slug>.md
 ```
 
 ## Writer commands
