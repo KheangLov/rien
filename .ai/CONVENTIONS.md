@@ -5,7 +5,7 @@
 ## Code
 - Validation: Zod at every boundary: packs (`shared/schemas/pack.ts`, parsed in `app/composables/usePacks.ts:11`), DB rows and backups (`shared/schemas/db.ts`, `app/data/sql.ts:88`).
 - Errors: named `Error` subclasses (`DuplicateWordError`, `app/data/repository.ts:63`).
-- State: composables with refs, no Pinia; live data via `useLiveQuery(() => db.countCards(), 0)` (`app/pages/index.vue:11-12`).
+- State: composables with refs, no Pinia; live data via `useLiveQuery(() => db.countCards(), 0)` (`app/pages/index.vue:13`).
 - Data access: always through `useDb()` and the `StudyRepository` interface; never Dexie or SQL from a component.
 - Native: `registerPlugin<Iface>('Name')` behind `Capacitor.isNativePlatform()` (`app/utils/rienSpeech.ts:30`).
 - Forms: native inputs with directives (`app/directives/inputAttrs.ts`, `app/directives/plainInput.ts`); example `app/pages/add-words.vue`.
@@ -44,7 +44,7 @@
 - UI: tokens and existing components only (DS-1, DS-2), all listed states, plain inline English strings (no i18n).
 - Git: no AI attribution; message format per Commits.
 - Project rules:
-  - P-1: Never pure white (`#fff` / `#ffffff`); soft whites `#f8fafc` / `#fcfcfd` (`nuxt.config.ts`, `app/assets/css/main.css:3673`).
+  - P-1: Never pure white (`#fff` / `#ffffff`); soft whites `#f8fafc` / `#fcfcfd` (`nuxt.config.ts`, `app/assets/css/main.css:3946`).
   - P-2: Content packs are original writing, never copied from English File; aligned only to each book's grammar list. Read every corrected sentence and check that no distractor is also correct English.
   - P-3: Sound never outlives its screen: stop speech on route change, background, sheet close and unmount (`app/plugins/quiet.client.ts`).
   - P-4: The app must work offline: no Iconify API, no web fonts, no CDN (`nuxt.config.ts`).
