@@ -11,7 +11,8 @@
 | Figma MCP | `figma` server connected | SET | 2026-11-03 |
 | Formatter / linter | none in the repo | SET | 2026-11-03 |
 | visual-tester browser tools (claude-in-chrome) | no `mcp__claude-in-chrome__*` tools are loaded in this session, so the names in `.claude/agents/visual-tester.md` can't be checked; rerun with the Chrome extension connected | UNVERIFIED | 2026-11-03 |
-| settings deny rules accepted | no Claude settings file is installed (proposal only), so nothing is denied: `git push --dry-run` ran and was not refused; the lockfile read was not tested | UNVERIFIED | 2026-11-03 |
+| settings deny rules accepted | `.claude/settings.json` installed; loaded mid-session: Read of the (absent) root .env refused ("denied by your permission settings"), Bash `rm -rf` on a missing folder refused | SET | 2026-11-03 |
+| attribution setting honored | after install the session's attribution instruction changed to "do not add attribution lines" | SET | 2026-11-03 |
 | hooks | none installed | UNVERIFIED | 2026-11-03 |
 | skill `model` frontmatter honored | `/verify-setup` has `model: sonnet`; the session ran it as claude-sonnet-5-5 (it had been on Opus 5.5) | SET | 2026-11-03 |
 | skill `effort` frontmatter honored | effort can't be observed from inside a session | UNVERIFIED | 2026-11-03 |
