@@ -11,7 +11,7 @@ slug: <YYYY-MM-DD>-<slug>
 status: draft | ready | in-progress | done | rejected
 writer: <AI name>
 writer_access: repo | chat-only
-writer_model: <model + reasoning level used>
+writer_model: <exact Writer model from .ai/WORKFLOW.md Routing, or the Claude model id> + reasoning level
 base_commit: <git rev-parse HEAD when written>
 complexity: trivial | simple | medium | complex
 mode: direct | light | full | split
@@ -27,8 +27,9 @@ files_to_create: [<path>, …]
 Sections in order: `# Implementation Prompt` · `# Implementation Plan` · `# Prompt Quality Check` · `# Confidence`. Appended by Claude, in this order, after approval: `## Import Check` · `## Implementation Log` · `## Checks` · `## Metrics`.
 
 - `files_to_read` is the implementer's whole read budget: every file in Required Changes plus every pattern under Existing Patterns To Reuse. Point at code with `path:start-end`; paste only lines a change must match exactly.
-- Any API change lists the client regeneration command and its outputs; any UI text lists every locale file.
+- Any API change lists the client regeneration command and its outputs; UI text is inline English (no locale files here).
 - A G12 path → `mode: full`, `implement_tier: BUILD-SECURE`.
+- A task file at `status: in-progress` or `status: done` is never rewritten: changed or new work gets a new slug, or `<slug>-v2` with `parent: <slug>`; the old file stays as the record.
 
 ## Implementation Prompt (sections; non-applicable → `N/A — <reason>`; Light uses the first five plus Acceptance)
 Role (`Senior <stack> engineer in <area>, responsible for <quality bar>`) · Objective (one or two verifiable sentences) · Context (paths; UI: Design Mapping) · Relevant Files · Required Changes (numbered: file → change → expected behavior; declarations per G9) · Existing Patterns To Reuse · Current Implementation · Architecture Constraints · Edge Cases · Error Handling · Performance · Security · Testing Requirements · Acceptance Criteria (checkboxes, each pass/fail) · Constraints · Output Format
@@ -53,7 +54,7 @@ Steps · Files To Read (each with the question it answers) · Files To Modify ·
 ## Import Check (`/implement`, no re-analysis)
 | # | Check | How | On failure |
 | --- | --- | --- | --- |
-| 1 | Contract | front matter complete; sections present; `depends_on` all `done` | `rejected`, list gaps |
+| 1 | Contract | `status: ready`; front matter complete; sections match `mode` (light: Role, Objective, Context, Relevant Files, Required Changes, Acceptance Criteria only; full: all); `mode` fits WORKFLOW Modes (light: 1–3 files and no G12 path; more than 8 files: split); `writer_model` matches the Writer column in WORKFLOW Routing (a Claude model id for `writer: claude`); `depends_on` all `done` | stays `rejected`, list gaps |
 | 2 | Freshness | `git diff --stat <base_commit>..HEAD -- <paths>` and `git status --short -- <paths>` both empty | re-read changed ranges; plan broken → STOP |
 | 3 | Paths | `files_to_read`/`files_to_modify` exist; `files_to_create` don't | STOP |
 | 4 | Scope | no secret files; no CI, deploy, settings or dependency change unless named as a G4 action | `rejected` (G11-3) |
@@ -70,7 +71,7 @@ node -e "const f=require('fs').readFileSync(process.argv[1],'utf8').split('\n## 
 ```
 
 ## Writer commands
-- Codex CLI, from the repo root: `codex "You are the writer. Follow AGENTS.md and .ai/TASK_CONTRACT.md. Write one task file for: <request>"`
+- Codex CLI, from the repo root: `codex "You are the writer. Follow AGENTS.md and .ai/TASK_CONTRACT.md. Write one task file for: <request>. Copy writer_model exactly from .ai/WORKFLOW.md Routing."`
 - Non-interactive: `codex exec "<same prompt>"`; heavier tasks: add `-c model_reasoning_effort=high`.
 - Then in Claude Code: `/implement <slug>`.
 
