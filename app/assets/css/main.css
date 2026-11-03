@@ -3964,3 +3964,109 @@ html.rien-motion .rien-talk-card-enter-active {
 :root .sq-color-picker__knob {
   background: #f8fafc;
 }
+
+/* ---------------------------------------------------------------------------
+   Responsive layout (by viewport width, never by device)
+   Phone under 768px: one column, bottom tab bar (the rules above).
+   Tablet 768-1023px: overview pages (Today, IELTS) widen to 720px.
+   Desktop 1024px and up: overviews widen to 1080px in two columns, and the
+   tab bar moves to the top. Focus pages (games, session, forms, reading,
+   settings) keep the 560px measure at every width, which .rien-actionbar
+   also aligns to.
+   ------------------------------------------------------------------------ */
+.rien-today-main,
+.rien-today-side,
+.rien-ielts-skills {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: 16px;
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .rien-page.rien-overview {
+    max-width: 720px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .rien-page.rien-overview {
+    max-width: 1080px;
+    padding-left: 32px;
+    padding-right: 32px;
+    column-gap: 24px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  /* Headers and anything not placed below span the full width. */
+  .rien-page.rien-overview > * {
+    grid-column: 1 / -1;
+  }
+
+  /* Today: the session, progress and notices on the left; practice and this
+     week's resources on the right. */
+  .rien-page.rien-today {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+
+  .rien-page.rien-today > .rien-today-main { grid-column: 1; }
+  .rien-page.rien-today > .rien-today-side { grid-column: 2; }
+
+  /* IELTS: the intro card on the left; the four skills and academic words on
+     the right. */
+  .rien-page.rien-ielts > .rien-ielts-intro {
+    grid-column: 1;
+    grid-row: 2 / span 2;
+    align-self: start;
+  }
+
+  .rien-page.rien-ielts > .rien-ielts-skills,
+  .rien-page.rien-ielts > .rien-ielts-words {
+    grid-column: 2;
+  }
+
+  .rien-page.rien-ielts > .rien-ielts-words {
+    align-self: start;
+  }
+
+  /* Tab bar: a compact capsule at the top instead of the bottom. */
+  :root {
+    --rien-tabbar-h: 56px;
+  }
+
+  .rien-tabbar-wrap {
+    top: calc(env(safe-area-inset-top) + 12px);
+    bottom: auto;
+  }
+
+  .rien-tabbar {
+    width: min(100%, 600px);
+  }
+
+  .rien-tab {
+    grid-auto-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  .rien-shell.has-tabs .rien-page {
+    padding-top: calc(var(--rien-tabbar-h) + 28px);
+    padding-bottom: 40px;
+  }
+
+  /* The tab bar already names the page at the top, so the collapsed title bar
+     would only sit under it. */
+  body:has(.rien-shell.has-tabs) .ios-navbar {
+    display: none;
+  }
+
+  /* Tank news drops below the tab bar instead of covering it. */
+  .rien-shell.has-tabs .rien-toast {
+    top: calc(env(safe-area-inset-top) + var(--rien-tabbar-h) + 22px);
+  }
+}

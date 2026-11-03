@@ -64,10 +64,10 @@ async function addAcademic() {
 </script>
 
 <template>
-  <div class="rien-page">
+  <div class="rien-page rien-overview rien-ielts">
     <PageHeader title="IELTS" back="/" />
 
-    <SqCard variant="tonal">
+    <SqCard variant="tonal" class="rien-ielts-intro">
       <SqCardText class="rien-stack rien-card-body">
         <LearningArtwork scene="ielts" class="rien-ielts-art" />
         <template v-if="band">
@@ -85,20 +85,22 @@ async function addAcademic() {
       </SqCardText>
     </SqCard>
 
-    <h2 class="rien-section-title">Practise a skill</h2>
-    <ul class="rien-skill-grid">
-      <li v-for="skill in SKILLS" :key="skill.to">
-        <Squircle class="rien-skill-tile rien-glass-surface" :radius="22">
-          <NuxtLink :to="skill.to" class="rien-skill-link">
-            <span class="rien-list-icon"><RienIcon :name="skill.icon" weight="duotone" :size="26" /></span>
-            <span class="rien-skill-title">{{ skill.title }} <RienIcon name="next" :size="14" weight="bold" /></span>
-            <span class="rien-skill-sub">{{ skill.sub }}</span>
-          </NuxtLink>
-        </Squircle>
-      </li>
-    </ul>
+    <div class="rien-ielts-skills">
+      <h2 class="rien-section-title">Practise a skill</h2>
+      <ul class="rien-skill-grid">
+        <li v-for="skill in SKILLS" :key="skill.to">
+          <Squircle class="rien-skill-tile rien-glass-surface" :radius="22">
+            <NuxtLink :to="skill.to" class="rien-skill-link">
+              <span class="rien-list-icon"><RienIcon :name="skill.icon" weight="duotone" :size="26" /></span>
+              <span class="rien-skill-title">{{ skill.title }} <RienIcon name="next" :size="14" weight="bold" /></span>
+              <span class="rien-skill-sub">{{ skill.sub }}</span>
+            </NuxtLink>
+          </Squircle>
+        </li>
+      </ul>
+    </div>
 
-    <SqCard title="Academic words" :subtitle="`${savedAcademic} of ${academic.length} in your words`">
+    <SqCard class="rien-ielts-words" title="Academic words" :subtitle="`${savedAcademic} of ${academic.length} in your words`">
       <SqCardText class="rien-stack rien-card-body">
         <p class="rien-muted">
           The first part of the Academic Word List: words that come up again and again in IELTS reading and writing,
