@@ -2,6 +2,7 @@
 import type { ActivityId } from '#shared/utils/learning'
 import { dateKey } from '#shared/utils/streak'
 import { GAME_COMPONENTS } from '~/components/games/registry'
+import LearningArtwork from '~/components/learn/LearningArtwork.vue'
 
 useHead({ title: 'Today’s session · Rien' })
 
@@ -110,7 +111,7 @@ function continueSession() {
 
     <template v-else-if="phase === 'between' && nextUp">
       <div class="rien-celebrate">
-        <span class="rien-celebrate-icon"><RienIcon name="check" :size="44" weight="bold" /></span>
+        <LearningArtwork scene="checkpoint" class="rien-celebrate-art" />
         <h2>Nice work!</h2>
         <p class="rien-celebrate-count">{{ doneCount }} of {{ plan.length }} finished</p>
       </div>
@@ -123,14 +124,16 @@ function continueSession() {
         </span>
       </Squircle>
       <ActionBar>
-        <SqBtn color="primary" size="large" @click="continueSession">Continue</SqBtn>
+        <SqBtn color="primary" size="large" @click="continueSession">
+          <span class="rien-btn-label">Continue <RienIcon name="next" :size="18" weight="bold" /></span>
+        </SqBtn>
       </ActionBar>
     </template>
 
     <template v-else-if="phase === 'finished'">
       <Confetti />
       <div class="rien-celebrate">
-        <span class="rien-celebrate-icon is-big"><RienIcon name="flame" :size="52" weight="fill" /></span>
+        <LearningArtwork scene="complete" class="rien-celebrate-art" />
         <h2>Session complete</h2>
         <p class="rien-celebrate-count">All {{ plan.length }} steps finished</p>
         <p class="rien-muted">
@@ -139,7 +142,9 @@ function continueSession() {
         </p>
       </div>
       <ActionBar>
-        <SqBtn color="primary" size="large" @click="navigateTo('/')">Back to Today</SqBtn>
+        <SqBtn color="primary" size="large" @click="navigateTo('/')">
+          <span class="rien-btn-label"><RienIcon name="today" :size="18" weight="bold" /> Back to Today</span>
+        </SqBtn>
       </ActionBar>
     </template>
   </div>

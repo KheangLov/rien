@@ -4,6 +4,7 @@ import { normalizeAnswer } from '#shared/utils/answer'
 import { bandFor } from '#shared/utils/ielts'
 import { DuplicateWordError } from '~/data/repository'
 import type { Learner } from '~/composables/useLearner'
+import LearningArtwork from '~/components/learn/LearningArtwork.vue'
 
 // IELTS practice: the four skills in the exam's own formats, the Academic
 // Word List, and an estimated band from the skill model.
@@ -68,6 +69,7 @@ async function addAcademic() {
 
     <SqCard variant="tonal">
       <SqCardText class="rien-stack rien-card-body">
+        <LearningArtwork scene="ielts" class="rien-ielts-art" />
         <template v-if="band">
           <p class="rien-muted">Estimated band, from your answers in Rien</p>
           <p class="rien-big">{{ band.band }}</p>
@@ -83,18 +85,18 @@ async function addAcademic() {
       </SqCardText>
     </SqCard>
 
-    <Squircle class="rien-list" :radius="22"><ul class="rien-list-items">
+    <h2 class="rien-section-title">Practise a skill</h2>
+    <ul class="rien-skill-grid">
       <li v-for="skill in SKILLS" :key="skill.to">
-        <NuxtLink :to="skill.to" class="rien-list-row">
-          <span class="rien-list-icon"><RienIcon :name="skill.icon" weight="duotone" :size="26" /></span>
-          <span class="rien-list-text">
-            <span class="rien-list-title">{{ skill.title }}</span>
-            <span class="rien-list-sub">{{ skill.sub }}</span>
-          </span>
-          <span class="rien-list-end"><RienIcon name="next" :size="16" weight="bold" /></span>
-        </NuxtLink>
+        <Squircle class="rien-skill-tile rien-glass-surface" :radius="22">
+          <NuxtLink :to="skill.to" class="rien-skill-link">
+            <span class="rien-list-icon"><RienIcon :name="skill.icon" weight="duotone" :size="26" /></span>
+            <span class="rien-skill-title">{{ skill.title }} <RienIcon name="next" :size="14" weight="bold" /></span>
+            <span class="rien-skill-sub">{{ skill.sub }}</span>
+          </NuxtLink>
+        </Squircle>
       </li>
-    </ul></Squircle>
+    </ul>
 
     <SqCard title="Academic words" :subtitle="`${savedAcademic} of ${academic.length} in your words`">
       <SqCardText class="rien-stack rien-card-body">

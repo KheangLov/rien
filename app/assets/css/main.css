@@ -929,6 +929,7 @@ input {
   align-items: center;
   justify-content: center;
   gap: 8px;
+  box-shadow: 0 8px 20px #0f172a33;
 }
 
 .rien-hero-btn:focus-visible {
@@ -941,6 +942,80 @@ input {
   min-height: 48px;
   color: #f8fafc;
   background: #f8fafc29;
+  box-shadow: none;
+}
+
+/* Learning artwork (app/components/learn/LearningArtwork.vue): decorative,
+   never takes taps, drawn inside its own viewBox. */
+.rien-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.rien-btn-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* IELTS: the study scene in the intro card, and the four skills as tiles. */
+.rien-ielts-art {
+  max-width: 360px;
+  margin: 0 auto 4px;
+}
+
+.rien-skill-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rien-skill-tile {
+  height: 100%;
+  box-sizing: border-box;
+  --sq-bg: var(--sq-surface, #f8fafc);
+  --sq-bd: var(--sq-border, #e4e4e7);
+  --sq-bw: 1px;
+}
+
+.rien-skill-link {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  height: 100%;
+  min-height: 44px;
+  padding: 14px;
+  box-sizing: border-box;
+  color: inherit;
+  text-decoration: none;
+}
+
+.rien-skill-link:active {
+  background: #78788029;
+}
+
+.rien-skill-link:focus-visible {
+  outline: 2px solid var(--sq-primary, #0f766e);
+  outline-offset: -3px;
+}
+
+.rien-skill-title {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 700;
+  color: var(--sq-on-surface, #18181b);
+}
+
+.rien-skill-sub {
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--sq-muted, #6b7280);
 }
 
 .rien-hero-head {
@@ -973,6 +1048,29 @@ input {
   height: 100%;
   border-radius: inherit;
   background: #f8fafc;
+}
+
+/* The journey scene across the top of the session card. */
+.rien-hero-art {
+  margin: -6px -4px -18px;
+  width: calc(100% + 8px);
+}
+
+.rien-hero-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rien-hero-progress-row .rien-hero-progress {
+  flex: 1;
+}
+
+.rien-hero-progress-count {
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.9;
 }
 
 /* The step the session opens on next. */
@@ -1056,33 +1154,19 @@ html.rien-motion .page-leave-active {
   display: grid;
   justify-items: center;
   gap: 8px;
-  padding: 48px 8px 8px;
+  padding: 16px 8px 8px;
   text-align: center;
+}
+
+/* Session milestones: the guide fish's checkpoint and finish scenes. */
+.rien-celebrate-art {
+  width: min(100%, 300px);
+  margin-bottom: 4px;
 }
 
 .rien-celebrate h2 {
   margin: 0;
   font-size: 28px;
-}
-
-.rien-celebrate-icon {
-  display: grid;
-  place-items: center;
-  width: 84px;
-  height: 84px;
-  border-radius: 50%;
-  color: #f8fafc;
-  background: var(--sq-success, #16a34a);
-  box-shadow: 0 0 0 10px color-mix(in srgb, var(--sq-success, #16a34a) 16%, transparent);
-  margin-bottom: 8px;
-  animation: rien-pop-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-
-.rien-celebrate-icon.is-big {
-  width: 104px;
-  height: 104px;
-  background: #f97316;
-  box-shadow: 0 0 0 12px color-mix(in srgb, #f97316 16%, transparent);
 }
 
 .rien-celebrate-count {
@@ -1119,12 +1203,6 @@ html.rien-motion .page-leave-active {
 .rien-next-up-blurb {
   font-size: 14px;
   color: var(--sq-muted, #6b7280);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .rien-celebrate-icon {
-    animation: none;
-  }
 }
 
 .rien-skip {
@@ -1687,7 +1765,7 @@ html.rien-motion .rien-hero {
   animation: rien-rise-in 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
-/* Daily session: progress fills, celebrations rise in after the icon pops.
+/* Daily session: progress fills, celebrations rise in after the art arrives.
    The Continue / Back to Today button is never animated or delayed. */
 html.rien-motion .rien-hero-progress > span {
   transition: width 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -1697,7 +1775,7 @@ html.rien-motion .rien-session-step {
   transition: background-color 280ms ease, box-shadow 280ms ease;
 }
 
-html.rien-motion .rien-celebrate > :not(.rien-celebrate-icon),
+html.rien-motion .rien-celebrate > :not(.rien-art),
 html.rien-motion .rien-next-up {
   animation: rien-rise-in 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
   animation-delay: 140ms;
@@ -1706,6 +1784,50 @@ html.rien-motion .rien-next-up {
 html.rien-motion .rien-celebrate > :nth-child(3) { animation-delay: 200ms; }
 html.rien-motion .rien-celebrate > :nth-child(4),
 html.rien-motion .rien-next-up { animation-delay: 260ms; }
+
+/* Artwork: one short entrance per scene, nothing that loops. */
+html.rien-motion .rien-art-guide {
+  animation: rien-art-swim 640ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes rien-art-swim {
+  from { opacity: 0; translate: -18px 6px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+html.rien-motion .rien-art-stone,
+html.rien-motion .rien-art-skill {
+  animation: rien-art-fade-up 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(120ms + var(--i, 0) * 70ms);
+}
+
+@keyframes rien-art-fade-up {
+  from { opacity: 0; translate: 0 8px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+html.rien-motion .rien-art-badge {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: rien-pop-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 240ms both;
+}
+
+html.rien-motion .rien-art-rays {
+  animation: rien-art-fade 600ms ease 160ms both;
+}
+
+@keyframes rien-art-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+html.rien-motion .rien-skill-tile {
+  transition: transform 160ms ease;
+}
+
+html.rien-motion .rien-skill-tile:active {
+  transform: scale(0.97);
+}
 
 html.rien-motion .rien-list-row {
   transition: background-color 120ms ease;
@@ -1729,8 +1851,17 @@ html.rien-motion .rien-list-row:active .rien-list-icon {
 
   .rien-celebrate > *,
   .rien-next-up,
-  .rien-hero-badge {
+  .rien-hero-badge,
+  .rien-art-guide,
+  .rien-art-stone,
+  .rien-art-skill,
+  .rien-art-badge,
+  .rien-art-rays {
     animation: none;
+  }
+
+  .rien-skill-tile {
+    transition: none;
   }
 }
 
@@ -1738,8 +1869,7 @@ html.rien-motion .rien-list-row:active .rien-list-icon {
 html:not(.rien-motion) .rien-fish,
 html:not(.rien-motion) .rien-fish-bob,
 html:not(.rien-motion) .rien-plant,
-html:not(.rien-motion) .rien-bubble,
-html:not(.rien-motion) .rien-celebrate-icon {
+html:not(.rien-motion) .rien-bubble {
   animation: none;
 }
 
