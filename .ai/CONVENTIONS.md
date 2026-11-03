@@ -44,7 +44,7 @@
 - UI: tokens and existing components only (DS-1, DS-2), all listed states, plain inline English strings (no i18n).
 - Git: no AI attribution; message format per Commits.
 - Project rules:
-  - P-1: Never pure white (`#fff` / `#ffffff`); soft whites `#f8fafc` / `#fcfcfd` (`nuxt.config.ts`, `app/assets/css/main.css:3946`).
+  - P-1: Never pure white (`#fff` / `#ffffff`); soft whites `#f8fafc` / `#fcfcfd` (`nuxt.config.ts`, `app/assets/css/main.css:3961`).
   - P-2: Content packs are original writing, never copied from English File; aligned only to each book's grammar list. Read every corrected sentence and check that no distractor is also correct English.
   - P-3: Sound never outlives its screen: stop speech on route change, background, sheet close and unmount (`app/plugins/quiet.client.ts`).
   - P-4: The app must work offline: no Iconify API, no web fonts, no CDN (`nuxt.config.ts`).
