@@ -27,7 +27,11 @@ Spacing, font sizes and easings are literal values (no spacing or type tokens).
 - Settings (`shared/schemas/db.ts:215-221`): appearance system/light/dark, accent (8 colours, default teal), liquidGlass (on), motion (on; off under prefers-reduced-motion).
 - Dark styles use `html.rien-dark X` selectors. Theme changes animate with a View Transition circle reveal.
 - Page transitions: `app/middleware/transition.global.ts` (push, pop, modal, dismiss, fade). Haptics: `app/composables/useHaptics.ts`.
-- Layout: one column, `.rien-page` max 560px, portrait only, safe-area insets on `.rien-shell`; no width breakpoints.
+- Layout: breakpoints by viewport width only (no device detection), safe-area insets on `.rien-shell`; the rules are the Responsive layout section at the end of `app/assets/css/main.css`.
+  - Phone, under 768px: one column, `.rien-page` max 560px, floating tab bar at the bottom.
+  - Tablet, 768–1023px: overview pages (`.rien-page.rien-overview`: Today, IELTS) widen to 720px; tab bar stays at the bottom.
+  - Desktop, 1024px and up: overviews widen to 1080px in two columns (Today: `.rien-today-main` with the session and week, `.rien-today-side` with Practice and This week; IELTS: intro card left, skills and academic words right); the tab bar becomes a compact capsule at the top, and the collapsed title bar is hidden on tab pages.
+  - Focus pages (games, session, forms, reading, settings) keep the 560px measure at every width; `.rien-actionbar` aligns to it.
 
 ## Components (reusable only)
 | Component | Path | Key props / variants | Figma component |
