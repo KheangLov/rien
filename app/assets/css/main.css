@@ -782,6 +782,12 @@ input {
   background: #78788029;
 }
 
+/* Inset so the ring isn't clipped by the list's rounded edge. */
+.rien-list-row:focus-visible {
+  outline: 2px solid var(--sq-primary, #0f766e);
+  outline-offset: -2px;
+}
+
 .rien-list-icon {
   display: grid;
   place-items: center;
@@ -919,6 +925,59 @@ input {
   color: var(--rien-brand, #0f766e);
   background: #f8fafc;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.rien-hero-btn:focus-visible {
+  outline: 3px solid #f8fafc;
+  outline-offset: 3px;
+}
+
+/* After the session: a quieter button that scrolls to Practice. */
+.rien-hero-btn.is-quiet {
+  min-height: 48px;
+  color: #f8fafc;
+  background: #f8fafc29;
+}
+
+.rien-hero-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.rien-hero-badge {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  color: var(--rien-brand, #0f766e);
+  background: #f8fafc;
+}
+
+/* Today's progress through the session (finished or skipped steps). */
+.rien-hero-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: #f8fafc29;
+}
+
+.rien-hero-progress > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #f8fafc;
+}
+
+/* The step the session opens on next. */
+.rien-hero-step.is-next {
+  box-shadow: inset 0 0 0 1.5px #f8fafcb3;
 }
 
 .rien-streak-row {
@@ -976,8 +1035,11 @@ html.rien-motion .page-leave-active {
   background: color-mix(in srgb, var(--sq-primary, #0f766e) 18%, transparent);
 }
 
+/* The activity she is on: lighter fill with a solid edge, so it reads apart
+   from the finished steps without colour alone. */
 .rien-session-step.is-current {
-  background: color-mix(in srgb, var(--sq-primary, #0f766e) 55%, transparent);
+  background: color-mix(in srgb, var(--sq-primary, #0f766e) 35%, transparent);
+  box-shadow: inset 0 0 0 1.5px var(--sq-primary, #0f766e);
 }
 
 .rien-session-step.is-done {
@@ -1011,18 +1073,52 @@ html.rien-motion .page-leave-active {
   border-radius: 50%;
   color: #f8fafc;
   background: var(--sq-success, #16a34a);
-  animation: rien-pop 320ms ease-out;
+  box-shadow: 0 0 0 10px color-mix(in srgb, var(--sq-success, #16a34a) 16%, transparent);
+  margin-bottom: 8px;
+  animation: rien-pop-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 .rien-celebrate-icon.is-big {
   width: 104px;
   height: 104px;
   background: #f97316;
+  box-shadow: 0 0 0 12px color-mix(in srgb, #f97316 16%, transparent);
 }
 
-@keyframes rien-pop {
-  from { transform: scale(0.6); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+.rien-celebrate-count {
+  margin: 0;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--sq-primary, #0f766e);
+  background: color-mix(in srgb, var(--sq-primary, #0f766e) 12%, transparent);
+}
+
+/* Between steps: the next activity, as a card. */
+.rien-next-up {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0 0;
+  padding: 14px 16px;
+  box-sizing: border-box;
+  --sq-bg: var(--sq-surface, #f8fafc);
+  --sq-bd: var(--sq-border, #e4e4e7);
+  --sq-bw: 1px;
+}
+
+.rien-next-up-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--sq-muted, #6b7280);
+}
+
+.rien-next-up-blurb {
+  font-size: 14px;
+  color: var(--sq-muted, #6b7280);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1589,6 +1685,53 @@ html.rien-motion .rien-awards li:nth-child(n + 6) { animation-delay: 200ms; }
 
 html.rien-motion .rien-hero {
   animation: rien-rise-in 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* Daily session: progress fills, celebrations rise in after the icon pops.
+   The Continue / Back to Today button is never animated or delayed. */
+html.rien-motion .rien-hero-progress > span {
+  transition: width 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+html.rien-motion .rien-session-step {
+  transition: background-color 280ms ease, box-shadow 280ms ease;
+}
+
+html.rien-motion .rien-celebrate > :not(.rien-celebrate-icon),
+html.rien-motion .rien-next-up {
+  animation: rien-rise-in 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: 140ms;
+}
+
+html.rien-motion .rien-celebrate > :nth-child(3) { animation-delay: 200ms; }
+html.rien-motion .rien-celebrate > :nth-child(4),
+html.rien-motion .rien-next-up { animation-delay: 260ms; }
+
+html.rien-motion .rien-list-row {
+  transition: background-color 120ms ease;
+}
+
+html.rien-motion .rien-list-row .rien-list-icon {
+  transition: transform 160ms ease;
+}
+
+html.rien-motion .rien-list-row:active .rien-list-icon {
+  transform: scale(0.92);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rien-hero-progress > span,
+  .rien-session-step,
+  .rien-list-row,
+  .rien-list-row .rien-list-icon {
+    transition: none;
+  }
+
+  .rien-celebrate > *,
+  .rien-next-up,
+  .rien-hero-badge {
+    animation: none;
+  }
 }
 
 /* Without motion the tank holds still too. */
