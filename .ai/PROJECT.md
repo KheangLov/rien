@@ -7,7 +7,7 @@ Rien is a private study tool for one learner (ACE Cambodia GEP levels 4-12: Engl
 
 ## Stack
 - pnpm 11.28.10 (`package.json:6`), Node `^24.22.1` or `>=26.12.1` (`package.json:8`), `.nvmrc` 26.13.0; no workspaces (`pnpm-workspace.yaml` holds settings only).
-- Nuxt 4.6.2, `ssr: false` (`nuxt.config.ts:14`), Vue 3.5, vue-router 5; `@vite-pwa/nuxt` for the PWA.
+- Nuxt 4.6.3, `ssr: false` (`nuxt.config.ts:14`), Vue 3.5, vue-router 5; `@vite-pwa/nuxt` for the PWA.
 - UI: `@squirkle-ui/*` 0.1.2 (core, ui, nuxt, charts), prefix `Sq`; Solar icons (Iconify subset).
 - Data: Dexie 4.4.7 (IndexedDB, web), `@capacitor-community/sqlite` (native); Zod 4 schemas.
 - Learning: ts-fsrs 5.4.2 (pinned), TensorFlow.js 4.22.0 (pinned, worker only).

@@ -1,5 +1,8 @@
 {
   "permissions": {
+    "allow": [
+      "Bash(node .ai/hash.mjs:*)"
+    ],
     "deny": [
       "Read(./.env)",
       "Read(./.env.*)",
