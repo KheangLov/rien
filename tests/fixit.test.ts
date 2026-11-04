@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import type { GrammarRow } from '#shared/schemas/db'
 import { correctedText, fixItCards, fixItGrade, gradeFixIt, packsFor, wrongIndex, type FixItCard } from '#shared/utils/fixit'
+import { builderCards } from '#shared/utils/builder'
+import { radioCards } from '#shared/utils/radio'
+import { soundCards } from '#shared/utils/sounds'
 import { pickRound } from '#shared/utils/rounds'
 import { newFsrsState, Rating } from '#shared/utils/scheduler'
 
@@ -133,5 +136,50 @@ describe('packsFor', () => {
   it('keeps every pack of the books before hers, so earlier work is still reviewed', () => {
     expect(packsFor(packs, { book: 'english-file-intermediate-4e', file: 1 }).map(p => p.id)).toEqual(['core', 'pre-7', 'pre-9', 'int-1'])
     expect(packsFor(packs, { book: 'english-file-upper-intermediate-4e', file: 1 }).map(p => p.id)).toEqual(['core', 'pre-7', 'pre-9', 'int-1'])
+  })
+
+  it('carries each pack\'s book and File onto every kind of card', () => {
+    const fix = { id: 'a', text: 'x y', wrong: 'x', fix: 'z', distractors: ['w'], type: 'tense' as const, explain: '' }
+    const build = { id: 'b', words: ['a', 'b'], translation: '', explain: '' } as never
+    const pair = { id: 's', focus: 'final-t', words: ['a', 'b'] } as never
+    const radio = { id: 'r', title: '', text: 'a b c' } as never
+    const make = (extra: object) => [{ id: 'p', title: '', fixIt: [fix], soundPairs: [pair], talks: [], builder: [build], radio: [radio], ...extra }] as never
+    const origins = (packs: never) => [fixItCards(packs)[0], soundCards(packs)[0], builderCards(packs)[0], radioCards(packs)[0]]
+      .map(c => [c!.book, c!.file])
+    expect(origins(make({ book: 'english-file-intermediate-4e', file: 3 }))).toEqual(Array(4).fill(['english-file-intermediate-4e', 3]))
+    expect(origins(make({ book: 'ready-for-ielts' }))).toEqual(Array(4).fill(['ready-for-ielts', undefined]))
+    expect(origins(make({}))).toEqual(Array(4).fill([undefined, undefined]))
+  })
+})
+
+describe('pickRound with her book and File', () => {
+  const noRandom = () => 0
+  const scope = { book: 'english-file-intermediate-4e', file: 4 } as const
+  const from = (id: string, book?: FixItCard['book'], file?: number): FixItCard => ({ ...card(id), book, file })
+  const ids = (round: { id: string }[]) => round.map(x => x.id).sort()
+  const here = [from('h1', scope.book, 4), from('h2', scope.book, 4)]
+  const earlier = [from('e3', scope.book, 3), from('e1', scope.book, 1), from('prev', 'english-file-pre-intermediate-4e', 12), from('core')]
+
+  it('draws new sentences from her own File before earlier and core ones', () => {
+    const round = pickRound([...earlier, ...here], new Map(), {}, now, 2, noRandom, undefined, scope)
+    expect(ids(round)).toEqual(['h1', 'h2'])
+  })
+
+  it('fills a short round with the nearest earlier content first', () => {
+    const round = pickRound([...earlier, here[0]!], new Map(), {}, now, 4, noRandom, undefined, scope)
+    expect(ids(round)).toEqual(['e1', 'e3', 'h1', 'prev'])
+  })
+
+  it('still reviews a due sentence from an earlier File', () => {
+    const old = earlier[1]!
+    const states = new Map([[old.itemId, state(old, new Date('2026-10-30T00:00:00Z'))]])
+    const round = pickRound([old, ...here], states, {}, now, 2, noRandom, undefined, scope)
+    expect(ids(round)).toEqual(['e1', 'h1'])
+  })
+
+  it('never picks a new sentence from a later File or book', () => {
+    const future = [from('f5', scope.book, 5), from('next', 'english-file-upper-intermediate-4e', 1)]
+    const round = pickRound([...future, ...here], new Map(), {}, now, 10, noRandom, undefined, scope)
+    expect(ids(round)).toEqual(['h1', 'h2'])
   })
 })

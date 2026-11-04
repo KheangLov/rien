@@ -24,6 +24,8 @@ export const GAP_EVERY = 7
 export function radioCards(packs: Pack[]): RadioCard[] {
   return packs.flatMap(pack => pack.radio.map(item => ({
     ...item,
+    book: pack.book,
+    file: pack.file,
     itemId: `${pack.id}:${item.id}`,
     type: 'listening' as const,
     skill: 'listening',

@@ -1,5 +1,5 @@
 import type { Card } from 'ts-fsrs'
-import type { GrammarRow, Level, MistakeRow, MistakeType } from '../schemas/db'
+import { BOOKS, type Book, type GrammarRow, type Level, type MistakeRow, type MistakeType } from '../schemas/db'
 import { newFsrsState, nextFsrsState, type Grade } from './scheduler'
 
 // Anything from a content pack she practises: a Fix It sentence or a sound pair.
@@ -10,18 +10,41 @@ export interface PracticeItem {
   // What it trains and how hard it starts out (shared/utils/skills.ts).
   skill: string
   level: Level
+  // Where it comes from; both undefined for core (unscoped) packs.
+  book?: Book
+  file?: number
 }
 
 // Answered this recently, a due item waits (missed items come back within
 // minutes, which made rounds feel like the same few sentences again).
 export const RECENT_MS = 15 * 60_000
 
+// The book and File she is on. New items are drawn from here first.
+export interface PracticeScope {
+  book: Book
+  file: number
+}
+
+// How far an item's source is from her scope: 0 is her File, then earlier
+// Files of her book (nearest first), then earlier books, then core content.
+// undefined: from her future, never a new item.
+function distance(item: PracticeItem, scope: PracticeScope): number | undefined {
+  if (!item.book) return 1000
+  const books = BOOKS.indexOf(scope.book) - BOOKS.indexOf(item.book)
+  if (books > 0) return 20 * books
+  if (books < 0) return undefined
+  const files = scope.file - (item.file ?? 1)
+  return files < 0 ? undefined : files
+}
+
 // Picks a round. Spaced repetition decides what is due, then the round is mixed
 // so it does not feel the same each time:
 // - due items come first, oldest first, except ones she answered in the last
 //   RECENT_MS, which fill in only when the round would be short;
 // - new items are drawn at random, leaning towards her weaker mistake types,
-//   but one type takes at most half the round;
+//   but one type takes at most half the round. Given her scope, new items
+//   from her own File come first, then nearer earlier ones fill what is left
+//   (due reviews ignore the scope, and her future Files are never new items);
 // - the chosen items are shuffled.
 export function pickRound<T extends PracticeItem>(
   items: T[],
@@ -33,6 +56,7 @@ export function pickRound<T extends PracticeItem>(
   // From the skill model (useLearner): how well each unseen item suits her
   // now, about 0 to 1.5. Without it, her recent mistake counts decide.
   rank?: (item: T) => number,
+  scope?: PracticeScope,
 ): T[] {
   const at = now.getTime()
   const dueAt = (item: T) => states.get(item.itemId)?.due.getTime()
@@ -54,6 +78,7 @@ export function pickRound<T extends PracticeItem>(
   const weight = (item: T) => rank ? 0.25 + 3 * rank(item) : 1 + Math.min(4, mistakeCounts[item.type] ?? 0)
   const fresh = items
     .filter(item => !states.has(item.itemId))
+    .filter(item => !scope || distance(item, scope) !== undefined)
     .map(item => ({ item, key: random() ** (1 / weight(item)) }))
     .sort((a, b) => b.key - a.key)
     .map(({ item }) => item)
@@ -71,8 +96,16 @@ export function pickRound<T extends PracticeItem>(
     }
   }
   take(due.filter(item => !recent(item)), false)
-  take(fresh, true)
-  take(fresh, false)
+  // Nearest source first; the weighted order holds within each tier.
+  const tiers = new Map<number, T[]>()
+  for (const item of fresh) {
+    const key = scope ? distance(item, scope)! : 0
+    tiers.set(key, [...(tiers.get(key) ?? []), item])
+  }
+  for (const key of [...tiers.keys()].sort((a, b) => a - b)) {
+    take(tiers.get(key)!, true)
+    take(tiers.get(key)!, false)
+  }
   take(due.filter(recent), false)
   return shuffle(picked, random)
 }

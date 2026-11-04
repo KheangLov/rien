@@ -15,6 +15,8 @@ export interface Tile {
 export function builderCards(packs: Pack[]): BuilderCard[] {
   return packs.flatMap(pack => pack.builder.map(item => ({
     ...item,
+    book: pack.book,
+    file: pack.file,
     itemId: `${pack.id}:${item.id}`,
     type: 'word-order' as const,
     skill: item.skill ?? 'word-order',

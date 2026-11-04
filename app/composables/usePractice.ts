@@ -3,6 +3,7 @@ import type { GrammarRow } from '#shared/schemas/db'
 import { builderCards } from '#shared/utils/builder'
 import { fixItCards, packsFor } from '#shared/utils/fixit'
 import { radioCards } from '#shared/utils/radio'
+import type { PracticeScope } from '#shared/utils/rounds'
 import { soundCards } from '#shared/utils/sounds'
 import { addDays } from '#shared/utils/streak'
 
@@ -28,6 +29,7 @@ export async function loadPractice(now = new Date()) {
     now,
     since,
     settings,
+    scope: { book: settings.book, file: settings.file } satisfies PracticeScope,
     fixCards: fixItCards(active),
     soundCards: soundCards(active),
     builderCards: builderCards(active),

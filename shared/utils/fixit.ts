@@ -20,6 +20,8 @@ export function packsFor(packs: Pack[], settings: Pick<Settings, 'book' | 'file'
 export function fixItCards(packs: Pack[]): FixItCard[] {
   return packs.flatMap(pack => pack.fixIt.map(item => ({
     ...item,
+    book: pack.book,
+    file: pack.file,
     itemId: `${pack.id}:${item.id}`,
     skill: skillOf(item),
     level: item.level ?? packLevel(pack),

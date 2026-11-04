@@ -10,6 +10,8 @@ export interface SoundCard extends SoundPair, PracticeItem {}
 export function soundCards(packs: Pack[]): SoundCard[] {
   return packs.flatMap(pack => pack.soundPairs.map(pair => ({
     ...pair,
+    book: pack.book,
+    file: pack.file,
     itemId: `${pack.id}:${pair.id}`,
     type: pair.focus.startsWith('final-') ? 'final-sound' as const : 'sound' as const,
     skill: soundSkill(pair.focus),
