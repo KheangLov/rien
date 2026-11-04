@@ -1,5 +1,7 @@
 # Eval results
 
+**Purpose:** latest behavior-eval outcomes, one line per eval. **Read when:** rerunning evals or judging whether a rule still holds.
+
 Run 2026-11-04 (third run), tiers lite + standard (18 rows), after the E09/E15 rewording.
 
 E01 PASS G3-1

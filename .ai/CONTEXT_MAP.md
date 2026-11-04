@@ -3,7 +3,7 @@
 **Purpose:** which files and sections to read for which task; read this first, every task. **Read when:** always.
 
 - **Prompt version:** CONTEXT-ENGINEER-PROMPT v2
-- **Last synced:** `77b4be5454c5c520738d16de01bc06efab9a2a3b` (2026-11-03)
+- **Last synced:** `813114509e41e7c5d927b3920efbf7647e3b3095` (2026-11-04)
 
 ## Routing
 | Task type | Read first | Read if needed |
