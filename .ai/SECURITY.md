@@ -29,7 +29,7 @@
 ## S1 Universal
 - S1-1 · MUST · REVIEW · Deny by default: every route, job and query authorizes on the server; client checks are UX only.
 - S1-2 · MUST · REVIEW · Every external input is schema-validated at the boundary (type, length, range, format); unknown fields rejected.
-- S1-3 · MUST · REVIEW · Output is encoded for its sink with framework-safe APIs; untrusted data is never concatenated into HTML, SQL, shell, URLs or headers.
+- S1-3 · MUST · REVIEW · Output is encoded for its sink with framework-safe APIs; untrusted data is never concatenated into HTML, SQL, shell, URLs or headers. User HTML goes only through the sanitizer helper (S2-1).
 - S1-4 · MUST · REVIEW · Fail closed: clients get a generic message plus a request id, never stack traces, SQL errors, paths or versions. No empty catch.
 - S1-5 · MUST · REVIEW · Log sign-ins, authorization and validation failures, admin actions and money movement with user id, time and request id; never secrets, tokens, OTPs, card data or full national ids.
 - S1-6 · MUST · REVIEW · Secrets only from env or a secret manager; never in code, tests, images, bundles or logs.

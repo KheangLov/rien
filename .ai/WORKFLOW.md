@@ -7,7 +7,7 @@
 | --- | --- | --- |
 | Direct | a question; a command the user named; one file, 20 changed lines or fewer, no behavior/API/state change; or `/quick` and nothing below applies | do it, show the diff; no prompt or plan |
 | Light | 1–3 files, a clear behavior change | Role, Objective, Files, Changes, Acceptance + confidence → STOP |
-| Full | 4+ files, a feature, an API/state/data-flow change, any G12 path, a dependency or security config | full template (TASK_CONTRACT) → STOP |
+| Full | 4–8 files (more than 8 is Split), a feature, an API/state/data-flow change, any G12 path, a dependency or security config | full template (TASK_CONTRACT) → STOP |
 | Split | more than 8 files or 400 changed lines; separately testable layers; task file over 200 lines | parent plan, then each subtask in its own mode |
 
 Direct work that grows past Direct → stop, say why in one line, switch to Light. Never shrink a description to dodge the gate.
