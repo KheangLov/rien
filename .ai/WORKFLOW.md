@@ -57,6 +57,8 @@ Direct work that grows past Direct → stop, say why in one line, switch to Ligh
 | Medium | writer, PLAN | BUILD (BUILD-SECURE on G12) | REVIEW + CHECK |
 | Complex | writer, PLAN-HIGH | BUILD; PLAN for migrations | REVIEW + CHECK |
 
+Build agent: after approval, `/implement` runs Phases 6–8 in the `implementer` agent (`.claude/agents/implementer.md`), launched at the task's `implement_tier` model and effort; Phases 9–10 and `/check-all` stay in the main session. A skill's `model` lasts only its own turn, so the build never runs on the session's model.
+
 Escalation line (skills can't switch their own tier): `Route: complex → run /task after /model opus and /effort high, or hand off to <writer>`. Never claim a switch that didn't happen. Escalate on a Scope Protection STOP, two failed fix loops or confidence below 75%.
 
 ## Cheat sheet

@@ -62,7 +62,7 @@ Steps · Files To Read (each with the question it answers) · Files To Modify ·
 | 6 | Declarations and quality | G9 declarations listed; Quality Check all Pass; confidence 75%+ | ask the writer to revise |
 | 7 | Writer stayed a writer | `git status --short -- <task paths>` shows no source edits the task doesn't explain; other sessions' work elsewhere is listed, never touched | STOP |
 | 8 | Approval word | `approval_word` matches CONTEXT_MAP for this work | STOP |
-Then show the table, Claude's own confidence and the planned files; STOP for the approval word (or continue on a one-step approval, GUARDRAILS G2-1). Never re-print the prompt.
+Then show the table, Claude's own confidence and the planned files; STOP for the approval word (or continue on a one-step approval, GUARDRAILS G2-1). Never re-print the prompt. After approval: Phases 6–8 in the `implementer` agent at `implement_tier`, Phases 9–10 in the main session (WORKFLOW Routing, Build agent).
 
 ## Tamper seal
 At approval record `approved_hash:` under `## Import Check`; recompute before each later phase and at the report. Mismatch → STOP, show the diff, ask for a new approval. The hash covers the file up to `## Import Check`, without the `status:` and `approved_hash:` lines (`.ai/hash.mjs`; allow `Bash(node .ai/hash.mjs:*)` in `.claude/settings.json` so it never prompts):
