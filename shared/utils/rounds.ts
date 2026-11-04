@@ -102,6 +102,8 @@ export function pickRound<T extends PracticeItem>(
     const key = scope ? distance(item, scope)! : 0
     tiers.set(key, [...(tiers.get(key) ?? []), item])
   }
+  // The type cap is per tier on purpose: earlier or core items must not push
+  // her own File out, so a File heavy in one type can fill the round with it.
   for (const key of [...tiers.keys()].sort((a, b) => a - b)) {
     take(tiers.get(key)!, true)
     take(tiers.get(key)!, false)

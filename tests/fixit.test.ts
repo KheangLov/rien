@@ -170,6 +170,17 @@ describe('pickRound with her book and File', () => {
     expect(ids(round)).toEqual(['e1', 'e3', 'h1', 'prev'])
   })
 
+  it('takes the nearest earlier File before a farther one', () => {
+    const round = pickRound([...earlier, here[0]!], new Map(), {}, now, 2, noRandom, undefined, scope)
+    expect(ids(round)).toEqual(['e3', 'h1'])
+  })
+
+  it('keeps the skill-model ranking inside a tier', () => {
+    const picks = (best: string) => pickRound(here, new Map(), {}, now, 1, () => 0.5, item => (item.id === best ? 1.5 : 0), scope)[0]!.id
+    expect(picks('h1')).toBe('h1')
+    expect(picks('h2')).toBe('h2')
+  })
+
   it('still reviews a due sentence from an earlier File', () => {
     const old = earlier[1]!
     const states = new Map([[old.itemId, state(old, new Date('2026-10-30T00:00:00Z'))]])
