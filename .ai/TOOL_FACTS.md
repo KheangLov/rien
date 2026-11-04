@@ -17,4 +17,4 @@
 | attribution setting honored | after install the session's attribution instruction changed to "do not add attribution lines" | SET | 2026-11-03 |
 | hooks | none installed (no hooks key in .claude/settings.json), nothing to test | SET | 2026-11-04 |
 | skill `model` frontmatter honored | `/verify-setup` has `model: sonnet`; `/verify-setup` (model: sonnet) ran again as claude-sonnet-5-5 | SET | 2026-11-04 |
-| skill `effort` frontmatter honored | `effort:` is set in every skill and agent file; it can't be observed from inside a session, so this was not tested. Marked SET on the user's say-so (4 Nov), not on evidence | SET | 2026-11-04 |
+| skill `effort` frontmatter honored | evidence: session transcripts (`~/.claude/projects/-Users-nitaandkheang-projects-rien/*.jsonl`) log `perTurnEffort` per assistant turn with `attributionSkill`. Matches the frontmatter: task and implement = medium (60 and 226 turns); check-all, run-evals, sync-ai, verify-setup, visual-test = low (30, 16, 15, 34, 13). Not seen from inside a session, only in the logs. Not checked: figma-ui, quick, review-task, verify-tests, agents | SET | 2026-11-04 |
