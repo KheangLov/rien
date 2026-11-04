@@ -81,7 +81,7 @@ const when = (at: Date) => {
 </script>
 
 <template>
-  <div class="rien-page rien-game">
+  <div class="rien-page rien-game" :class="{ 'rien-wide': !practising }">
     <div class="rien-game-bar">
       <NuxtLink to="/" class="rien-icon-btn" aria-label="Close">
         <RienIcon name="close" weight="bold" />

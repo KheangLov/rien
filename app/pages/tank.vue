@@ -40,7 +40,7 @@ function select(id: string) {
 </script>
 
 <template>
-  <div class="rien-page">
+  <div class="rien-page rien-wide rien-tank-page">
     <PageHeader title="Tank" :subtitle="`${fishCount} ${fishCount === 1 ? 'fish' : 'fish'} · ${unlocked.length} of ${tank.awards.length} awards`" />
 
     <FishTank :skills="tank.skills" :awards="tank.awards" :selected="selected" @select="select" />

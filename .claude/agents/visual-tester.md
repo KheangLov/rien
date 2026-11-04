@@ -13,3 +13,5 @@ Report every `[e2e] FAIL` line verbatim; the runner already fails on fields unde
 Spot-check contrast and alt text from the screenshots and source; keyboard reach and focus can't be driven by the script: list them as manual checks.
 No Chrome, no build or no design → NOT RUN with the reason and a manual checklist.
 Return 20 lines max plus a 3–5 line summary for the task file.
+
+Waiting: the harness blocks foreground `sleep` and sleep-then-cat polling. Run long commands in the foreground with a large `timeout` (up to 600000), or with `run_in_background: true` and wait for the completion notice; never poll with `sleep`.

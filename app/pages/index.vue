@@ -153,6 +153,25 @@ const talkedThisWeek = computed(() => {
           Practise more
         </button>
       </Squircle>
+    </div>
+
+    <div class="rien-today-side">
+      <h2 id="practice" class="rien-section-title" tabindex="-1">Practice</h2>
+      <Squircle class="rien-list" :radius="22"><ul class="rien-list-items">
+        <li v-for="item in practice" :key="item.id">
+          <NuxtLink :to="item.to" class="rien-list-row">
+            <span class="rien-list-icon"><RienIcon :name="item.icon" weight="duotone" :size="26" /></span>
+            <span class="rien-list-text">
+              <span class="rien-list-title">{{ item.title }}</span>
+              <span class="rien-list-sub">{{ item.sub }}</span>
+            </span>
+            <span class="rien-list-end">
+              <span v-if="item.done" class="rien-done-dot" aria-label="Done today"><RienIcon name="check" :size="14" weight="bold" /></span>
+              <RienIcon name="next" :size="16" weight="bold" />
+            </span>
+          </NuxtLink>
+        </li>
+      </ul></Squircle>
 
       <LevelUpCard />
       <InstallCard />
@@ -180,25 +199,6 @@ const talkedThisWeek = computed(() => {
           </p>
         </SqCardText>
       </SqCard>
-    </div>
-
-    <div class="rien-today-side">
-      <h2 id="practice" class="rien-section-title" tabindex="-1">Practice</h2>
-      <Squircle class="rien-list" :radius="22"><ul class="rien-list-items">
-        <li v-for="item in practice" :key="item.id">
-          <NuxtLink :to="item.to" class="rien-list-row">
-            <span class="rien-list-icon"><RienIcon :name="item.icon" weight="duotone" :size="26" /></span>
-            <span class="rien-list-text">
-              <span class="rien-list-title">{{ item.title }}</span>
-              <span class="rien-list-sub">{{ item.sub }}</span>
-            </span>
-            <span class="rien-list-end">
-              <span v-if="item.done" class="rien-done-dot" aria-label="Done today"><RienIcon name="check" :size="14" weight="bold" /></span>
-              <RienIcon name="next" :size="16" weight="bold" />
-            </span>
-          </NuxtLink>
-        </li>
-      </ul></Squircle>
 
       <h2 class="rien-section-title">This week</h2>
       <Squircle class="rien-list" :radius="22"><ul class="rien-list-items">
