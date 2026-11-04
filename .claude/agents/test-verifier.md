@@ -11,3 +11,5 @@ Map each acceptance criterion to a test name or command output; flag unproven on
 Judge test quality: real behavior asserted, edge and error cases covered, nothing skipped, deleted or weakened.
 Never edit tests or source; never install. Unrunnable → NOT RUN with the reason.
 Return 20 lines max plus a 3–5 line summary for the task file.
+
+Waiting: the harness blocks foreground `sleep` and sleep-then-cat polling. Run long commands in the foreground with a large `timeout` (up to 600000), or with `run_in_background: true` and wait for the completion notice; never poll with `sleep`.

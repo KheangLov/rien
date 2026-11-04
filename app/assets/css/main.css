@@ -4219,6 +4219,16 @@ html.rien-motion .rien-talk-card-enter-active {
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
   }
 
+  /* Progress summary tiles: four across once there is room. */
+  .rien-stats {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  }
+
+  /* Long explanatory text on data pages keeps a readable line length. */
+  .rien-tank-page > .rien-muted {
+    max-width: 68ch;
+  }
+
   /* The journey scene scales with the card; on a tablet that is a ~225px tall
      picture pushing the session title and Start button down. Cap and centre. */
   .rien-hero-art {
@@ -4264,9 +4274,23 @@ html.rien-motion .rien-talk-card-enter-active {
   }
 
   .rien-page.rien-wide {
-    max-width: 880px;
+    max-width: 960px;
     padding-left: 32px;
     padding-right: 32px;
+  }
+
+  /* Progress: header and summary tiles across the top, then two columns of
+     cards (skills and Rien's self-check beside the charts and results). */
+  .rien-page.rien-progress-page {
+    max-width: 1080px;
+    column-gap: 24px;
+    align-items: start;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .rien-page.rien-progress-page > .rien-stats,
+  .rien-page.rien-progress-page > :first-child {
+    grid-column: 1 / -1;
   }
 
   /* Generic overview columns, for hubs beyond Today and IELTS. */
@@ -4275,6 +4299,7 @@ html.rien-motion .rien-talk-card-enter-active {
 
   .rien-page.rien-today > .rien-today-main { grid-column: 1; }
   .rien-page.rien-today > .rien-today-side { grid-column: 2; }
+  .rien-page.rien-today > .rien-today-main { align-self: start; }
 
   /* IELTS: the intro card on the left; the four skills and academic words on
      the right. */
@@ -4329,5 +4354,15 @@ html.rien-motion .rien-talk-card-enter-active {
   /* Tank news drops below the tab bar instead of covering it. */
   .rien-shell.has-tabs .rien-toast {
     top: calc(env(safe-area-inset-top) + var(--rien-tabbar-h) + 22px);
+  }
+}
+
+/* Tall desktop windows: the session card stays in view while the right column
+   (practice, notices, the week) scrolls with the page. The document is the only
+   scroller; short or small windows keep the normal flow. */
+@media (min-width: 1024px) and (min-height: 760px) {
+  .rien-page.rien-today > .rien-today-main {
+    position: sticky;
+    top: calc(env(safe-area-inset-top) + var(--rien-tabbar-h) + 28px);
   }
 }

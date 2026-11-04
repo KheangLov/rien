@@ -93,7 +93,7 @@ const formatDate = (date: Date) => date.toLocaleDateString('en-GB', { day: 'nume
 </script>
 
 <template>
-  <div class="rien-page">
+  <div class="rien-page rien-wide rien-progress-page">
     <PageHeader title="Progress" />
 
     <div class="rien-stats">
