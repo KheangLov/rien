@@ -17,4 +17,4 @@
 | attribution setting honored | after install the session's attribution instruction changed to "do not add attribution lines" | SET | 2026-11-03 |
 | hooks | none installed (no hooks key in .claude/settings.json), nothing to test | SET | 2026-11-04 |
 | skill `model` frontmatter honored | `/verify-setup` has `model: sonnet`; `/verify-setup` (model: sonnet) ran again as claude-sonnet-5-5 | SET | 2026-11-04 |
-| skill `effort` frontmatter honored | known limitation: effort can't be observed from inside a session; `effort:` is set in every skill and agent file. Check by eye in the UI if it ever matters. Left UNVERIFIED on purpose | UNVERIFIED | 2026-11-04 |
+| skill `effort` frontmatter honored | `effort:` is set in every skill and agent file; it can't be observed from inside a session, so this was not tested. Marked SET on the user's say-so (4 Nov), not on evidence | SET | 2026-11-04 |
