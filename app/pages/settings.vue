@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { BOOK_LABELS, BOOKS, FILE_NUMBERS, partLabel, type Settings } from '#shared/schemas/db'
 import { backupAgeLabel } from '#shared/utils/backups'
+import { LEARNER_HISTORY_DAYS, summarizeLearningData, type LearningDataSummary } from '#shared/utils/learningDataSummary'
 import { FILES_IN_BOOK } from '#shared/utils/levelUp'
+import { addDays } from '#shared/utils/streak'
 
 const db = useDb()
 const { $pwa } = useNuxtApp()
@@ -40,8 +42,37 @@ function refreshStatus() {
     (navigator as Navigator & { standalone?: boolean }).standalone === true
 }
 
+// How much of her last year of practice the models can learn from: counts
+// only, read once when Settings opens. A failure here leaves the rest alone.
+const learningData = ref<LearningDataSummary | null>(null)
+const learningDataLoading = ref(true)
+const learningDataError = ref(false)
+const ML_STATE_LABELS: Record<LearningDataSummary['mlState'], string> = {
+  'not-trained': 'Not trained yet',
+  'baseline': 'Trained, not in use',
+  'active': 'In use',
+}
+
+async function loadLearningData() {
+  learningDataLoading.value = true
+  learningDataError.value = false
+  try {
+    const since = addDays(new Date(), -LEARNER_HISTORY_DAYS)
+    const [attempts, reviews] = await Promise.all([db.attemptsSince(since), db.reviewsSince(since)])
+    learningData.value = summarizeLearningData(attempts, reviews, settings.value?.mlModel)
+  }
+  catch {
+    learningData.value = null
+    learningDataError.value = true
+  }
+  finally {
+    learningDataLoading.value = false
+  }
+}
+
 onMounted(async () => {
   settings.value = await db.getSettings()
+  void loadLearningData()
   refreshStatus()
   void navigator.serviceWorker?.ready.then(() => { offline.value = true })
   window.addEventListener('online', refreshStatus)
@@ -237,6 +268,26 @@ async function importBackup(event: Event) {
           :options="reminderTimes"
           @update:model-value="updateReminder({ hour: Math.floor($event / 60), minute: $event % 60 })"
         />
+      </IosGroup>
+
+      <IosGroup
+        header="Learning data"
+        :footer="learningDataError
+          ? 'Learning data summary is unavailable right now. Everything else still works.'
+          : learningData && !learningData.trainingExamples
+            ? 'No practice in the last year yet. Each game and word review you do adds to this. Counted on this device only; nothing is sent anywhere.'
+            : 'What Rien can learn from: your last year of practice. Counted on this device only; nothing is sent anywhere.'"
+      >
+        <IosRow v-if="learningDataLoading" label="Counting your practice" icon="calendar" value="…" />
+        <template v-else-if="learningData">
+          <IosRow label="Practice answers" icon="play" :value="String(learningData.attempts)" />
+          <IosRow label="Different questions" icon="sparkles" :value="String(learningData.uniqueItems)" />
+          <IosRow label="Repeated questions" icon="word-recall" :value="String(learningData.repeatedAttempts)" />
+          <IosRow label="Word reviews" icon="words" :value="String(learningData.wordReviews)" />
+          <IosRow label="Skills practised" icon="goal" :value="String(learningData.skills)" />
+          <IosRow label="Total for learning" icon="plus" :value="String(learningData.trainingExamples)" />
+          <IosRow label="Smart model" icon="today" :value="ML_STATE_LABELS[learningData.mlState]" />
+        </template>
       </IosGroup>
     </template>
 

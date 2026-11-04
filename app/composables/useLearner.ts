@@ -5,6 +5,7 @@ import { forward } from '#shared/ml/forward'
 import { GUESS_BY_KIND, learn, predict, skillReport, suitability, workingLevel, type Evidence, type Model, type SelfCheck, type SkillReport } from '#shared/utils/mastery'
 import { applyFsrsParams, DEFAULT_MS_PER_LETTER } from '#shared/utils/scheduler'
 import { levelFor, mistakeTypeOf } from '#shared/utils/skills'
+import { LEARNER_HISTORY_DAYS } from '#shared/utils/learningDataSummary'
 import { addDays } from '#shared/utils/streak'
 import type { LearnerInput, LearnerOutput, MlModel } from '~/workers/learnerWork'
 
@@ -27,9 +28,6 @@ export interface Learner {
   ml?: MlModel
   featureState: FeatureState
 }
-
-// A year of answers is plenty; older ones have faded from the model anyway.
-const HISTORY_DAYS = 365
 
 let building: Promise<Learner> | undefined
 let current: Learner | undefined
@@ -114,7 +112,7 @@ async function build(): Promise<Learner> {
   // replaces them when it is ready.
   applyFsrsParams(settings.fsrsParams)
   const now = new Date()
-  const since = addDays(now, -HISTORY_DAYS)
+  const since = addDays(now, -LEARNER_HISTORY_DAYS)
   const level = levelFor(settings.book, settings.file)
   const base = { level, now, since, timezoneOffset: now.getTimezoneOffset(), previousMl: settings.mlModel }
 
