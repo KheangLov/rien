@@ -35,7 +35,6 @@ none (every change is approved with `go`)
 - Kit edit: Never rule 9 in `AGENTS.md` is G6-DATA (on-device data has no server copy) instead of G6-AC, which has nothing to check in a client-only app; G6-AC stays in `.ai/GUARDRAILS.md` for any future backend.
 
 ## Known drift (code vs rules, open conflicts)
-- Due 2026-11-03 (`pnpm-workspace.yaml:9-11`): remove the temporary node-forge release-age exclusion and update Nuxt to 4.6.3. Open; needs the user's go (G4-2).
 - No lint or format script and no formatter config exist, while the kit's checklist assumes one; the setup formatter step was skipped.
 - `android/app/src/main/AndroidManifest.xml:5` sets `allowBackup="true"`: system backups can copy her SQLite data. Undecided.
 - Backup restore (`app/data/dexie.ts:252`) replaces all tables after Zod validation with no size cap. Undecided.
