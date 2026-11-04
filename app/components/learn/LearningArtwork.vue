@@ -34,7 +34,7 @@ const STONES = [
 // The four IELTS skills, floating round the open book.
 const SKILLS = [
   { x: 52, y: 34, tint: 1 },
-  { x: 104, y: 14, tint: 2 },
+  { x: 104, y: 24, tint: 2 },
   { x: 262, y: 70, tint: 3 },
   { x: 40, y: 88, tint: 2 },
 ]
@@ -93,24 +93,28 @@ const SKILLS = [
         stroke-width="3"
         stroke-linecap="round"
         stroke-dasharray="1 9"
+        class="rien-art-trail"
       />
       <g v-for="(stone, i) in STONES" :key="stone.label" class="rien-art-stone" :style="{ '--i': i }">
         <rect :x="stone.x - 18" :y="stone.y - 13" width="36" height="26" rx="9" fill="#f8fafc" fill-opacity="0.16" stroke="#f8fafc" stroke-opacity="0.45" stroke-width="1.5" />
         <text :x="stone.x" :y="stone.y + 5" text-anchor="middle" font-size="13" font-weight="700" fill="#f8fafc" fill-opacity="0.92">{{ stone.label }}</text>
       </g>
       <!-- Goal flag -->
-      <path d="M298 30V4" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round" />
-      <path d="M299 5C306 2 312 8 318 5V17C312 20 306 14 299 17Z" style="fill: var(--rien-tint-1, #2dd4bf)" />
-      <circle cx="298" cy="31" r="4" fill="#f8fafc" fill-opacity="0.7" />
+      <g class="rien-art-flag">
+        <path d="M298 30V4" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round" />
+        <path d="M299 5C306 2 312 8 318 5V17C312 20 306 14 299 17Z" style="fill: var(--rien-tint-1, #2dd4bf)" />
+        <circle cx="298" cy="31" r="4" fill="#f8fafc" fill-opacity="0.7" />
+      </g>
       <!-- Bubbles -->
-      <circle cx="160" cy="26" r="4" fill="none" stroke="#f8fafc" stroke-opacity="0.55" stroke-width="1.4" />
-      <circle cx="172" cy="12" r="2.6" fill="none" stroke="#f8fafc" stroke-opacity="0.45" stroke-width="1.2" />
-      <circle cx="40" cy="58" r="3" fill="none" stroke="#f8fafc" stroke-opacity="0.35" stroke-width="1.2" />
+      <circle class="rien-art-bubble" style="--i: 0" cx="160" cy="26" r="4" fill="none" stroke="#f8fafc" stroke-opacity="0.55" stroke-width="1.4" />
+      <circle class="rien-art-bubble" style="--i: 1" cx="172" cy="12" r="2.6" fill="none" stroke="#f8fafc" stroke-opacity="0.45" stroke-width="1.2" />
+      <circle class="rien-art-bubble" style="--i: 2" cx="40" cy="58" r="3" fill="none" stroke="#f8fafc" stroke-opacity="0.35" stroke-width="1.2" />
     </g>
 
     <!-- IELTS: an open book with the four skills floating up from it -->
     <g v-else-if="scene === 'ielts'" class="rien-art-scene">
       <ellipse cx="160" cy="120" rx="120" ry="7" style="fill: var(--sq-primary, #0f766e)" fill-opacity="0.12" />
+      <g class="rien-art-book">
       <path d="M160 54C130 42 98 42 72 50V118C98 110 130 110 160 120Z" style="fill: var(--sq-surface, #fcfcfd); stroke: var(--sq-primary, #0f766e)" stroke-opacity="0.55" stroke-width="2" stroke-linejoin="round" />
       <path d="M160 54C190 42 222 42 248 50V118C222 110 190 110 160 120Z" style="fill: var(--sq-surface, #fcfcfd); stroke: var(--sq-primary, #0f766e)" stroke-opacity="0.55" stroke-width="2" stroke-linejoin="round" />
       <path d="M160 54V120" style="stroke: var(--sq-primary, #0f766e)" stroke-opacity="0.45" stroke-width="2" />
@@ -120,9 +124,11 @@ const SKILLS = [
       </g>
       <!-- Band target on the right page -->
       <circle cx="222" cy="100" r="10" fill="none" style="stroke: var(--rien-tint-1, #2dd4bf)" stroke-width="2.4" />
-      <circle cx="222" cy="100" r="4" style="fill: var(--rien-tint-1, #2dd4bf)" />
+      <circle class="rien-art-pulse" cx="222" cy="100" r="4" style="fill: var(--rien-tint-1, #2dd4bf)" />
+      </g>
       <!-- Skills: speaking, writing, reading, listening -->
       <g v-for="(skill, i) in SKILLS" :key="i" class="rien-art-skill" :style="{ '--i': i }">
+        <g class="rien-art-skill-float">
         <circle :cx="skill.x" :cy="skill.y" r="15" :style="{ fill: `var(--rien-tint-${skill.tint}, #38bdf8)` }" fill-opacity="0.22" />
         <circle :cx="skill.x" :cy="skill.y" r="15" fill="none" :style="{ stroke: `var(--rien-tint-${skill.tint}, #38bdf8)` }" stroke-width="1.6" />
         <g :transform="`translate(${skill.x - 8} ${skill.y - 8})`" fill="none" style="stroke: var(--sq-primary, #0f766e)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -131,48 +137,53 @@ const SKILLS = [
           <path v-else-if="i === 2" d="M3 1H11L14 4V15H3ZM6 7H11M6 10H11" />
           <path v-else d="M2 8V8M5 5V11M8 2V14M11 5V11M14 8V8" />
         </g>
+        </g>
       </g>
-      <path d="M286 22l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z" fill="#fbbf24" />
+      <path class="rien-art-twinkle" d="M286 22l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z" fill="#fbbf24" />
     </g>
 
     <!-- Checkpoint: the guide leaps through a ring, a tick above it -->
     <g v-else-if="scene === 'checkpoint'" class="rien-art-scene">
-      <path d="M20 112C60 102 90 122 130 112S210 102 250 112S290 120 300 116C300 124 290 128 260 128H60C30 128 20 124 20 112Z" :fill="`url(#${id}-water)`" />
-      <path d="M20 116C60 106 90 126 130 116S210 106 250 116S290 124 300 120" fill="none" :stroke="`url(#${id}-wave)`" stroke-width="2" stroke-linecap="round" />
+      <g class="rien-art-water">
+        <path d="M20 112C60 102 90 122 130 112S210 102 250 112S290 120 300 116C300 124 290 128 260 128H60C30 128 20 124 20 112Z" :fill="`url(#${id}-water)`" />
+        <path d="M20 116C60 106 90 126 130 116S210 106 250 116S290 124 300 120" fill="none" :stroke="`url(#${id}-wave)`" stroke-width="2" stroke-linecap="round" />
+      </g>
       <ellipse cx="160" cy="64" rx="40" ry="46" fill="none" style="stroke: var(--rien-tint-1, #2dd4bf)" stroke-width="7" stroke-opacity="0.85" />
-      <ellipse cx="160" cy="64" rx="40" ry="46" fill="none" stroke="#f8fafc" stroke-width="2" stroke-opacity="0.6" stroke-dasharray="10 12" />
+      <ellipse cx="160" cy="64" rx="40" ry="46" fill="none" stroke="#f8fafc" stroke-width="2" stroke-opacity="0.6" stroke-dasharray="10 12" class="rien-art-ring-dash" />
       <g class="rien-art-badge">
         <circle cx="240" cy="30" r="17" style="fill: var(--sq-success, #16a34a)" />
         <path d="M232 30L238 36L249 24" fill="none" stroke="#f8fafc" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
       </g>
-      <g fill="none" style="stroke: var(--rien-tint-2, #38bdf8)" stroke-width="2" stroke-linecap="round" stroke-opacity="0.8">
+      <g class="rien-art-splash" fill="none" style="stroke: var(--rien-tint-2, #38bdf8); --i: 0" stroke-width="2" stroke-linecap="round" stroke-opacity="0.8">
         <path d="M96 104C92 96 90 92 84 88M104 102C104 94 106 90 104 84M88 112C80 108 76 108 70 108" />
       </g>
-      <circle cx="78" cy="80" r="3" style="fill: var(--rien-tint-2, #38bdf8)" fill-opacity="0.7" />
-      <circle cx="66" cy="96" r="2" style="fill: var(--rien-tint-2, #38bdf8)" fill-opacity="0.6" />
+      <circle class="rien-art-splash" cx="78" cy="80" r="3" style="fill: var(--rien-tint-2, #38bdf8); --i: 1" fill-opacity="0.7" />
+      <circle class="rien-art-splash" cx="66" cy="96" r="2" style="fill: var(--rien-tint-2, #38bdf8); --i: 2" fill-opacity="0.6" />
     </g>
 
     <!-- Complete: the guide on a stack of books, a star and light behind -->
     <g v-else class="rien-art-scene">
-      <circle cx="160" cy="60" r="62" :fill="`url(#${id}-glow)`" />
+      <circle class="rien-art-glow" cx="160" cy="60" r="62" :fill="`url(#${id}-glow)`" />
       <g class="rien-art-rays" fill="#fbbf24" fill-opacity="0.32">
         <path d="M160 60L120 0H142Z" />
         <path d="M160 60L178 0H200Z" />
         <path d="M160 60L230 16L240 34Z" />
         <path d="M160 60L80 34L90 16Z" />
       </g>
+      <g class="rien-art-books">
       <rect x="104" y="112" width="112" height="14" rx="4" style="fill: var(--sq-primary, #0f766e)" />
       <rect x="114" y="98" width="94" height="14" rx="4" style="fill: var(--rien-tint-1, #2dd4bf)" />
       <rect x="110" y="84" width="100" height="14" rx="4" style="fill: var(--rien-tint-3, #f472b6)" />
       <g stroke="#f8fafc" stroke-opacity="0.6" stroke-width="1.6" stroke-linecap="round">
         <path d="M110 119H210M120 105H200M116 91H204" />
       </g>
+      </g>
       <g class="rien-art-badge">
         <path d="M160 2l5.6 11.4 12.6 1.8 -9.1 8.9 2.1 12.5 -11.2 -5.9 -11.2 5.9 2.1 -12.5 -9.1 -8.9 12.6 -1.8Z" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.6" stroke-linejoin="round" />
       </g>
-      <path d="M62 42l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z" style="fill: var(--rien-tint-2, #38bdf8)" />
-      <path d="M262 70l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z" style="fill: var(--rien-tint-3, #f472b6)" />
-      <path d="M248 26l1.4 3.6 3.6 1.4 -3.6 1.4 -1.4 3.6 -1.4 -3.6 -3.6 -1.4 3.6 -1.4Z" fill="#fbbf24" />
+      <path class="rien-art-twinkle" d="M62 42l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z" style="--i: 0; fill: var(--rien-tint-2, #38bdf8)" />
+      <path class="rien-art-twinkle" d="M262 70l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z" style="--i: 1; fill: var(--rien-tint-3, #f472b6)" />
+      <path class="rien-art-twinkle" style="--i: 2" d="M248 26l1.4 3.6 3.6 1.4 -3.6 1.4 -1.4 3.6 -1.4 -3.6 -3.6 -1.4 3.6 -1.4Z" fill="#fbbf24" />
     </g>
 
     <!-- The guide fish (120 x 70 box, facing right) -->
