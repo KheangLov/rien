@@ -14,7 +14,7 @@ const id = useId()
 // Where the guide swims in each scene: position, size and tilt (degrees).
 const GUIDE: Record<LearningScene, { x: number, y: number, scale: number, tilt: number }> = {
   journey: { x: 78, y: 6, scale: 0.56, tilt: -10 },
-  ielts: { x: 196, y: 10, scale: 0.6, tilt: 8 },
+  ielts: { x: 196, y: 14, scale: 0.6, tilt: 8 },
   checkpoint: { x: 104, y: 14, scale: 0.78, tilt: -22 },
   complete: { x: 116, y: 30, scale: 0.74, tilt: -4 },
 }
@@ -165,8 +165,8 @@ const SKILLS = [
     <g v-else class="rien-art-scene">
       <circle class="rien-art-glow" cx="160" cy="60" r="62" :fill="`url(#${id}-glow)`" />
       <g class="rien-art-rays" fill="#fbbf24" fill-opacity="0.32">
-        <path d="M160 60L120 0H142Z" />
-        <path d="M160 60L178 0H200Z" />
+        <path d="M160 60L122 8H142Z" />
+        <path d="M160 60L178 8H198Z" />
         <path d="M160 60L230 16L240 34Z" />
         <path d="M160 60L80 34L90 16Z" />
       </g>
